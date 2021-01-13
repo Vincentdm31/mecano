@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\InterventionController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -26,3 +29,5 @@ Route::group(['middleware' => ['admin']], function () {
     Route::get('/admin', [HomeController::class, 'adminView'])->name('admin.view');
 });
 
+Route::resource('users', UserController::class);
+Route::resource('interventions', InterventionController::class);

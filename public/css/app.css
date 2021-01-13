@@ -7104,3 +7104,7 @@ textarea.form-control[rows] {
 .bd-transparent {
   border-color: transparent !important;
 }
+
+body {
+  font-family: "Quicksand", sans-serif;
+}

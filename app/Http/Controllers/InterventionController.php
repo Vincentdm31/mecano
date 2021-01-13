@@ -13,8 +13,9 @@ class InterventionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //
+    {   
+        $interventions = Intervention::all();
+        return view('interventions.index', ['interventions' => $interventions]);
     }
 
     /**
@@ -24,7 +25,8 @@ class InterventionController extends Controller
      */
     public function create()
     {
-        //
+        return view('interventions.create');
+        
     }
 
     /**
@@ -35,7 +37,13 @@ class InterventionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $inputs = $request->except('_token', 'created_at', 'updated_at');
+        $intervention = new Intervention();
+        foreach ($inputs as $key => $value) {
+            $intervention->$key = $value;
+        }
+        $intervention->save();
+        return redirect(route('interventions.create', ['intervention' => $intervention->id]));    
     }
 
     /**
@@ -64,12 +72,19 @@ class InterventionController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Intervention  $intervention
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Intervention $intervention)
-    {
-        //
+    public function update(Request $request, $id)
+    {   
+        $inputs = $request->except('_token', '_method', 'updated_at');
+        $intervention = Intervention::find($id);
+        foreach ($inputs as $key => $value){
+            $intervention->$key = $value;
+        }
+        $intervention->save();
+       // return redirect(route('interventions.index'));
+       return redirect(route('interventions.create', ['intervention' => $intervention->id]));
     }
 
     /**
