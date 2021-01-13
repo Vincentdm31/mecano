@@ -15,6 +15,7 @@ class CreateOpSousCategoriesTable extends Migration
     {
         Schema::create('op_sous_categories', function (Blueprint $table) {
             $table->id();
+            $table->string('sous_categ_op');
             $table->timestamps();
         });
     }

@@ -15,6 +15,10 @@ class CreatePiecesTable extends Migration
     {
         Schema::create('pieces', function (Blueprint $table) {
             $table->id();
+            $table->string('nom');
+            $table->string('ref');
+            $table->float('prix');
+            $table->float('qte');
             $table->timestamps();
         });
     }

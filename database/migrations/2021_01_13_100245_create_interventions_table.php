@@ -15,6 +15,14 @@ class CreateInterventionsTable extends Migration
     {
         Schema::create('interventions', function (Blueprint $table) {
             $table->id();
+            $table->boolean('is_moving');
+            $table->float('distance_km_interv');
+            $table->date('start_intervention_time');
+            $table->date('end_intervention_time');
+            $table->float('prix');
+            $table->float('km_vehicule');
+            $table->enum('state', ['doing', 'pause', 'finish']);
+            $table->text('observations');
             $table->timestamps();
         });
     }

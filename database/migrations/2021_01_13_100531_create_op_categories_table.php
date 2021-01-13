@@ -15,6 +15,7 @@ class CreateOpCategoriesTable extends Migration
     {
         Schema::create('op_categories', function (Blueprint $table) {
             $table->id();
+            $table->string('categorie_op');
             $table->timestamps();
         });
     }
