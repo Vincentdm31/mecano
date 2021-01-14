@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Operation extends Model
 {
     use HasFactory;
+
+    //public $timestamps = false;
+    
+    public function intervention()
+    {
+        return $this->belongsTo(Intervention::class);
+    }
+
+
 }

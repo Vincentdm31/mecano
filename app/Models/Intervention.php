@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Intervention extends Model
 {
     use HasFactory;
+
+    public function operation()
+    {
+        return $this->hasMany(Operation::class);
+    }
+
+    public function vehicule()
+    {
+        return $this->hasOne(Vehicule::class);
+    }
 }

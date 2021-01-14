@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Vehicule extends Model
 {
     use HasFactory;
+
+    public function intervention()
+    {
+        return $this->belongsTo(Intervention::class);
+    }
 }

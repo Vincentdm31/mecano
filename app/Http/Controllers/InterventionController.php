@@ -77,14 +77,15 @@ class InterventionController extends Controller
      */
     public function update(Request $request, $id)
     {   
+        $kmVehicule = $request->input('distance_km_interv');
         $inputs = $request->except('_token', '_method', 'updated_at');
         $intervention = Intervention::find($id);
         foreach ($inputs as $key => $value){
             $intervention->$key = $value;
         }
         $intervention->save();
-       // return redirect(route('interventions.index'));
-       return redirect(route('interventions.create', ['intervention' => $intervention->id]));
+
+       return redirect(route('interventions.create', ['intervention' => $intervention, 'kmVehicule' => $kmVehicule]));
     }
 
     /**
@@ -97,4 +98,5 @@ class InterventionController extends Controller
     {
         //
     }
+
 }
