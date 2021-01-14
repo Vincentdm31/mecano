@@ -35,7 +35,15 @@ class VehiculeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $interventionId = $request->input('intervention_id');
+        $inputs = $request->except('_token', 'created_at', 'updated_at');
+        $vehicule = new Vehicule();
+        foreach ($inputs as $key => $value) {
+            $vehicule->$key = $value;
+        }
+        
+        $vehicule->save();
+        return redirect(route('interventions.create', ['intervention' => $interventionId]));
     }
 
     /**

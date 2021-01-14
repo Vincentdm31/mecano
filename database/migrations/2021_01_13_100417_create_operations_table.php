@@ -15,11 +15,11 @@ class CreateOperationsTable extends Migration
     {
         Schema::create('operations', function (Blueprint $table) {
             $table->id();
+            $table->string('nom');
             $table->timestamps();
             
             $table->bigInteger('intervention_id')->unsigned();
-            $table->foreign('intervention_id')
-                    ->references('id')->on('interventions')
+            $table->foreign('intervention_id')->references('id')->on('interventions')
                     ->onDelete('cascade')->onUpdate('cascade');
             
         });

@@ -5,7 +5,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\OperationController;
 use App\Http\Controllers\InterventionController;
-use App\Http\Controllers\OpCategorieController;
+use App\Http\Controllers\VehiculeController;
+
 
 
 /*
@@ -34,4 +35,5 @@ Route::group(['middleware' => ['admin']], function () {
 Route::resource('users', UserController::class);
 Route::resource('interventions', InterventionController::class);
 Route::resource('operations', OperationController::class);
-Route::resource('categories', OpCategorieController::class);
+Route::resource('vehicules', VehiculeController::class);
+

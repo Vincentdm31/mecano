@@ -20,6 +20,10 @@ class CreatePiecesTable extends Migration
             $table->float('prix');
             $table->float('qte');
             $table->timestamps();
+
+            $table->bigInteger('intervention_id')->unsigned();
+            $table->foreign('intervention_id')->references('id')->on('interventions')
+                    ->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
