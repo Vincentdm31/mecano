@@ -35,7 +35,7 @@ class VehiculeController extends Controller
      */
     public function store(Request $request)
     {
-        $interventionId = $request->input('intervention_id');
+        $intervention = $request->input('intervention_id');
         $inputs = $request->except('_token', 'created_at', 'updated_at');
         $vehicule = new Vehicule();
         foreach ($inputs as $key => $value) {
@@ -43,7 +43,7 @@ class VehiculeController extends Controller
         }
         
         $vehicule->save();
-        return redirect(route('interventions.create', ['intervention' => $interventionId]));
+        return redirect(route('interventions.edit', ['intervention' => $intervention, 'vehicule' => $vehicule]));
     }
 
     /**
@@ -72,12 +72,20 @@ class VehiculeController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Vehicule  $vehicule
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Vehicule $vehicule)
-    {
-        //
+    public function update(Request $request, $id)
+    {   
+        $intervention = $request->input('intervention_id');
+        $inputs = $request->except('_token', '_method', 'updated_at');
+        $vehicule = Vehicule::find($id);
+        foreach ($inputs as $key => $value){
+            $vehicule->$key = $value;
+        }
+        $vehicule->save();
+
+       return redirect(route('interventions.edit', ['intervention' => $intervention, 'vehicule' => $vehicule]));
     }
 
     /**

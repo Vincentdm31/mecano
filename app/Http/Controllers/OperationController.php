@@ -35,14 +35,14 @@ class OperationController extends Controller
      */
     public function store(Request $request)
     {   
-        $interventionId = $request->input('intervention_id');
+        $intervention = $request->input('intervention_id');
         $inputs = $request->except('_token', 'created_at', 'updated_at');
         $operation = new Operation();
         foreach ($inputs as $key => $value) {
             $operation->$key = $value;
         }
         $operation->save();
-        return redirect(route('interventions.create', ['intervention' => $interventionId]));
+        return redirect(route('interventions.edit', ['intervention' => $intervention]));
     }
 
     /**

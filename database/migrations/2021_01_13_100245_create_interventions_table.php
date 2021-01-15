@@ -15,10 +15,10 @@ class CreateInterventionsTable extends Migration
     {
         Schema::create('interventions', function (Blueprint $table) {
             $table->id();
-            $table->float('distance_km_interv')->nullable();
+            $table->string('distance_km_interv')->nullable();
             $table->date('start_intervention_time')->nullable();
             $table->date('end_intervention_time')->nullable();
-            $table->float('totalTime')->nullable();
+            $table->string('totalTime')->nullable();
             $table->float('prix')->nullable();
             $table->enum('state', ['doing', 'pause', 'finish'])->nullable();
             $table->text('observations')->nullable();

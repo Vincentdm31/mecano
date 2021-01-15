@@ -39,17 +39,15 @@ class InterventionController extends Controller
     {
         $inputs = $request->except('_token', 'created_at', 'updated_at');
         $intervention = new Intervention();
-        foreach ($inputs as $key => $value) {
-            $intervention->$key = $value;
-        }
+
         $intervention->save();
-        return redirect(route('interventions.create', ['intervention' => $intervention->id]));    
+        return redirect(route('interventions.edit', ['intervention' => $intervention]));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Intervention  $intervention
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show(Intervention $intervention)
@@ -63,9 +61,9 @@ class InterventionController extends Controller
      * @param  \App\Models\Intervention  $intervention
      * @return \Illuminate\Http\Response
      */
-    public function edit(Intervention $intervention)
+    public function edit($id)
     {
-        //
+        return view('interventions.edit', ['intervention' => Intervention::find($id)]);
     }
 
     /**
@@ -77,7 +75,6 @@ class InterventionController extends Controller
      */
     public function update(Request $request, $id)
     {   
-        $kmVehicule = $request->input('distance_km_interv');
         $inputs = $request->except('_token', '_method', 'updated_at');
         $intervention = Intervention::find($id);
         foreach ($inputs as $key => $value){
@@ -85,7 +82,7 @@ class InterventionController extends Controller
         }
         $intervention->save();
 
-       return redirect(route('interventions.create', ['intervention' => $intervention, 'kmVehicule' => $kmVehicule]));
+       return redirect(route('interventions.edit', ['intervention' => $intervention]));
     }
 
     /**
