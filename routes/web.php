@@ -20,22 +20,24 @@ use App\Http\Controllers\VehiculeController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Auth::routes();
 
-Route::get('/home', [HomeController::class,'index'])->name('home');
+
 
 Route::group(['middleware' => ['admin']], function () {
     Route::get('/admin', [HomeController::class, 'adminView'])->name('admin.view');
 });
 
-Route::resource('users', UserController::class);
-Route::resource('interventions', InterventionController::class);
-Route::resource('operations', OperationController::class);
-Route::resource('vehicules', VehiculeController::class);
 
-Route::get('/searchUser',  [UserController::class, 'searchUser']);
-Route::get('/searchVehicule',  [VehiculeController::class, 'searchVehicule']);
+
+Route::middleware('auth')->group(function() {
+    Route::get('/', [HomeController::class,'index'])->name('home');
+    Route::resource('users', UserController::class);
+    Route::resource('interventions', InterventionController::class);
+    Route::resource('operations', OperationController::class);
+    Route::resource('vehicules', VehiculeController::class);
+
+    Route::get('/searchUser',  [UserController::class, 'searchUser']);
+    Route::get('/searchVehicule',  [VehiculeController::class, 'searchVehicule']);
+});
