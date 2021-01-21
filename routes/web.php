@@ -37,4 +37,5 @@ Route::resource('interventions', InterventionController::class);
 Route::resource('operations', OperationController::class);
 Route::resource('vehicules', VehiculeController::class);
 
-Route::get('/search',  [UserController::class, 'searchUser']);
+Route::get('/searchUser',  [UserController::class, 'searchUser']);
+Route::get('/searchVehicule',  [VehiculeController::class, 'searchVehicule']);

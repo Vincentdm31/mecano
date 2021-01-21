@@ -15,7 +15,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('user.index', ['users' => User::all()]);
+        return view('users.index', ['users' => User::all()]);
     }
 
     /**
@@ -25,7 +25,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('user.create');
+        return view('users.create');
     }
 
     /**
@@ -57,7 +57,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        return view('user.show', ['user' => User::find($id)]);
+        return view('users.show', ['user' => User::find($id)]);
     }
 
     /**
@@ -68,7 +68,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        return view('user.edit', ['user' => User::find($id)]);
+        return view('users.edit', ['user' => User::find($id)]);
     }
 
     /**
@@ -106,12 +106,12 @@ class UserController extends Controller
 
     public function searchUser(Request $request)
     {
-        $search = $request->get('search');
+        $search = $request->get('searchUser');
 
         $users = User::Where('name', 'like', '%'.$search.'%')
                     ->orWhere('email', 'like', '%'.$search.'%')
                     ->orWhere('is_admin', 'like', '%'.$search.'%')
                     ->get();
-        return view('user.index', ['users' => $users]);
+        return view('users.index', ['users' => $users]);
     }
 }

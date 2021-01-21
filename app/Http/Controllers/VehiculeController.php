@@ -13,8 +13,9 @@ class VehiculeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //
+    {   
+        $vehicules = Vehicule::all();
+        return view('vehicules.index', ['vehicules' => $vehicules]);
     }
 
     /**
@@ -24,7 +25,8 @@ class VehiculeController extends Controller
      */
     public function create()
     {
-        //
+        return view('vehicules.create');
+        
     }
 
     /**
@@ -35,7 +37,6 @@ class VehiculeController extends Controller
      */
     public function store(Request $request)
     {
-        $intervention = $request->input('intervention_id');
         $inputs = $request->except('_token', 'created_at', 'updated_at');
         $vehicule = new Vehicule();
         foreach ($inputs as $key => $value) {
@@ -43,7 +44,8 @@ class VehiculeController extends Controller
         }
         
         $vehicule->save();
-        return redirect(route('interventions.edit', ['intervention' => $intervention, 'vehicule' => $vehicule]));
+        return redirect(route('vehicules.index'));
+        
     }
 
     /**
@@ -63,9 +65,9 @@ class VehiculeController extends Controller
      * @param  \App\Models\Vehicule  $vehicule
      * @return \Illuminate\Http\Response
      */
-    public function edit(Vehicule $vehicule)
+    public function edit($id)
     {
-        //
+        return view('vehicules.edit', ['vehicule' => Vehicule::find($id)]);
     }
 
     /**
@@ -77,7 +79,6 @@ class VehiculeController extends Controller
      */
     public function update(Request $request, $id)
     {   
-        $intervention = $request->input('intervention_id');
         $inputs = $request->except('_token', '_method', 'updated_at');
         $vehicule = Vehicule::find($id);
         foreach ($inputs as $key => $value){
@@ -85,17 +86,32 @@ class VehiculeController extends Controller
         }
         $vehicule->save();
 
-       return redirect(route('interventions.edit', ['intervention' => $intervention, 'vehicule' => $vehicule]));
+       return redirect(route('vehicules.index'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Vehicule  $vehicule
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Vehicule $vehicule)
+    public function destroy($id)
     {
-        //
+        $vehicule = Vehicule::find($id);
+        $vehicule->delete();
+        
+        
+        return redirect(route('vehicules.index'));
+    }
+
+    public function searchVehicule(Request $request)
+    {
+        $search = $request->get('searchVehicule');
+
+        $vehicules = Vehicule::Where('marque', 'like', '%'.$search.'%')
+                    ->orWhere('modele', 'like', '%'.$search.'%')
+                    ->orWhere('immat', 'like', '%'.$search.'%')
+                    ->get();
+        return view('vehicules.index', ['vehicules' => $vehicules]);
     }
 }

@@ -18,12 +18,7 @@ class CreateVehiculesTable extends Migration
             $table->string('marque');
             $table->string('modele');
             $table->string('immat');
-            $table->string('km');
             $table->timestamps();
-            
-            $table->bigInteger('intervention_id')->unsigned();
-            $table->foreign('intervention_id')->references('id')->on('interventions')
-                    ->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

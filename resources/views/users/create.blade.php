@@ -5,7 +5,7 @@ Add Car
 @section('content')
 <div class="container mt-5">
     <div class="grix xs1 sm3">
-        <div class="card shadow-1 pos-sm2">
+        <div class="card rounded-1 shadow-1 pos-sm2">
             <div class="card-content">
                 <form class="form-material" method="POST" action="{{ route('users.store') }}">
                     @csrf
@@ -31,7 +31,7 @@ Add Car
                         </div> 
                     </div>
                     <div class="txt-center">
-                        <button type="submit" class="btn airforce dark-4 mt-5">
+                        <button type="submit" class="btn rounded-1 airforce dark-4 mt-5">
                             Ajouter
                         </button>
                     </div>
