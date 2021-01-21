@@ -3,7 +3,7 @@
 <div class="container">
     <div class="grix xs1 p-2">
             <div>
-                <p class="bd-airforce bd-b-solid bd-3">Déplacements ?</p>
+                <p class="bd-airforce bd-b-solid bd-3">Déplacements <?php echo($intervention->distance_km_interv != null ? '' : '?' ) ?></p>
             </div>
             <div>
             @if(empty($intervention->distance_km_interv))
@@ -46,6 +46,7 @@
     <div>
         <p class="bd-airforce bd-b-solid bd-3 mb-5">Choix du véhicule</p>
     </div>
+    @if(empty($intervention->vehicule_id))
     <form class="form-material" method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
         @method('PUT')
         @csrf
@@ -63,6 +64,8 @@
                     Valider
                 </button>
         </div>
+        @endif
+
         @if(!empty($intervention->vehicule_id))
         {{$intervention->vehiculeList}}
         @endif
