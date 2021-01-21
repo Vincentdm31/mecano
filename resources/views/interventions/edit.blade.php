@@ -52,6 +52,7 @@
         <div class="form-field">
             <label for="select">Véhicule</label>
             <select class="form-control rounded-1" id="select" name="vehicule_id">
+            
             @foreach ( $vehicules as $vehicule) 
                 <option value="{{ $vehicule->id }}">{{ $vehicule->marque }} - {{ $vehicule->modele }} - {{ $vehicule->immat }}</option>
             @endforeach 
@@ -61,7 +62,10 @@
                 <button type="submit" class="btn airforce rounded-1 dark-4 mt-3">
                     Valider
                 </button>
-            </div>
+        </div>
+        @if(!empty($intervention->vehicule_id))
+        {{$intervention->vehiculeList}}
+        @endif
     </form>
 </div>
 @endsection

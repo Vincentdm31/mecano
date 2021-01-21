@@ -25,9 +25,9 @@ class CreateInterventionsTable extends Migration
             $table->text('observations')->nullable();
             $table->timestamps();
             
-            $table->bigInteger('vehicule_id')->unsigned();
+            $table->bigInteger('vehicule_id')->unsigned()->nullable();
             $table->foreign('vehicule_id')->references('id')->on('vehicules')
-                        ->onDelete('cascade');
+                        ->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

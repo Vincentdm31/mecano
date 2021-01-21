@@ -27,5 +27,21 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('azsqazsq'),
             'is_admin' => '1'
         ]);
+
+        DB::table('vehicules')->insert([
+            'marque' => 'peugeot',
+            'modele' => '206',
+            'immat' => 'AV546VH'
+        ]);
+        DB::table('vehicules')->insert([
+            'marque' => 'bmw',
+            'modele' => '450',
+            'immat' => 'ui565ki'
+        ]);
+        DB::table('vehicules')->insert([
+            'marque' => 'renault',
+            'modele' => 'twingo',
+            'immat' => 'azHzvez'
+        ]);
     }
 }

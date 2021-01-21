@@ -64,9 +64,10 @@ class InterventionController extends Controller
      */
     public function edit($id)
     {   
+        $intervention =  Intervention::find($id);
         $vehicules = Vehicule::all();
-
-        return view('interventions.edit', ['intervention' => Intervention::find($id), 'vehicules' => $vehicules]);
+        
+        return view('interventions.edit', ['intervention' => $intervention, 'vehicules' => $vehicules]);
     }
 
     /**
@@ -80,9 +81,6 @@ class InterventionController extends Controller
     {   
         $inputs = $request->except('_token', '_method', 'updated_at');
         $intervention = Intervention::find($id);
-
-        $vehiculeId = $request->input('vehicule_id');
-        
         foreach ($inputs as $key => $value){
             $intervention->$key = $value;
         }
@@ -104,5 +102,6 @@ class InterventionController extends Controller
     {
         //
     }
+
 
 }

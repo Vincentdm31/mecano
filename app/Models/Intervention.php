@@ -19,9 +19,9 @@ class Intervention extends Model
         return $this->hasMany(Piece::class);
     }
 
-    public function vehicule()
+    public function vehiculeList()
     {
-        return $this->hasOne(Vehicule::class);
+        return $this->hasOne(Vehicule::class, 'id', 'vehicule_id');
     }
 
 }
