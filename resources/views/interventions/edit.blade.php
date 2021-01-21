@@ -51,19 +51,19 @@
             <form class="form-material" method="POST" action="{{ route('vehicules.store')}}">
                 @csrf
                 <div class="form-field">
-                    <input type="text" id="marque" name="marque"class="form-control txt-center" />
+                    <input required type="text" id="marque" name="marque"class="form-control txt-center" />
                     <label for="marque" class="">Marque</label>
                 </div> 
                 <div class="form-field">
-                    <input type="text" id="modele" name="modele"class="form-control txt-center" />
+                    <input required type="text" id="modele" name="modele"class="form-control txt-center" />
                     <label for="modele" class="">Modèle</label>
                 </div>
                 <div class="form-field">
-                    <input type="text" id="km" name="km"class="form-control txt-center" />
+                    <input required type="text" id="km" name="km"class="form-control txt-center" />
                     <label for="km" class="">Kilométrage</label>
                 </div>
                 <div class="form-field">
-                    <input type="text" id="immat" name="immat" class="form-control txt-center" />
+                    <input required type="text" id="immat" name="immat" class="form-control txt-center" />
                     <label for="immat" class="">Immatriculation</label>
                 </div>
                 <input hidden id="intervention_id" name="intervention_id" value="{{ $intervention->id }}"/></input>
@@ -92,19 +92,19 @@
                 @method('PUT')
                 @csrf
                 <div class="form-field">
-                    <input type="text" id="marque" name="marque" class="form-control txt-center" value="{{ $intervention->vehicule->marque }}" />
+                    <input required type="text" id="marque" name="marque" class="form-control txt-center" value="{{ $intervention->vehicule->marque }}" />
                     <label for="marque" class="">Marque</label>
                 </div> 
                 <div class="form-field">
-                    <input type="text" id="modele" name="modele"class="form-control txt-center" value="{{ $intervention->vehicule->modele }}" />
+                    <input required type="text" id="modele" name="modele"class="form-control txt-center" value="{{ $intervention->vehicule->modele }}" />
                     <label for="modele" class="">Modèle</label>
                 </div>
                 <div class="form-field">
-                    <input type="text" id="km" name="km"class="form-control txt-center" value="{{ $intervention->vehicule->km }}" />
+                    <input required type="text" id="km" name="km"class="form-control txt-center" value="{{ $intervention->vehicule->km }}" />
                     <label for="km" class="">Kilométrage</label>
                 </div>
                 <div class="form-field">
-                    <input type="text" id="immat" name="immat" class="form-control txt-center" value="{{ $intervention->vehicule->immat }}" />
+                    <input required type="text" id="immat" name="immat" class="form-control txt-center" value="{{ $intervention->vehicule->immat }}" />
                     <label for="immat" class="">Immatriculation</label>
                 </div>
                 <input hidden id="intervention_id" name="intervention_id" value="{{ $intervention->id }}"/></input>
@@ -133,6 +133,7 @@
         sct.classList.add("hide");
     });
 
+    
     btnModifyVehicule.addEventListener("click", function() {
         if(isModifyVehicule === false){
             sctVehicule.classList.remove("hide");

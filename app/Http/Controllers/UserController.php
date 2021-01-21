@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Hash;
 
 class UserController extends Controller
 {
@@ -35,11 +36,14 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $inputs = $request->except('_token', 'created_at', 'updated_at');
+        $inputs = $request->except('_token', 'created_at', 'updated_at', 'password');
+        $password = $request->input('password');
+        $hashed = Hash::make($password);    
         $user = new User();
         foreach ($inputs as $key => $value) {
             $user->$key = $value;
         }
+        $user->password = $hashed;
         $user->save();
 
         return redirect(route('users.index'))->with('toast', 'userStore');
@@ -100,18 +104,14 @@ class UserController extends Controller
         return redirect(route('users.index'))->with('toast', 'userDelete');
     }
 
-  // public function searchCar(Request $request)
-  //     {
-  //         $search = $request->get('search');
-  //         $cars = Car::where('idgps', 'like', '%'.$search.'%')
-  //                     ->orWhere('immat', 'like', '%'.$search.'%')
-  //                     ->orWhere('numsupgeo', 'like', '%'.$search.'%')
-  //                     ->orWhere('numligne', 'like', '%'.$search.'%')
-  //                     ->orWhere('numsimviergereafect', 'like', '%'.$search.'%')
-  //                     ->orWhere('F', 'like', '%'.$search.'%')
-  //                     ->orWhere('state', 'like', '%'.$search.'%')
-  //                     ->get();
+    public function searchUser(Request $request)
+    {
+        $search = $request->get('search');
 
-  //         return view('car.index', ['cars' => $cars]);
-  //     }
+        $users = User::Where('name', 'like', '%'.$search.'%')
+                    ->orWhere('email', 'like', '%'.$search.'%')
+                    ->orWhere('is_admin', 'like', '%'.$search.'%')
+                    ->get();
+        return view('user.index', ['users' => $users]);
+    }
 }

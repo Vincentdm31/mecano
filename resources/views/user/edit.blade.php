@@ -1,10 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-
-<h1 class="flex fx-center txt-airforce txt-dark-3"></h1>
-<div class="container edit-car">
-    <div class="card">
+<div class="container grix xs1 sm3">
+    <div class="card pos-sm2">
         <div class="card-content">
             <form class="form-material" method="POST" action="{{route('users.update', ['user' => $user->id])}}">
                 @method('PUT')
@@ -26,10 +24,12 @@
                         </select>
                     </div>                  
                 </div>
-                <button type="submit" class="btn press mx-auto edit-button mt-5">Mettre à jour</button>
+                <div class="txt-center">
+                    <button type="submit" class="btn airforce dark-4 mt-5">Mettre à jour</button>
+                </div>
             </form>
         </div>
     </div>
 </div>
-    
+
 @endsection

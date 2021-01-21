@@ -53,10 +53,6 @@
         @yield('content')
     </main>
 
-    <footer class="footer">
-        <!-- Footer content -->
-    </footer>
-
     <!-- Scripts -->
     <script src="{{ mix('js/app.js') }}"></script>
     @yield('extra-js')

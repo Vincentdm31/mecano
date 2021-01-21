@@ -2,9 +2,27 @@
 
 @section('content')
 <div class="container mt-5">
-    <div class="grix xs1 sm3 gutter-xs5">
+    <div class="grix xs1 sm3">
+        <div class="col-sm1 mx-auto my-auto">
+            <a href="{{ route('users.create') }}" class="btn rounded-1 airforce dark-4">Ajouter</a>
+        </div>
+        <div class="col-sm2">
+            <form class ="form-material" method="GET" action="search">
+                @csrf
+                <div class="grix xs5">
+                    <div class="form-field pos-xs1 col-xs4">
+                        <input type="text" name="search" id="search"class="form-control" />
+                        <label for="search">Rechercher</label>
+                    </div>
+                    <button type ="submit" class="btn circle search-icon vself-center rounded-4"><i class="fa fa-search"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <div class="grix xs1 mt-5 sm3 gutter-xs5">
         @foreach($users as $user)
-        <div class="card shadow-1">
+        <div class="card shadow-1 rounded-2">
             <div class="card-header">
                 {{$user->name}}
             </div>
