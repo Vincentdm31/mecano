@@ -42,15 +42,26 @@
         </form>
     </div>
 
-    <form class="form-material">
+    <!-- Choix Véhicule -->
+    <div>
+        <p class="bd-airforce bd-b-solid bd-3 mb-5">Choix du véhicule</p>
+    </div>
+    <form class="form-material" method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
+        @method('PUT')
+        @csrf
         <div class="form-field">
-            <label for="select">Choix véhicule</label>
-            <select class="form-control rounded-1" id="select">
+            <label for="select">Véhicule</label>
+            <select class="form-control rounded-1" id="select" name="vehicule_id">
             @foreach ( $vehicules as $vehicule) 
-                <option>{{ $vehicule->marque }} - {{ $vehicule->modele }} - {{ $vehicule->immat }}</option>
+                <option value="{{ $vehicule->id }}">{{ $vehicule->marque }} - {{ $vehicule->modele }} - {{ $vehicule->immat }}</option>
             @endforeach 
             </select>
         </div>
+        <div class="txt-center">
+                <button type="submit" class="btn airforce rounded-1 dark-4 mt-3">
+                    Valider
+                </button>
+            </div>
     </form>
 </div>
 @endsection

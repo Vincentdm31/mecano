@@ -24,8 +24,4 @@ class Intervention extends Model
         return $this->hasOne(Vehicule::class);
     }
 
-    public function user()
-    {
-        return $this->hasMany(User::class);
-    }
 }

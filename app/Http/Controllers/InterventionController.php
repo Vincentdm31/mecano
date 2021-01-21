@@ -81,6 +81,8 @@ class InterventionController extends Controller
         $inputs = $request->except('_token', '_method', 'updated_at');
         $intervention = Intervention::find($id);
 
+        $vehiculeId = $request->input('vehicule_id');
+        
         foreach ($inputs as $key => $value){
             $intervention->$key = $value;
         }
@@ -89,6 +91,8 @@ class InterventionController extends Controller
 
        return redirect(route('interventions.edit', ['intervention' => $intervention]));
     }
+
+    
 
     /**
      * Remove the specified resource from storage.

@@ -12,7 +12,8 @@ class CreateInterventionsTable extends Migration
      * @return void
      */
     public function up()
-    {
+    {   
+        Schema::dropIfExists('interventions');
         Schema::create('interventions', function (Blueprint $table) {
             $table->id();
             $table->string('distance_km_interv')->nullable();
@@ -23,8 +24,10 @@ class CreateInterventionsTable extends Migration
             $table->enum('state', ['doing', 'pause', 'finish'])->nullable();
             $table->text('observations')->nullable();
             $table->timestamps();
-
-            $table->string('vehicule_id')->nullable();
+            
+            $table->bigInteger('vehicule_id')->unsigned();
+            $table->foreign('vehicule_id')->references('id')->on('vehicules')
+                        ->onDelete('cascade');
         });
     }
 
