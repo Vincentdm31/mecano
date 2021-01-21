@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Intervention;
+use App\Models\Vehicule;
 use Illuminate\Http\Request;
 
 class InterventionController extends Controller
@@ -15,6 +16,7 @@ class InterventionController extends Controller
     public function index()
     {   
         $interventions = Intervention::all();
+
         return view('interventions.index', ['interventions' => $interventions]);
     }
 
@@ -26,7 +28,6 @@ class InterventionController extends Controller
     public function create()
     {
         return view('interventions.create');
-        
     }
 
     /**
@@ -39,8 +40,8 @@ class InterventionController extends Controller
     {
         $inputs = $request->except('_token', 'created_at', 'updated_at');
         $intervention = new Intervention();
-
         $intervention->save();
+
         return redirect(route('interventions.edit', ['intervention' => $intervention]));
     }
 
@@ -62,8 +63,10 @@ class InterventionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
-        return view('interventions.edit', ['intervention' => Intervention::find($id)]);
+    {   
+        $vehicules = Vehicule::all();
+
+        return view('interventions.edit', ['intervention' => Intervention::find($id), 'vehicules' => $vehicules]);
     }
 
     /**
@@ -77,9 +80,11 @@ class InterventionController extends Controller
     {   
         $inputs = $request->except('_token', '_method', 'updated_at');
         $intervention = Intervention::find($id);
+
         foreach ($inputs as $key => $value){
             $intervention->$key = $value;
         }
+
         $intervention->save();
 
        return redirect(route('interventions.edit', ['intervention' => $intervention]));

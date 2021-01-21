@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-
+<div class="container">
     <div class="grix xs1 p-2">
             <div>
                 <p class="bd-airforce bd-b-solid bd-3">Déplacements ?</p>
@@ -41,79 +41,18 @@
             </div>
         </form>
     </div>
-    <!-- Choix véhicule -->
-    <div class="grix xs1 mt-3 p-3">
-        @if(empty($intervention->vehicule->marque))
-        <div class="grix xs1">
-            <div>
-                <p class="bd-airforce bd-b-solid bd-3">Choix du véhicule</p>
-            </div>
-            <form class="form-material" method="POST" action="{{ route('vehicules.store')}}">
-                @csrf
-                <div class="form-field">
-                    <input required type="text" id="marque" name="marque"class="form-control txt-center" />
-                    <label for="marque" class="">Marque</label>
-                </div> 
-                <div class="form-field">
-                    <input required type="text" id="modele" name="modele"class="form-control txt-center" />
-                    <label for="modele" class="">Modèle</label>
-                </div>
-                <div class="form-field">
-                    <input required type="text" id="km" name="km"class="form-control txt-center" />
-                    <label for="km" class="">Kilométrage</label>
-                </div>
-                <div class="form-field">
-                    <input required type="text" id="immat" name="immat" class="form-control txt-center" />
-                    <label for="immat" class="">Immatriculation</label>
-                </div>
-                <input hidden id="intervention_id" name="intervention_id" value="{{ $intervention->id }}"/></input>
-                <button type="submit" class="btn shadow-1 rounded-1 airforce dark-4 w100">Ajouter Véhicule</button>
-            </form>
-        </div>
-        @else
-        <div class="grix xs1">
-            <p class="bd-airforce bd-b-solid bd-3">Véhicule</p>
-            <div class="grix xs3">
-                <div>
-                    <p class="txt-airforce txt-dark-2">{{ $intervention->vehicule->marque }}</p>
-                    <p class="txt-airforce txt-dark-2">{{ $intervention->vehicule->modele }}</p>
-                </div>
-                <div>
-                    <p class="txt-airforce txt-dark-2">{{ $intervention->vehicule->immat }}</p>
-                    <p class="txt-airforce txt-dark-2">{{ $intervention->vehicule->km }}</p>
-                </div>
-                <div class="my-auto">
-                    <button id="btnModifyVehicule"class="btn airforce dark-4 rounded-1">Modifier</button>
-                </div>
-            </div>
-            
-            <!-- Modif Vehicule -->
-            <form class="form-material hide" id="vehiculeForm" method="POST" action="{{ route('vehicules.update', ['vehicule' => $intervention->vehicule->id])}}">
-                @method('PUT')
-                @csrf
-                <div class="form-field">
-                    <input required type="text" id="marque" name="marque" class="form-control txt-center" value="{{ $intervention->vehicule->marque }}" />
-                    <label for="marque" class="">Marque</label>
-                </div> 
-                <div class="form-field">
-                    <input required type="text" id="modele" name="modele"class="form-control txt-center" value="{{ $intervention->vehicule->modele }}" />
-                    <label for="modele" class="">Modèle</label>
-                </div>
-                <div class="form-field">
-                    <input required type="text" id="km" name="km"class="form-control txt-center" value="{{ $intervention->vehicule->km }}" />
-                    <label for="km" class="">Kilométrage</label>
-                </div>
-                <div class="form-field">
-                    <input required type="text" id="immat" name="immat" class="form-control txt-center" value="{{ $intervention->vehicule->immat }}" />
-                    <label for="immat" class="">Immatriculation</label>
-                </div>
-                <input hidden id="intervention_id" name="intervention_id" value="{{ $intervention->id }}"/></input>
-                <button type="submit" class="btn shadow-1 rounded-1 airforce dark-4 w100">Modifier Véhicule</button>
-            </form>
-        </div>
-        @endif
-    </div>
 
+    <form class="form-material">
+        <div class="form-field">
+            <label for="select">Choix véhicule</label>
+            <select class="form-control rounded-1" id="select">
+            @foreach ( $vehicules as $vehicule) 
+                <option>{{ $vehicule->marque }} - {{ $vehicule->modele }} - {{ $vehicule->immat }}</option>
+            @endforeach 
+            </select>
+        </div>
+    </form>
+</div>
 @endsection
 
 @section('extra-js')

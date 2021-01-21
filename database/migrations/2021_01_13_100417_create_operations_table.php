@@ -21,7 +21,6 @@ class CreateOperationsTable extends Migration
             $table->bigInteger('intervention_id')->unsigned();
             $table->foreign('intervention_id')->references('id')->on('interventions')
                     ->onDelete('cascade')->onUpdate('cascade');
-            
         });
     }
 

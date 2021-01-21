@@ -23,6 +23,8 @@ class CreateInterventionsTable extends Migration
             $table->enum('state', ['doing', 'pause', 'finish'])->nullable();
             $table->text('observations')->nullable();
             $table->timestamps();
+
+            $table->string('vehicule_id')->nullable();
         });
     }
 
