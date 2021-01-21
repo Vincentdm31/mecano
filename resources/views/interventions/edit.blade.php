@@ -51,6 +51,7 @@
         <p class="bd-airforce bd-b-solid bd-3 mb-5">Choix du véhicule</p>
     </div>
     @if(empty($intervention->vehicule_id))
+    
     <form class="form-material" method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
         @method('PUT')
         @csrf
