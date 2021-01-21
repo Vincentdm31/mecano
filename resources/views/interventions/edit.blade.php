@@ -9,7 +9,11 @@
             @if(empty($intervention->distance_km_interv))
             <p class="txt-airforce txt-light-2">Pas de déplacements</p>
             @else
-            <p class="txt-airforce txt-light-2">{{ $intervention->distance_km_interv }} Km</p>
+            <div class="card shadow-1">
+                <div class="card-content">
+                    <p class="">{{ $intervention->distance_km_interv }} Km</p>
+                </div>
+            </div>
             @endif
             </div>
         <div class="grix xs2">
@@ -67,7 +71,15 @@
         @endif
 
         @if(!empty($intervention->vehicule_id))
-        {{$intervention->vehiculeList}}
+        <div class="grix xs1">
+            <div class="card shadow-1">
+                <div class="card-content">
+                    <p>{{$intervention->vehiculeList->marque}}</p>
+                    <p>{{$intervention->vehiculeList->modele}}</p>
+                    <p>{{$intervention->vehiculeList->immat}}</p>
+                </div>            
+            </div>
+        </div>
         @endif
     </form>
 </div>
@@ -94,11 +106,11 @@
     btnModifyVehicule.addEventListener("click", function() {
         if(isModifyVehicule === false){
             sctVehicule.classList.remove("hide");
-            isModifyVehicule = true;
+            isModifyVehicule = !isModifyVehicule;
         }
         else if(isModifyVehicule){
             sctVehicule.classList.add("hide");
-            isModifyVehicule = false;
+            isModifyVehicule = !isModifyVehicule;
         }
 
     });
