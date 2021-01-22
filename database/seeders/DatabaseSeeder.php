@@ -52,6 +52,11 @@ class DatabaseSeeder extends Seeder
                 'modele' => Str::random(4),
                 'immat' => Str::random(5)
             ]);
+            DB::table('vehicules')->insert([
+                'marque' => 'Iveco',
+                'modele' => Str::random(4),
+                'immat' => Str::random(5)
+            ]);
         }
         
     }
