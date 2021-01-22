@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 <div class="container">
-    <div class="grix xs1 p-2">
+    <div class="container grix xs1 p-2">
             <div>
                 <p class="bd-airforce bd-b-solid bd-3">Déplacements <?php echo($intervention->distance_km_interv != null ? '' : '?' ) ?></p>
             </div>
@@ -47,42 +47,56 @@
     </div>
 
     <!-- Choix Véhicule -->
-    <div>
+    <div class="container">
         <p class="bd-airforce bd-b-solid bd-3 mb-5">Choix du véhicule</p>
     </div>
     @if(empty($intervention->vehicule_id))
-    
-    <form class="form-material" method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
-        @method('PUT')
-        @csrf
-        <div class="form-field">
-            <label for="select">Véhicule</label>
-            <select class="form-control rounded-1" id="select" name="vehicule_id">
-            
-            @foreach ( $vehicules as $vehicule) 
-                <option value="{{ $vehicule->id }}">{{ $vehicule->marque }} - {{ $vehicule->modele }} - {{ $vehicule->immat }}</option>
-            @endforeach 
-            </select>
-        </div>
-        <div class="txt-center">
-                <button type="submit" class="btn airforce rounded-1 dark-4 mt-3">
-                    Valider
-                </button>
-        </div>
-        @endif
-
-        @if(!empty($intervention->vehicule_id))
-        <div class="grix xs1">
-            <div class="card shadow-1">
-                <div class="card-content">
-                    <p>{{$intervention->vehiculeList->marque}}</p>
-                    <p>{{$intervention->vehiculeList->modele}}</p>
-                    <p>{{$intervention->vehiculeList->immat}}</p>
-                </div>            
+    <div class="container mt-2 mb-2">
+        <form class ="form-material" method="GET" action="{{ route('selectVehicule')}}">
+            @csrf
+            <div class="grix xs5">
+                <div class="form-field pos-xs1 col-xs4">
+                    <input hidden type="text" id="intervention_id" name="intervention_id" value="{{ $intervention->id }}"/>
+                    <input type="text" name="selectVehicule" id="selectVehicule"class="form-control" />
+                    <label for="selectVehicule">Rechercher</label>
+                </div>
+                <button type ="submit" class="btn circle search-icon vself-center rounded-4"><i class="fa fa-search"></i></button>
             </div>
-        </div>
-        @endif
-    </form>
+        </form>
+    </div>
+    <div class="container">
+        <form class="form-material" method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
+            @method('PUT')
+            @csrf
+            <div class="form-field">
+                <label for="select">Véhicule</label>
+                <select class="form-control rounded-1" id="select" name="vehicule_id">
+                
+                @foreach ( $vehicules as $vehicule) 
+                    <option value="{{ $vehicule->id }}">{{ $vehicule->marque }} - {{ $vehicule->modele }} - {{ $vehicule->immat }}</option>
+                @endforeach 
+                </select>
+            </div>
+            <div class="txt-center">
+                    <button type="submit" class="btn airforce rounded-1 dark-4 mt-3">
+                        Valider
+                    </button>
+            </div>
+            @endif
+
+            @if(!empty($intervention->vehicule_id))
+            <div class="container grix xs1">
+                <div class="card shadow-1">
+                    <div class="card-content">
+                        <p>{{$intervention->vehiculeList->marque}}</p>
+                        <p>{{$intervention->vehiculeList->modele}}</p>
+                        <p>{{$intervention->vehiculeList->immat}}</p>
+                    </div>            
+                </div>
+            </div>
+            @endif
+        </form>
+    </div>  
 </div>
 @endsection
 

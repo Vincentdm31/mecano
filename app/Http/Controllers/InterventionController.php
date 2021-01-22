@@ -103,5 +103,19 @@ class InterventionController extends Controller
         //
     }
 
+    public function selectVehicule(Request $request)
+    {   
+        $interventionID = $request->get('intervention_id');
+        $intervention = Intervention::find($interventionID);
+
+        $search = $request->get('selectVehicule');
+
+        $vehicules = Vehicule::Where('marque', 'like', '%'.$search.'%')
+                    ->orWhere('modele', 'like', '%'.$search.'%')
+                    ->orWhere('immat', 'like', '%'.$search.'%')
+                    ->get();
+        return view('interventions.edit', ['intervention' => $intervention, 'vehicules' => $vehicules]);
+    }
+
 
 }

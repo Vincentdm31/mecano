@@ -40,4 +40,5 @@ Route::middleware('auth')->group(function() {
 
     Route::get('/searchUser',  [UserController::class, 'searchUser']);
     Route::get('/searchVehicule',  [VehiculeController::class, 'searchVehicule']);
+    Route::get('/selectVehicule',  [InterventionController::class, 'selectVehicule'])->name('selectVehicule');
 });

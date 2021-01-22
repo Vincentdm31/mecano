@@ -29,14 +29,29 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('vehicules')->insert([
-            'marque' => 'peugeot',
+            'marque' => 'Peugeot',
             'modele' => '206',
             'immat' => 'AV546VH'
         ]);
         DB::table('vehicules')->insert([
-            'marque' => 'bmw',
+            'marque' => 'Peugeot',
+            'modele' => '308',
+            'immat' => 'vzeve'
+        ]);
+        DB::table('vehicules')->insert([
+            'marque' => 'BMW',
             'modele' => '450',
             'immat' => 'ui565ki'
+        ]);
+        DB::table('vehicules')->insert([
+            'marque' => 'BMW',
+            'modele' => '7640',
+            'immat' => 'ui565ki'
+        ]);
+        DB::table('vehicules')->insert([
+            'marque' => 'BMW',
+            'modele' => '24352',
+            'immat' => 'uiefze565ki'
         ]);
         DB::table('vehicules')->insert([
             'marque' => 'renault',
