@@ -37,25 +37,16 @@ class DatabaseSeeder extends Seeder
                 'modele' => Str::random(4),
                 'immat' => Str::random(5)
             ]);
-        }
-
-        for ($i = 0; $i < 300; $i++){
             DB::table('vehicules')->insert([
-                'marque' => 'BMW',
+                'marque' => 'Lambo',
                 'modele' => Str::random(4),
                 'immat' => Str::random(5)
             ]);
-        }
-
-        for ($i = 0; $i < 300; $i++){
             DB::table('vehicules')->insert([
-                'marque' => 'Renault',
+                'marque' => 'Peugeot',
                 'modele' => Str::random(4),
                 'immat' => Str::random(5)
             ]);
-        }
-
-        for ($i = 0; $i < 300; $i++){
             DB::table('vehicules')->insert([
                 'marque' => 'Mercedes',
                 'modele' => Str::random(4),
