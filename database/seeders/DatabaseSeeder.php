@@ -19,14 +19,14 @@ class DatabaseSeeder extends Seeder
         DB::table('users')->insert([
             'name' => 'vins',
             'email' => 'vins@vins.vins',
-            'password' => Hash::make('azsqazsq'),
+            'password' => Hash::make('laravelcop'),
             'is_admin' => '0'
         ]);
 
         DB::table('users')->insert([
             'name' => 'admin',
             'email' => 'admin@vins.vins',
-            'password' => Hash::make('azsqazsq'),
+            'password' => Hash::make('laravelcop'),
             'is_admin' => '1'
         ]);
 
