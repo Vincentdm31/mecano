@@ -16,15 +16,16 @@ class CreateInterventionsTable extends Migration
         Schema::dropIfExists('interventions');
         Schema::create('interventions', function (Blueprint $table) {
             $table->id();
-            $table->string('distance_km_interv')->nullable();
-            $table->date('start_intervention_time')->nullable();
-            $table->date('end_intervention_time')->nullable();
+            $table->datetime('start_deplacement')->nullable();
+            $table->datetime('end_deplacement')->nullable();
+            $table->datetime('start_intervention_time')->nullable();
+            $table->datetime('end_intervention_time')->nullable();
             $table->string('totalTime')->nullable();
             $table->float('prix')->nullable();
             $table->enum('state', ['doing', 'pause', 'finish'])->nullable();
             $table->text('observations')->nullable();
             $table->timestamps();
-            
+            $table->string('km_vehicule')->nullable();
             $table->bigInteger('vehicule_id')->unsigned()->nullable();
             $table->foreign('vehicule_id')->references('id')->on('vehicules')
                         ->onDelete('cascade')->onUpdate('cascade');

@@ -1,49 +1,58 @@
 @extends('layouts.app')
 @section('content')
+<?php 
+use Carbon\Carbon;
+$date = Carbon::now();
+?>
 <div class="container">
     <div class="container grix xs1 p-2">
             <div>
-                <p class="bd-airforce bd-b-solid bd-3">Déplacements <?php echo($intervention->distance_km_interv != null ? '' : '?' ) ?></p>
+                <p class="bd-airforce bd-b-solid bd-3">Déplacements ?</p>
             </div>
             <div>
-            @if(empty($intervention->distance_km_interv))
+            @if(empty($intervention->start_deplacement))
             <p class="txt-airforce txt-light-2">Pas de déplacements</p>
             @else
             <div class="card shadow-1">
                 <div class="card-content">
-                    <p class="">{{ $intervention->distance_km_interv }} Km</p>
+                    <p class="">{{ $intervention->start_deplacement}}</p>
                 </div>
             </div>
             @endif
             </div>
         <div class="grix xs2">
             <button id="btn_yes" class="btn shadow-1 rounded-1 airforce dark-4 w100">Oui</button>
-            <form class="form-material" method="POST" action="{{ route('interventions.update', ['intervention' => $intervention->id])}}">
-                @method('PUT')
-                @csrf
-                <input hidden value="0" name="distance_km_interv"></input>
-                <button type="submit" id="btn_no" class="btn shadow-1 rounded-1 airforce dark-4 w100">Non</button>
-            </form>
         </div>
 
     </div>
-    <!-- Déplacements Interventions -->
-    <div id="kmSection" class="container grix xs1 mt-3 hide p-3">
-        <form class="form-material" method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
-            @method('PUT')
-            @csrf
-            <div class="grix xs1 txt-center">
-                <div class="form-field">
-                    <input type="number" id="distance_km_interv" value="{{ $intervention->distance_km_interv }}" name="distance_km_interv" class="form-control txt-center" />
-                    <label for="distance_km_interv" class="">Distance (Km)</label>
-                </div>                        
-            </div>
-            <div class="txt-center">
-                <button type="submit" class="btn airforce rounded-1 dark-4 mt-3">
-                    Valider distance
-                </button>
-            </div>
-        </form>
+    <!--Start Déplacement Interventions -->
+    <div id="kmSection" class="container grix xs2 mt-3 hide">
+        <div class="">
+            <form  method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
+                @method('PUT')
+                @csrf
+                <div class="txt-center">
+                    <input hidden id="start_deplacement" value="{{ $date }}" name="start_deplacement"/>
+                    <button type="submit" class="btn airforce rounded-1 dark-4 mt-3">
+                        Start Déplacement
+                    </button>
+                </div>
+            </form>
+        </div>
+    
+        <!--End Déplacement Interventions -->
+        <div class="">
+            <form method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
+                @method('PUT')
+                @csrf
+                <div class="txt-center">
+                    <input hidden id="end_deplacement" value="{{ $date }}" name="end_deplacement"/>
+                    <button type="submit" class="btn airforce rounded-1 dark-4 mt-3">
+                        End Déplacement
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 
     <!-- Choix Véhicule -->
@@ -97,7 +106,30 @@
             </div>
             @endif
         </form>
-    </div>  
+    </div>
+    <div class="container mt-5 mb-5">
+        <div class="">
+            <p class="bd-airforce bd-b-solid bd-3  mt-3 mb-5">Kilométrage du véhicule</p>
+        </div>
+        <div class="">
+            <form class="form-material" method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
+                @method('PUT')
+                @csrf
+                <div class="grix xs1 txt-center">
+                    <div class="form-field">
+                        <input type="number" id="km_vehicule" name="km_vehicule" value="{{ $intervention->km_vehicule }}" class="form-control txt-center" />
+                        <label for="km_vehicule" class="">Kilométrage véhicule (Km)</label>
+                    </div>                        
+                </div>
+                <div class="txt-center">
+                    <button type="submit" class="btn airforce rounded-1 dark-4 mt-3">
+                        Valider Kilométrage
+                    </button>
+                </div>
+            </form>
+        </div>
+        
+    </div>
 </div>
 @endsection
 
