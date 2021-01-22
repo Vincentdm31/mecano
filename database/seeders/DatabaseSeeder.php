@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
 
-        for ($i = 0; $i < 10000; $i++){
+        for ($i = 0; $i < 100000; $i++){
             DB::table('vehicules')->insert([
                 'marque' => Str::random(10).'marque',
                 'modele' => Str::random(10).'modele',
