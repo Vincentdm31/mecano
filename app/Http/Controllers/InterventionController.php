@@ -69,6 +69,7 @@ class InterventionController extends Controller
         $search = $request->get('selectVehicule');
         $vehicules = Vehicule::Where('immat', 'like', '%'.$search.'%')
                     ->orWhere('marque', 'like', '%'.$search.'%')
+                    ->orWhere('modele', 'like', '%'.$search.'%')
                     ->get();
         return view('interventions.edit', ['intervention' => $intervention, 'vehicules' => $vehicules]);
     }
