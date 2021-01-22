@@ -74,7 +74,7 @@
                 
 
                 @foreach ( $vehicules as $vehicule) 
-                    <option value="{{ $vehicule->id }}">{{ $vehicule->immat }}</option>
+                    <option value="{{ $vehicule->id }}">{{ $vehicule->immat }} - {{ $vehicule->marque }}</option>
                 @endforeach 
                 </select>
             </div>
