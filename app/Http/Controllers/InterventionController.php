@@ -62,11 +62,14 @@ class InterventionController extends Controller
      * @param  \App\Models\Intervention  $intervention
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {   
         $intervention =  Intervention::find($id);
-        $vehicules = Vehicule::all();
+        //$vehicules = Vehicule::all();
+        $search = $request->get('selectVehicule');
         
+        $vehicules = Vehicule::Where('immat', 'like', '%'.$search.'%')
+                    ->get();
         return view('interventions.edit', ['intervention' => $intervention, 'vehicules' => $vehicules]);
     }
 
@@ -110,9 +113,7 @@ class InterventionController extends Controller
 
         $search = $request->get('selectVehicule');
 
-        $vehicules = Vehicule::Where('marque', 'like', '%'.$search.'%')
-                    ->orWhere('modele', 'like', '%'.$search.'%')
-                    ->orWhere('immat', 'like', '%'.$search.'%')
+        $vehicules = Vehicule::Where('immat', 'like', '%'.$search.'%')
                     ->get();
         return view('interventions.edit', ['intervention' => $intervention, 'vehicules' => $vehicules]);
     }

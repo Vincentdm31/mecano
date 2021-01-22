@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -28,35 +30,14 @@ class DatabaseSeeder extends Seeder
             'is_admin' => '1'
         ]);
 
-        DB::table('vehicules')->insert([
-            'marque' => 'Peugeot',
-            'modele' => '206',
-            'immat' => 'AV546VH'
-        ]);
-        DB::table('vehicules')->insert([
-            'marque' => 'Peugeot',
-            'modele' => '308',
-            'immat' => 'vzeve'
-        ]);
-        DB::table('vehicules')->insert([
-            'marque' => 'BMW',
-            'modele' => '450',
-            'immat' => 'ui565ki'
-        ]);
-        DB::table('vehicules')->insert([
-            'marque' => 'BMW',
-            'modele' => '7640',
-            'immat' => 'ui565ki'
-        ]);
-        DB::table('vehicules')->insert([
-            'marque' => 'BMW',
-            'modele' => '24352',
-            'immat' => 'uiefze565ki'
-        ]);
-        DB::table('vehicules')->insert([
-            'marque' => 'renault',
-            'modele' => 'twingo',
-            'immat' => 'azHzvez'
-        ]);
+
+        for ($i = 0; $i < 1200; $i++){
+            DB::table('vehicules')->insert([
+                'marque' => Str::random(10).'marque',
+                'modele' => Str::random(10).'modele',
+                'immat' => Str::random(5)
+            ]);
+        }
+        
     }
 }

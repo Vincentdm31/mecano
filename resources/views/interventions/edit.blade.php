@@ -28,7 +28,7 @@
 
     </div>
     <!-- Déplacements Interventions -->
-    <div id="kmSection" class="grix xs1 mt-3 hide p-3">
+    <div id="kmSection" class="container grix xs1 mt-3 hide p-3">
         <form class="form-material" method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
             @method('PUT')
             @csrf
@@ -48,23 +48,23 @@
 
     <!-- Choix Véhicule -->
     <div class="container">
-        <p class="bd-airforce bd-b-solid bd-3 mb-5">Choix du véhicule</p>
+        <p class="bd-airforce bd-b-solid bd-3  mt-3 mb-5">Choix du véhicule</p>
     </div>
     @if(empty($intervention->vehicule_id))
     <div class="container mt-2 mb-2">
         <form class ="form-material" method="GET" action="{{ route('selectVehicule')}}">
             @csrf
-            <div class="grix xs5">
-                <div class="form-field pos-xs1 col-xs4">
+            <div class="grix xs6">
+                <div class="form-field pos-xs1 col-xs5">
                     <input hidden type="text" id="intervention_id" name="intervention_id" value="{{ $intervention->id }}"/>
-                    <input type="text" name="selectVehicule" id="selectVehicule"class="form-control" />
+                    <input type="text" name="selectVehicule" id="selectVehicule"class="form-control"/>
                     <label for="selectVehicule">Rechercher</label>
                 </div>
-                <button type ="submit" class="btn circle search-icon vself-center rounded-4"><i class="fa fa-search"></i></button>
+                <button type ="submit" class="btn circle ml-auto vself-center rounded-4"><i class="fa fa-search"></i></button>
             </div>
         </form>
     </div>
-    <div class="container">
+    <div class="container mt-5 ">
         <form class="form-material" method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
             @method('PUT')
             @csrf
@@ -72,8 +72,9 @@
                 <label for="select">Véhicule</label>
                 <select class="form-control rounded-1" id="select" name="vehicule_id">
                 
+
                 @foreach ( $vehicules as $vehicule) 
-                    <option value="{{ $vehicule->id }}">{{ $vehicule->marque }} - {{ $vehicule->modele }} - {{ $vehicule->immat }}</option>
+                    <option value="{{ $vehicule->id }}">{{ $vehicule->immat }}</option>
                 @endforeach 
                 </select>
             </div>
