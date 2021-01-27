@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Intervention;
 use App\Models\Vehicule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class InterventionController extends Controller
 {
@@ -37,15 +38,17 @@ class InterventionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
+
         $inputs = $request->except('_token', 'created_at', 'updated_at');
         $intervention = new Intervention();
         foreach ($inputs as $key => $value) {
             $intervention->$key = $value;
         }
         $intervention->state = "doing";
-        $intervention->save();
 
+        $intervention->save();
+        $intervention->users()->attach(Auth()->user()->id);
         return redirect(route('interventions.edit', ['intervention' => $intervention]));
     }
 

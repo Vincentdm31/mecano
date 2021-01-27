@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePiecesTable extends Migration
+class CreateInterventionUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,15 +12,11 @@ class CreatePiecesTable extends Migration
      * @return void
      */
     public function up()
-    {   
-        Schema::dropIfExists('pieces');
-        Schema::create('pieces', function (Blueprint $table) {
+    {
+        Schema::create('intervention_user', function (Blueprint $table) {
             $table->id();
-            $table->string('nom');
-            $table->string('ref');
-            $table->float('prix');
-            $table->float('qte');
-            $table->timestamps();
+            $table->integer('intervention_id')->unsigned();
+            $table->integer('user_id')->unsigned();
         });
     }
 
@@ -31,6 +27,6 @@ class CreatePiecesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pieces');
+        Schema::dropIfExists('intervention_user');
     }
 }

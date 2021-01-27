@@ -10,8 +10,11 @@ $date = Carbon::now();
     <!-- Récapitulatif -->
     <div class="container shadow-1 p-2 mb-5">
         <p class="txt-center h3">Récapitulatif</p>
-        
-        <p class="txt-center">{{ $intervention->user[0]->name }}</p>
+
+        <p class="txt-center">{{ $intervention->users[0]->name }}</p>
+        @foreach($intervention->users as $user)
+        <li>{{ $user->name }}</li>
+        @endforeach
         <p class="txt-center">{{ $intervention->created_at }}</p>
         <div class="grix xs1 md3">
             <!-- Déplacements -->
@@ -162,9 +165,9 @@ $date = Carbon::now();
 </div>
 <!-- Opérations -->
 <div class="container">
-<div class="container">
+    <div class="container">
 
 
-</div>
+    </div>
 </div>
 @endsection

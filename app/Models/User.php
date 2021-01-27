@@ -41,8 +41,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function intervention()
+    public function interventions()
     {
-        return $this->belongsTo(Intervention::class);
+        return $this->belongsToMany(Intervention::class);
     }
 }
