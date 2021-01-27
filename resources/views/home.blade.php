@@ -39,6 +39,8 @@
             <div id="qr-result" hidden="">
                 <b>Data:</b> <span id="outputData"></span>
             </div>
+            <input type="text" id="test" placeholder="test"></input>
+
         </div>
     </div>
     <style>

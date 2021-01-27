@@ -25,25 +25,22 @@
 
             <div class="navbar-menu ml-auto">
                 @guest
-                    <a class="navbar-link {{ Request::routeIs('login') ? 'active' : '' }}" href="{{ route('login') }}">{{ __('Login') }}</a>
+                <a class="navbar-link {{ Request::routeIs('login') ? 'active' : '' }}" href="{{ route('login') }}">{{ __('Login') }}</a>
 
-                    @if (Route::has('register'))
-                        <a class="navbar-link {{ Request::routeIs('register') ? 'active' : '' }}" href="{{ route('register') }}">{{ __('Register') }}</a>
-                    @endif
+                @if (Route::has('register'))
+                <a class="navbar-link {{ Request::routeIs('register') ? 'active' : '' }}" href="{{ route('register') }}">{{ __('Register') }}</a>
+                @endif
 
                 @else
-                    <span class="mr-2">{{ Auth::user()->name }}</span>
+                <span class="mr-2">{{ Auth::user()->name }}</span>
 
-                    <a href="{{ route('logout') }}"
-                       class="navbar-link"
-                       onclick="event.preventDefault(); document.getElementById('form-logout').submit();"
-                    >
-                        {{ __('Logout') }}
-                    </a>
+                <a href="{{ route('logout') }}" class="navbar-link" onclick="event.preventDefault(); document.getElementById('form-logout').submit();">
+                    {{ __('Logout') }}
+                </a>
 
-                    <form id="form-logout" action="{{ route('logout') }}" method="POST" class="hide">
-                        @csrf
-                    </form>
+                <form id="form-logout" action="{{ route('logout') }}" method="POST" class="hide">
+                    @csrf
+                </form>
                 @endguest
             </div>
         </nav>
@@ -55,7 +52,7 @@
 
     <!-- Scripts -->
     <script src="{{ mix('js/app.js') }}"></script>
-    
+
     @yield('extra-js')
 </body>
 

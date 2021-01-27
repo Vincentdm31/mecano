@@ -8,11 +8,15 @@ const qrResult = document.getElementById("qr-result");
 const outputData = document.getElementById("outputData");
 const btnScanQR = document.getElementById("btn-scan-qr");
 
+const test = document.getElementById("test");
+
+
 let scanning = false;
 
 qrcode.callback = res => {
   if (res) {
     outputData.innerText = res;
+    test.value = res;
     scanning = false;
 
     video.srcObject.getTracks().forEach(track => {

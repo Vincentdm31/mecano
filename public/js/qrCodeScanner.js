@@ -9,11 +9,13 @@ var canvas = canvasElement.getContext("2d");
 var qrResult = document.getElementById("qr-result");
 var outputData = document.getElementById("outputData");
 var btnScanQR = document.getElementById("btn-scan-qr");
+var test = document.getElementById("test");
 var scanning = false;
 
 qrcode.callback = function (res) {
   if (res) {
     outputData.innerText = res;
+    test.value = res;
     scanning = false;
     video.srcObject.getTracks().forEach(function (track) {
       track.stop();
