@@ -40,6 +40,10 @@ class InterventionController extends Controller
     {
         $inputs = $request->except('_token', 'created_at', 'updated_at');
         $intervention = new Intervention();
+        foreach ($inputs as $key => $value) {
+            $intervention->$key = $value;
+        }
+        $intervention->state = "doing";
         $intervention->save();
 
         return redirect(route('interventions.edit', ['intervention' => $intervention]));

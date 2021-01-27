@@ -12,7 +12,7 @@ class CreateInterventionsTable extends Migration
      * @return void
      */
     public function up()
-    {   
+    {
         Schema::dropIfExists('interventions');
         Schema::create('interventions', function (Blueprint $table) {
             $table->id();
@@ -26,9 +26,14 @@ class CreateInterventionsTable extends Migration
             $table->text('observations')->nullable();
             $table->timestamps();
             $table->string('km_vehicule')->nullable();
+
+            $table->bigInteger('user_id')->unsigned()->nullable();
+            $table->foreign('user_id')->references('id')->on('users')
+                ->onDelete('cascade')->onUpdate('cascade');
+
             $table->bigInteger('vehicule_id')->unsigned()->nullable();
             $table->foreign('vehicule_id')->references('id')->on('vehicules')
-                        ->onDelete('cascade')->onUpdate('cascade');
+                ->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

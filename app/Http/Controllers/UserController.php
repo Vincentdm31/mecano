@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Hash;
+use Illuminate\Support\Facades\Hash as FacadesHash;
 
 class UserController extends Controller
 {
@@ -38,7 +39,7 @@ class UserController extends Controller
     {
         $inputs = $request->except('_token', 'created_at', 'updated_at', 'password');
         $password = $request->input('password');
-        $hashed = Hash::make($password);    
+        $hashed = FacadesHash::make($password);    
         $user = new User();
         foreach ($inputs as $key => $value) {
             $user->$key = $value;

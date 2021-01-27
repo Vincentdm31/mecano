@@ -10,13 +10,16 @@ $date = Carbon::now();
     <!-- Récapitulatif -->
     <div class="container shadow-1 p-2 mb-5">
         <p class="txt-center h3">Récapitulatif</p>
+        
+        <p class="txt-center">{{ $intervention->user[0]->name }}</p>
+        <p class="txt-center">{{ $intervention->created_at }}</p>
         <div class="grix xs1 md3">
             <!-- Déplacements -->
             <div>
                 @if(empty($intervention->start_deplacement))
                 <p class="txt-airforce txt-center txt-light-2">Pas de déplacements</p>
                 @else
-                <p class="txt-center h4 mb-2 txt-airforce txt-dark-4 bd-b-solid bd-b-4 p-3 bd-airforce bd-dark-4">Déplacements</p>
+                <p class="txt-center h4 mb-2 txt-airforce txt-dark-4 bd-b-solid bd-b-4 p-3 bd-green bd-dark-2">Déplacements</p>
                 <p class="txt-center txt-green txt-dark-2">{{ $intervention->start_deplacement}}</p>
                 <p class="txt-center txt-red txt-dark-2">{{ $intervention->end_deplacement}}</p>
                 @endif
@@ -26,7 +29,7 @@ $date = Carbon::now();
                 @if(empty($intervention->vehicule_id))
                 <p class="txt-airforce txt-center txt-light-2">Choisir un véhicule</p>
                 @else
-                <p class="txt-center h4 mb-2 txt-airforce txt-dark-4 bd-b-solid bd-b-4 p-3 bd-airforce bd-dark-4">Véhicule</p>
+                <p class="txt-center h4 mb-2 txt-airforce txt-dark-4 bd-b-solid bd-b-4 p-3 bd-green bd-dark-2">Véhicule</p>
                 <p class="txt-center txt-green txt-dark-2">{{$intervention->vehiculeList->marque}}</p>
                 <p class="txt-center txt-green txt-dark-2">{{$intervention->vehiculeList->modele}}</p>
                 <p class="txt-center txt-green txt-dark-2">{{$intervention->vehiculeList->immat}}</p>
@@ -37,7 +40,7 @@ $date = Carbon::now();
                 @if(empty($intervention->km_vehicule))
                 <p class="txt-airforce txt-center txt-light-2">Saisir le kilométrage</p>
                 @else
-                <p class="txt-center h4 mb-2 txt-airforce txt-dark-4 bd-b-solid bd-b-4 p-3 bd-airforce bd-dark-4">Kilométrage</p>
+                <p class="txt-center h4 mb-2 txt-airforce txt-dark-4 bd-b-solid bd-b-4 p-3 bd-green bd-dark-2">Kilométrage</p>
                 <p class="txt-center txt-green txt-dark-2">{{$intervention->km_vehicule}}</p>
 
                 @endif
@@ -49,6 +52,7 @@ $date = Carbon::now();
 <!-- Actions -->
 <div class="container">
     <div class="container shadow-1 mt-5">
+        <p class="txt-center h5 pt-3">Config véhicule</p>
         <div class="grix xs1 md3">
             <!-- Déplacement collapsible -->
             <div class="p-2">
@@ -156,9 +160,11 @@ $date = Carbon::now();
         </div>
     </div>
 </div>
+<!-- Opérations -->
+<div class="container">
+<div class="container">
 
-@endsection
 
-@section('extra-js')
-
+</div>
+</div>
 @endsection
