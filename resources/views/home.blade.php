@@ -25,4 +25,53 @@
         </div>
     </div>
     @endif
+
+    <div class="container">
+        <div id="container">
+            <h1>QR Code Scanner</h1>
+
+            <a id="btn-scan-qr">
+                <img src="https://dab1nmslvvntp.cloudfront.net/wp-content/uploads/2017/07/1499401426qr_icon.svg">
+            </a>
+
+            <canvas hidden="" id="qr-canvas"></canvas>
+
+            <div id="qr-result" hidden="">
+                <b>Data:</b> <span id="outputData"></span>
+            </div>
+        </div>
+    </div>
+    <style>
+    #qr-canvas {
+  margin: auto;
+  width: calc(100% - 20px);
+  max-width: 400px;
+}
+
+#btn-scan-qr {
+  cursor: pointer;
+}
+
+#btn-scan-qr img {
+  height: 10em;
+  padding: 15px;
+  margin: 15px;
+  background: white;
+}
+
+#qr-result {
+  font-size: 1.2em;
+  margin: 20px auto;
+  padding: 20px;
+  max-width: 700px;
+  background-color: white;
+}</style>
+@endsection
+
+
+
+@section('extra-js')
+<script src="https://rawgit.com/sitepoint-editors/jsqrcode/master/src/qr_packed.js"></script>
+<script type="text/javascript" src="{{ mix('js/qrCodeScanner.js') }}"></script>
+
 @endsection

@@ -17,8 +17,13 @@ $date = Carbon::now();
                 <p class="txt-airforce txt-light-2">Pas de déplacements</p>
                 @else
                 <div class="card shadow-1">
-                    <div class="card-content">
-                        <p class="">{{ $intervention->start_deplacement}}</p>
+                    <div class="grix xs2">
+                        <div>
+                        <p class="txt-center">{{ $intervention->start_deplacement}}</p>
+                        </div>
+                        <div>
+                        <p class="txt-center">{{ $intervention->end_deplacement}}</p>
+                        </div>
                     </div>
                 </div>
                 @endif
@@ -54,55 +59,56 @@ $date = Carbon::now();
                 </div>
             </div>
         </div>
-    <!-- Choix Véhicule collapsible -->
-    <button data-target="collapsible-vehicule" class="btn rounded-1 press airforce dark-4 collapsible-trigger mx-auto w100 mt-3">
-            Choix du véhicule
-    </button>
-    <div class="collapsible mb-3" id="collapsible-vehicule" data-ax="collapsible">
-        @if(empty($intervention->vehicule_id))
-        <div class="mt-2 mb-2">
-            <form class ="form-material" method="GET" action="{{ route('selectVehicule')}}">
-                @csrf
-                <div class="grix xs6">
-                    <div class="form-field pos-xs1 col-xs5">
-                        <input hidden type="text" id="intervention_id" name="intervention_id" value="{{ $intervention->id }}"/>
-                        <input type="text" name="selectVehicule" id="selectVehicule"class="form-control"/>
-                        <label for="selectVehicule">Rechercher</label>
+        <!-- Choix Véhicule collapsible -->
+        <button data-target="collapsible-vehicule" class="btn rounded-1 press airforce dark-4 collapsible-trigger mx-auto w100 mt-3">
+                Choix du véhicule
+        </button>
+        <div class="collapsible mb-3" id="collapsible-vehicule" data-ax="collapsible">
+            @if(empty($intervention->vehicule_id))
+            <div class="mt-2 mb-2">
+                <form class ="form-material" method="GET" action="{{ route('selectVehicule')}}">
+                    @csrf
+                    <div class="grix xs6">
+                        <div class="form-field pos-xs1 col-xs5">
+                            <input hidden type="text" id="intervention_id" name="intervention_id" value="{{ $intervention->id }}"/>
+                            <input type="text" name="selectVehicule" id="selectVehicule"class="form-control"/>
+                            <label for="selectVehicule">Rechercher</label>
+                        </div>
+                        <button type ="submit" class="btn circle ml-auto vself-center rounded-4"><i class="fa fa-search"></i></button>
                     </div>
-                    <button type ="submit" class="btn circle ml-auto vself-center rounded-4"><i class="fa fa-search"></i></button>
-                </div>
-            </form>
-        </div>
-        <div class="mt-5">
-            <form class="form-material" method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
-                @method('PUT')
-                @csrf
-                <div class="form-field">
-                    <label for="select">Véhicule</label>
-                    <select class="form-control rounded-1" id="select" name="vehicule_id">
-                    @foreach ( $vehicules as $vehicule) 
-                        <option value="{{ $vehicule->id }}">{{ $vehicule->immat }} - {{ $vehicule->marque }}</option>
-                    @endforeach 
-                    </select>
-                </div>
-                <div class="txt-center">
-                    <button type="submit" class="btn airforce rounded-1 dark-4 mt-3">
-                        Valider
-                    </button>
-                </div>
+                </form>
+            </div>
+            <div class="mt-5">
+                <form class="form-material" method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
+                    @method('PUT')
+                    @csrf
+                    <div class="form-field">
+                        <label for="select">Véhicule</label>
+                        <select class="form-control rounded-1" id="select" name="vehicule_id">
+                        @foreach ( $vehicules as $vehicule) 
+                            <option value="{{ $vehicule->id }}">{{ $vehicule->immat }} - {{ $vehicule->marque }}</option>
+                        @endforeach 
+                        </select>
+                    </div>
+                    <div class="txt-center">
+                        <button type="submit" class="btn airforce rounded-1 dark-4 mt-3">
+                            Valider
+                        </button>
+                    </div>
+                </form>
                 @endif
                 @if(!empty($intervention->vehicule_id))
-                <div class="container grix xs1">
-                    <div class="card shadow-1">
-                        <div class="card-content">
-                            <p>{{$intervention->vehiculeList->marque}}</p>
-                            <p>{{$intervention->vehiculeList->modele}}</p>
-                            <p>{{$intervention->vehiculeList->immat}}</p>
-                        </div>            
+                    <div class="container grix xs1">
+                        <div class="card shadow-1">
+                            <div class="card-content">
+                                <p>{{$intervention->vehiculeList->marque}}</p>
+                                <p>{{$intervention->vehiculeList->modele}}</p>
+                                <p>{{$intervention->vehiculeList->immat}}</p>
+                            </div>            
+                        </div>
                     </div>
-                </div>
                 @endif
-            </form>
+            </div>
         </div>
     </div>
 
