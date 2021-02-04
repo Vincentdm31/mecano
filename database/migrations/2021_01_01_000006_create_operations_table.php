@@ -17,6 +17,7 @@ class CreateOperationsTable extends Migration
         Schema::create('operations', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->text('commentaire')->nullable();
             $table->timestamps();
 
             $table->bigInteger('intervention_id')->unsigned();

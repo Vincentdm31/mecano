@@ -159,8 +159,8 @@ $date = Carbon::now();
                     <form class="form-material" method="POST" action="{{ route('operations.store')}}">
                         @csrf
                         <div class="form-field">
-                            <label for="select">Véhicule</label>
-                            <select class="form-control rounded-1" id="select" name="name">
+                            <label for="operation">Opération</label>
+                            <select class="form-control rounded-1" id="operation" name="name">
                                 @foreach ( $categories as $categorie)
                                 <option value="{{ $categorie->name }}">{{ $categorie->name }}</option>
                                 @endforeach
@@ -173,6 +173,7 @@ $date = Carbon::now();
                             </button>
                         </div>
                     </form>
+
                 </div>
             </div>
         </div>
@@ -252,14 +253,38 @@ $date = Carbon::now();
     </div>
 </div>
 <!-- Opérations -->
-<div class="container ">
-    <div class="container shadow-4">
-        <p class="txt-center txt-airforce txt-dark-4">Liste des opérations</p>
-        <div class="card shadow-4">
+<div class="container mb-5">
+    <div class="container">
+        <div class="card rounded-3 txt-center shadow-4">
+            <div class="card-header airforce dark-4 txt-center txt-white">
+                <p class="h5 p-2">Liste des opérations</p>
+            </div>
             @foreach ($intervention->operations as $operation)
-            <div class="grix xs2">
-                <p>{{ $operation->id }}</p>
-                <p>{{ $operation->name }}</p>
+            <div class="card-content grix xs2">
+                <p class="my-auto">{{ $operation->name }}</p>
+                <button data-target="edit-operation-{{ $operation->id }}" class="btn rounded-1 press airforce dark-4 modal-trigger mx-auto">
+                    <i class="fas fa-comment-medical <?php echo (isset($operation->commentaire) ? 'txt-green':'txt-red')?>"></i> 
+                </button>
+                <div class="modal grey light-4 shadow-1 mb-3 p-4" id="edit-operation-{{ $operation->id }}" data-ax="modal">
+                    <div class="">
+                        <form class="form-material" method="POST" action="{{ route('operations.update',['operation' => $operation->id])}}">
+                            @method('PUT')
+                            @csrf
+                            <div class="grix xs1 txt-center">
+                                <div class="form-field">
+                                    <textarea type="text" id="commentaire" name="commentaire" class="form-control" value="">{{ $operation->commentaire }}</textarea>
+                                    <input hidden name="intervention_id" value="{{ $intervention->id }}" />
+                                    <label for="commentaire" class="">Commentaire</label>
+                                </div>
+                            </div>
+                            <div class="txt-center">
+                                <button type="submit" class="btn green dark-2 rounded-1 mt-3 mb-3">
+                                    Valider
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
             @endforeach
 

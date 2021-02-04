@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categorie;
+use App\Models\Intervention;
 use App\Models\Operation;
 use Illuminate\Http\Request;
 
@@ -46,13 +47,13 @@ class OperationController extends Controller
         $categorieId = Categorie::Where('name', 'like', '%'.$categorie.'%')->pluck('id')->implode(' ');
         $operation->categorie_id = $categorieId;
         $operation->save();
-        return redirect(route('interventions.edit', ['intervention' => $intervention]));
+        return redirect(route('interventions.edit', ['intervention' => $intervention, 'operation' => $operation]));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Operation  $operation
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show(Operation $operation)
@@ -66,21 +67,32 @@ class OperationController extends Controller
      * @param  \App\Models\Operation  $operation
      * @return \Illuminate\Http\Response
      */
-    public function edit(Operation $operation)
+    public function edit(Request $request, $id)
     {
-        //
+        
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Operation  $operation
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Operation $operation)
-    {
-        //
+    public function update(Request $request, $id)
+    {   
+        $inputs = $request->except('_token', '_method', 'created_at', 'updated_at');
+        $intervention =  $request->input('intervention_id');
+        $intervention = Intervention::find($intervention);
+        $operation =  Operation::find($id);        
+        $categories = Categorie::all();
+
+        foreach ($inputs as $key => $value) {
+            $operation->$key = $value;
+        }
+        $operation->save();
+
+        return redirect( route('interventions.edit', ['intervention' => $intervention, 'operation' => $operation, 'categories' => $categories]));
     }
 
     /**
