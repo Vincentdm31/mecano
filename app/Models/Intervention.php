@@ -9,7 +9,7 @@ class Intervention extends Model
 {
     use HasFactory;
 
-    public function operation()
+    public function operations()
     {
         return $this->hasMany(Operation::class);
     }

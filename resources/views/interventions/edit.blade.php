@@ -11,7 +11,7 @@ $date = Carbon::now();
 <!-- Actions -->
 <div class="container">
     <div class="container shadow-1 mt-5 mb-5">
-        <p class="txt-center h5 pt-3">Config véhicule</p>
+        <p class="txt-center h5 pt-3">Liste des actions</p>
         <div class="grix xs1 md3">
             <!-- Déplacement modal -->
             <div class="p-2">
@@ -150,6 +150,31 @@ $date = Carbon::now();
                     </div>
                 </div>
             </div>
+            <!-- Opération modal -->
+            <div class="p-2">
+                <button data-target="modal-operation" class="btn rounded-1 press airforce dark-4 modal-trigger mx-auto w100">
+                    <i class="far fa-plus-square mr-3"></i>Opération
+                </button>
+                <div class="modal grey light-4 shadow-1 mb-3 p-4" id="modal-operation" data-ax="modal">
+                    <form class="form-material" method="POST" action="{{ route('operations.store')}}">
+                        @csrf
+                        <div class="form-field">
+                            <label for="select">Véhicule</label>
+                            <select class="form-control rounded-1" id="select" name="name">
+                                @foreach ( $categories as $categorie)
+                                <option value="{{ $categorie->name }}">{{ $categorie->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <input hidden name="intervention_id" value="{{ $intervention->id }}">
+                        <div class="txt-center">
+                            <button type="submit" class="btn green dark-2 rounded-1 mt-3 mb-3">
+                                Valider
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -162,13 +187,13 @@ $date = Carbon::now();
         <li>{{ $user->name }}</li>
         @endforeach
         <p class="txt-center">{{ $intervention->created_at }}</p>
-        <div class="grix xs1 gutter-xs5 md3 p-4">
+        <div class="grix xs1 gutter-xs5 md2 p-4">
             <!-- Déplacements -->
             <div>
                 @if(empty($intervention->start_deplacement_aller))
                 <p class="txt-airforce txt-center txt-light-2">Pas de déplacement aller</p>
                 @else
-                <div class="card shadow-4 rounded-2">
+                <div class="card h100 shadow-4 rounded-2">
                     <div class="card-header p-2 airforce dark-4">
                         <p class="txt-center txt-white">Déplacement Aller</p>
                     </div>
@@ -182,7 +207,7 @@ $date = Carbon::now();
                 @if(empty($intervention->start_deplacement_retour))
                 <p class="txt-airforce txt-center txt-light-2">Pas de déplacement retour</p>
                 @else
-                <div class="card shadow-4 rounded-2">
+                <div class="card h100 shadow-4 rounded-2">
                     <div class="card-header p-2 airforce dark-4">
                         <p class="txt-center txt-white">Déplacement Retour</p>
                     </div>
@@ -197,7 +222,7 @@ $date = Carbon::now();
                 @if(empty($intervention->vehicule_id))
                 <p class="txt-airforce txt-center txt-light-2">Choisir un véhicule</p>
                 @else
-                <div class="card shadow-4 rounded-2">
+                <div class="card h100 shadow-4 rounded-2">
                     <div class="card-header p-2 airforce dark-4">
                         <p class="txt-center txt-white">Véhicule</p>
                     </div>
@@ -215,11 +240,11 @@ $date = Carbon::now();
                 @if(empty($intervention->km_vehicule))
                 <p class="txt-airforce txt-center txt-light-2">Saisir le kilométrage</p>
                 @else
-                <div class="card shadow-4 rounded-2">
+                <div class="card h100 shadow-4 rounded-2">
                     <div class="card-header p-2 airforce dark-4">
                         <p class="txt-center txt-white">Kilométrage</p>
                     </div>
-                    <p class="txt-center txt-green txt-dark-2">{{$intervention->km_vehicule}}</p>
+                    <p class="txt-center txt-green my-auto txt-dark-2">{{$intervention->km_vehicule}}</p>
                 </div>
                 @endif
             </div>
@@ -227,10 +252,19 @@ $date = Carbon::now();
     </div>
 </div>
 <!-- Opérations -->
-<div class="container">
-    <div class="container">
+<div class="container ">
+    <div class="container shadow-4">
+        <p class="txt-center txt-airforce txt-dark-4">Liste des opérations</p>
+        <div class="card shadow-4">
+            @foreach ($intervention->operations as $operation)
+            <div class="grix xs2">
+                <p>{{ $operation->id }}</p>
+                <p>{{ $operation->name }}</p>
+            </div>
+            @endforeach
 
 
+        </div>
     </div>
 </div>
 @endsection

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categorie;
 use App\Models\Intervention;
 use App\Models\Vehicule;
 use Illuminate\Http\Request;
@@ -76,7 +77,10 @@ class InterventionController extends Controller
         $search = $request->get('selectVehicule');
         $vehicules = Vehicule::Where('immat', 'like', '%'.$search.'%')
                     ->get();
-        return view('interventions.edit', ['intervention' => $intervention, 'vehicules' => $vehicules]);
+        
+        $categories = Categorie::all();
+
+        return view('interventions.edit', ['intervention' => $intervention, 'vehicules' => $vehicules, 'categories' => $categories]);
     }
 
     /**

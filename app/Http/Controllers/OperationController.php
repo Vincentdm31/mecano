@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categorie;
 use App\Models\Operation;
 use Illuminate\Http\Request;
 
@@ -41,6 +42,9 @@ class OperationController extends Controller
         foreach ($inputs as $key => $value) {
             $operation->$key = $value;
         }
+        $categorie = $request->input('name');
+        $categorieId = Categorie::Where('name', 'like', '%'.$categorie.'%')->pluck('id')->implode(' ');
+        $operation->categorie_id = $categorieId;
         $operation->save();
         return redirect(route('interventions.edit', ['intervention' => $intervention]));
     }
