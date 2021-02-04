@@ -16,8 +16,10 @@ class CreateInterventionsTable extends Migration
         Schema::dropIfExists('interventions');
         Schema::create('interventions', function (Blueprint $table) {
             $table->id();
-            $table->datetime('start_deplacement')->nullable();
-            $table->datetime('end_deplacement')->nullable();
+            $table->datetime('start_deplacement_aller')->nullable();
+            $table->datetime('end_deplacement_aller')->nullable();
+            $table->datetime('start_deplacement_retour')->nullable();
+            $table->datetime('end_deplacement_retour')->nullable();
             $table->datetime('start_intervention_time')->nullable();
             $table->datetime('end_intervention_time')->nullable();
             $table->string('totalTime')->nullable();
