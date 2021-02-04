@@ -16,5 +16,10 @@ class Operation extends Model
         return $this->belongsTo(Intervention::class);
     }
 
+    public function categorie()
+    {
+        return $this->hasOne(Categorie::class, 'id', 'categorie_id');
+    }
+
 
 }

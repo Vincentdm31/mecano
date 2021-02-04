@@ -12,16 +12,20 @@ class CreateOperationsTable extends Migration
      * @return void
      */
     public function up()
-    {   
+    {
         Schema::dropIfExists('operations');
         Schema::create('operations', function (Blueprint $table) {
             $table->id();
-            $table->string('nom');
+            $table->string('name');
             $table->timestamps();
-            
+
             $table->bigInteger('intervention_id')->unsigned();
             $table->foreign('intervention_id')->references('id')->on('interventions')
-                    ->onDelete('cascade')->onUpdate('cascade');
+                ->onDelete('cascade')->onUpdate('cascade');
+
+            $table->bigInteger('categorie_id')->unsigned()->nullable();
+            $table->foreign('categorie_id')->references('id')->on('categories')
+                ->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

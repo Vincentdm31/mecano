@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Categorie extends Model
 {
     use HasFactory;
+
+    public function operation()
+    {
+        return $this->belongsTo(Operation::class);
+    }
 }
