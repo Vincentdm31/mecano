@@ -47,9 +47,9 @@ class InterventionController extends Controller
             $intervention->$key = $value;
         }
         $intervention->state = "doing";
-
+        $intervention->created_by = Auth::user()->name;
         $intervention->save();
-        $intervention->users()->attach(Auth()->user()->id);
+        // $intervention->users()->attach(Auth()->user()->id);
         return redirect(route('interventions.edit', ['intervention' => $intervention]));
     }
 

@@ -28,6 +28,7 @@ class CreateInterventionsTable extends Migration
             $table->text('observations')->nullable();
             $table->timestamps();
             $table->string('km_vehicule')->nullable();
+            $table->string('created_by');
 
             $table->bigInteger('user_id')->unsigned()->nullable();
             $table->foreign('user_id')->references('id')->on('users')

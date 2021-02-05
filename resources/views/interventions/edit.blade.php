@@ -1,8 +1,10 @@
 @extends('layouts.app')
 @section('content')
 <?php
+
 use Carbon\Carbon;
-$date = Carbon::now();
+$date = Carbon::now()->format('d/m/Y');  
+
 ?>
 
 <!-- Actions -->
@@ -43,11 +45,26 @@ $date = Carbon::now();
         <div class="card-hearder airforce dark-4 txt-white">
             <p class="txt-center h5 p-2">Récapitulatif</p>
         </div>
-        <p class="txt-center">{{ $intervention->users[0]->name }}</p>
-        @foreach($intervention->users as $user)
-        <li>{{ $user->name }}</li>
-        @endforeach
-        <p class="txt-center">{{ $intervention->created_at }}</p>
+        <div class="grix xs2 md3">
+            <div>
+                <p class="txt-center">Créateur : {{ $intervention->created_by }}</p>
+            </div>
+            <div>
+                <p class="txt-center">
+                    Ref Intervention : {{ $intervention->id }}
+                </p>
+            </div>
+            <div>
+                <p class="txt-center">{{\Carbon\Carbon::parse($intervention->created_at)->isoFormat('LLLL')}}</p>
+            </div>
+            @foreach($intervention->users as $user)
+            <div>
+                <li class="txt-center">{{ $user->name }}</li>
+            </div>
+            @endforeach
+
+        </div>
+
         <div class="grix xs1 gutter-xs5 md2 p-4">
             <!-- Déplacements -->
             <div>
