@@ -3,7 +3,8 @@
 <?php
 
 use Carbon\Carbon;
-$date = Carbon::now()->format('d/m/Y');  
+
+$date = Carbon::now();
 
 ?>
 
@@ -78,7 +79,6 @@ $date = Carbon::now()->format('d/m/Y');
                     <p class="txt-center txt-green txt-dark-2">{{ $intervention->start_deplacement_aller }}</p>
                     <p class="txt-center txt-red txt-dark-2">{{ $intervention->end_deplacement_aller }}</p>
                 </div>
-
                 @endif
             </div>
             <div>
@@ -92,7 +92,6 @@ $date = Carbon::now()->format('d/m/Y');
                     <p class="txt-center txt-green txt-dark-2">{{ $intervention->start_deplacement_retour }}</p>
                     <p class="txt-center txt-red txt-dark-2">{{ $intervention->end_deplacement_retour }}</p>
                 </div>
-
                 @endif
             </div>
             <!-- Véhicule -->
@@ -110,7 +109,6 @@ $date = Carbon::now()->format('d/m/Y');
                     </div>
                     <p class="txt-center txt-green txt-dark-2">{{$intervention->vehiculeList->immat}}</p>
                 </div>
-
                 @endif
             </div>
             <!-- Kilométrage -->
