@@ -37,14 +37,39 @@ $date = Carbon::now();
                     <i class="far fa-plus-square mr-3"></i>Opération
                 </button>
             </div>
+            <!-- Commentaire modal -->
+            <div class="p-2">
+                <button data-target="modal-observation" class="btn rounded-1 press airforce dark-4 modal-trigger mx-auto w100">
+                    Observations
+                </button>
+            </div>
+            <!-- Start/Pause intervention -->
+            <div class="p-2">
+                @if($intervention->state == "doing")
+                <form class="form-material" method="POST" action="{{ route('timeinterventions.store') }}">
+                    @csrf
+                    <input hidden name="intervention_id" value="{{ $intervention->id }}">
+                    <input hidden name="start_date" value="{{ $date }}">
+                    <button type="submit" class="btn press green rounded-1 shadow-1 w100 mb-2">Pause</button>
+                </form>
+                @elseif(($intervention->state == "pause"))
+                <form class="form-material" method="POST" action="{{ route('timeinterventions.store') }}">
+                    @csrf
+                    <input hidden name="intervention_id" value="{{ $intervention->id }}">
+                    <input hidden name="end_date" value="{{ $date }}">
+                    <button type="submit" class="btn press orange rounded-1 shadow-1 w100 mb-2">Reprendre</button>
+                </form>
+                @endif
+            </div>
         </div>
     </div>
 </div>
 <div class="container mt-5">
     <!-- Récapitulatif -->
-    <div class="container rounded-3 card shadow-4 mb-5">
-        <div class="card-hearder airforce dark-4 txt-white">
+    <div class="container rounded-3 card overflow-visible shadow-4 mb-5">
+        <div class="card-header airforce dark-4">
             <p class="txt-center h5 p-2">Récapitulatif</p>
+            <a href="" data-target="modal-comment" style="position:absolute;right:0;top:0;transform:translate(50%,-50%); font-size:2.5rem;" class="<?php echo (empty($intervention->observations) ? 'txt-airforce txt-light-4' : 'txt-green') ?> fas fa-comment modal-trigger"></a>
         </div>
         <div class="grix xs2 md3">
             <div>
@@ -308,4 +333,34 @@ $date = Carbon::now();
         </div>
     </form>
 </div>
+
+<div class="modal grey light-4 shadow-1 mb-3 p-4" id="modal-observation" data-ax="modal">
+    <div class="">
+        <form class="form-material" method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
+            @method('PUT')
+            @csrf
+            <div class="grix xs1 txt-center">
+                <div class="form-field">
+                    <textarea type="number" id="km_vehicule" name="observations" class="form-control txt-center">{{ $intervention->observations }}</textarea>
+                    <label for="km_vehicule" class="">Observations</label>
+                </div>
+            </div>
+            <div class="txt-center">
+                <button type="submit" class="btn green dark-2 rounded-1 mt-3 mb-3">
+                    Envoyer
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="modal grey light-4 shadow-1 mb-3 h100 rounded-3" id="modal-comment" data-ax="modal">
+    <div class="card m-0">
+        <div class="card-header airforce dark-4 txt-center">Observations</div>
+    </div>
+    <div class="card-content p-4">
+        {{ $intervention->observations}}
+    </div>
+</div>
+
 @endsection
