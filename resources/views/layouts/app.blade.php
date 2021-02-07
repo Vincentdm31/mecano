@@ -20,8 +20,8 @@
 
 <body class="layout grey light-4">
     <header>
-        <nav class="navbar airforce dark-4 shadow-1">
-            <a href="{{ url('/') }}" class="navbar-brand">{{ config('app.name', 'Laravel') }}</a>
+        <nav class="navbar greyy shadow-1 txt-orange txt-light-1">
+            <a href="{{ url('/') }}" class="navbar-brand">Mecalcis</a>
 
             <div class="navbar-menu ml-auto">
                 @guest

@@ -7108,3 +7108,20 @@ textarea.form-control[rows] {
 body {
   font-family: "Quicksand", sans-serif;
 }
+
+.greyy {
+  background-color: #1d1d1d;
+}
+
+.tab .tab-menu {
+  --tab-active-color:#EA8527!important;
+}
+
+.form-material .form-field:not(.form-default) {
+  --form-material-color: #EA8527!important;
+}
+
+select:hover {
+  color: #444645;
+  background: #ddd;
+}

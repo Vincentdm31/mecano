@@ -10,27 +10,173 @@ $date = Carbon::now();
 
 <!-- Actions -->
 <div class="container">
-    <div class="container shadow-1 mt-5 mb-5">
-        <p class="txt-center h5 pt-3">Liste des actions</p>
+    <div class="container shadow-1 rounded-3 mt-5 mb-5">
+        <button data-target="modal-deplacement" class="btn orange h100 w100 modal-trigger mb-2">
+            Récapitulatif
+        </button>
+        <div class="tab full-width shadow-1" id="example-tab" data-ax="tab">
+            <ul class="tab-menu greyy txt-white">
+                <li class="tab-link">
+                    <a href="#tab1">Déplacement</a>
+                </li>
+                <li class="tab-link">
+                    <a href="#tab2">Véhicule</a>
+                </li>
+                <li class="tab-link">
+                    <a href="#tab3">Kilométrage</a>
+                </li>
+                <li class="tab-link">
+                    <a href="#tab4">Opérations<i class="far fa-plus-square ml-3"></i></a>
+                </li>
+                <li class="tab-link">
+                    <a href="#tab5">Observations</a>
+                </li>
+            </ul>
+
+            <!-- Here are your tab contents -->
+            <div id="tab1" class="p-3 greyy">
+                @if(empty($intervention->start_deplacement_aller) || empty($intervention->end_deplacement_aller))
+                <p class="txt-white txt-center">Déplacements ALLER</p>
+                @endif
+                @if(empty($intervention->start_deplacement_aller))
+                <form method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
+                    @method('PUT')
+                    @csrf
+                    <div class="txt-center">
+                        <input hidden id="start_deplacement" value="{{ $date }}" name="start_deplacement_aller" />
+                        <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange"><span class="outline-text outline-invert">Début</span></button>
+                    </div>
+                </form>
+                @endif
+                <!--End Déplacement Interventions Aller -->
+                @if(!empty($intervention->start_deplacement_aller) && empty($intervention->end_deplacement_aller))
+                <div class="">
+                    <form method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
+                        @method('PUT')
+                        @csrf
+                        <div class="txt-center">
+                            <input hidden id="end_deplacement" value="{{ $date }}" name="end_deplacement_aller" />
+                            <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange"><span class="outline-text outline-invert">Fin</span></button>
+                        </div>
+                    </form>
+                </div>
+                @endif
+                <!--Start Déplacement Interventions Retour -->
+                @if(!empty($intervention->end_deplacement_aller) && empty($intervention->start_deplacement_retour))
+                <p class="txt-white txt-center">Déplacements Retour</p>
+                <div class="">
+                    <form method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
+                        @method('PUT')
+                        @csrf
+                        <div class="txt-center">
+                            <input hidden id="start_deplacement" value="{{ $date }}" name="start_deplacement_retour" />
+                            <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange"><span class="outline-text outline-invert">Début</span></button>
+                        </div>
+                    </form>
+                </div>
+                @endif
+                <!--End Déplacement Interventions Retour -->
+                @if(!empty($intervention->start_deplacement_retour) && empty($intervention->end_deplacement_retour))
+                <p class="txt-white txt-center">Déplacements Retour</p>
+                <div class="">
+                    <form method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
+                        @method('PUT')
+                        @csrf
+                        <div class="txt-center">
+                            <input hidden id="end_deplacement" value="{{ $date }}" name="end_deplacement_retour" />
+                            <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange"><span class="outline-text outline-invert">Fin</span></button>
+                        </div>
+                    </form>
+                </div>
+                @endif
+                @if(!empty($intervention->start_deplacement_retour) && !empty($intervention->end_deplacement_retour) && !empty($intervention->end_deplacement_aller) && !empty($intervention->start_deplacement_retour))
+                <p class="txt-center txt-white">Déplacements enregistrés</p>
+                @endif
+            </div>
+            <!-- TAB 2 -->
+            <div id="tab2" class="p-3 greyy">
+                <div class="mt-2 mb-2">
+                    <form class="form-material" method="GET" action="{{ route('selectVehicule')}}">
+                        @csrf
+                        <div class="grix xs6">
+                            <div class="form-field pos-xs1 col-xs5">
+                                <input hidden type="text" id="intervention_id" name="intervention_id" value="{{ $intervention->id }}" />
+                                <input type="text" name="selectVehicule" id="selectVehicule" class="form-control txt-white" />
+                                <label for="selectVehicule">Rechercher</label>
+                            </div>
+                            <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange circle ml-auto vself-center rounded-4"><span class="outline-text outline-invert"><i class="fa fa-search"></i></span></button>
+                        </div>
+                    </form>
+                </div>
+                <div class="mt-5">
+                    <form class="form-material" method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
+                        @method('PUT')
+                        @csrf
+                        <div class="form-field">
+                            <label for="select">Véhicule</label>
+                            <select class="form-control greyy txt-white" id="select" name="vehicule_id">
+                                @foreach ( $vehicules as $vehicule)
+                                <option class="greyy" value="{{ $vehicule->id }}">{{ $vehicule->immat }} - {{ $vehicule->marque }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="txt-center">
+                            <button type="submit" class="btn shadow-1 outline opening txt-orange ml-auto vself-center rounded-2 mt-4"><span class="outline-text outline-invert">Valider</span></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- TAB 3 -->
+            <div id="tab3" class="p-3 greyy">
+                <form class="form-material" method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
+                    @method('PUT')
+                    @csrf
+                    <div class="grix xs1 txt-center">
+                        <div class="form-field">
+                            <input type="number" id="km_vehicule" name="km_vehicule" value="{{ $intervention->km_vehicule }}" class="form-control txt-center txt-white" />
+                            <label for="km_vehicule" class="">Kilométrage</label>
+                        </div>
+                    </div>
+                    <div class="txt-center">
+                        <button type="submit" class="btn shadow-1 outline opening txt-orange ml-auto vself-center rounded-2 mt-4"><span class="outline-text outline-invert">Valider</span></button>
+                    </div>
+                </form>
+            </div>
+            <!-- TAB 4 -->
+            <div id="tab4" class="p-3 greyy">
+                <form class="form-material" method="POST" action="{{ route('operations.store')}}">
+                    @csrf
+                    <div class="form-field">
+                        <label for="operation">Opération</label>
+                        <select class="form-control rounded-1 greyy txt-white" id="operation" name="name">
+                            @foreach ( $categories as $categorie)
+                            <option class="greyy txt-white" value=" {{ $categorie->name }}">{{ $categorie->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <input hidden name="intervention_id" value="{{ $intervention->id }}">
+                    <div class="txt-center">
+                        <button type="submit" class="btn shadow-1 outline opening txt-orange ml-auto vself-center rounded-2 mt-4"><span class="outline-text outline-invert">Ajouter</span></button>
+                    </div>
+                </form>
+            </div>
+            <div id="tab5" class="p-3 greyy">
+                <form class="form-material" method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
+                    @method('PUT')
+                    @csrf
+                    <div class="form-field">
+                        <textarea type="number" id="km_vehicule" name="observations" class="form-control txt-white">{{ $intervention->observations }}</textarea>
+                        <label for="km_vehicule" class="">Observations</label>
+                    </div>
+                    <div class="txt-center">
+                        <button type="submit" class="btn shadow-1 outline opening txt-orange ml-auto vself-center rounded-2 mt-4"><span class="outline-text outline-invert">Ajouter</span></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
         <div class="grix xs1 md3">
-            <!-- Déplacement modal -->
-            <div class="p-2">
-                <button data-target="modal-deplacement" class="btn rounded-1 press airforce dark-4 modal-trigger w100 mx-auto">
-                    Déplacements
-                </button>
-            </div>
-            <!-- Choix Véhicule modal -->
-            <div class="p-2">
-                <button data-target="modal-vehicule" class="btn rounded-1 press airforce dark-4 modal-trigger w100 mx-auto">
-                    Choix du véhicule
-                </button>
-            </div>
-            <!-- Kilométrage véhicule modal -->
-            <div class="p-2">
-                <button data-target="modal-kilometrage" class="btn rounded-1 press airforce dark-4 modal-trigger mx-auto w100">
-                    Kilométrage
-                </button>
-            </div>
+
             <!-- Opération modal -->
             <div class="p-2">
                 <button data-target="modal-operation" class="btn rounded-1 press airforce dark-4 modal-trigger mx-auto w100">
@@ -92,33 +238,7 @@ $date = Carbon::now();
         </div>
 
         <div class="grix xs1 gutter-xs5 md2 p-4">
-            <!-- Déplacements -->
-            <div>
-                @if(empty($intervention->start_deplacement_aller))
-                <p class="txt-airforce txt-center txt-light-2">Pas de déplacement aller</p>
-                @else
-                <div class="card h100 shadow-4 rounded-2">
-                    <div class="card-header p-2 airforce dark-4">
-                        <p class="txt-center txt-white">Déplacement Aller</p>
-                    </div>
-                    <p class="txt-center txt-green txt-dark-2">{{ $intervention->start_deplacement_aller }}</p>
-                    <p class="txt-center txt-red txt-dark-2">{{ $intervention->end_deplacement_aller }}</p>
-                </div>
-                @endif
-            </div>
-            <div>
-                @if(empty($intervention->start_deplacement_retour))
-                <p class="txt-airforce txt-center txt-light-2">Pas de déplacement retour</p>
-                @else
-                <div class="card h100 shadow-4 rounded-2">
-                    <div class="card-header p-2 airforce dark-4">
-                        <p class="txt-center txt-white">Déplacement Retour</p>
-                    </div>
-                    <p class="txt-center txt-green txt-dark-2">{{ $intervention->start_deplacement_retour }}</p>
-                    <p class="txt-center txt-red txt-dark-2">{{ $intervention->end_deplacement_retour }}</p>
-                </div>
-                @endif
-            </div>
+
             <!-- Véhicule -->
             <div>
                 @if(empty($intervention->vehicule_id))
