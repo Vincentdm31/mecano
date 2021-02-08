@@ -11,30 +11,44 @@ $date = Carbon::now();
 <!-- Actions -->
 <div class="container">
     <div class="container shadow-1 rounded-3 mt-5 mb-5">
-        <button data-target="modal-deplacement" class="btn orange h100 w100 modal-trigger mb-2">
-            Récapitulatif
-        </button>
+        <div class="grix xs1 md3 gutter-xs1 greyy">
+            <button data-target="modal-operation" class="btn press orange h100 w100 modal-trigger mb-2">
+                Opération<i class="far fa-plus-square ml-3"></i>
+            </button>
+            <button data-target="modal-observation" class="btn press orange h100 w100 modal-trigger mb-2">
+                Observations<i class="far fa-plus-square ml-3"></i>
+            </button>
+            @if($intervention->state == "doing")
+            <form class="form-material" method="POST" action="{{ route('timeinterventions.store') }}">
+                @csrf
+                <input hidden name="intervention_id" value="{{ $intervention->id }}">
+                <input hidden name="start_date" value="{{ $date }}">
+                <button type="submit" class="btn press orange h100 w100">Mettre en pause</button>
+            </form>
+            @elseif(($intervention->state == "pause"))
+            <form class="form-material" method="POST" action="{{ route('timeinterventions.store') }}">
+                @csrf
+                <input hidden name="intervention_id" value="{{ $intervention->id }}">
+                <input hidden name="end_date" value="{{ $date }}">
+                <button type="submit" class="btn press orange h100 w100">Reprendre</button>
+            </form>
+            @endif
+        </div>
         <div class="tab full-width shadow-1" id="example-tab" data-ax="tab">
             <ul class="tab-menu greyy txt-white">
                 <li class="tab-link">
-                    <a href="#tab1">Déplacement</a>
+                    <a href="#tab-deplacement">Déplacement</a>
                 </li>
                 <li class="tab-link">
-                    <a href="#tab2">Véhicule</a>
+                    <a href="#tab-vehicule">Véhicule</a>
                 </li>
                 <li class="tab-link">
-                    <a href="#tab3">Kilométrage</a>
-                </li>
-                <li class="tab-link">
-                    <a href="#tab4">Opérations<i class="far fa-plus-square ml-3"></i></a>
-                </li>
-                <li class="tab-link">
-                    <a href="#tab5">Observations</a>
+                    <a href="#tab-kilometrage">Kilométrage</a>
                 </li>
             </ul>
 
             <!-- Here are your tab contents -->
-            <div id="tab1" class="p-3 greyy">
+            <div id="tab-deplacement" class="p-3 greyy">
                 @if(empty($intervention->start_deplacement_aller) || empty($intervention->end_deplacement_aller))
                 <p class="txt-white txt-center">Déplacements ALLER</p>
                 @endif
@@ -94,7 +108,7 @@ $date = Carbon::now();
                 @endif
             </div>
             <!-- TAB 2 -->
-            <div id="tab2" class="p-3 greyy">
+            <div id="tab-vehicule" class="p-3 greyy">
                 <div class="mt-2 mb-2">
                     <form class="form-material" method="GET" action="{{ route('selectVehicule')}}">
                         @csrf
@@ -127,7 +141,7 @@ $date = Carbon::now();
                 </div>
             </div>
             <!-- TAB 3 -->
-            <div id="tab3" class="p-3 greyy">
+            <div id="tab-kilometrage" class="p-3 greyy">
                 <form class="form-material" method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
                     @method('PUT')
                     @csrf
@@ -142,130 +156,56 @@ $date = Carbon::now();
                     </div>
                 </form>
             </div>
-            <!-- TAB 4 -->
-            <div id="tab4" class="p-3 greyy">
-                <form class="form-material" method="POST" action="{{ route('operations.store')}}">
-                    @csrf
-                    <div class="form-field">
-                        <label for="operation">Opération</label>
-                        <select class="form-control rounded-1 greyy txt-white" id="operation" name="name">
-                            @foreach ( $categories as $categorie)
-                            <option class="greyy txt-white" value=" {{ $categorie->name }}">{{ $categorie->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <input hidden name="intervention_id" value="{{ $intervention->id }}">
-                    <div class="txt-center">
-                        <button type="submit" class="btn shadow-1 outline opening txt-orange ml-auto vself-center rounded-2 mt-4"><span class="outline-text outline-invert">Ajouter</span></button>
-                    </div>
-                </form>
-            </div>
-            <div id="tab5" class="p-3 greyy">
-                <form class="form-material" method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
-                    @method('PUT')
-                    @csrf
-                    <div class="form-field">
-                        <textarea type="number" id="km_vehicule" name="observations" class="form-control txt-white">{{ $intervention->observations }}</textarea>
-                        <label for="km_vehicule" class="">Observations</label>
-                    </div>
-                    <div class="txt-center">
-                        <button type="submit" class="btn shadow-1 outline opening txt-orange ml-auto vself-center rounded-2 mt-4"><span class="outline-text outline-invert">Ajouter</span></button>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <div class="grix xs1 md3">
-
-            <!-- Opération modal -->
-            <div class="p-2">
-                <button data-target="modal-operation" class="btn rounded-1 press airforce dark-4 modal-trigger mx-auto w100">
-                    <i class="far fa-plus-square mr-3"></i>Opération
-                </button>
-            </div>
-            <!-- Commentaire modal -->
-            <div class="p-2">
-                <button data-target="modal-observation" class="btn rounded-1 press airforce dark-4 modal-trigger mx-auto w100">
-                    Observations
-                </button>
-            </div>
-            <!-- Start/Pause intervention -->
-            <div class="p-2">
-                @if($intervention->state == "doing")
-                <form class="form-material" method="POST" action="{{ route('timeinterventions.store') }}">
-                    @csrf
-                    <input hidden name="intervention_id" value="{{ $intervention->id }}">
-                    <input hidden name="start_date" value="{{ $date }}">
-                    <button type="submit" class="btn press green rounded-1 shadow-1 w100 mb-2">Pause</button>
-                </form>
-                @elseif(($intervention->state == "pause"))
-                <form class="form-material" method="POST" action="{{ route('timeinterventions.store') }}">
-                    @csrf
-                    <input hidden name="intervention_id" value="{{ $intervention->id }}">
-                    <input hidden name="end_date" value="{{ $date }}">
-                    <button type="submit" class="btn press orange rounded-1 shadow-1 w100 mb-2">Reprendre</button>
-                </form>
-                @endif
-            </div>
         </div>
     </div>
 </div>
 <div class="container mt-5">
     <!-- Récapitulatif -->
     <div class="container rounded-3 card overflow-visible shadow-4 mb-5">
-        <div class="card-header airforce dark-4">
-            <p class="txt-center h5 p-2">Récapitulatif</p>
+        <div class="card-header orange p-0">
+            <p class="txt-center txt-black">Récapitulatif</p>
             <a href="" data-target="modal-comment" style="position:absolute;right:0;top:0;transform:translate(50%,-50%); font-size:2.5rem;" class="<?php echo (empty($intervention->observations) ? 'txt-airforce txt-light-4' : 'txt-green') ?> fas fa-comment modal-trigger"></a>
         </div>
-        <div class="grix xs2 md3">
-            <div>
-                <p class="txt-center">Créateur : {{ $intervention->created_by }}</p>
-            </div>
-            <div>
-                <p class="txt-center">
-                    Ref Intervention : {{ $intervention->id }}
-                </p>
-            </div>
-            <div>
-                <p class="txt-center">{{\Carbon\Carbon::parse($intervention->created_at)->isoFormat('LLLL')}}</p>
-            </div>
-            @foreach($intervention->users as $user)
-            <div>
-                <li class="txt-center">{{ $user->name }}</li>
-            </div>
-            @endforeach
+        <div class="card-content greyy">
+            <div class="grix xs1 txt-white md3">
+                <div>
+                    <p class="txt-center">Créateur : {{ $intervention->created_by }}</p>
+                </div>
+                <div>
+                    <p class="txt-center">
+                        Ref Intervention : {{ $intervention->id }}
+                    </p>
+                </div>
+                <div>
+                    <p class="txt-center">{{\Carbon\Carbon::parse($intervention->created_at)->isoFormat('LLLL')}}</p>
+                </div>
+                @foreach($intervention->users as $user)
+                <div>
+                    <li class="txt-center">{{ $user->name }}</li>
+                </div>
+                @endforeach
 
+            </div>
         </div>
 
-        <div class="grix xs1 gutter-xs5 md2 p-4">
 
+        <div class="grix xs1 gutter-xs5">
             <!-- Véhicule -->
             <div>
                 @if(empty($intervention->vehicule_id))
-                <p class="txt-airforce txt-center txt-light-2">Choisir un véhicule</p>
+                <p class="greyy txt-orange h100 m-0 p-2 txt-center">Aucun véhicule sélectionné</p>
                 @else
-                <div class="card h100 shadow-4 rounded-2">
-                    <div class="card-header p-2 airforce dark-4">
-                        <p class="txt-center txt-white">Véhicule</p>
+                <div class="card m-0 greyy h100">
+                    <div class="grix xs1 md4 txt-white txt-center">
+                        <p class="">Marque : {{$intervention->vehiculeList->marque}}</p>
+                        <p class="">Modèle : {{$intervention->vehiculeList->modele}}</p>
+                        <p class="">Immatriculation : {{$intervention->vehiculeList->immat}}</p>
+                        @if(empty($intervention->km_vehicule))
+                        <p class="txt-orange">Saisir kilométrage</p>
+                        @else
+                        <p class="">Kilométrage : {{$intervention->km_vehicule}}</p>
+                        @endif
                     </div>
-                    <div class="grix xs2">
-                        <p class="txt-center txt-green txt-dark-2">{{$intervention->vehiculeList->marque}}</p>
-                        <p class="txt-center txt-green txt-dark-2">{{$intervention->vehiculeList->modele}}</p>
-                    </div>
-                    <p class="txt-center txt-green txt-dark-2">{{$intervention->vehiculeList->immat}}</p>
-                </div>
-                @endif
-            </div>
-            <!-- Kilométrage -->
-            <div>
-                @if(empty($intervention->km_vehicule))
-                <p class="txt-airforce txt-center txt-light-2">Saisir le kilométrage</p>
-                @else
-                <div class="card h100 shadow-4 rounded-2">
-                    <div class="card-header p-2 airforce dark-4">
-                        <p class="txt-center txt-white">Kilométrage</p>
-                    </div>
-                    <p class="txt-center txt-green my-auto txt-dark-2">{{$intervention->km_vehicule}}</p>
                 </div>
                 @endif
             </div>
@@ -275,14 +215,14 @@ $date = Carbon::now();
 <!-- Opérations -->
 <div class="container mb-5">
     <div class="container">
-        <div class="card rounded-3 txt-center shadow-4">
-            <div class="card-header airforce dark-4 txt-center txt-white">
+        <div class="card txt-center shadow-4">
+            <div class="card-header orange txt-center txt-black">
                 <p class="h5 p-2">Liste des opérations</p>
             </div>
             @foreach ($intervention->operations as $operation)
-            <div class="card-content grix xs2">
+            <div class="card-content greyy txt-white grix xs2">
                 <p class="my-auto">{{ $operation->name }}</p>
-                <button data-target="edit-operation-{{ $operation->id }}" class="btn rounded-1 press airforce dark-4 modal-trigger mx-auto">
+                <button data-target="edit-operation-{{ $operation->id }}" class="btn rounded-1 press orange txt-white modal-trigger mx-auto">
                     <i class="fas fa-comment-medical <?php echo (isset($operation->commentaire) ? 'txt-green' : '') ?>"></i>
                 </button>
                 <div class="modal grey light-4 shadow-1 mb-3 p-4" id="edit-operation-{{ $operation->id }}" data-ax="modal">
@@ -414,25 +354,6 @@ $date = Carbon::now();
     </div>
 </div>
 
-<div class="modal grey light-4 shadow-1 mb-3 p-4" id="modal-kilometrage" data-ax="modal">
-    <div class="">
-        <form class="form-material" method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
-            @method('PUT')
-            @csrf
-            <div class="grix xs1 txt-center">
-                <div class="form-field">
-                    <input type="number" id="km_vehicule" name="km_vehicule" value="{{ $intervention->km_vehicule }}" class="form-control txt-center" />
-                    <label for="km_vehicule" class="">Kilométrage</label>
-                </div>
-            </div>
-            <div class="txt-center">
-                <button type="submit" class="btn green dark-2 rounded-1 mt-3 mb-3">
-                    Valider Kilométrage
-                </button>
-            </div>
-        </form>
-    </div>
-</div>
 
 <div class="modal grey light-4 shadow-1 mb-3 p-4" id="modal-operation" data-ax="modal">
     <form class="form-material" method="POST" action="{{ route('operations.store')}}">
@@ -476,7 +397,7 @@ $date = Carbon::now();
 
 <div class="modal grey light-4 shadow-1 mb-3 h100 rounded-3" id="modal-comment" data-ax="modal">
     <div class="card m-0">
-        <div class="card-header airforce dark-4 txt-center">Observations</div>
+        <div class="card-header greyy txt-orange txt-center">Observations</div>
     </div>
     <div class="card-content p-4">
         {{ $intervention->observations}}
