@@ -7113,6 +7113,10 @@ body {
   background-color: #1d1d1d;
 }
 
+.txt-greyy {
+  color: #1d1d1d;
+}
+
 .tab .tab-menu {
   --tab-active-color:#EA8527!important;
 }
