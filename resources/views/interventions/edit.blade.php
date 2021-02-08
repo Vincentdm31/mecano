@@ -236,7 +236,7 @@ $date = Carbon::now();
                 <p class="">Liste des opérations</p>
             </div>
             @if(empty($intervention->operations[0]))
-            <p class="m-0 p-4 greyy txt-white">Aucune opération</p>
+            <p class="m-0 p-4 greyy txt-orange">Aucune opération</p>
             @endif
             @foreach ($intervention->operations as $operation)
 
@@ -245,7 +245,7 @@ $date = Carbon::now();
                 <button data-target="edit-operation-{{ $operation->id }}" class="btn rounded-1 press orange txt-white modal-trigger mx-auto">
                     <i class="fas fa-comment-medical <?php echo (isset($operation->commentaire) ? 'txt-greyy' : '') ?>"></i>
                 </button>
-                <div class="modal grey light-4 shadow-1 mb-3 p-4" id="edit-operation-{{ $operation->id }}" data-ax="modal">
+                <div class="modal greyy shadow-1 mb-3 p-4" id="edit-operation-{{ $operation->id }}" data-ax="modal">
                     <div class="">
                         <form class="form-material" method="POST" action="{{ route('operations.update',['operation' => $operation->id])}}">
                             @method('PUT')
@@ -258,9 +258,7 @@ $date = Carbon::now();
                                 </div>
                             </div>
                             <div class="txt-center">
-                                <button type="submit" class="btn green dark-2 rounded-1 mt-3 mb-3">
-                                    Valider
-                                </button>
+                                <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange mt-4"><span class="outline-text outline-invert">Début</span></button>
                             </div>
                         </form>
                     </div>
