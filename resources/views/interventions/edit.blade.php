@@ -166,7 +166,6 @@ $date = Carbon::now();
             <p class="txt-center txt-black">Récapitulatif</p>
             <a href="" data-target="modal-comment" style="position:absolute;right:0;top:0;transform:translate(50%,-50%); font-size:2.5rem;" class="<?php echo (empty($intervention->observations) ? 'hide' : 'txt-greyy') ?> fas fa-comment modal-trigger"></a>
         </div>
-        <p class="txt-center h6">Informations Générales</p>
         <div class="card-content p-0 greyy">
             <div class="grix xs1 txt-white md3 mt-4 mb-4">
                 <div>
@@ -185,10 +184,8 @@ $date = Carbon::now();
                     <li class="txt-center">{{ $user->name }}</li>
                 </div>
                 @endforeach
+
             </div>
-
-            <p class="txt-center white p-3 h6">Informations véhicule</p>
-
             <div class="grix xs1 gutter-xs5 mt-4 mb-4">
 
                 <!-- Véhicule -->
@@ -197,7 +194,7 @@ $date = Carbon::now();
                     <p class="greyy txt-orange h100 m-0 p-2 txt-center">Aucun véhicule sélectionné</p>
                     @else
                     <div class="card m-0 greyy h100">
-                        <div class="grix xs1 md4 txt-white txt-center">
+                        <div class="grix xs1 md2 txt-white txt-center">
                             <p class="">Marque : {{$intervention->vehiculeList->marque}}</p>
                             <p class="">Modèle : {{$intervention->vehiculeList->modele}}</p>
                             <p class="">Immatriculation : {{$intervention->vehiculeList->immat}}</p>
@@ -213,7 +210,6 @@ $date = Carbon::now();
             </div>
             <!-- Déplacements -->
             @if(!empty($intervention->start_deplacement_aller))
-            <p class="txt-center white p-3 h6">Informations déplacement</p>
             <div class="mt-4 grix xs1 md2 txt-center txt-white mb-4 ">
                 <div>
                     <p>Départ aller : {{ $intervention->start_deplacement_aller }}</p>
@@ -224,6 +220,8 @@ $date = Carbon::now();
                     <p>Arrivée retour : {{ $intervention->end_deplacement_retour }}</p>
                 </div>
             </div>
+            @else
+            <p class="m-0 p-4 txt-center txt-orange"> Pas de déplacement</p>
             @endif
         </div>
     </div>
@@ -246,22 +244,20 @@ $date = Carbon::now();
                     <i class="fas fa-comment-medical <?php echo (isset($operation->commentaire) ? 'txt-greyy' : '') ?>"></i>
                 </button>
                 <div class="modal greyy shadow-1 mb-3 p-4" id="edit-operation-{{ $operation->id }}" data-ax="modal">
-                    <div class="">
-                        <form class="form-material" method="POST" action="{{ route('operations.update',['operation' => $operation->id])}}">
-                            @method('PUT')
-                            @csrf
-                            <div class="grix xs1 txt-center">
-                                <div class="form-field">
-                                    <textarea type="text" id="commentaire" name="commentaire" class="form-control" value="">{{ $operation->commentaire }}</textarea>
-                                    <input hidden name="intervention_id" value="{{ $intervention->id }}" />
-                                    <label for="commentaire" class="">Commentaire</label>
-                                </div>
+                    <form class="form-material" method="POST" action="{{ route('operations.update',['operation' => $operation->id])}}">
+                        @method('PUT')
+                        @csrf
+                        <div class="grix xs1 txt-center">
+                            <div class="form-field">
+                                <textarea type="text" id="commentaire" name="commentaire" class="form-control" value="">{{ $operation->commentaire }}</textarea>
+                                <input hidden name="intervention_id" value="{{ $intervention->id }}" />
+                                <label for="commentaire" class="">Commentaire</label>
                             </div>
-                            <div class="txt-center">
-                                <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange mt-4"><span class="outline-text outline-invert">Début</span></button>
-                            </div>
-                        </form>
-                    </div>
+                        </div>
+                        <div class="txt-center">
+                            <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange mt-4"><span class="outline-text outline-invert">Envoyer</span></button>
+                        </div>
+                    </form>
                 </div>
             </div>
             @endforeach
@@ -314,3 +310,9 @@ $date = Carbon::now();
 </div>
 
 @endsection
+
+@foreach($intervention->pieces as $piece)
+<div>
+    <li class="txt-center">{{ $piece->nom}}</li>
+</div>
+@endforeach

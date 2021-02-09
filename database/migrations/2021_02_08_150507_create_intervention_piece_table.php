@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateInterventionUserTable extends Migration
+class CreateInterventionPieceTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateInterventionUserTable extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('intervention_user');
-
-        Schema::create('intervention_user', function (Blueprint $table) {
+        Schema::create('intervention_piece', function (Blueprint $table) {
             $table->id();
             $table->integer('intervention_id')->unsigned();
-            $table->integer('user_id')->unsigned();
+            $table->integer('piece_id')->unsigned();
         });
     }
 
@@ -29,6 +27,6 @@ class CreateInterventionUserTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('intervention_user');
+        Schema::dropIfExists('intervention_piece');
     }
 }

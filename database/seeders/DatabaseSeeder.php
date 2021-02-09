@@ -31,6 +31,27 @@ class DatabaseSeeder extends Seeder
             ]
         ]);
 
+        DB::table('pieces')->insert([
+            [
+                'nom' => 'piece1',
+                'ref' => 'zerzerez',
+                'prix' => '12',
+                'qte' => '5'
+            ],
+            [
+                'nom' => 'piece2',
+                'ref' => 'sqdsqd',
+                'prix' => '14',
+                'qte' => '8'
+            ],
+            [
+                'nom' => 'piece3',
+                'ref' => 'hersrthe',
+                'prix' => '123',
+                'qte' => '55'
+            ]
+        ]);
+
         for ($i = 0; $i < 20; $i++) {
             DB::table('vehicules')->insert([
                 [

@@ -24,4 +24,8 @@ class Intervention extends Model
         return $this->belongsToMany(User::class);
     }
 
+    public function pieces()
+    {
+        return $this->belongsToMany(Piece::class);
+    }
 }

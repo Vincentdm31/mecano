@@ -9,4 +9,8 @@ class Piece extends Model
 {
     use HasFactory;
 
+    public function interventions()
+    {
+        return $this->belongsToMany(Intervention::class);
+    }
 }
