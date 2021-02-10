@@ -187,7 +187,7 @@ $date = Carbon::now();
 <div class="container">
     <div class="container grix xs1 md2 gutter-xs5 mt-4 mb-4 ">
         <!-- Véhicule -->
-        <div class="rounded-3">
+        <div class="rounded-3 bd-orange bd-light-4 bd-solid bd-3">
             @if(empty($intervention->vehicule_id))
             <p class="greyy txt-orange h100 m-0 p-4 rounded-3 vself-center txt-center">Aucun véhicule sélectionné</p>
             @else
@@ -230,7 +230,7 @@ $date = Carbon::now();
             </div>
         </div>
         @else
-        <div class="greyy bd-solid bd-3 bd-white rounded-3">
+        <div class="greyy bd-solid bd-3 bd-orange bd-light-4 rounded-3">
             <p class="m-0 p-4 txt-center txt-orange"> Pas de déplacement</p>
         </div>
         @endif
