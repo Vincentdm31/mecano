@@ -201,7 +201,7 @@ $date = Carbon::now();
                         @if(empty($intervention->km_vehicule))
                         <p class="txt-orange">Saisir kilométrage</p>
                         @else
-                        <p class="">Kilométrage : {{$intervention->km_vehicule}}</p>
+                        <p class="">{{$intervention->km_vehicule}} Km</p>
                         @endif
                     </div>
                 </div>
