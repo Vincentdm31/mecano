@@ -43,8 +43,8 @@ class OperationController extends Controller
         foreach ($inputs as $key => $value) {
             $operation->$key = $value;
         }
-        $categorie = $request->input('name');
-        $categorieId = Categorie::Where('name', 'like', '%'.$categorie.'%')->pluck('id')->implode(' ');
+        $categorieName = $request->input('name');
+        $categorieId = Categorie::Where('name', 'like', '%'.$categorieName.'%')->pluck('id')->implode(' ');
         $operation->categorie_id = $categorieId;
         $operation->save();
         return redirect(route('interventions.edit', ['intervention' => $intervention, 'operation' => $operation]));
