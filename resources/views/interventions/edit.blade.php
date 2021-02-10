@@ -158,7 +158,7 @@ $date = Carbon::now();
 <div class="container mt-5">
     <!-- Récapitulatif -->
     <div class="container bd-solid bd-white bd-3 rounded-3 card overflow-visible shadow-4 mb-5">
-        <div class="card-header greyy p-2 rounded-tl3 rounded-tr3">
+        <div class="card-header greyy p-2 rounded-tl3 rounded-tr3 txt-center">
             <p class="pl-4 txt-white">Infos générales</p>
             <a href="" data-target="modal-comment" style="position:absolute;right:0;top:0;transform:translate(50%,-50%); font-size:2.5rem;" class="<?php echo (empty($intervention->observations) ? 'hide' : 'txt-orange') ?> fas fa-comment modal-trigger"></a>
         </div>
