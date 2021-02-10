@@ -10,33 +10,33 @@ $date = Carbon::now();
 
 <!-- Actions -->
 <div class="container mt-5">
-    <div class="container bd-solid bd-3 bd-white shadow-1 rounded-3">
+    <div class="container bd-solid bd-3 bd-orange bd-light-4 shadow-1 rounded-3">
         <div class="grix xs1 md3 gutter-xs3 vcenter center p-4">
-            <button data-target="modal-operation" class="btn w100 modal-trigger rounded-1 outline opening txt-orange"><span class="outline-text">Opération<i class="far fa-plus-square ml-3"></i></span></button>
-            <button data-target="modal-observation" class="btn w100 modal-trigger rounded-1 outline opening txt-orange"><span class="outline-text">Observation<i class="far fa-plus-square ml-3"></i></span></button>
+            <button data-target="modal-operation" class="btn w100 modal-trigger rounded-1 outline opening txt-orange txt-light-4"><span class="outline-text outline-invert">Opération<i class="far fa-plus-square ml-3"></i></span></button>
+            <button data-target="modal-observation" class="btn w100 modal-trigger rounded-1 outline opening txt-orange txt-light-4"><span class="outline-text outline-invert">Observation<i class="far fa-plus-square ml-3"></i></span></button>
             @if($intervention->state == "doing")
             <form class="form-material my-auto w100" method="POST" action="{{ route('timeinterventions.store') }}">
                 @csrf
                 <input hidden name="intervention_id" value="{{ $intervention->id }}">
                 <input hidden name="start_date" value="{{ $date }}">
-                <button type="submit" class="btn w100 modal-trigger rounded-1 outline opening txt-orange"><span class="outline-text">Pause</span></button>
+                <button type="submit" class="btn w100 modal-trigger rounded-1 outline opening txt-orange txt-light-4"><span class="outline-text outline-invert">Pause</span></button>
             </form>
             @elseif(($intervention->state == "pause"))
             <form class="form-material my-auto w100" method="POST" action="{{ route('timeinterventions.store') }}">
                 @csrf
                 <input hidden name="intervention_id" value="{{ $intervention->id }}">
                 <input hidden name="end_date" value="{{ $date }}">
-                <button type="submit" class="btn w100 modal-trigger rounded-1 outline opening txt-orange"><span class="outline-text">Reprendre</span></button>
+                <button type="submit" class="btn w100 modal-trigger rounded-1 outline opening txt-orange txt-light-4"><span class="outline-text outline-invert">Reprendre</span></button>
             </form>
             @endif
         </div>
         <div class="tab full-width shadow-1 p-3" id="example-tab" data-ax="tab">
             <ul class="tab-menu greyy txt-white">
                 <li class="tab-link">
-                    <a href="#tab-deplacement">Déplacement</a>
+                    <a href="#tab-vehicule">Véhicule</a>
                 </li>
                 <li class="tab-link">
-                    <a href="#tab-vehicule">Véhicule</a>
+                    <a href="#tab-deplacement">Déplacement</a>
                 </li>
                 <li class="tab-link">
                     <a href="#tab-kilometrage">Kilométrage</a>
@@ -73,7 +73,7 @@ $date = Carbon::now();
                 @endif
                 <!--Start Déplacement Interventions Retour -->
                 @if(!empty($intervention->end_deplacement_aller) && empty($intervention->start_deplacement_retour))
-                <p class="txt-white txt-center">Déplacements Retour</p>
+                <p class="txt-orange txt-center">Déplacements Retour</p>
                 <div class="">
                     <form method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
                         @method('PUT')
@@ -87,7 +87,7 @@ $date = Carbon::now();
                 @endif
                 <!--End Déplacement Interventions Retour -->
                 @if(!empty($intervention->start_deplacement_retour) && empty($intervention->end_deplacement_retour))
-                <p class="txt-white txt-center">Déplacements Retour</p>
+                <p class="txt-orange txt-center">Déplacements Retour</p>
                 <div class="">
                     <form method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
                         @method('PUT')
@@ -114,7 +114,7 @@ $date = Carbon::now();
                                 <input type="text" name="selectVehicule" id="selectVehicule" class="form-control txt-white" />
                                 <label for="selectVehicule">Rechercher</label>
                             </div>
-                            <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange circle ml-auto vself-center rounded-4"><span class="outline-text outline-invert"><i class="fa fa-search"></i></span></button>
+                            <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange circle mx-auto vself-center rounded-4"><span class="outline-text outline-invert"><i class="fa fa-search"></i></span></button>
                         </div>
                     </form>
                 </div>
@@ -157,9 +157,9 @@ $date = Carbon::now();
 </div>
 <div class="container mt-5">
     <!-- Récapitulatif -->
-    <div class="container bd-solid bd-white bd-3 rounded-3 card overflow-visible shadow-4 mb-5">
-        <div class="card-header greyy p-2 rounded-tl3 rounded-tr3 txt-center">
-            <p class="pl-4 txt-white">Infos générales</p>
+    <div class="container bd-orange bd-light-4 bd-solid bd-3 rounded-3 card overflow-visible shadow-4 mb-5">
+        <div class="card-header p-0 txt-center">
+            <p class="m-3 txt-white">Infos générales</p>
             <a href="" data-target="modal-comment" style="position:absolute;right:0;top:0;transform:translate(50%,-50%); font-size:2.5rem;" class="<?php echo (empty($intervention->observations) ? 'hide' : 'txt-orange') ?> fas fa-comment modal-trigger"></a>
         </div>
         <div class="card-content rounded-bl3 rounded-br3 p-2 greyy">
@@ -187,13 +187,13 @@ $date = Carbon::now();
 <div class="container">
     <div class="container grix xs1 md2 gutter-xs5 mt-4 mb-4 ">
         <!-- Véhicule -->
-        <div class="bd-solid bd-3 bd-white rounded-3">
+        <div class="rounded-3">
             @if(empty($intervention->vehicule_id))
             <p class="greyy txt-orange h100 m-0 p-4 rounded-3 vself-center txt-center">Aucun véhicule sélectionné</p>
             @else
-            <div class="card m-0 greyy rounded-3 txt-center h100">
-                <div class="card-header greyy txt-white">Véhicule</div>
-                <div class="card-content">
+            <div class="card m-0 greyy rounded-3 bd-orange bd-3 bd-light-4 bd-solid txt-center h100">
+                <div class="card-header p-2 txt-white">Véhicule</div>
+                <div class="card-content rounded-bl3 rounded-br3">
                     <div class="grix xs1 md2 txt-white">
                         <p class="">{{$intervention->vehiculeList->marque}}</p>
                         <p class="">{{$intervention->vehiculeList->modele}}</p>
@@ -210,12 +210,10 @@ $date = Carbon::now();
         </div>
         <!-- Déplacements -->
         @if(!empty($intervention->start_deplacement_aller))
-        <div class="grix xs1 greyy bd-solid bd-white bd-3 rounded-3 txt-white">
+        <div class="grix xs1 greyy rounded-3 bd-orange bd-light-4 bd-3 bd-solid txt-white">
             <div class="card m-0">
-                <div class="card-header txt-center p-0 pl-4">
-                    <p>Déplacement</p>
-                </div>
-                <div class="card-content">
+                <div class="card-header txt-center p-2 txt-white rounded-tl3 rounded-tr3">Déplacement</div>
+                <div class="card-content rounded-bl3 rounded-br3">
                     <div class="grix sm1 md2 txt-center">
                         <div>
                             <p class="pb-2 txt-orange">Aller</p>
@@ -244,8 +242,8 @@ $date = Carbon::now();
 <!-- Opérations -->
 <div class="container mb-5">
     <div class="container">
-        <div class="card txt-center shadow-4">
-            <div class="card-header p-0 orange txt-center txt-black">
+        <div class="card rounded-3 txt-center bd-orange bd-light-4 bd-solid bd-3 shadow-4">
+            <div class="card-header p-0  txt-center txt-white">
                 <p class="">Liste des opérations</p>
             </div>
             @if(empty($intervention->operations[0]))
@@ -255,8 +253,8 @@ $date = Carbon::now();
 
             <div class="card-content greyy txt-white grix xs2">
                 <p class="my-auto">{{ $operation->name }}</p>
-                <button data-target="edit-operation-{{ $operation->id }}" class="btn rounded-1 press orange txt-white modal-trigger mx-auto">
-                    <i class="fas fa-comment-medical <?php echo (isset($operation->commentaire) ? 'txt-greyy' : '') ?>"></i>
+                <button data-target="edit-operation-{{ $operation->id }}" class="btn rounded-1 txt-greyy modal-trigger mx-auto">
+                    <i class="fas fa-comment-medical <?php echo (isset($operation->commentaire) ? 'txt-orange' : '') ?>"></i>
                 </button>
                 <div class="modal greyy shadow-1 mb-3 p-4" id="edit-operation-{{ $operation->id }}" data-ax="modal">
                     <form class="form-material" method="POST" action="{{ route('operations.update',['operation' => $operation->id])}}">
@@ -326,8 +324,3 @@ $date = Carbon::now();
 
 @endsection
 
-@foreach($intervention->pieces as $piece)
-<div>
-    <li class="txt-center">{{ $piece->nom}}</li>
-</div>
-@endforeach
