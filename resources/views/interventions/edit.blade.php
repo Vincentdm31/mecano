@@ -67,10 +67,10 @@ $date = Carbon::now();
         <div class="tab full-width shadow-1 p-3" id="example-tab" data-ax="tab">
             <ul class="tab-menu greyy txt-white">
                 <li class="tab-link">
-                    <a href="#tab-vehicule">Véhicule</a>
+                    <a href="#tab-deplacement">Déplacement</a>
                 </li>
                 <li class="tab-link">
-                    <a href="#tab-deplacement">Déplacement</a>
+                    <a href="#tab-vehicule">Véhicule</a>
                 </li>
                 <li class="tab-link">
                     <a href="#tab-kilometrage">Kilométrage</a>
@@ -233,9 +233,9 @@ $date = Carbon::now();
             @if(empty($intervention->vehicule_id))
             <p class="greyy txt-orange h100 m-0 p-4 rounded-3 vself-center txt-center">Aucun véhicule sélectionné</p>
             @else
-            <div class="card m-0 greyy rounded-3 bd-orange bd-3 bd-light-4 bd-solid txt-center h100">
+            <div class="card m-0 greyy rounded-3 txt-center h100">
                 <div class="card-header p-2 txt-white">Véhicule</div>
-                <div class="card-content rounded-bl3 rounded-br3">
+                <div class="card-content d-flex rounded-bl3 mx-auto my-auto rounded-br3">
                     <div class="grix xs1 md2 txt-white">
                         <p class="">{{$intervention->vehiculeList->marque}}</p>
                         <p class="">{{$intervention->vehiculeList->modele}}</p>
@@ -260,12 +260,18 @@ $date = Carbon::now();
                         <div>
                             <p class="pb-2 txt-orange">Aller</p>
                             <p>{{ Carbon::parse($intervention->start_deplacement_aller)->format('d/m/Y h:m:s')  }}</p>
+                            @if(!empty($intervention->end_deplacement_aller))
                             <p>{{ Carbon::parse($intervention->end_deplacement_aller)->format('d/m/Y h:m:s')  }}</p>
+                            @endif
                         </div>
                         <div>
                             <p class="pb-2 txt-orange">Retour</p>
+                            @if(!empty($intervention->start_deplacement_retour))
                             <p>{{ Carbon::parse($intervention->start_deplacement_retour)->format('d/m/Y h:m:s')  }}</p>
+                            @endif
+                            @if(!empty($intervention->end_deplacement_retour))
                             <p>{{ Carbon::parse($intervention->end_deplacement_retour)->format('d/m/Y h:m:s')  }}</p>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -288,48 +294,53 @@ $date = Carbon::now();
             <div class="card-header p-0  txt-center txt-white">
                 <p class="">Liste des opérations</p>
             </div>
-            <div class="card-content">
-                <div class="grix xs3">
+            <div class="card-content container">
+                @if(!$intervention->categories()->exists())
+                <p class="txt-center txt-orange">Aucune opération en cours</p>
+                @else
+                <div class="grix xs2">
                     @foreach( $intervention->categories as $operation)
                     <div class="my-auto txt-white">
                         <p>{{ $operation->name }}</p>
                     </div>
-                    <div class="my-auto">
-                        <button data-target="edit-operation-{{ $operation->id }}" class="btn rounded-1 txt-blue modal-trigger mx-auto">
-                            <i class="fas fa-comment-medical <?php echo (isset($operation->observations) ? 'txt-orange' : '') ?>"></i>
-                        </button>
-                        <div class="modal greyy shadow-1 mb-3 p-4" id="edit-operation-{{ $operation->id }}" data-ax="modal">
-                            <form class="form-material" method="POST" action="{{ route('editOperation') }}">
+                    <div class="grix xs2 gutter-xs5">
+                        <div class="my-auto ml-auto">
+                            <button data-target="edit-operation-{{ $operation->id }}" class="btn rounded-1 txt-blue modal-trigger mx-auto">
+                                <i class="fas fa-comment-medical <?php echo (isset($operation->pivot->observations) ? 'txt-orange' : '') ?>"></i>
+                            </button>
+                            <div class="modal greyy shadow-1 mb-3 p-4" id="edit-operation-{{ $operation->id }}" data-ax="modal">
+                                <form class="form-material" method="POST" action="{{ route('editOperation') }}">
+                                    @method('PUT')
+                                    @csrf
+                                    <div class="grix xs1 txt-center">
+                                        <div class="form-field">
+                                            <textarea type="text" id="observations" name="observations" class="form-control txt-white">{{ $operation->pivot->observations }}</textarea>
+                                            <input hidden name="intervention_id" value="{{ $intervention->id }}" />
+                                            <input hidden name="categorie_id" value="{{ $operation->id}}" />
+                                            <label for="observations" class="">Observations</label>
+                                        </div>
+                                    </div>
+                                    <div class="txt-center">
+                                        <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange mt-4"><span class="outline-text outline-invert">Envoyer</span></button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="mr-auto">
+                            <form class="form-material" method="POST" action="{{ route('deleteOperation') }}">
                                 @method('PUT')
                                 @csrf
-                                <div class="grix xs1 txt-center">
-                                    <div class="form-field">
-                                        <textarea type="text" id="observations" name="observations" class="form-control txt-white">{{ $operation->pivot->observations }}</textarea>
-                                        <input hidden name="intervention_id" value="{{ $intervention->id }}" />
-                                        <input hidden name="categorie_id" value="{{ $operation->id}}" />
-                                        <label for="observations" class="">Observations</label>
-                                    </div>
-                                </div>
-                                <div class="txt-center">
-                                    <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange mt-4"><span class="outline-text outline-invert">Envoyer</span></button>
+                                <input hidden name="intervention_id" value="{{ $intervention->id }}" />
+                                <input hidden name="categorie_id" value="{{ $operation->id}}" />
+                                <div class="mx-auto">
+                                    <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-white"><span class="outline-text outline-invert"><i class="fas fa-trash txt-red"></i></span></button>
                                 </div>
                             </form>
                         </div>
                     </div>
-                    <div>
-                        <form class="form-material" method="POST" action="{{ route('deleteOperation') }}">
-                            @method('PUT')
-                            @csrf
-                            <input hidden name="intervention_id" value="{{ $intervention->id }}" />
-                            <input hidden name="categorie_id" value="{{ $operation->id}}" />
-                            <div class="mx-auto">
-                                <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange"><span class="outline-text outline-invert">delete</span></button>
-                            </div>
-                        </form>
-                    </div>
                     @endforeach
                 </div>
-
+                @endif
             </div>
         </div>
     </div>

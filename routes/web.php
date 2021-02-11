@@ -31,7 +31,6 @@ Route::middleware('auth')->group(function() {
     Route::get('/', [HomeController::class,'index'])->name('home');
     Route::resource('users', UserController::class);
     Route::resource('interventions', InterventionController::class);
-    Route::resource('operations', OperationController::class);
     Route::resource('vehicules', VehiculeController::class);
     Route::resource('timeinterventions', TimeInterventionController::class);
 
