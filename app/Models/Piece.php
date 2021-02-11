@@ -11,6 +11,6 @@ class Piece extends Model
 
     public function interventions()
     {
-        return $this->belongsToMany(Intervention::class);
+        return $this->belongsToMany(Intervention::class)->withPivot('id');
     }
 }

@@ -22,13 +22,13 @@ class CreateInterventionsTable extends Migration
             $table->datetime('end_deplacement_retour')->nullable();
             $table->datetime('start_intervention_time')->nullable();
             $table->datetime('end_intervention_time')->nullable();
-            $table->string('totalTime')->nullable();
+            $table->float('totalTime')->nullable();
             $table->float('prix')->nullable();
             $table->enum('state', ['doing', 'pause', 'finish'])->nullable();
             $table->text('observations')->nullable();
-            $table->timestamps();
             $table->string('km_vehicule')->nullable();
             $table->string('created_by');
+            $table->timestamps();
 
             $table->bigInteger('user_id')->unsigned()->nullable();
             $table->foreign('user_id')->references('id')->on('users')

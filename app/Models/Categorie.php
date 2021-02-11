@@ -9,11 +9,6 @@ class Categorie extends Model
 {
     use HasFactory;
 
-    public function operation()
-    {
-        return $this->belongsTo(Operation::class);
-    }
-
     public function intervention()
     {
         return $this->belongsToMany(Intervention::class)->withPivot('id');

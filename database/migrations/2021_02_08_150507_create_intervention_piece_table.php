@@ -15,8 +15,14 @@ class CreateInterventionPieceTable extends Migration
     {
         Schema::create('intervention_piece', function (Blueprint $table) {
             $table->id();
-            $table->integer('intervention_id')->unsigned();
-            $table->integer('piece_id')->unsigned();
+            $table->bigInteger('intervention_id')->unsigned();
+            $table->bigInteger('piece_id')->unsigned();
+
+            $table->foreign('intervention_id')->references('id')->on('interventions')
+                ->onDelete('cascade')->onUpdate('cascade');
+
+            $table->foreign('piece_id')->references('id')->on('pieces')
+                ->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

@@ -16,9 +16,9 @@ class CreatePiecesTable extends Migration
         Schema::dropIfExists('pieces');
         Schema::create('pieces', function (Blueprint $table) {
             $table->id();
-            $table->string('nom');
+            $table->string('name');
             $table->string('ref');
-            $table->float('prix');
+            $table->float('price');
             $table->float('qte');
             $table->timestamps();
         });

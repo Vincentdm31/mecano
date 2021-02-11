@@ -9,11 +9,6 @@ class Intervention extends Model
 {
     use HasFactory;
 
-    public function operations()
-    {
-        return $this->hasMany(Operation::class);
-    }
-
     public function vehiculeList()
     {
         return $this->hasOne(Vehicule::class, 'id', 'vehicule_id');
@@ -26,7 +21,7 @@ class Intervention extends Model
 
     public function pieces()
     {
-        return $this->belongsToMany(Piece::class);
+        return $this->belongsToMany(Piece::class)->withPivot('id');
     }
 
     public function categories()

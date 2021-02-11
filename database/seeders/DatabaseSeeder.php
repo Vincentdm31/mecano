@@ -33,21 +33,21 @@ class DatabaseSeeder extends Seeder
 
         DB::table('pieces')->insert([
             [
-                'nom' => 'piece1',
+                'name' => 'piece1',
                 'ref' => 'zerzerez',
-                'prix' => '12',
+                'price' => '12',
                 'qte' => '5'
             ],
             [
-                'nom' => 'piece2',
+                'name' => 'piece2',
                 'ref' => 'sqdsqd',
-                'prix' => '14',
+                'price' => '14',
                 'qte' => '8'
             ],
             [
-                'nom' => 'piece3',
+                'name' => 'piece3',
                 'ref' => 'hersrthe',
-                'prix' => '123',
+                'price' => '123',
                 'qte' => '55'
             ]
         ]);
