@@ -379,7 +379,7 @@ $date = Carbon::now();
                 @if(!$intervention->pieces()->exists())
                 <p class="txt-center txt-orange">Aucune pièce utilisée</p>
                 @else
-                <div class="grix xs3">
+                <div class="grix xs2 md4">
                     @foreach( $intervention->pieces as $piece)
                     <div class="my-auto txt-white">
                         <p>{{ $piece->name }}</p>
@@ -387,7 +387,7 @@ $date = Carbon::now();
                     <div class="my-auto txt-white">
                         <p>x{{ $piece->pivot->qte }}</p>
                     </div>
-                    <div class="grix xs2 gutter-xs5">
+                    <div class="grix xs2 col-xs2 gutter-xs5">
                         <div class="my-auto ml-auto">
                             <button data-target="edit-piece-{{ $piece->id }}" class="btn rounded-1 txt-blue modal-trigger mx-auto">
                                 <i class="fas fa-comment-medical <?php echo (isset($piece->pivot->observations) ? 'txt-orange' : '') ?>"></i>
@@ -429,4 +429,34 @@ $date = Carbon::now();
         </div>
     </div>
 </div>
+@endsection
+
+@section('extra-js')
+
+<script>
+    let toast = new Axentix.Toast();
+</script>
+
+@if(session('toast') == 'nopieceqte')
+<script>
+    toast.change('Pas assez de pièces', {
+        classes: "rounded-1 red light-2 shadow-2 mt-5"
+    });
+    toast.show();
+</script>
+@elseif(session('toast') == 'addpiece')
+<script>
+    toast.change('Pièce ajoutée', {
+        classes: "rounded-1 green light-2 shadow-2"
+    });
+    toast.show();
+</script>
+@elseif(session('toast') == 'removepiece')
+<script>
+    toast.change('Pièce supprimée', {
+        classes: "rounded-1 green light-2 shadow-2"
+    });
+    toast.show();
+</script>
+@endif
 @endsection

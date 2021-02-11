@@ -164,9 +164,16 @@ class InterventionController extends Controller
         $qte = $request->get('qte');
         $intervention = Intervention::find($interventionId);
 
-        $intervention->pieces()->sync([$piece_id => [ 'qte' => $qte]], false);
+        $piece = Piece::find($piece_id);
+
+        if($piece->qte >= $qte){
+            $piece->qte -= $qte;
+            $intervention->pieces()->sync([$piece_id => [ 'qte' => $qte]], false);
+        }else{
+            return redirect(route('interventions.edit', ['intervention' => $intervention]))->with('toast', 'nopieceqte' );
+        }
         
-        return redirect(route('interventions.edit', ['intervention' => $intervention]));
+        return redirect(route('interventions.edit', ['intervention' => $intervention]))->with('toast', 'addpiece' );
     }
 
     public function editPiece(Request $request){
@@ -185,8 +192,18 @@ class InterventionController extends Controller
         $piece_id = $request->get('piece_id');
         $intervention = Intervention::find($interventionId);
 
-        $intervention->pieces()->detach($piece_id);
+        $piece = Piece::find($piece_id);
+        $qte = $intervention->pieces()->find($piece_id)->pivot->qte;
+
+        if($intervention->pieces()->find($piece_id)->pivot->qte > 1){
+            $intervention->pieces()->sync([$piece_id => [ 'qte' => $qte -1]], false);
+            $piece->qte ++;
+            $piece->save();
+        }else{
+            $intervention->pieces()->detach($piece_id);
+        }
         
-        return redirect(route('interventions.edit', ['intervention' => $intervention]));
+        
+        return redirect(route('interventions.edit', ['intervention' => $intervention]))->with('toast', 'removepiece');
     }
 }
