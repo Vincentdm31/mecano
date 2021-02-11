@@ -37,7 +37,13 @@ Route::middleware('auth')->group(function() {
     Route::get('/searchUser',  [UserController::class, 'searchUser']);
     Route::get('/searchVehicule',  [VehiculeController::class, 'searchVehicule']);
     Route::get('/selectVehicule',  [InterventionController::class, 'selectVehicule'])->name('selectVehicule');
+
     Route::post('/addOperation',  [InterventionController::class, 'addOperation'])->name('addOperation');
     Route::put('/editOperation',  [InterventionController::class, 'editOperation'])->name('editOperation');
     Route::put('/deleteOperation',  [InterventionController::class, 'deleteOperation'])->name('deleteOperation');
+
+    Route::post('/addPiece',  [InterventionController::class, 'addPiece'])->name('addPiece');
+    Route::put('/editPiece',  [InterventionController::class, 'editPiece'])->name('editPiece');
+    Route::put('/deletePiece',  [InterventionController::class, 'deletePiece'])->name('deletePiece');
+
 });

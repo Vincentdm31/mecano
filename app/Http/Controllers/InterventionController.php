@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Categorie;
 use App\Models\Intervention;
+use App\Models\Piece;
 use App\Models\Vehicule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -77,10 +78,10 @@ class InterventionController extends Controller
         $search = $request->get('selectVehicule');
         $vehicules = Vehicule::Where('immat', 'like', '%' . $search . '%')
             ->get();
-
         $categories = Categorie::all();
+        $pieces = Piece::all();
 
-        return view('interventions.edit', ['intervention' => $intervention, 'vehicules' => $vehicules, 'categories' => $categories]);
+        return view('interventions.edit', ['intervention' => $intervention, 'vehicules' => $vehicules, 'categories' => $categories, 'pieces' => $pieces]);
     }
 
     /**
@@ -97,7 +98,6 @@ class InterventionController extends Controller
         foreach ($inputs as $key => $value) {
             $intervention->$key = $value;
         }
-
         $intervention->save();
 
         return redirect(route('interventions.edit', ['intervention' => $intervention]));
@@ -119,53 +119,74 @@ class InterventionController extends Controller
     public function selectVehicule(Request $request)
     {
         $interventionID = $request->get('intervention_id');
+        $search = $request->get('selectVehicule');
         $intervention = Intervention::find($interventionID);
         $categories = Categorie::all();
-        $search = $request->get('selectVehicule');
-
+        $pieces = Piece::all();
         $vehicules = Vehicule::Where('immat', 'like', '%' . $search . '%')
             ->orWhere('marque', 'like', '%' . $search . '%')
             ->get();
-        return view('interventions.edit', ['intervention' => $intervention, 'vehicules' => $vehicules, 'categories' => $categories]);
+
+        return view('interventions.edit', ['intervention' => $intervention, 'vehicules' => $vehicules, 'categories' => $categories, 'pieces' => $pieces]);
     }
 
     public function addOperation(Request $request){
         $interventionId = $request->get('intervention_id');
-        $intervention = Intervention::find($interventionId);
-
         $categorieId = $request->get('categorie_id');
+        $intervention = Intervention::find($interventionId);
         $intervention->categories()->attach($categorieId);
 
-        $categories = Categorie::all();
-        $vehicules = Vehicule::all();
-
-        return redirect(route('interventions.edit', ['intervention' => $intervention, 'vehicules' => $vehicules, 'categories' => $categories]));
+        return redirect(route('interventions.edit', ['intervention' => $intervention]));
     }
 
     public function editOperation(Request $request){
         $interventionId = $request->get('intervention_id');
-        $intervention = Intervention::find($interventionId);
-        $categories = Categorie::all();
-        $vehicules = Vehicule::all();
         $observation = $request->input('observations');
         $categorie_id = $request->get('categorie_id');
-
+        $intervention = Intervention::find($interventionId);
         $intervention->categories()->sync([$categorie_id => [ 'observations' => $observation]], false);
         
-        return redirect(route('interventions.edit', ['intervention' => $intervention, 'vehicules' => $vehicules, 'categories' => $categories]));
-    
+        return redirect(route('interventions.edit', ['intervention' => $intervention]));
     }
     
     public function deleteOperation(Request $request){
         $interventionId = $request->get('intervention_id');
-        $intervention = Intervention::find($interventionId);
-        $categories = Categorie::all();
-        $vehicules = Vehicule::all();
         $categorie_id = $request->get('categorie_id');
-
+        $intervention = Intervention::find($interventionId);
         $intervention->categories()->detach($categorie_id);
         
-        return redirect(route('interventions.edit', ['intervention' => $intervention, 'vehicules' => $vehicules, 'categories' => $categories]));
-    
+        return redirect(route('interventions.edit', ['intervention' => $intervention]));
+    }
+
+    public function addPiece(Request $request){
+        $interventionId = $request->get('intervention_id');
+        $piece_id = $request->get('piece_id');
+        $qte = $request->get('qte');
+        $intervention = Intervention::find($interventionId);
+
+        $intervention->pieces()->sync([$piece_id => [ 'qte' => $qte]], false);
+        
+        return redirect(route('interventions.edit', ['intervention' => $intervention]));
+    }
+
+    public function editPiece(Request $request){
+        $interventionId = $request->get('intervention_id');
+        $piece_id = $request->get('piece_id');
+        $observations = $request->get('observations');
+        $intervention = Intervention::find($interventionId);
+
+        $intervention->pieces()->sync([$piece_id => [ 'observations' => $observations]], false);
+        
+        return redirect(route('interventions.edit', ['intervention' => $intervention]));
+    }
+
+    public function deletePiece(Request $request){
+        $interventionId = $request->get('intervention_id');
+        $piece_id = $request->get('piece_id');
+        $intervention = Intervention::find($interventionId);
+
+        $intervention->pieces()->detach($piece_id);
+        
+        return redirect(route('interventions.edit', ['intervention' => $intervention]));
     }
 }

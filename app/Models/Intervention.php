@@ -21,7 +21,7 @@ class Intervention extends Model
 
     public function pieces()
     {
-        return $this->belongsToMany(Piece::class)->withPivot('id');
+        return $this->belongsToMany(Piece::class)->withPivot('id', 'observations' , 'qte');
     }
 
     public function categories()

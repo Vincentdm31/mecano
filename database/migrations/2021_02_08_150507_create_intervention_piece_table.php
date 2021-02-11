@@ -17,10 +17,11 @@ class CreateInterventionPieceTable extends Migration
             $table->id();
             $table->bigInteger('intervention_id')->unsigned();
             $table->bigInteger('piece_id')->unsigned();
+            $table->integer('qte');
+            $table->text('observations')->nullable();
 
             $table->foreign('intervention_id')->references('id')->on('interventions')
                 ->onDelete('cascade')->onUpdate('cascade');
-
             $table->foreign('piece_id')->references('id')->on('pieces')
                 ->onDelete('cascade')->onUpdate('cascade');
         });
