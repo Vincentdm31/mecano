@@ -22,6 +22,7 @@
     <header>
         <nav class="navbar greyy txt-white">
             <a href="{{ url('/') }}" class="navbar-brand">Mecalcis</a>
+            <a href="{{ route('images.create') }}" class="navbar-brand">test</a>
 
             <div class="navbar-menu ml-auto">
                 @guest
