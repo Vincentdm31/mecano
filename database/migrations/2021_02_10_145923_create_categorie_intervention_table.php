@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateInterventionUserTable extends Migration
+class CreateCategorieInterventionTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,16 @@ class CreateInterventionUserTable extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('intervention_user');
-
-        Schema::create('intervention_user', function (Blueprint $table) {
+        Schema::create('categorie_intervention', function (Blueprint $table) {
             $table->id();
+            $table->timestamps();
+            $table->text('observations')->nullable();
+            $table->bigInteger('categorie_id')->unsigned();
             $table->bigInteger('intervention_id')->unsigned();
-            $table->bigInteger('user_id')->unsigned();
 
-            $table->foreign('intervention_id')->references('id')->on('interventions')
+            $table->foreign('categorie_id')->references('id')->on('categories')
                 ->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('user_id')->references('id')->on('users')
+            $table->foreign('intervention_id')->references('id')->on('interventions')
                 ->onDelete('cascade')->onUpdate('cascade');
         });
     }
@@ -34,6 +34,6 @@ class CreateInterventionUserTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('intervention_user');
+        Schema::dropIfExists('categorie_intervention');
     }
 }

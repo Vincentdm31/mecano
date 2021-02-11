@@ -73,7 +73,7 @@ class InterventionController extends Controller
     public function edit(Request $request, $id)
     {
         $intervention =  Intervention::find($id);
-        //$vehicules = Vehicule::all();
+        $vehicules = Vehicule::all();
         $search = $request->get('selectVehicule');
         $vehicules = Vehicule::Where('immat', 'like', '%' . $search . '%')
             ->get();
@@ -127,5 +127,45 @@ class InterventionController extends Controller
             ->orWhere('marque', 'like', '%' . $search . '%')
             ->get();
         return view('interventions.edit', ['intervention' => $intervention, 'vehicules' => $vehicules, 'categories' => $categories]);
+    }
+
+    public function addOperation(Request $request){
+        $interventionId = $request->get('intervention_id');
+        $intervention = Intervention::find($interventionId);
+
+        $categorieId = $request->get('categorie_id');
+        $intervention->categories()->attach($categorieId);
+
+        $categories = Categorie::all();
+        $vehicules = Vehicule::all();
+
+        return redirect(route('interventions.edit', ['intervention' => $intervention, 'vehicules' => $vehicules, 'categories' => $categories]));
+    }
+
+    public function editOperation(Request $request){
+        $interventionId = $request->get('intervention_id');
+        $intervention = Intervention::find($interventionId);
+        $categories = Categorie::all();
+        $vehicules = Vehicule::all();
+        $observation = $request->input('observations');
+        $categorie_id = $request->get('categorie_id');
+
+        $intervention->categories()->sync([$categorie_id => [ 'observations' => $observation]], false);
+        
+        return redirect(route('interventions.edit', ['intervention' => $intervention, 'vehicules' => $vehicules, 'categories' => $categories]));
+    
+    }
+    
+    public function deleteOperation(Request $request){
+        $interventionId = $request->get('intervention_id');
+        $intervention = Intervention::find($interventionId);
+        $categories = Categorie::all();
+        $vehicules = Vehicule::all();
+        $categorie_id = $request->get('categorie_id');
+
+        $intervention->categories()->detach($categorie_id);
+        
+        return redirect(route('interventions.edit', ['intervention' => $intervention, 'vehicules' => $vehicules, 'categories' => $categories]));
+    
     }
 }

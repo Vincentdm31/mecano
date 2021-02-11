@@ -12,8 +12,42 @@ $date = Carbon::now();
 <div class="container mt-5">
     <div class="container bd-solid bd-3 bd-orange bd-light-4 shadow-1 rounded-3">
         <div class="grix xs1 md3 gutter-xs3 vcenter center p-4">
-            <button data-target="modal-operation" class="btn w100 modal-trigger rounded-1 outline opening txt-orange txt-light-4"><span class="outline-text outline-invert">Opération<i class="far fa-plus-square ml-3"></i></span></button>
+            <button data-target="modal-add-operation" class="btn w100 modal-trigger rounded-1 outline opening txt-orange txt-light-4"><span class="outline-text outline-invert">Operation<i class="far fa-plus-square ml-3"></i></span></button>
+            <div class="modal greyy light-4 shadow-1 mb-3 p-4" id="modal-add-operation" data-ax="modal">
+                <form class="form-material" method="POST" action="{{ route('addOperation')}}">
+                    @csrf
+                    <div class="form-field">
+                        <label for="operation">Opération</label>
+                        <select class="form-control rounded-1 txt-white" name="categorie_id">
+                            @foreach ( $categories as $categorie)
+                            <option class="greyy txt-white" value="{{ $categorie->id }}">{{ $categorie->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <input hidden name="intervention_id" value="{{ $intervention->id }}">
+                    <div class="txt-center">
+                        <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange mt-4"><span class="outline-text outline-invert">Valider</span></button>
+                    </div>
+                </form>
+            </div>
             <button data-target="modal-observation" class="btn w100 modal-trigger rounded-1 outline opening txt-orange txt-light-4"><span class="outline-text outline-invert">Observation<i class="far fa-plus-square ml-3"></i></span></button>
+            <div class="modal greyy shadow-1 mb-3 p-4" id="modal-observation" data-ax="modal">
+                <div class="">
+                    <form class="form-material" method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
+                        @method('PUT')
+                        @csrf
+                        <div class="grix xs1 txt-center">
+                            <div class="form-field">
+                                <textarea type="number" id="km_vehicule" name="observations" class="form-control txt-center txt-white">{{ $intervention->observations }}</textarea>
+                                <label for="km_vehicule" class="">Observations</label>
+                            </div>
+                        </div>
+                        <div class="txt-center">
+                            <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange mt-4"><span class="outline-text outline-invert">Envoyer</span></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
             @if($intervention->state == "doing")
             <form class="form-material my-auto w100" method="POST" action="{{ route('timeinterventions.store') }}">
                 @csrf
@@ -161,6 +195,14 @@ $date = Carbon::now();
         <div class="card-header p-0 txt-center">
             <p class="m-3 txt-white">Infos générales</p>
             <a href="" data-target="modal-comment" style="position:absolute;right:0;top:0;transform:translate(50%,-50%); font-size:2.5rem;" class="<?php echo (empty($intervention->observations) ? 'hide' : 'txt-orange') ?> fas fa-comment modal-trigger"></a>
+            <div class="modal grey light-4 shadow-1 mb-3 h100 rounded-3" id="modal-comment" data-ax="modal">
+                <div class="card m-0">
+                    <div class="card-header greyy txt-white txt-center">Observations</div>
+                </div>
+                <div class="card-content p-4">
+                    {{ $intervention->observations}}
+                </div>
+            </div>
         </div>
         <div class="card-content rounded-bl3 rounded-br3 p-2 greyy">
             <div class="grix xs1 txt-white md3 mt-4 mb-5">
@@ -246,81 +288,50 @@ $date = Carbon::now();
             <div class="card-header p-0  txt-center txt-white">
                 <p class="">Liste des opérations</p>
             </div>
-            @if(empty($intervention->operations[0]))
-            <p class="m-0 p-4 greyy txt-orange">Aucune opération</p>
-            @endif
-            @foreach ($intervention->operations as $operation)
-
-            <div class="card-content greyy txt-white grix xs2">
-                <p class="my-auto">{{ $operation->name }}</p>
-                <button data-target="edit-operation-{{ $operation->id }}" class="btn rounded-1 txt-greyy modal-trigger mx-auto">
-                    <i class="fas fa-comment-medical <?php echo (isset($operation->commentaire) ? 'txt-orange' : '') ?>"></i>
-                </button>
-                <div class="modal greyy shadow-1 mb-3 p-4" id="edit-operation-{{ $operation->id }}" data-ax="modal">
-                    <form class="form-material" method="POST" action="{{ route('operations.update',['operation' => $operation->id])}}">
-                        @method('PUT')
-                        @csrf
-                        <div class="grix xs1 txt-center">
-                            <div class="form-field">
-                                <textarea type="text" id="commentaire" name="commentaire" class="form-control" value="">{{ $operation->commentaire }}</textarea>
-                                <input hidden name="intervention_id" value="{{ $intervention->id }}" />
-                                <label for="commentaire" class="">Commentaire</label>
+            <div class="card-content">
+                <div class="grix xs3">
+                    @foreach( $intervention->categories as $operation)
+                    <div class="my-auto txt-white">
+                        <p>{{ $operation->name }}</p>
+                    </div>
+                    <div class="my-auto">
+                        <button data-target="edit-operation-{{ $operation->id }}" class="btn rounded-1 txt-blue modal-trigger mx-auto">
+                            <i class="fas fa-comment-medical <?php echo (isset($operation->observations) ? 'txt-orange' : '') ?>"></i>
+                        </button>
+                        <div class="modal greyy shadow-1 mb-3 p-4" id="edit-operation-{{ $operation->id }}" data-ax="modal">
+                            <form class="form-material" method="POST" action="{{ route('editOperation') }}">
+                                @method('PUT')
+                                @csrf
+                                <div class="grix xs1 txt-center">
+                                    <div class="form-field">
+                                        <textarea type="text" id="observations" name="observations" class="form-control txt-white">{{ $operation->pivot->observations }}</textarea>
+                                        <input hidden name="intervention_id" value="{{ $intervention->id }}" />
+                                        <input hidden name="categorie_id" value="{{ $operation->id}}" />
+                                        <label for="observations" class="">Observations</label>
+                                    </div>
+                                </div>
+                                <div class="txt-center">
+                                    <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange mt-4"><span class="outline-text outline-invert">Envoyer</span></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div>
+                        <form class="form-material" method="POST" action="{{ route('deleteOperation') }}">
+                            @method('PUT')
+                            @csrf
+                            <input hidden name="intervention_id" value="{{ $intervention->id }}" />
+                            <input hidden name="categorie_id" value="{{ $operation->id}}" />
+                            <div class="mx-auto">
+                                <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange"><span class="outline-text outline-invert">delete</span></button>
                             </div>
-                        </div>
-                        <div class="txt-center">
-                            <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange mt-4"><span class="outline-text outline-invert">Envoyer</span></button>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
+                    @endforeach
                 </div>
-            </div>
-            @endforeach
-        </div>
-    </div>
-</div>
 
-<!-- LISTE MODAL -->
-<div class="modal greyy light-4 shadow-1 mb-3 p-4" id="modal-operation" data-ax="modal">
-    <form class="form-material" method="POST" action="{{ route('operations.store')}}">
-        @csrf
-        <div class="form-field">
-            <label for="operation">Opération</label>
-            <select class="form-control rounded-1 txt-white" id="operation" name="name">
-                @foreach ( $categories as $categorie)
-                <option class="greyy txt-white" value=" {{ $categorie->name }}">{{ $categorie->name }}</option>
-                @endforeach
-            </select>
-        </div>
-        <input hidden name="intervention_id" value="{{ $intervention->id }}">
-        <div class="txt-center">
-            <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange mt-4"><span class="outline-text outline-invert">Valider</span></button>
-        </div>
-    </form>
-</div>
-<div class="modal greyy shadow-1 mb-3 p-4" id="modal-observation" data-ax="modal">
-    <div class="">
-        <form class="form-material" method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
-            @method('PUT')
-            @csrf
-            <div class="grix xs1 txt-center">
-                <div class="form-field">
-                    <textarea type="number" id="km_vehicule" name="observations" class="form-control txt-center txt-white">{{ $intervention->observations }}</textarea>
-                    <label for="km_vehicule" class="">Observations</label>
-                </div>
             </div>
-            <div class="txt-center">
-                <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange mt-4"><span class="outline-text outline-invert">Envoyer</span></button>
-            </div>
-        </form>
+        </div>
     </div>
 </div>
-<div class="modal grey light-4 shadow-1 mb-3 h100 rounded-3" id="modal-comment" data-ax="modal">
-    <div class="card m-0">
-        <div class="card-header greyy txt-white txt-center">Observations</div>
-    </div>
-    <div class="card-content p-4">
-        {{ $intervention->observations}}
-    </div>
-</div>
-
 @endsection
-
