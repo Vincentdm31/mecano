@@ -458,5 +458,33 @@ $date = Carbon::now();
     });
     toast.show();
 </script>
+@elseif(session('toast') == 'comment')
+<script>
+    toast.change('Commentaire ajouté', {
+        classes: "rounded-1 green light-2 shadow-2"
+    });
+    toast.show();
+</script>
+@elseif(session('toast') == 'addoperation')
+<script>
+    toast.change('Opération ajoutée', {
+        classes: "rounded-1 green light-2 shadow-2"
+    });
+    toast.show();
+</script>
+@elseif(session('toast') == 'removeoperation')
+<script>
+    toast.change('Opération supprimée', {
+        classes: "rounded-1 green light-2 shadow-2"
+    });
+    toast.show();
+</script>
+@elseif(session('toast') == 'update')
+<script>
+    toast.change('Intervention mise à jour', {
+        classes: "rounded-1 green light-2 shadow-2"
+    });
+    toast.show();
+</script>
 @endif
 @endsection

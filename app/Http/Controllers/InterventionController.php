@@ -81,7 +81,7 @@ class InterventionController extends Controller
         $categories = Categorie::all();
         $pieces = Piece::all();
 
-        return view('interventions.edit', ['intervention' => $intervention, 'vehicules' => $vehicules, 'categories' => $categories, 'pieces' => $pieces]);
+        return view('interventions.edit', ['intervention' => $intervention, 'vehicules' => $vehicules, 'categories' => $categories, 'pieces' => $pieces])->with('toast', 'update');
     }
 
     /**
@@ -100,7 +100,7 @@ class InterventionController extends Controller
         }
         $intervention->save();
 
-        return redirect(route('interventions.edit', ['intervention' => $intervention]));
+        return redirect(route('interventions.edit', ['intervention' => $intervention]))->with('toast', 'update');
     }
 
 
@@ -136,7 +136,7 @@ class InterventionController extends Controller
         $intervention = Intervention::find($interventionId);
         $intervention->categories()->attach($categorieId);
 
-        return redirect(route('interventions.edit', ['intervention' => $intervention]));
+        return redirect(route('interventions.edit', ['intervention' => $intervention]))->with('toast', 'addoperation' );
     }
 
     public function editOperation(Request $request){
@@ -146,7 +146,7 @@ class InterventionController extends Controller
         $intervention = Intervention::find($interventionId);
         $intervention->categories()->sync([$categorie_id => [ 'observations' => $observation]], false);
         
-        return redirect(route('interventions.edit', ['intervention' => $intervention]));
+        return redirect(route('interventions.edit', ['intervention' => $intervention]))->with('toast', 'comment' );
     }
     
     public function deleteOperation(Request $request){
@@ -155,7 +155,7 @@ class InterventionController extends Controller
         $intervention = Intervention::find($interventionId);
         $intervention->categories()->detach($categorie_id);
         
-        return redirect(route('interventions.edit', ['intervention' => $intervention]));
+        return redirect(route('interventions.edit', ['intervention' => $intervention]))->with('toast', 'removeoperation' );
     }
 
     public function addPiece(Request $request){
@@ -184,7 +184,7 @@ class InterventionController extends Controller
 
         $intervention->pieces()->sync([$piece_id => [ 'observations' => $observations]], false);
         
-        return redirect(route('interventions.edit', ['intervention' => $intervention]));
+        return redirect(route('interventions.edit', ['intervention' => $intervention]))->with('toast', 'comment' );
     }
 
     public function deletePiece(Request $request){
