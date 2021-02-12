@@ -34,11 +34,12 @@ $date = Carbon::now();
                 <div class="card-content white p-3">
                     <div class="grix xs1 md2 gutter-xs5">
                         <div class="greyy p-2">
-                            @if(empty($intervention->vehicule_id))
-                            <p class="txt-orange pb-2">Aucun véhicule sélectionné</p>
-                            @else
                             <div class="txt-white">
-                                <p class="txt-white bd-b-solid bd-white bd-2 pb-2 mb-3">Véhicule</p>
+                                <p class="bd-b-solid bd-white bd-2 pb-2 mb-3">Véhicule</p>
+
+                                @if(empty($intervention->vehicule_id))
+                                <p class="txt-orange pb-2">Aucun véhicule sélectionné</p>
+                                @else
                                 <p class="">{{$intervention->vehiculeList->marque}}</p>
                                 <p class="">{{$intervention->vehiculeList->modele}}</p>
                                 <p class="">{{$intervention->vehiculeList->immat}}</p>
@@ -131,7 +132,7 @@ $date = Carbon::now();
                         <div class="greyy p-2">
                             <p class="txt-white bd-b-solid bd-white bd-2 pb-2">Liste des pièces</p>
                             @if(!$intervention->pieces()->exists())
-                            <p class="txt-center txt-orange">Aucune pièce utilisée</p>
+                            <p class="txt-orange">Aucune pièce utilisée</p>
                             @else
                             <div class="grix xs2 md4">
                                 @foreach( $intervention->pieces as $piece)
