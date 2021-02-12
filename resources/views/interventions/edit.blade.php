@@ -9,10 +9,10 @@ $date = Carbon::now();
 ?>
 <div class="container mt-5">
     <div class="container shadow-3">
-        <button data-target="modal-recap" class="btn w100 txt-white greyy collapsible-trigger mx-auto">
+        <button data-target="modal-recap" class="btn w100 txt-white greyy modal-trigger mx-auto">
             Voir le récapitulatif
         </button>
-        <div class="collapsible greyy shadow-3" id="modal-recap" data-ax="collapsible">
+        <div class="modal greyy shadow-3" id="modal-recap" data-ax="modal">
             <div class="card">
                 <div class="card-header p-3 recap-infos">
                     <p class="txt-white bd-b-solid bd-white bd-2 pb-2 ml-2">Infos générales</p>
@@ -95,7 +95,7 @@ $date = Carbon::now();
                                         <button data-target="edit-operation-{{ $operation->id }}" class="btn rounded-1 txt-blue modal-trigger mx-auto">
                                             <i class="fas fa-comment-medical <?php echo (isset($operation->pivot->observations) ? 'txt-orange' : '') ?>"></i>
                                         </button>
-                                        <div class="modal greyy shadow-1 mb-3 p-4 col-md3" id="edit-operation-{{ $operation->id }}" data-ax="modal">
+                                        <div class="modal greyy shadow-1 mb-3 p-4" id="edit-operation-{{ $operation->id }}" data-ax="modal">
                                             <form class="form-material" method="POST" action="{{ route('editOperation') }}">
                                                 @method('PUT')
                                                 @csrf

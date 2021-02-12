@@ -37,18 +37,8 @@ class ImageUploaderController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1024',
-        ]);
-    
-        $imageName = time().'.'.$request->image->extension();
-     
-        $request->image->move(public_path('images'), $imageName);
-  
-    
-        return redirect()->back()->with('success','Image uploaded successfully.')->with('image',$imageName);
-    
+    {   
+        
     }
 
     /**

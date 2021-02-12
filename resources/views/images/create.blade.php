@@ -4,22 +4,22 @@
 <p>TEST</p>
 <div class="container">
     <div class="container">
-        <form action="{{ route('images.store') }}" method="POST" enctype="multipart/form-data" class="form-material container">
+        <form action="{{ route('images.store') }}" method="POST" enctype="multipart/form-data" class="form-material container txt-greyy">
             @csrf
             <div class="form-field">
-                <input required type="text" name="ref" class="form-control txt-white"></input>
+                <input required type="text" name="ref" class="form-control txt-greyy"></input>
                 <label for="ref">Référence</label>
             </div>
             <div class="form-field">
-                <input required type="text" name="name" class="form-control txt-white"></input>
+                <input required type="text" name="name" class="form-control txt-greyy"></input>
                 <label for="name">Nom</label>
             </div>
             <div class="form-field">
-                <input required type="number" name="qte" class="form-control txt-white"></input>
+                <input required type="number" name="qte" class="form-control txt-greyy"></input>
                 <label for="qte">Qte</label>
             </div>
             <div class="form-field">
-                <input required type="file" name="file_path" class="form-control txt-white"></input>
+                <input required type="file" name="file_path" class="form-control txt-whgreyyite"></input>
 
             </div>
             <div class="txt-center">
