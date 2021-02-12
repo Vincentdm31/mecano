@@ -8,6 +8,9 @@ body{
     background-color: rgb(29, 29, 29);
 }
 
+.greyy2{
+    background-color: rgb(46, 46, 46);
+}
 .txt-greyy{
     color: rgb(29, 29, 29);
 }
@@ -23,4 +26,16 @@ body{
 select:hover {
     color: #444645;
     background: #ddd;
+}
+
+.recap-infos{
+    p{
+        font-size: 1rem;
     }
+
+    @include responsive("md-down"){
+        p{
+            font-size: 0.8rem;
+        }
+    }
+}

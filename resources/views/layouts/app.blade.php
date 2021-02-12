@@ -18,11 +18,11 @@
     @yield('extra-css')
 </head>
 
-<body class="layout greyy">
+<body class="layout grey light-4">
     <header>
         <nav class="navbar greyy txt-white">
             <a href="{{ url('/') }}" class="navbar-brand">Mecalcis</a>
-            <a href="{{ route('images.create') }}" class="navbar-brand">test</a>
+            <a href="{{ route('images.create') }}" class="navbar-brand ml-5">test</a>
 
             <div class="navbar-menu ml-auto">
                 @guest

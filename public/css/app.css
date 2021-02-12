@@ -7113,6 +7113,10 @@ body {
   background-color: #1d1d1d;
 }
 
+.greyy2 {
+  background-color: #2e2e2e;
+}
+
 .txt-greyy {
   color: #1d1d1d;
 }
@@ -7128,4 +7132,13 @@ body {
 select:hover {
   color: #444645;
   background: #ddd;
+}
+
+.recap-infos p {
+  font-size: 1rem;
+}
+@media screen and (max-width: 1279px) {
+  .recap-infos p {
+    font-size: 0.8rem;
+  }
 }
