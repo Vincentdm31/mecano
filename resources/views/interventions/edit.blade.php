@@ -9,50 +9,46 @@ $date = Carbon::now();
 ?>
 <div class="container mt-5">
     <div class="container txt-center">
-        <button data-target="modal-recap" class="btn txt-white shadow-3 orange modal-trigger">
+        <button data-target="modal-recap" class="btn rounded-1 txt-white shadow-3 orange modal-trigger">
             Voir le récapitulatif
         </button>
-        <div class="modal greyy shadow-3" id="modal-recap" data-ax="modal">
+        <div class="modal white shadow-3 rounded-2" id="modal-recap" data-ax="modal">
             <div class="card">
                 <div class="card-header p-3 recap-infos">
-                    <p class="txt-white bd-b-solid bd-white bd-2 pb-2 ml-2">Infos générales</p>
                     <a href="" data-target="modal-comment" style="position:absolute;right:0;top:0;transform:translate(-50%,10%); font-size:3rem;" class="<?php echo (empty($intervention->observations) ? 'hide' : 'txt-orange') ?> fas fa-comment modal-trigger"></a>
-                    <div class="modal grey light-4 shadow-1 mb-3 h100 rounded-3" id="modal-comment" data-ax="modal">
+                    <div class="modal airforce dark-4 shadow-1 mb-3 h100 rounded-2" id="modal-comment" data-ax="modal">
                         <div class="card m-0">
-                            <div class="card-header greyy txt-white txt-center">Observations</div>
+                            <div class="card-header txt-white txt-center">Observations</div>
                         </div>
-                        <div class="card-content p-4">
+                        <div class="card-content p-4 txt-white">
                             {{ $intervention->observations}}
                         </div>
                     </div>
-                    <div class="grix xs1 txt-white md3">
+                    <div class="grix xs1 txt-airforce txt-dark-4 md3 bd-b-solid bd-orange bd-2 pb-2">
                         <p class="pl-2 lh-normal">{{\Carbon\Carbon::parse($intervention->created_at)->isoFormat('LLLL')}}</p>
                         <p class="pl-2 lh-normal">Créateur : {{ $intervention->created_by }}</p>
                         <p class="pl-2 lh-normal">Ref Intervention : {{ $intervention->id }}</p>
                     </div>
                 </div>
-                <div class="card-content white p-3">
+                <div class="card-content p-3">
                     <div class="grix xs1 md2 gutter-xs5">
-                        <div class="greyy p-2">
-                            <div class="txt-white">
-                                <p class="bd-b-solid bd-white bd-2 pb-2 mb-3">Véhicule</p>
-
-                                @if(empty($intervention->vehicule_id))
-                                <p class="txt-orange pb-2">Aucun véhicule sélectionné</p>
-                                @else
-                                <p class="">{{$intervention->vehiculeList->marque}}</p>
-                                <p class="">{{$intervention->vehiculeList->modele}}</p>
-                                <p class="">{{$intervention->vehiculeList->immat}}</p>
-                                @if(empty($intervention->km_vehicule))
-                                <p class="txt-orange">Saisir kilométrage</p>
-                                @else
-                                <p class="">{{$intervention->km_vehicule}} Km</p>
-                                @endif
-                                @endif
-                            </div>
+                        <div class="p-2 txt-airforce txt-dark-4 rounded-1 shadow-2">
+                            <p class="bd-b-solid bd-white bd-2 pb-2 mb-3">Véhicule</p>
+                            @if(empty($intervention->vehicule_id))
+                            <p class="txt-orange pb-2">Aucun véhicule sélectionné</p>
+                            @else
+                            <p class="">{{$intervention->vehiculeList->marque}}</p>
+                            <p class="">{{$intervention->vehiculeList->modele}}</p>
+                            <p class="">{{$intervention->vehiculeList->immat}}</p>
+                            @if(empty($intervention->km_vehicule))
+                            <p class="txt-orange">Saisir kilométrage</p>
+                            @else
+                            <p class="">{{$intervention->km_vehicule}} Km</p>
+                            @endif
+                            @endif
                         </div>
-                        <div class="greyy p-2">
-                            <p class="txt-white bd-b-solid bd-white bd-2 pb-2 mb-3">Déplacements</p>
+                        <div class="p-2 txt-airforce txt-dark-4 rounded-1 shadow-2">
+                            <p class="txt-airforce txt-dark-4 bd-b-solid bd-white bd-2 pb-2 mb-3">Déplacements</p>
                             @if(empty($intervention->start_deplacement_aller))
                             <p class="txt-orange pb-2">Aucun déplacement</p>
                             @else
@@ -80,7 +76,7 @@ $date = Carbon::now();
                 </div>
                 <div class="card-footer p-3 white">
                     <div class="grix xs1 sm2 gutter-xs5">
-                        <div class="greyy p-2">
+                        <div class="p-2">
                             <p class="txt-white bd-b-solid bd-white bd-2 pb-2">Liste des opérations</p>
                             @if(!$intervention->categories()->exists())
                             <p class="txt-orange">Aucune opération en cours</p>
@@ -113,7 +109,7 @@ $date = Carbon::now();
                             </div>
                             @endif
                         </div>
-                        <div class="greyy p-2">
+                        <div class="p-2">
                             <p class="txt-white bd-b-solid bd-white bd-2 pb-2">Liste des pièces</p>
                             @if(!$intervention->pieces()->exists())
                             <p class=" txt-orange">Aucune pièce utilisée</p>
@@ -246,40 +242,54 @@ $date = Carbon::now();
             @endif
         </div>
         <!-- TAB Véhicule -->
-        <div id="tab-vehicule" class="p-3 container">
-            <div class="mt-2 mb-2 container">
-                <form class="form-material container" method="GET" action="{{ route('selectVehicule')}}">
-                    @csrf
-                    <div class="grix xs6">
-                        <div class="form-field pos-xs1 col-xs5">
-                            <input hidden type="text" id="intervention_id" name="intervention_id" value="{{ $intervention->id }}" />
-                            <input type="text" name="selectVehicule" id="selectVehicule" class="form-control txt-airforce txt-dark-4" />
-                            <label for="selectVehicule">Rechercher</label>
-                        </div>
-                        <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange circle mx-auto vself-center rounded-4"><span class="outline-text outline-invert"><i class="fas fa-search"></i></span></button>
+        <div id="tab-vehicule" class="p-4">
+            @if(!empty($intervention->vehicule_id))
+            <p class="txt-center txt-airforce txt-dark-4">Véhicule enregistré</p>
+            @else
+            <div class="mt-2 mb-2 grix sm2 gutter-sm5">
+                <div>
+                    <div>
+                        <form class="form-material" method="GET" action="{{ route('selectVehicule')}}">
+                            @csrf
+                            <div class="grix xs6">
+                                <div class="form-field pos-xs1 col-xs5">
+                                    <input hidden type="text" id="intervention_id" name="intervention_id" value="{{ $intervention->id }}" />
+                                    <input type="text" name="selectVehicule" id="selectVehicule" class="form-control txt-airforce txt-dark-4" />
+                                    <label for="selectVehicule">Rechercher</label>
+                                </div>
+                                <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange circle mx-auto vself-center rounded-4"><span class="outline-text outline-invert"><i class="fas fa-search"></i></span></button>
+                            </div>
+                        </form>
                     </div>
-                </form>
-            </div>
-            <div class="mt-5 container">
-                <form class="form-material container" method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
-                    @method('PUT')
-                    @csrf
-                    <div class="form-field">
-                        <label for="select">Véhicule</label>
-                        <select class="form-control  txt-airforce txt-dark-4" id="select" name="vehicule_id">
-                            @foreach ( $vehicules as $vehicule)
-                            <option class="grey light-4 txt-airforce txt-dark-4" value="{{ $vehicule->id }}">{{ $vehicule->immat }} - {{ $vehicule->marque }}</option>
-                            @endforeach
-                        </select>
+                    <div class="mt-5">
+                        <form class="form-material" method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
+                            @method('PUT')
+                            @csrf
+                            <div class="form-field">
+                                <label for="select">Véhicule</label>
+                                <select class="form-control  txt-airforce txt-dark-4" id="select" name="vehicule_id">
+                                    @foreach ( $vehicules as $vehicule)
+                                    <option class="grey light-4 txt-airforce txt-dark-4" value="{{ $vehicule->id }}">{{ $vehicule->immat }} - {{ $vehicule->marque }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="txt-center">
+                                <button type="submit" class="btn shadow-1 outline opening txt-orange ml-auto vself-center rounded-2 mt-4"><span class="outline-text outline-invert">Valider</span></button>
+                            </div>
+                        </form>
                     </div>
-                    <div class="txt-center">
-                        <button type="submit" class="btn shadow-1 outline opening txt-orange ml-auto vself-center rounded-2 mt-4"><span class="outline-text outline-invert">Valider</span></button>
-                    </div>
-                </form>
+                    @endif
+                </div>
+                <div class="d-flex my-auto">
+                    <img src="{{ asset('/images/car.svg') }}" class="responsive-media p-3" alt="">
+                </div>
             </div>
         </div>
         <!-- TAB Kilométrage -->
         <div id="tab-kilometrage" class="p-3 container">
+            @if(!empty($intervention->km_vehicule))
+            <p class="txt-center txt-airforce txt-dark-4">Kilométrage enregistré</p>
+            @else
             <form class="form-material container" method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
                 @method('PUT')
                 @csrf
@@ -293,6 +303,7 @@ $date = Carbon::now();
                     <button type="submit" class="btn shadow-1 outline opening txt-orange ml-auto vself-center rounded-2 mt-4"><span class="outline-text outline-invert">Valider</span></button>
                 </div>
             </form>
+            @endif
         </div>
         <!-- Tab opération -->
         <div id="tab-operation" class="p-3 container">
@@ -325,7 +336,7 @@ $date = Carbon::now();
                     </select>
                 </div>
                 <div class="form-field">
-                    <input required type="number" name="qte" class="form-control txt-white"></input>
+                    <input required type="number" name="qte" class="form-control txt-airforce txt-dark-4"></input>
                     <label for="qte">Quantité</label>
                 </div>
                 <input hidden name="intervention_id" value="{{ $intervention->id }}">
@@ -381,7 +392,7 @@ $date = Carbon::now();
 <!-- MODALS -->
 
 @foreach( $intervention->pieces as $piece)
-<div class="modal greyy shadow-1 p-4" id="edit-piece-{{ $piece->id }}" data-ax="modal">
+<div class="modal shadow-1 p-4 rounded-2" id="edit-piece-{{ $piece->id }}" data-ax="modal">
     <form class="form-material" method="POST" action="{{ route('editPiece') }}">
         @method('PUT')
         @csrf
@@ -401,7 +412,7 @@ $date = Carbon::now();
 @endforeach
 
 @foreach( $intervention->categories as $operation)
-<div class="modal greyy shadow-1 p-4" id="edit-operation-{{ $operation->id }}" data-ax="modal">
+<div class="modal shadow-1 p-4 rounded-2" id="edit-operation-{{ $operation->id }}" data-ax="modal">
     <form class="form-material" method="POST" action="{{ route('editOperation') }}">
         @method('PUT')
         @csrf
