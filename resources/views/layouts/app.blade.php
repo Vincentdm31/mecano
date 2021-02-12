@@ -20,7 +20,7 @@
 
 <body class="layout grey light-4">
     <header>
-        <nav class="navbar greyy txt-white">
+        <nav class="navbar grey light-4 txt-airforce txt-dark-4 shadow-2">
             <a href="{{ url('/') }}" class="navbar-brand">Mecalcis</a>
             <a href="{{ route('images.create') }}" class="navbar-brand ml-5">test</a>
 

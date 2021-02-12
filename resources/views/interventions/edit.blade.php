@@ -8,8 +8,8 @@ $date = Carbon::now();
 
 ?>
 <div class="container mt-5">
-    <div class="container shadow-3">
-        <button data-target="modal-recap" class="btn w100 txt-white greyy modal-trigger mx-auto">
+    <div class="container txt-center">
+        <button data-target="modal-recap" class="btn txt-white shadow-3 orange modal-trigger">
             Voir le récapitulatif
         </button>
         <div class="modal greyy shadow-3" id="modal-recap" data-ax="modal">
@@ -95,23 +95,7 @@ $date = Carbon::now();
                                         <button data-target="edit-operation-{{ $operation->id }}" class="btn rounded-1 txt-blue modal-trigger mx-auto">
                                             <i class="fas fa-comment-medical <?php echo (isset($operation->pivot->observations) ? 'txt-orange' : '') ?>"></i>
                                         </button>
-                                        <div class="modal greyy shadow-1 mb-3 p-4" id="edit-operation-{{ $operation->id }}" data-ax="modal">
-                                            <form class="form-material" method="POST" action="{{ route('editOperation') }}">
-                                                @method('PUT')
-                                                @csrf
-                                                <div class="grix xs1 txt-center">
-                                                    <div class="form-field">
-                                                        <textarea type="text" id="observations" name="observations" class="form-control txt-white">{{ $operation->pivot->observations }}</textarea>
-                                                        <input hidden name="intervention_id" value="{{ $intervention->id }}" />
-                                                        <input hidden name="categorie_id" value="{{ $operation->id}}" />
-                                                        <label for="observations" class="">Observations</label>
-                                                    </div>
-                                                </div>
-                                                <div class="txt-center">
-                                                    <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange mt-4"><span class="outline-text outline-invert">Envoyer</span></button>
-                                                </div>
-                                            </form>
-                                        </div>
+
                                     </div>
                                     <div class="mr-auto my-auto">
                                         <form class="form-material" method="POST" action="{{ route('deleteOperation') }}">
@@ -132,7 +116,7 @@ $date = Carbon::now();
                         <div class="greyy p-2">
                             <p class="txt-white bd-b-solid bd-white bd-2 pb-2">Liste des pièces</p>
                             @if(!$intervention->pieces()->exists())
-                            <p class="txt-orange">Aucune pièce utilisée</p>
+                            <p class=" txt-orange">Aucune pièce utilisée</p>
                             @else
                             <div class="grix xs2 md4">
                                 @foreach( $intervention->pieces as $piece)
@@ -147,23 +131,7 @@ $date = Carbon::now();
                                         <button data-target="edit-piece-{{ $piece->id }}" class="btn rounded-1 txt-blue modal-trigger mx-auto">
                                             <i class="fas fa-comment-medical <?php echo (isset($piece->pivot->observations) ? 'txt-orange' : '') ?>"></i>
                                         </button>
-                                        <div class="modal greyy shadow-1 mb-3 p-4" id="edit-piece-{{ $piece->id }}" data-ax="modal">
-                                            <form class="form-material" method="POST" action="{{ route('editPiece') }}">
-                                                @method('PUT')
-                                                @csrf
-                                                <div class="grix xs1 txt-center">
-                                                    <div class="form-field">
-                                                        <textarea type="text" id="observations" name="observations" class="form-control txt-white">{{ $piece->pivot->observations }}</textarea>
-                                                        <input hidden name="intervention_id" value="{{ $intervention->id }}" />
-                                                        <input hidden name="piece_id" value="{{ $piece->id}}" />
-                                                        <label for="observations" class="">Observations</label>
-                                                    </div>
-                                                </div>
-                                                <div class="txt-center">
-                                                    <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange mt-4"><span class="outline-text outline-invert">Envoyer</span></button>
-                                                </div>
-                                            </form>
-                                        </div>
+
                                     </div>
                                     <div class="my-auto">
                                         <form class="form-material" method="POST" action="{{ route('deletePiece') }}">
@@ -189,8 +157,8 @@ $date = Carbon::now();
 </div>
 <!-- Actions -->
 <div class="container mt-5">
-    <div class="tab container full-width shadow-3" id="example-tab" data-ax="tab">
-        <ul class="tab-menu greyy txt-white">
+    <div class="tab rounded-3 full-width shadow-3" id="example-tab" data-ax="tab">
+        <ul class="tab-menu shadow-2 rounded-tl2 rounded-tr2 grey light-4 txt-black">
             <li class="tab-link">
                 <a href="#tab-vehicule">Véhicule</a>
             </li>
@@ -215,9 +183,9 @@ $date = Carbon::now();
         </ul>
 
         <!-- Tab Déplacement -->
-        <div id="tab-deplacement" class="p-3 greyy">
+        <div id="tab-deplacement" class="p-3 container">
             @if(empty($intervention->start_deplacement_aller) || empty($intervention->end_deplacement_aller))
-            <p class="txt-white txt-center">Déplacements ALLER</p>
+            <p class="txt-airforce txt-dark-4 txt-center">Déplacements ALLER</p>
             @endif
             @if(empty($intervention->start_deplacement_aller))
             <div>
@@ -247,7 +215,7 @@ $date = Carbon::now();
             @endif
             <!--Start Déplacement Interventions Retour -->
             @if(!empty($intervention->end_deplacement_aller) && empty($intervention->start_deplacement_retour))
-            <p class="txt-orange txt-center">Déplacements Retour</p>
+            <p class="txt-airforce txt-dark-4 txt-center">Déplacements Retour</p>
             <div class="">
                 <form method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
                     @method('PUT')
@@ -261,7 +229,7 @@ $date = Carbon::now();
             @endif
             <!--End Déplacement Interventions Retour -->
             @if(!empty($intervention->start_deplacement_retour) && empty($intervention->end_deplacement_retour))
-            <p class="txt-orange txt-center">Déplacements Retour</p>
+            <p class="txt-airforce txt-dark-4 txt-center">Déplacements Retour</p>
             <div class="">
                 <form method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
                     @method('PUT')
@@ -274,33 +242,33 @@ $date = Carbon::now();
             </div>
             @endif
             @if(!empty($intervention->start_deplacement_retour) && !empty($intervention->end_deplacement_retour) && !empty($intervention->end_deplacement_aller) && !empty($intervention->start_deplacement_retour))
-            <p class="txt-center txt-white">Déplacements enregistrés</p>
+            <p class="txt-center txt-airforce txt-dark-4">Déplacements enregistrés</p>
             @endif
         </div>
         <!-- TAB Véhicule -->
-        <div id="tab-vehicule" class="p-3 greyy">
-            <div class="mt-2 mb-2">
-                <form class="form-material" method="GET" action="{{ route('selectVehicule')}}">
+        <div id="tab-vehicule" class="p-3 container">
+            <div class="mt-2 mb-2 container">
+                <form class="form-material container" method="GET" action="{{ route('selectVehicule')}}">
                     @csrf
                     <div class="grix xs6">
                         <div class="form-field pos-xs1 col-xs5">
                             <input hidden type="text" id="intervention_id" name="intervention_id" value="{{ $intervention->id }}" />
-                            <input type="text" name="selectVehicule" id="selectVehicule" class="form-control txt-white" />
+                            <input type="text" name="selectVehicule" id="selectVehicule" class="form-control txt-airforce txt-dark-4" />
                             <label for="selectVehicule">Rechercher</label>
                         </div>
                         <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange circle mx-auto vself-center rounded-4"><span class="outline-text outline-invert"><i class="fas fa-search"></i></span></button>
                     </div>
                 </form>
             </div>
-            <div class="mt-5">
-                <form class="form-material" method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
+            <div class="mt-5 container">
+                <form class="form-material container" method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
                     @method('PUT')
                     @csrf
                     <div class="form-field">
                         <label for="select">Véhicule</label>
-                        <select class="form-control greyy txt-white" id="select" name="vehicule_id">
+                        <select class="form-control  txt-airforce txt-dark-4" id="select" name="vehicule_id">
                             @foreach ( $vehicules as $vehicule)
-                            <option class="greyy" value="{{ $vehicule->id }}">{{ $vehicule->immat }} - {{ $vehicule->marque }}</option>
+                            <option class="grey light-4 txt-airforce txt-dark-4" value="{{ $vehicule->id }}">{{ $vehicule->immat }} - {{ $vehicule->marque }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -311,13 +279,13 @@ $date = Carbon::now();
             </div>
         </div>
         <!-- TAB Kilométrage -->
-        <div id="tab-kilometrage" class="p-3 greyy">
-            <form class="form-material" method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
+        <div id="tab-kilometrage" class="p-3 container">
+            <form class="form-material container" method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
                 @method('PUT')
                 @csrf
                 <div class="grix xs1 txt-center">
                     <div class="form-field">
-                        <input type="number" id="km_vehicule" name="km_vehicule" value="{{ $intervention->km_vehicule }}" class="form-control txt-center txt-white" />
+                        <input type="number" id="km_vehicule" name="km_vehicule" value="{{ $intervention->km_vehicule }}" class="form-control txt-center txt-airforce txt-dark-4" />
                         <label for="km_vehicule" class="">Kilométrage</label>
                     </div>
                 </div>
@@ -327,14 +295,14 @@ $date = Carbon::now();
             </form>
         </div>
         <!-- Tab opération -->
-        <div id="tab-operation" class="p-3 greyy">
-            <form class="form-material" method="POST" action="{{ route('addOperation')}}">
+        <div id="tab-operation" class="p-3 container">
+            <form class="form-material container" method="POST" action="{{ route('addOperation')}}">
                 @csrf
                 <div class="form-field">
                     <label for="operation">Opération</label>
-                    <select class="form-control rounded-1 txt-white" name="categorie_id">
+                    <select class="form-control rounded-1 txt-airforce txt-dark-4" name="categorie_id">
                         @foreach ( $categories as $categorie)
-                        <option class="greyy txt-white" value="{{ $categorie->id }}">{{ $categorie->name }}</option>
+                        <option class="grey light-4 txt-airforce txt-dark-4" value="{{ $categorie->id }}">{{ $categorie->name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -345,14 +313,14 @@ $date = Carbon::now();
             </form>
         </div>
         <!-- Tab pièce -->
-        <div id="tab-piece" class="p-3 greyy">
-            <form class="form-material" method="POST" action="{{ route('addPiece')}}">
+        <div id="tab-piece" class="p-3 container">
+            <form class="form-material container" method="POST" action="{{ route('addPiece')}}">
                 @csrf
                 <div class="form-field">
                     <label for="operation">Piece</label>
-                    <select class="form-control rounded-1 txt-white" name="piece_id">
+                    <select class="form-control rounded-1 txt-airforce txt-dark-4" name="piece_id">
                         @foreach ( $pieces as $piece)
-                        <option class="greyy txt-white" value="{{ $piece->id }}">{{ $piece->name }}</option>
+                        <option class="grey light-4 txt-airforce txt-dark-4" value="{{ $piece->id }}">{{ $piece->name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -367,13 +335,13 @@ $date = Carbon::now();
             </form>
         </div>
         <!-- Tab observations -->
-        <div id="tab-observation" class="p-3 greyy">
-            <form class="form-material" method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
+        <div id="tab-observation" class="p-3 container">
+            <form class="form-material container" method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
                 @method('PUT')
                 @csrf
                 <div class="grix xs1 txt-center">
                     <div class="form-field">
-                        <textarea type="number" id="km_vehicule" name="observations" class="form-control txt-center txt-white">{{ $intervention->observations }}</textarea>
+                        <textarea type="number" id="km_vehicule" name="observations" class="form-control txt-center grey txt-airforce txt-dark-4">{{ $intervention->observations }}</textarea>
                         <label for="km_vehicule" class="">Observations</label>
                     </div>
                 </div>
@@ -382,14 +350,17 @@ $date = Carbon::now();
                 </div>
             </form>
         </div>
-        <div id="tab-gestion" class="p-3 greyy">
+        <!-- Tab gestion -->
+        <div id="tab-gestion" class="p-3">
             @if($intervention->state == "doing")
             <div>
                 <form class="form-material" method="POST" action="{{ route('timeinterventions.store') }}">
                     @csrf
                     <input hidden name="intervention_id" value="{{ $intervention->id }}">
                     <input hidden name="start_date" value="{{ $date }}">
-                    <button type="submit" class="btn  rounded-1 outline opening txt-orange txt-light-4"><span class="outline-text outline-invert">Pause</span></button>
+                    <div class="txt-center">
+                        <button type="submit" class="btn txt-center rounded-1 outline opening txt-orange"><span class="outline-text outline-invert">Pause</span></button>
+                    </div>
                 </form>
             </div>
             @elseif(($intervention->state == "pause"))
@@ -398,15 +369,56 @@ $date = Carbon::now();
                     @csrf
                     <input hidden name="intervention_id" value="{{ $intervention->id }}">
                     <input hidden name="end_date" value="{{ $date }}">
-                    <button type="submit" class="btn rounded-1 outline opening txt-orange txt-light-4"><span class="outline-text outline-invert">Reprendre</span></button>
+                    <div class="txt-center">
+                        <button type="submit" class="btn rounded-1 outline opening txt-orange"><span class="outline-text outline-invert">Reprendre</span></button>
+                    </div>
                 </form>
             </div>
-
             @endif
         </div>
     </div>
-
 </div>
+<!-- MODALS -->
+
+@foreach( $intervention->pieces as $piece)
+<div class="modal greyy shadow-1 p-4" id="edit-piece-{{ $piece->id }}" data-ax="modal">
+    <form class="form-material" method="POST" action="{{ route('editPiece') }}">
+        @method('PUT')
+        @csrf
+        <div class="grix xs1 txt-center">
+            <div class="form-field">
+                <textarea type="text" id="observations" name="observations" class="form-control txt-white">{{ $piece->pivot->observations }}</textarea>
+                <input hidden name="intervention_id" value="{{ $intervention->id }}" />
+                <input hidden name="piece_id" value="{{ $piece->id}}" />
+                <label for="observations" class="">Observations</label>
+            </div>
+        </div>
+        <div class="txt-center">
+            <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange mt-4"><span class="outline-text outline-invert">Envoyer</span></button>
+        </div>
+    </form>
+</div>
+@endforeach
+
+@foreach( $intervention->categories as $operation)
+<div class="modal greyy shadow-1 p-4" id="edit-operation-{{ $operation->id }}" data-ax="modal">
+    <form class="form-material" method="POST" action="{{ route('editOperation') }}">
+        @method('PUT')
+        @csrf
+        <div class="grix xs1 txt-center">
+            <div class="form-field">
+                <textarea type="text" id="observations" name="observations" class="form-control txt-white">{{ $operation->pivot->observations }}</textarea>
+                <input hidden name="intervention_id" value="{{ $intervention->id }}" />
+                <input hidden name="categorie_id" value="{{ $operation->id}}" />
+                <label for="observations" class="">Observations</label>
+            </div>
+        </div>
+        <div class="txt-center">
+            <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange mt-4"><span class="outline-text outline-invert">Envoyer</span></button>
+        </div>
+    </form>
+</div>
+@endforeach
 
 @endsection
 

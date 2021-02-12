@@ -7109,18 +7109,6 @@ body {
   font-family: "Quicksand", sans-serif;
 }
 
-.greyy {
-  background-color: #1d1d1d;
-}
-
-.greyy2 {
-  background-color: #2e2e2e;
-}
-
-.txt-greyy {
-  color: #1d1d1d;
-}
-
 .tab .tab-menu {
   --tab-active-color:#EA8527!important;
 }
@@ -7130,7 +7118,7 @@ body {
 }
 
 select:hover {
-  color: #444645;
+  color: #0bdf75;
   background: #ddd;
 }
 
