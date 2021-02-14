@@ -15,10 +15,8 @@ class CreateImageUploadersTable extends Migration
     {
         Schema::create('image_uploaders', function (Blueprint $table) {
             $table->id();
-            $table->string('ref');
-            $table->string('name');
-            $table->integer('qte');
-            $table->string('file_path');
+
+            $table->string('file');
             $table->timestamps();
         });
     }

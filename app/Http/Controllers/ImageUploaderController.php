@@ -37,8 +37,8 @@ class ImageUploaderController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   
-        
+    {
+        return $request->file('file')->store('qrcode');
     }
 
     /**

@@ -185,7 +185,6 @@ $date = Carbon::now();
             @endif
             @if(empty($intervention->start_deplacement_aller))
             <div>
-
                 <form method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
                     @method('PUT')
                     @csrf
@@ -244,10 +243,18 @@ $date = Carbon::now();
         <!-- TAB Véhicule -->
         <div id="tab-vehicule" class="p-4">
             @if(!empty($intervention->vehicule_id))
-            <p class="txt-center txt-airforce txt-dark-4">Véhicule enregistré</p>
+            <div class="grix xs1 sm2">
+                <div class=my-auto>
+                    <p class="txt-center txt-airforce txt-dark-4">Véhicule enregistré</p>
+                </div>
+                <div>
+                    <img src="{{ asset('/images/car.svg') }}" class="responsive-media p-3" alt="">
+                </div>
+            </div>
+
             @else
             <div class="mt-2 mb-2 grix sm2 gutter-sm5">
-                <div>
+                <div class="my-auto">
                     <div>
                         <form class="form-material" method="GET" action="{{ route('selectVehicule')}}">
                             @csrf
@@ -278,12 +285,13 @@ $date = Carbon::now();
                             </div>
                         </form>
                     </div>
-                    @endif
+
                 </div>
                 <div class="d-flex my-auto">
                     <img src="{{ asset('/images/car.svg') }}" class="responsive-media p-3" alt="">
                 </div>
             </div>
+            @endif
         </div>
         <!-- TAB Kilométrage -->
         <div id="tab-kilometrage" class="p-3 container">
