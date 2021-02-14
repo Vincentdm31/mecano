@@ -27,7 +27,7 @@ class ImageUploaderController extends Controller
      */
     public function create()
     {
-        return view('images.create');
+        return view('upload.create');
     }
 
     /**
@@ -38,21 +38,17 @@ class ImageUploaderController extends Controller
      */
     public function store(Request $request)
     {
-        $inputs = $request->except('_token');
-        $image = new ImageUploader();
-        foreach ($inputs as $key => $value) {
-            if ($request->hasFile('img') && $key == 'img') {
-                if ($request->file('img')->isValid()) {
-                    $image_name = $request->file('img')->getClientOriginalName();
-                    $path = $request->file('img')->move(public_path() . '/images/', $image_name);
-                    $image->$key = $image_name;
-                }
-            } else {
-                $image->$key = $value;
-            }
+        if ($request->hasFile('img')) {
+            $custom_file_name = $request->file('img')->getClientOriginalName();
+            $path = $request->file('img')->storeAs('public/images', $custom_file_name);
+
+            $img = new ImageUploader();
+            $img->image = $custom_file_name;
+            $img->save();
         }
-        $image->save();
-        return redirect('/adminGames');
+
+
+        return redirect('/');
     }
 
     /**
@@ -61,10 +57,13 @@ class ImageUploaderController extends Controller
      * @param  \App\Models\ImageUploader  $imageUploader
      * @return \Illuminate\Http\Response
      */
-    public function show(ImageUploader $imageUploader)
+
+    public function show($id)
     {
-        //
+        $image = ImageUploader::find($id);
+        return view('upload.show', ['image' => $image]);
     }
+
 
     /**
      * Show the form for editing the specified resource.

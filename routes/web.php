@@ -27,13 +27,13 @@ Route::group(['middleware' => ['admin']], function () {
     Route::get('/admin', [HomeController::class, 'adminView'])->name('admin.view');
 });
 
-Route::middleware('auth')->group(function() {
-    Route::get('/', [HomeController::class,'index'])->name('home');
+Route::middleware('auth')->group(function () {
+    Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::resource('users', UserController::class);
     Route::resource('interventions', InterventionController::class);
     Route::resource('vehicules', VehiculeController::class);
     Route::resource('timeinterventions', TimeInterventionController::class);
-    Route::resource('images', ImageUploaderController::class);
+    Route::resource('upload', ImageUploaderController::class);
 
     Route::get('/searchUser',  [UserController::class, 'searchUser']);
     Route::get('/searchVehicule',  [VehiculeController::class, 'searchVehicule']);
@@ -46,5 +46,4 @@ Route::middleware('auth')->group(function() {
     Route::post('/addPiece',  [InterventionController::class, 'addPiece'])->name('addPiece');
     Route::put('/editPiece',  [InterventionController::class, 'editPiece'])->name('editPiece');
     Route::put('/deletePiece',  [InterventionController::class, 'deletePiece'])->name('deletePiece');
-
 });

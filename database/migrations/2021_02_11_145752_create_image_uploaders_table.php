@@ -15,7 +15,7 @@ class CreateImageUploadersTable extends Migration
     {
         Schema::create('image_uploaders', function (Blueprint $table) {
             $table->id();
-            $table->binary('img')->nullable();
+            $table->string('image');
             $table->timestamps();
         });
     }
