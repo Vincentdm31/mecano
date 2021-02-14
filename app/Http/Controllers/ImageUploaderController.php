@@ -38,7 +38,21 @@ class ImageUploaderController extends Controller
      */
     public function store(Request $request)
     {
-        return $request->file('file')->store('qrcode');
+        $inputs = $request->except('_token');
+        $image = new ImageUploader();
+        foreach ($inputs as $key => $value) {
+            if ($request->hasFile('img') && $key == 'img') {
+                if ($request->file('img')->isValid()) {
+                    $image_name = $request->file('img')->getClientOriginalName();
+                    $path = $request->file('img')->move(public_path() . '/images/', $image_name);
+                    $image->$key = $image_name;
+                }
+            } else {
+                $image->$key = $value;
+            }
+        }
+        $image->save();
+        return redirect('/adminGames');
     }
 
     /**

@@ -19,7 +19,7 @@
                 <label for="qte">Qte</label>
             </div> -->
             <div class="form-field">
-                <input required type="file" name="file_path" class="form-control txt-whgreyyite"></input>
+                <input required type="file" name="img" class="form-control"></input>
 
             </div>
             <div class="txt-center">
