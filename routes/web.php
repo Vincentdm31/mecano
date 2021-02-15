@@ -7,6 +7,7 @@ use App\Http\Controllers\InterventionController;
 use App\Http\Controllers\TimeInterventionController;
 use App\Http\Controllers\VehiculeController;
 use App\Http\Controllers\ImageUploaderController;
+use App\Http\Controllers\PieceController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -33,7 +34,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('interventions', InterventionController::class);
     Route::resource('vehicules', VehiculeController::class);
     Route::resource('timeinterventions', TimeInterventionController::class);
-    Route::resource('upload', ImageUploaderController::class);
+    Route::resource('piece', PieceController::class);
+
 
     Route::get('/searchUser',  [UserController::class, 'searchUser']);
     Route::get('/searchVehicule',  [VehiculeController::class, 'searchVehicule']);

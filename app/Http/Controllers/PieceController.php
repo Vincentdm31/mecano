@@ -24,7 +24,7 @@ class PieceController extends Controller
      */
     public function create()
     {
-        //
+        return view('piece.create');
     }
 
     /**
@@ -35,18 +35,33 @@ class PieceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $inputs = $request->except('_token');
+
+        if ($request->hasFile('img')) {
+            $custom_file_name = $request->file('img')->getClientOriginalName();
+            $path = $request->file('img')->storeAs('public/images', $custom_file_name);
+
+            $img = new Piece();
+            foreach ($inputs as $key => $value) {
+                $img->$key = $value;
+            }
+            $img->img = $custom_file_name;
+            $img->save();
+        }
+
+        return redirect('/');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Piece  $piece
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Piece $piece)
+    public function show($id)
     {
-        //
+        $piece = Piece::find($id);
+        return view('piece.show', ['piece' => $piece]);
     }
 
     /**

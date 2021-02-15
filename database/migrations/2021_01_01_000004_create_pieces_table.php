@@ -12,7 +12,7 @@ class CreatePiecesTable extends Migration
      * @return void
      */
     public function up()
-    {   
+    {
         Schema::dropIfExists('pieces');
         Schema::create('pieces', function (Blueprint $table) {
             $table->id();
@@ -20,6 +20,7 @@ class CreatePiecesTable extends Migration
             $table->string('ref');
             $table->float('price');
             $table->float('qte');
+            $table->string('img')->nullable();
             $table->timestamps();
         });
     }
