@@ -18,9 +18,9 @@
     @yield('extra-css')
 </head>
 
-<body class="layout grey light-4">
+<body class="layout">
     <header>
-        <nav class="navbar orange txt-grey txt-light-4 shadow-1">
+        <nav class="navbar test txt-white shadow-1">
             <a href="{{ url('/') }}" class="navbar-brand">Mecalcis</a>
             <a href="{{ route('piece.create') }}" class="navbar-brand ml-5">Piece</a>
 
@@ -53,7 +53,7 @@
 
     <!-- Scripts -->
     <script src="{{ mix('js/app.js') }}"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/neu-axentix@1.4.0/dist/js/neu-axentix.min.js"></script>
     @yield('extra-js')
 </body>
 

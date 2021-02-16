@@ -1,4 +1,5 @@
 @import "node_modules/axentix/src/scss/axentix";
+@import "node_modules/neu-axentix/src/scss/neu-axentix";
 
 body{
     font-family: 'Quicksand', sans-serif;
@@ -27,4 +28,8 @@ select:hover {
             font-size: 0.8rem;
         }
     }
+}
+
+.test{
+    background-color: rgb(27, 27, 27);
 }

@@ -1,6 +1,7 @@
 /**** Axentix ****/
 window.Axentix = require('axentix').Axentix;
 
+
 /** Laravel default */
 // window._ = require('lodash');
 

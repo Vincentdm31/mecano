@@ -9,10 +9,10 @@ $date = Carbon::now();
 ?>
 <div class="container mt-5">
     <div class="container txt-center">
-        <button data-target="modal-recap" class="btn rounded-1 txt-white shadow-3 orange modal-trigger">
+        <button data-target="modal-recap" class="btn rounded-1 txt-white shadow-1 orange dark-1 modal-trigger">
             Voir le récapitulatif
         </button>
-        <div class="modal white shadow-3 rounded-2" id="modal-recap" data-ax="modal">
+        <div class="modal white shadow-1 rounded-2" id="modal-recap" data-ax="modal">
             <div class="card">
                 <div class="card-header p-3 recap-infos">
                     <a href="" data-target="modal-comment" style="position:absolute;right:0;top:0;transform:translate(-50%,10%); font-size:3rem;" class="<?php echo (empty($intervention->observations) ? 'hide' : 'txt-orange') ?> fas fa-comment modal-trigger"></a>
@@ -153,8 +153,8 @@ $date = Carbon::now();
 </div>
 <!-- Actions -->
 <div class="container mt-5">
-    <div class="tab rounded-3 full-width shadow-3" id="example-tab" data-ax="tab">
-        <ul class="tab-menu shadow-2 rounded-tl2 rounded-tr2 grey light-4 txt-black">
+    <div class="tab rounded-3 full-width white shadow-2" id="example-tab" data-ax="tab">
+        <ul class="tab-menu light-shadow-1 rounded-tl2 rounded-tr2 txt-black">
             <li class="tab-link">
                 <a href="#tab-vehicule">Véhicule</a>
             </li>
