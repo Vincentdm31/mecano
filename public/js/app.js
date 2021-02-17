@@ -3491,10 +3491,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/scss/home.scss":
-/*!**********************************!*\
-  !*** ./resources/scss/home.scss ***!
-  \**********************************/
+/***/ "./resources/scss/qrcode.scss":
+/*!************************************!*\
+  !*** ./resources/scss/qrcode.scss ***!
+  \************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -3578,7 +3578,7 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 		var deferredModules = [
 /******/ 			["./resources/js/app.js"],
 /******/ 			["./resources/scss/app.scss"],
-/******/ 			["./resources/scss/home.scss"]
+/******/ 			["./resources/scss/qrcode.scss"]
 /******/ 		];
 /******/ 		// no chunk on demand loading
 /******/ 		

@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('extra-css')
+<link href="{{ mix('css/qrcode.css') }}" rel="stylesheet">
+@endsection
 @section('content')
 <?php
 
@@ -333,25 +336,42 @@ $date = Carbon::now();
         </div>
         <!-- Tab pièce -->
         <div id="tab-piece" class="p-3 container">
-            <form class="form-material container" method="POST" action="{{ route('addPiece')}}">
-                @csrf
-                <div class="form-field">
-                    <label for="operation">Piece</label>
-                    <select class="form-control rounded-1 txt-airforce txt-dark-4" name="piece_id">
-                        @foreach ( $pieces as $piece)
-                        <option class="grey light-4 txt-airforce txt-dark-4" value="{{ $piece->id }}">{{ $piece->name }}</option>
-                        @endforeach
-                    </select>
+            <div class="grix xs1 md2">
+                <div>
+                    <form class="form-material container" method="POST" action="{{ route('addPiece')}}">
+                        @csrf
+                        <div class="form-field">
+                            <label for="operation">Piece</label>
+                            <select class="form-control rounded-1 txt-airforce txt-dark-4" name="piece_id">
+                                @foreach ( $pieces as $piece)
+                                <option class="grey light-4 txt-airforce txt-dark-4" value="{{ $piece->id }}">{{ $piece->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <input required type="number" name="qte" class="form-control txt-airforce txt-dark-4"></input>
+                            <label for="qte">Quantité</label>
+                        </div>
+                        <input hidden name="intervention_id" value="{{ $intervention->id }}">
+                        <div class="txt-center">
+                            <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange mt-4"><span class="outline-text outline-invert">Valider</span></button>
+                        </div>
+                    </form>
                 </div>
-                <div class="form-field">
-                    <input required type="number" name="qte" class="form-control txt-airforce txt-dark-4"></input>
-                    <label for="qte">Quantité</label>
+
+                <div>
+                    <a id="btn-scan-qr">
+                        <img src="https://dab1nmslvvntp.cloudfront.net/wp-content/uploads/2017/07/1499401426qr_icon.svg">
+                    </a>
+                    <canvas hidden="" id="qr-canvas"></canvas>
+                    <div id="qr-result" hidden="">
+                        <b>Data:</b> <span id="outputData"></span>
+                    </div>
+                    <div>
+                        <input type="text" id="test" placeholder="test"></input>
+                    </div>
                 </div>
-                <input hidden name="intervention_id" value="{{ $intervention->id }}">
-                <div class="txt-center">
-                    <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange mt-4"><span class="outline-text outline-invert">Valider</span></button>
-                </div>
-            </form>
+            </div>
         </div>
         <!-- Tab observations -->
         <div id="tab-observation" class="p-3 container">
@@ -360,8 +380,8 @@ $date = Carbon::now();
                 @csrf
                 <div class="grix xs1 txt-center">
                     <div class="form-field">
-                        <textarea type="number" id="km_vehicule" name="observations" class="form-control txt-center grey txt-airforce txt-dark-4">{{ $intervention->observations }}</textarea>
-                        <label for="km_vehicule" class="">Observations</label>
+                        <textarea type="number" name="observations" class="form-control txt-center grey txt-airforce txt-dark-4">{{ $intervention->observations }}</textarea>
+                        <label for="observations" class="">Observations</label>
                     </div>
                 </div>
                 <div class="txt-center">
@@ -442,6 +462,9 @@ $date = Carbon::now();
 @endsection
 
 @section('extra-js')
+
+<script src="https://rawgit.com/sitepoint-editors/jsqrcode/master/src/qr_packed.js"></script>
+<script type="text/javascript" src="{{ mix('js/qrCodeScanner.js') }}"></script>
 
 <script>
     let toast = new Axentix.Toast();
