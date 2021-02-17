@@ -9,13 +9,13 @@ var canvas = canvasElement.getContext("2d");
 var qrResult = document.getElementById("qr-result");
 var outputData = document.getElementById("outputData");
 var btnScanQR = document.getElementById("btn-scan-qr");
-var test = document.getElementById("test");
+var qrCodeResult = document.getElementById("qr-code-result");
 var scanning = false;
 
 qrcode.callback = function (res) {
   if (res) {
     outputData.innerText = res;
-    test.value = res;
+    qrCodeResult.value = res;
     scanning = false;
     video.srcObject.getTracks().forEach(function (track) {
       track.stop();
@@ -39,8 +39,8 @@ btnScanQR.onclick = function () {
     video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
 
     video.srcObject = stream;
-    video.play(); //tick();
-
+    video.play();
+    tick();
     scan();
   });
 };

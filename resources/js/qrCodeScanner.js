@@ -8,7 +8,7 @@ const qrResult = document.getElementById("qr-result");
 const outputData = document.getElementById("outputData");
 const btnScanQR = document.getElementById("btn-scan-qr");
 
-const test = document.getElementById("test");
+const qrCodeResult = document.getElementById("qr-code-result");
 
 
 let scanning = false;
@@ -16,7 +16,7 @@ let scanning = false;
 qrcode.callback = res => {
   if (res) {
     outputData.innerText = res;
-    test.value = res;
+    qrCodeResult.value = res;
     scanning = false;
 
     video.srcObject.getTracks().forEach(track => {
@@ -40,7 +40,7 @@ btnScanQR.onclick = () => {
       video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
       video.srcObject = stream;
       video.play();
-      //tick();
+      tick();
       scan();
     });
 };

@@ -8,13 +8,6 @@
   cursor: pointer;
 }
 
-#btn-scan-qr img {
-  height: 10em;
-  padding: 15px;
-  margin: 15px;
-  background: white;
-}
-
 #qr-result {
   font-size: 1.2em;
   margin: 20px auto;

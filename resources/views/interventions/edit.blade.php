@@ -360,15 +360,15 @@ $date = Carbon::now();
                 </div>
 
                 <div>
-                    <a id="btn-scan-qr">
-                        <img src="https://dab1nmslvvntp.cloudfront.net/wp-content/uploads/2017/07/1499401426qr_icon.svg">
+                    <a id="btn-scan-qr" class="btn rounded-1 shadow-1 orange dark-1">
+                        SCAN
                     </a>
                     <canvas hidden="" id="qr-canvas"></canvas>
                     <div id="qr-result" hidden="">
                         <b>Data:</b> <span id="outputData"></span>
                     </div>
                     <div>
-                        <input type="text" id="test" placeholder="test"></input>
+                        <input type="text" id="qr-code-result" placeholder="Result"></input>
                     </div>
                 </div>
             </div>
