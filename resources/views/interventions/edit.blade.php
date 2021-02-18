@@ -15,9 +15,9 @@ $date = Carbon::now();
         <button data-target="modal-recap" class="btn rounded-1 txt-white shadow-1 orange dark-1 modal-trigger">
             Voir le récapitulatif
         </button>
-        <div class="modal overflow-visible white shadow-1 rounded-2" id="modal-recap" data-ax="modal">
-            <a href="" data-target="modal-comment" style="position:absolute;right:0;top:0;transform:translate(50%,-50%); font-size:3rem;" class="<?php echo (empty($intervention->observations) ? 'hide' : 'txt-orange') ?> fas fa-comment modal-trigger"></a>
+        <div class="modal white shadow-1 rounded-2 mt-4" id="modal-recap" data-ax="modal">
             <div class="card rounded-2 m-0 overflow-visible">
+                <a href="" data-target="modal-comment" style="position:absolute;right:0;top:0;font-size:3rem;" class="<?php echo (empty($intervention->observations) ? 'hide' : 'txt-blue') ?> fas fa-comment modal-trigger"></a>
                 <div class="card-header rounded-tl2 rounded-tr2 orange dark-1 p-3 recap-infos">
                     <div class="grix txt-white md3">
                         <p class="pl-2 lh-normal">{{\Carbon\Carbon::parse($intervention->created_at)->isoFormat('LLLL')}}</p>
@@ -331,7 +331,7 @@ $date = Carbon::now();
             <div class="grix xs1 md2 container">
                 <div class="d-flex my-auto mx-auto w100 ">
                     <form class="form-material w100" method="POST" action="{{ route('addPiece')}}">
-                    @csrf
+                        @csrf
                         <div class="txt-center">
                             <a id="btn-scan-qr" class="btn rounded-1 shadow-1 orange dark-1 txt-white">SCAN</a>
                         </div>
@@ -405,13 +405,13 @@ $date = Carbon::now();
 <!-- MODALS -->
 
 @foreach( $intervention->pieces as $piece)
-<div class="modal shadow-1 p-4 rounded-2" id="edit-piece-{{ $piece->id }}" data-ax="modal">
+<div class="modal white shadow-1 p-4 rounded-2" id="edit-piece-{{ $piece->id }}" data-ax="modal">
     <form class="form-material" method="POST" action="{{ route('editPiece') }}">
         @method('PUT')
         @csrf
         <div class="grix xs1 txt-center">
             <div class="form-field">
-                <textarea type="text" id="piece-observations" name="observations" class="form-control txt-white">{{ $piece->pivot->observations }}</textarea>
+                <textarea type="text" id="piece-observations" name="observations" class="form-control txt-airforce txt-dark-4">{{ $piece->pivot->observations }}</textarea>
                 <input hidden name="intervention_id" value="{{ $intervention->id }}" />
                 <input hidden name="piece_id" value="{{ $piece->id}}" />
                 <label for="observations" class="">Observations</label>
@@ -425,13 +425,13 @@ $date = Carbon::now();
 @endforeach
 
 @foreach( $intervention->categories as $operation)
-<div class="modal shadow-1 p-4 rounded-2" id="edit-operation-{{ $operation->id }}" data-ax="modal">
+<div class="modal white shadow-1 p-4 rounded-2" id="edit-operation-{{ $operation->id }}" data-ax="modal">
     <form class="form-material" method="POST" action="{{ route('editOperation') }}">
         @method('PUT')
         @csrf
         <div class="grix xs1 txt-center">
             <div class="form-field">
-                <textarea type="text" id="operation-observations" name="observations" class="form-control txt-white">{{ $operation->pivot->observations }}</textarea>
+                <textarea type="text" id="operation-observations" name="observations" class="form-control txt-airforce txt-dark-4">{{ $operation->pivot->observations }}</textarea>
                 <input hidden name="intervention_id" value="{{ $intervention->id }}" />
                 <input hidden name="categorie_id" value="{{ $operation->id}}" />
                 <label for="observations" class="">Observations</label>
