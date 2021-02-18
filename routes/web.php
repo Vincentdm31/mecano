@@ -26,22 +26,23 @@ Auth::routes();
 
 Route::group(['middleware' => ['admin']], function () {
     Route::get('/admin', [HomeController::class, 'adminView'])->name('admin.view');
-});
 
-Route::middleware('auth')->group(function () {
-    Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::resource('users', UserController::class);
-    Route::resource('interventions', InterventionController::class);
+    Route::get('/searchUser',  [UserController::class, 'searchUser']);
+
     Route::resource('vehicules', VehiculeController::class);
-    Route::resource('timeinterventions', TimeInterventionController::class);
+    Route::get('/searchVehicule',  [VehiculeController::class, 'searchVehicule']);
+    Route::get('/selectVehicule',  [InterventionController::class, 'selectVehicule'])->name('selectVehicule');
 
     Route::resource('pieces', PieceController::class);
     Route::get('/searchPiece',  [PieceController::class, 'searchPiece']);
 
+});
 
-    Route::get('/searchUser',  [UserController::class, 'searchUser']);
-    Route::get('/searchVehicule',  [VehiculeController::class, 'searchVehicule']);
-    Route::get('/selectVehicule',  [InterventionController::class, 'selectVehicule'])->name('selectVehicule');
+Route::middleware('auth')->group(function () {
+    Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::resource('interventions', InterventionController::class);
+    Route::resource('timeinterventions', TimeInterventionController::class);
 
     Route::post('/addOperation',  [InterventionController::class, 'addOperation'])->name('addOperation');
     Route::put('/editOperation',  [InterventionController::class, 'editOperation'])->name('editOperation');

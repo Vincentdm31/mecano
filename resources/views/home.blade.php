@@ -2,6 +2,7 @@
 @section('extra-css')
 <link href="{{ mix('css/home.css') }}" rel="stylesheet">
 @endsection
+
 @section('content')
 <!-- ADMIN VIEW -->
 @if(Auth()->user()->is_admin)
@@ -50,5 +51,16 @@
 
 @section('extra-js')
 
+<script>
+    let toast = new Axentix.Toast();
+</script>
 
+@if(session('error') == 'noadmin')
+<script>
+    toast.change("Vous n'avez pas accés à cette page", {
+        classes: "rounded-1 red txt-white shadow-2 mt-5"
+    });
+    toast.show();
+</script>
+@endif
 @endsection

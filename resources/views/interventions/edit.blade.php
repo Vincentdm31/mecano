@@ -426,7 +426,7 @@ $date = Carbon::now();
         @csrf
         <div class="grix xs1 txt-center">
             <div class="form-field">
-                <textarea type="text" id="observations" name="observations" class="form-control txt-white">{{ $piece->pivot->observations }}</textarea>
+                <textarea type="text" id="piece-observations" name="observations" class="form-control txt-white">{{ $piece->pivot->observations }}</textarea>
                 <input hidden name="intervention_id" value="{{ $intervention->id }}" />
                 <input hidden name="piece_id" value="{{ $piece->id}}" />
                 <label for="observations" class="">Observations</label>
@@ -446,7 +446,7 @@ $date = Carbon::now();
         @csrf
         <div class="grix xs1 txt-center">
             <div class="form-field">
-                <textarea type="text" id="observations" name="observations" class="form-control txt-white">{{ $operation->pivot->observations }}</textarea>
+                <textarea type="text" id="operation-observations" name="observations" class="form-control txt-white">{{ $operation->pivot->observations }}</textarea>
                 <input hidden name="intervention_id" value="{{ $intervention->id }}" />
                 <input hidden name="categorie_id" value="{{ $operation->id}}" />
                 <label for="observations" class="">Observations</label>
