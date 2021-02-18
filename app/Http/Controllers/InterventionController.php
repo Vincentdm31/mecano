@@ -6,6 +6,7 @@ use App\Models\Categorie;
 use App\Models\Intervention;
 use App\Models\Piece;
 use App\Models\Vehicule;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -166,8 +167,13 @@ class InterventionController extends Controller
     
         $intervention = Intervention::find($interventionId);
 
-        $pieceId = Piece::Where('ref', 'like', '%' . $pieceRef . '%')->value('id');
-        $piece = Piece::find($pieceId);
+        try{
+            $pieceId = Piece::Where('ref', 'like', '%' . $pieceRef . '%')->value('id');
+            $piece = Piece::findOrFail($pieceId);
+        }
+        catch (Exception $e){
+            dd('Pièce introuvable.');
+        }
         
         if( $piece->qte >= $qte){
             $piece->qte -= $qte;
