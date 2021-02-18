@@ -15,19 +15,11 @@ $date = Carbon::now();
         <button data-target="modal-recap" class="btn rounded-1 txt-white shadow-1 orange dark-1 modal-trigger">
             Voir le récapitulatif
         </button>
-        <div class="modal white shadow-1 rounded-2" id="modal-recap" data-ax="modal">
-            <div class="card">
-                <div class="card-header p-3 recap-infos">
-                    <a href="" data-target="modal-comment" style="position:absolute;right:0;top:0;transform:translate(-50%,10%); font-size:3rem;" class="<?php echo (empty($intervention->observations) ? 'hide' : 'txt-orange') ?> fas fa-comment modal-trigger"></a>
-                    <div class="modal airforce dark-4 shadow-1 mb-3 h100 rounded-2" id="modal-comment" data-ax="modal">
-                        <div class="card m-0">
-                            <div class="card-header txt-white txt-center">Observations</div>
-                        </div>
-                        <div class="card-content p-4 txt-white">
-                            {{ $intervention->observations}}
-                        </div>
-                    </div>
-                    <div class="grix xs1 txt-airforce txt-dark-4 md3 bd-b-solid bd-orange bd-2 pb-2">
+        <div class="modal overflow-visible white shadow-1 rounded-2" id="modal-recap" data-ax="modal">
+            <a href="" data-target="modal-comment" style="position:absolute;right:0;top:0;transform:translate(50%,-50%); font-size:3rem;" class="<?php echo (empty($intervention->observations) ? 'hide' : 'txt-orange') ?> fas fa-comment modal-trigger"></a>
+            <div class="card rounded-2 m-0 overflow-visible">
+                <div class="card-header rounded-tl2 rounded-tr2 orange dark-1 p-3 recap-infos">
+                    <div class="grix txt-white md3">
                         <p class="pl-2 lh-normal">{{\Carbon\Carbon::parse($intervention->created_at)->isoFormat('LLLL')}}</p>
                         <p class="pl-2 lh-normal">Créateur : {{ $intervention->created_by }}</p>
                         <p class="pl-2 lh-normal">Ref Intervention : {{ $intervention->id }}</p>
@@ -35,7 +27,7 @@ $date = Carbon::now();
                 </div>
                 <div class="card-content p-3">
                     <div class="grix xs1 md2 gutter-xs5">
-                        <div class="p-2 txt-airforce txt-dark-4 rounded-1 shadow-2">
+                        <div class="p-2 txt-airforce txt-dark-4 rounded-1 light-shadow-2">
                             <p class="bd-b-solid bd-white bd-2 pb-2 mb-3">Véhicule</p>
                             @if(empty($intervention->vehicule_id))
                             <p class="txt-orange pb-2">Aucun véhicule sélectionné</p>
@@ -80,13 +72,13 @@ $date = Carbon::now();
                 <div class="card-footer p-3 white">
                     <div class="grix xs1 sm2 gutter-xs5">
                         <div class="p-2">
-                            <p class="txt-white bd-b-solid bd-white bd-2 pb-2">Liste des opérations</p>
+                            <p class="txt-airforce bd-b-solid bd-white bd-2 pb-2">Liste des opérations</p>
                             @if(!$intervention->categories()->exists())
                             <p class="txt-orange">Aucune opération en cours</p>
                             @else
                             <div class="grix xs2">
                                 @foreach( $intervention->categories as $operation)
-                                <div class="my-auto mx-auto txt-white">
+                                <div class="my-auto mx-auto txt-airforce">
                                     <p>{{ $operation->name }}</p>
                                 </div>
                                 <div class="grix xs2 gutter-xs2">
@@ -113,16 +105,16 @@ $date = Carbon::now();
                             @endif
                         </div>
                         <div class="p-2">
-                            <p class="txt-white bd-b-solid bd-white bd-2 pb-2">Liste des pièces</p>
+                            <p class="txt-airforce bd-b-solid bd-white bd-2 pb-2">Liste des pièces</p>
                             @if(!$intervention->pieces()->exists())
                             <p class=" txt-orange">Aucune pièce utilisée</p>
                             @else
                             <div class="grix xs2 md4">
                                 @foreach( $intervention->pieces as $piece)
-                                <div class="my-auto mx-auto txt-white">
+                                <div class="my-auto mx-auto txt-airforce">
                                     <p>{{ $piece->name }}</p>
                                 </div>
-                                <div class="my-auto mx-auto txt-white">
+                                <div class="my-auto mx-auto txt-airforce">
                                     <p>x{{ $piece->pivot->qte }}</p>
                                 </div>
                                 <div class="grix xs2 col-xs2 gutter-xs2">
@@ -335,42 +327,35 @@ $date = Carbon::now();
             </form>
         </div>
         <!-- Tab pièce -->
-        <div id="tab-piece" class="p-3 container">
-            <div class="grix xs1 md2">
-                <div>
-                    <form class="form-material container" method="POST" action="{{ route('addPiece')}}">
-                        @csrf
+        <div id="tab-piece" class="p-3">
+            <div class="grix xs1 md2 container">
+                <div class="d-flex my-auto mx-auto w100 ">
+                    <form class="form-material w100" method="POST" action="{{ route('addPiece')}}">
+                    @csrf
+                        <div class="txt-center">
+                            <a id="btn-scan-qr" class="btn rounded-1 shadow-1 orange dark-1 txt-white">SCAN</a>
+                        </div>
+                        <canvas hidden="" id="qr-canvas"></canvas>
+                        <div id="qr-result" hidden="">
+                            <b>Data:</b> <span id="outputData"></span>
+                        </div>
+
                         <div class="form-field">
-                            <label for="operation">Piece</label>
-                            <select class="form-control rounded-1 txt-airforce txt-dark-4" name="piece_id">
-                                @foreach ( $pieces as $piece)
-                                <option class="grey light-4 txt-airforce txt-dark-4" value="{{ $piece->id }}">{{ $piece->name }}</option>
-                                @endforeach
-                            </select>
+                            <input required type="text" id="qr-code-result" name="piece-ref" class="form-control txt-airforce txt-dark-4"></input>
+                            <label for="qte">Pièce</label>
                         </div>
                         <div class="form-field">
                             <input required type="number" name="qte" class="form-control txt-airforce txt-dark-4"></input>
                             <label for="qte">Quantité</label>
                         </div>
-                        <input hidden name="intervention_id" value="{{ $intervention->id }}">
+                        <input hidden name="intervention-id" value="{{ $intervention->id }}">
                         <div class="txt-center">
                             <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange mt-4"><span class="outline-text outline-invert">Valider</span></button>
                         </div>
                     </form>
                 </div>
+                <img src="{{ asset('/images/qrcode.png') }}" class="p-3 responsive-media" alt="">
 
-                <div>
-                    <a id="btn-scan-qr" class="btn rounded-1 shadow-1 orange dark-1">
-                        SCAN
-                    </a>
-                    <canvas hidden="" id="qr-canvas"></canvas>
-                    <div id="qr-result" hidden="">
-                        <b>Data:</b> <span id="outputData"></span>
-                    </div>
-                    <div>
-                        <input type="text" id="qr-code-result" placeholder="Result"></input>
-                    </div>
-                </div>
             </div>
         </div>
         <!-- Tab observations -->
@@ -458,6 +443,15 @@ $date = Carbon::now();
     </form>
 </div>
 @endforeach
+
+<div class="modal airforce dark-4 shadow-1 mb-3 h100 rounded-2" id="modal-comment" data-ax="modal">
+    <div class="card m-0">
+        <div class="card-header txt-white txt-center">Observations</div>
+    </div>
+    <div class="card-content p-4 txt-white">
+        {{ $intervention->observations}}
+    </div>
+</div>
 
 @endsection
 

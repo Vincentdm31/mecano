@@ -9,6 +9,8 @@ class Intervention extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['qte'];
+    
     public function vehiculeList()
     {
         return $this->hasOne(Vehicule::class, 'id', 'vehicule_id');

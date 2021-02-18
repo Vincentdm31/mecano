@@ -16,8 +16,8 @@ class CreatePiecesTable extends Migration
         Schema::dropIfExists('pieces');
         Schema::create('pieces', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('ref');
+            $table->string('name')->unique();
+            $table->string('ref')->unique();
             $table->float('price');
             $table->float('qte');
             $table->string('img')->nullable();

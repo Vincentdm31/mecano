@@ -159,16 +159,20 @@ class InterventionController extends Controller
     }
 
     public function addPiece(Request $request){
-        $interventionId = $request->get('intervention_id');
-        $piece_id = $request->get('piece_id');
+
+        $interventionId = $request->get('intervention-id');
+        $pieceRef = $request->get('piece-ref');
         $qte = $request->get('qte');
+    
         $intervention = Intervention::find($interventionId);
 
-        $piece = Piece::find($piece_id);
-
-        if($piece->qte >= $qte){
+        $pieceId = Piece::Where('ref', 'like', '%' . $pieceRef . '%')->value('id');
+        $piece = Piece::find($pieceId);
+        
+        if( $piece->qte >= $qte){
             $piece->qte -= $qte;
-            $intervention->pieces()->sync([$piece_id => [ 'qte' => $qte]], false);
+            $piece->save();
+            $intervention->pieces()->sync([$pieceId => [ 'qte' => $qte]], false);
         }else{
             return redirect(route('interventions.edit', ['intervention' => $intervention]))->with('toast', 'nopieceqte' );
         }
