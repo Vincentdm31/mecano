@@ -34,7 +34,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('interventions', InterventionController::class);
     Route::resource('vehicules', VehiculeController::class);
     Route::resource('timeinterventions', TimeInterventionController::class);
-    Route::resource('piece', PieceController::class);
+
+    Route::resource('pieces', PieceController::class);
+    Route::get('/searchPiece',  [PieceController::class, 'searchPiece']);
 
 
     Route::get('/searchUser',  [UserController::class, 'searchUser']);

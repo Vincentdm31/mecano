@@ -1,10 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-<p>TEST</p>
-<div class="container">
-    <div class="container">
-        <form action="{{ route('piece.store') }}" enctype="multipart/form-data" method="POST" class="form-material container txt-greyy">
+<div class="container mt-5">
+    <div class="container shadow-1 pb-3  rounded-2">
+        <form action="{{ route('pieces.store') }}" enctype="multipart/form-data" method="POST" class="form-material container txt-greyy">
             @csrf
             <div class="form-field">
                 <input required type="text" name="ref" class="form-control txt-greyy"></input>

@@ -21,7 +21,6 @@
     <header>
         <nav class="navbar test txt-white shadow-1">
             <a href="{{ url('/') }}" class="navbar-brand">Mecalcis</a>
-            <a href="{{ route('piece.create') }}" class="navbar-brand ml-5">Piece</a>
 
             <div class="navbar-menu ml-auto">
                 @guest

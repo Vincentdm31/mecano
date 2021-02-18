@@ -1,26 +1,43 @@
 @extends('layouts.app')
-
+@section('extra-css')
+<link href="{{ mix('css/home.css') }}" rel="stylesheet">
+@endsection
 @section('content')
 <!-- ADMIN VIEW -->
 @if(Auth()->user()->is_admin)
-<div class="container mt-5">
-    <div class="grix xs1 sm3 mt-5">
-        <a href="{{route('users.index')}}" class="btn press airforce dark-4 rounded-1 shadow-1 w100 mb-2">Gestion utilisateurs</a>
-        <a href="" class="btn press airforce dark-4 rounded-1 shadow-1 w100 mb-2">Interventions</a>
-        <a href="{{route('vehicules.index')}}" class="btn press airforce dark-4 rounded-1 shadow-1 w100 mb-2">Véhicules</a>
+<div class="container home">
+    <div class="grix xs1 md4 gutter-xs4 mt-5 h100">
+        <div>
+            <a href="" class="btn orange dark-2 txt-white d-flex vcenter fx-center rounded-1 shadow-1 hoverable-1 h100 w100 mb-2">Interventions</a>
+        </div>
+        <div>
+            <a href="{{ route('users.index') }}" class="btn red dark-2 txt-white d-flex vcenter fx-center rounded-1 shadow-1 hoverable-1 h100 w100 mb-2">Gestion utilisateurs</a>
+        </div>
+        <div>
+            <a href="{{ route('vehicules.index') }}" class="btn airforce dark-2 txt-white d-flex vcenter fx-center rounded-1 shadow-1 hoverable-1 h100 w100 mb-2">Gestion véhicules</a>
+        </div>
+        <div>
+            <a href="{{ route('pieces.index') }}" class="btn green dark-2 txt-white d-flex vcenter fx-center rounded-1 shadow-1 hoverable-1 h100 w100 mb-2">Gestion pièces</a>
+        </div>
     </div>
 </div>
 
 <!-- USER VIEW -->
 @else
-<div class="container mt-5">
-    <div class="grix xs1 sm3 mt-5">
-        <form class="form-material" method="POST" action="{{ route('interventions.store') }}">
-            @csrf
-            <button type="submit" class="btn press airforce dark-4 rounded-1 shadow-1 w100 mb-2">Nouvelle</button>
-        </form>
-        <a href="" class="btn press airforce dark-4 rounded-1 shadow-1 w100 mb-2">Rejoindre</a>
-        <a href="" class="btn press airforce dark-4 rounded-1 shadow-1 w100">Reprendre</a>
+<div class="container mt-3">
+    <div class="grix xs1 gutter-xs5 md3 home">
+        <div class="h100">
+            <form class="form-material h100" method="POST" action="{{ route('interventions.store') }}">
+                @csrf
+                <button type="submit" class="btn airforce dark-4 rounded-1 shadow-1 h100 w100">Nouvelle</button>
+            </form>
+        </div>
+        <div class="h100">
+            <a href="" class="btn airforce dark-4 rounded-1 shadow-1 w100 h100 d-flex fx-center vcenter">Rejoindre</a>
+        </div>
+        <div class="h100">
+            <a href="" class="btn airforce dark-4 rounded-1 shadow-1 w100 h100 d-flex fx-center vcenter">Reprendre</a>
+        </div>
     </div>
 </div>
 @endif

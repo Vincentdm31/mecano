@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Piece;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PieceController extends Controller
 {
@@ -14,7 +15,8 @@ class PieceController extends Controller
      */
     public function index()
     {
-        //
+        $pieces = Piece::all();
+        return view('pieces.index', ['pieces' => $pieces]);
     }
 
     /**
@@ -24,7 +26,7 @@ class PieceController extends Controller
      */
     public function create()
     {
-        return view('piece.create');
+        return view('pieces.create');
     }
 
     /**
@@ -41,15 +43,15 @@ class PieceController extends Controller
             $custom_file_name = $request->file('img')->getClientOriginalName();
             $path = $request->file('img')->storeAs('public/images', $custom_file_name);
 
-            $img = new Piece();
+            $piece = new Piece();
             foreach ($inputs as $key => $value) {
-                $img->$key = $value;
+                $piece->$key = $value;
             }
-            $img->img = $custom_file_name;
-            $img->save();
+            $piece->img = $custom_file_name;
+            $piece->save();
         }
 
-        return redirect('/');
+        return redirect(route('pieces.index'));
     }
 
     /**
@@ -61,40 +63,73 @@ class PieceController extends Controller
     public function show($id)
     {
         $piece = Piece::find($id);
-        return view('piece.show', ['piece' => $piece]);
+        return view('pieces.show', ['piece' => $piece]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Piece  $piece
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Piece $piece)
-    {
-        //
+    public function edit($id)
+    {   
+        $piece = Piece::find($id);
+        return view('pieces.edit', ['piece' => $piece]);
+        
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Piece  $piece
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Piece $piece)
-    {
-        //
+    public function update(Request $request, $id)
+    {   
+        $piece = Piece::find($id);
+        $lastImg = $piece->img;
+        Storage::disk('local')->delete('public/images/'.$lastImg);
+
+        $inputs = $request->except('_token', '_method', 'updated_at');
+        foreach ($inputs as $key => $value){
+            $piece->$key = $value;
+        }
+        $piece->save();
+        
+        if ($request->hasFile('img')) {
+            $custom_file_name = $request->file('img')->getClientOriginalName();
+            $path = $request->file('img')->storeAs('public/images', $custom_file_name);
+
+            $piece->img = $custom_file_name;
+            $piece->save();
+        }
+        
+       return redirect(route('pieces.index'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Piece  $piece
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Piece $piece)
+    public function destroy($id)
     {
-        //
+        $piece = Piece::find($id);
+        $piece->delete();
+
+        return redirect(route('pieces.index'));
+    }
+
+    public function searchPiece(Request $request)
+    {
+        $search = $request->get('searchPiece');
+
+        $pieces = Piece::Where('ref', 'like', '%'.$search.'%')
+                    ->orWhere('name', 'like', '%'.$search.'%')
+                    ->get();
+        return view('pieces.index', ['pieces' => $pieces]);
     }
 }

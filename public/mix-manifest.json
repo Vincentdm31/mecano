@@ -2,5 +2,6 @@
     "/js/app.js": "/js/app.js",
     "/js/qrCodeScanner.js": "/js/qrCodeScanner.js",
     "/css/qrcode.css": "/css/qrcode.css",
+    "/css/home.css": "/css/home.css",
     "/css/app.css": "/css/app.css"
 }

@@ -1738,15 +1738,19 @@ document.addEventListener('DOMContentLoaded', () => Axentix.updateInputsFile());
       this.overflowParents = [];
 
       for (var elem = this.el; elem && elem !== document; elem = elem.parentNode) {
-        if (window.getComputedStyle(elem).overflow === 'hidden') {
+        var elementSyle = window.getComputedStyle(elem);
+
+        if (elementSyle.overflow === 'hidden' || elementSyle.overflowX === 'hidden' || elementSyle.overflowY === 'hidden') {
           this.overflowParents.push(elem);
-          elem.style.overflow = 'visible';
+          elem.style.setProperty('overflow', 'visible', 'important');
+          document.body.style.overflowX = 'hidden';
         }
       }
     }
 
     _unsetOverflowParents() {
       this.overflowParents.map(parent => parent.style.overflow = '');
+      document.body.style.overflowX = '';
     }
     /**
      * Set position of active lightbox
@@ -1918,6 +1922,7 @@ document.addEventListener('DOMContentLoaded', () => Axentix.updateInputsFile());
 
       this.options.overlay ? this._createOverlay() : '';
       this.el.style.transitionDuration = this.options.animationDuration + 'ms';
+      this.el.style.animationDuration = this.options.animationDuration + 'ms';
     }
     /**
      * Setup listeners
@@ -3352,13 +3357,6 @@ Axentix.extend = (...args) => {
 Axentix.getComponentOptions = (component, options, el, isLoadedWithData) => {
   return Axentix.extend(Axentix[component].getDefaultOptions(), isLoadedWithData ? {} : Axentix.DataDetection.formatOptions(component, el), options);
 };
-/**
- * Wrap content inside an element (<div> by default)
- * @param {Array<Element>} target
- * @param {Element} wrapper
- * @return {Element}
- */
-
 
 Axentix.wrap = (target, wrapper = document.createElement('div')) => {
   var parent = target[0].parentElement;
@@ -3366,13 +3364,10 @@ Axentix.wrap = (target, wrapper = document.createElement('div')) => {
   target.forEach(elem => wrapper.appendChild(elem));
   return wrapper;
 };
-/**
- * Create custom event
- * @param {Element} element
- * @param {string} eventName
- * @param {Object} extraData
- */
 
+Axentix.unwrap = wrapper => {
+  wrapper.replaceWith(...wrapper.childNodes);
+};
 
 Axentix.createEvent = (element, eventName, extraData) => {
   var event = new CustomEvent('ax.' + eventName, {
@@ -3383,7 +3378,7 @@ Axentix.createEvent = (element, eventName, extraData) => {
 };
 
 Axentix.isTouchEnabled = () => {
-  return 'ontouchstart' in window;
+  return 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
 };
 
 Axentix.getInstanceByType = type => {
@@ -3491,6 +3486,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/scss/home.scss":
+/*!**********************************!*\
+  !*** ./resources/scss/home.scss ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
 /***/ "./resources/scss/qrcode.scss":
 /*!************************************!*\
   !*** ./resources/scss/qrcode.scss ***!
@@ -3578,6 +3586,7 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 		var deferredModules = [
 /******/ 			["./resources/js/app.js"],
 /******/ 			["./resources/scss/app.scss"],
+/******/ 			["./resources/scss/home.scss"],
 /******/ 			["./resources/scss/qrcode.scss"]
 /******/ 		];
 /******/ 		// no chunk on demand loading
