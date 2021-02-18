@@ -3,22 +3,22 @@
 @section('content')
 <div class="container mt-5">
     <div class="container shadow-1 pb-3  rounded-2">
-        <form action="{{ route('pieces.store') }}" enctype="multipart/form-data" method="POST" class="form-material container txt-greyy">
+        <form action="{{ route('pieces.store') }}" enctype="multipart/form-data" method="POST" class="form-material container txt-airforce txt-dark-4">
             @csrf
             <div class="form-field">
-                <input required type="text" name="ref" class="form-control txt-greyy"></input>
-                <label for="ref">Référence</label>
-            </div>
-            <div class="form-field">
-                <input required type="text" name="name" class="form-control txt-greyy"></input>
+                <input required type="text" name="name" class="form-control txt-airforce txt-dark-4"></input>
                 <label for="name">Nom</label>
             </div>
             <div class="form-field">
-                <input required type="number" name="qte" class="form-control txt-greyy"></input>
+                <input required type="text" name="ref" class="form-control txt-airforce txt-dark-4"></input>
+                <label for="ref">Référence</label>
+            </div>
+            <div class="form-field">
+                <input required type="number" name="qte" class="form-control txt-airforce txt-dark-4"></input>
                 <label for="qte">Qte</label>
             </div>
             <div class="form-field">
-                <input required type="number" name="price" class="form-control txt-greyy"></input>
+                <input required type="number" name="price" class="form-control txt-airforce txt-dark-4"></input>
                 <label for="price">Prix</label>
             </div>
             <div class="form-field">
