@@ -20,19 +20,19 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => 'vins',
                 'email' => 'vins@vins.vins',
-                'password' => Hash::make('laravelcop'),
+                'password' => Hash::make('totoalcis'),
                 'is_admin' => '0'
             ],
             [
                 'name' => 'toto',
                 'email' => 'toto@vins.vins',
-                'password' => Hash::make('laravelcop'),
+                'password' => Hash::make('totoalcis'),
                 'is_admin' => '0'
             ],
             [
                 'name' => 'admin',
                 'email' => 'admin@vins.vins',
-                'password' => Hash::make('laravelcop'),
+                'password' => Hash::make('totoalcis'),
                 'is_admin' => '1'
             ]
         ]);
