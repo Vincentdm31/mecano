@@ -26,12 +26,15 @@
 <!-- USER VIEW -->
 @else
 <div class="container mt-3">
-    <div class="grix xs1 gutter-xs5 md3 home">
+    <div class="grix xs1 gutter-xs5 md4 home">
         <div class="h100">
             <form class="form-material h100" method="POST" action="{{ route('interventions.store') }}">
                 @csrf
                 <button type="submit" class="btn green dark-1 txt-white hoverable-1 rounded-1 shadow-1 h100 w100">Nouvelle</button>
             </form>
+        </div>
+        <div class="h100">
+            <a href="{{ route('interventions.index') }}" class="btn red dark-1 txt-white hoverable-1 rounded-1 shadow-1 w100 h100 d-flex fx-center vcenter">Liste complète</a>
         </div>
         <div class="h100">
             <a href="{{ route('joinIntervention') }}" class="btn cyan dark-1 txt-white hoverable-1 rounded-1 shadow-1 w100 h100 d-flex fx-center vcenter">Rejoindre</a>

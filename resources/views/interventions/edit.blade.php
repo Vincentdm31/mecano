@@ -11,10 +11,15 @@ $date = Carbon::now();
 
 ?>
 <div class="container mt-5">
-    <div class="container txt-center">
-        <button data-target="modal-recap" class="btn rounded-1 txt-white shadow-1 orange dark-1 modal-trigger">
+    <div class="container txt-center d-flex vcenter">
+        <button data-target="modal-recap" class="mx-auto btn rounded-1 txt-white shadow-1 orange dark-1 modal-trigger">
             Voir le récapitulatif
         </button>
+        @if(Auth()->user()->name != $intervention->created_by)
+        <a href="{{route('leaveIntervention', ['intervention' => $intervention->id])}}" class="btn rounded-1 txt-white shadow-1 red dark-1 mx-auto">
+            Quitter
+        </a>
+        @endif
         <div class="modal white shadow-1 rounded-2 mt-4" id="modal-recap" data-ax="modal">
             <div class="card rounded-2 m-0 overflow-visible">
                 <a href="" data-target="modal-comment" style="position:absolute;right:0;top:0;font-size:2.5rem;" class="<?php echo (empty($intervention->observations) ? 'hide' : 'txt-white') ?> fas fa-comment modal-trigger"></a>

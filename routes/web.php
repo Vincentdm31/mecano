@@ -46,6 +46,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/joinIntervention',  [InterventionController::class, 'joinIntervention'])->name('joinIntervention');
     Route::get('/goToIntervention',  [InterventionController::class, 'goToIntervention'])->name('goToIntervention');
     Route::get('/goToJoinIntervention',  [InterventionController::class, 'goToJoinIntervention'])->name('goToJoinIntervention');
+    Route::get('/leaveIntervention',  [InterventionController::class, 'leaveIntervention'])->name('leaveIntervention');
 
     Route::resource('timeinterventions', TimeInterventionController::class);
 

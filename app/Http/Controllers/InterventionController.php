@@ -76,6 +76,9 @@ class InterventionController extends Controller
     public function edit(Request $request, $id)
     {   
         $intervention =  Intervention::find($id);
+        if(Auth()->user()->name != $intervention->created_by){
+            $intervention->users()->attach(Auth::id());
+        }
         $vehicules = Vehicule::all();
         $search = $request->get('selectVehicule');
         $vehicules = Vehicule::Where('immat', 'like', '%' . $search . '%')
@@ -246,5 +249,13 @@ class InterventionController extends Controller
         $intervention->save();
 
         return redirect(route('interventions.edit', ['intervention' => $intervention]));
+    }
+
+    public function leaveIntervention(Request $request){
+        $id = $request->input('intervention');
+        $intervention = Intervention::find($id);
+        $intervention->users()->detach(Auth::id());
+
+        return redirect(route('interventions.index'));
     }
 }
