@@ -24,6 +24,12 @@ class DatabaseSeeder extends Seeder
                 'is_admin' => '0'
             ],
             [
+                'name' => 'toto',
+                'email' => 'toto@vins.vins',
+                'password' => Hash::make('laravelcop'),
+                'is_admin' => '0'
+            ],
+            [
                 'name' => 'admin',
                 'email' => 'admin@vins.vins',
                 'password' => Hash::make('laravelcop'),

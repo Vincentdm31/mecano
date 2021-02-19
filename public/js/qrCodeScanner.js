@@ -9,6 +9,7 @@ var canvas = canvasElement.getContext("2d");
 var qrResult = document.getElementById("qr-result");
 var outputData = document.getElementById("outputData");
 var btnScanQR = document.getElementById("btn-scan-qr");
+var btnStopQR = document.getElementById("btn-stop-qr");
 var qrCodeResult = document.getElementById("qr-code-result");
 var scanning = false;
 
@@ -17,6 +18,8 @@ qrcode.callback = function (res) {
     outputData.innerText = res;
     qrCodeResult.value = res;
     scanning = false;
+    btnScanQR.classList.remove('hide');
+    btnStopQR.classList.add('hide');
     video.srcObject.getTracks().forEach(function (track) {
       track.stop();
     });
@@ -27,6 +30,8 @@ qrcode.callback = function (res) {
 };
 
 btnScanQR.onclick = function () {
+  btnScanQR.classList.add('hide');
+  btnStopQR.classList.remove('hide');
   navigator.mediaDevices.getUserMedia({
     video: {
       facingMode: "environment"
@@ -45,6 +50,17 @@ btnScanQR.onclick = function () {
   });
 };
 
+btnStopQR.onclick = function () {
+  scanning = false;
+  video.srcObject.getTracks().forEach(function (track) {
+    track.stop();
+  });
+  qrResult.hidden = true;
+  canvasElement.hidden = true;
+  btnScanQR.classList.remove('hide');
+  btnStopQR.classList.add('hide');
+};
+
 function tick() {
   canvasElement.height = video.videoHeight;
   canvasElement.width = video.videoWidth;
@@ -56,7 +72,7 @@ function scan() {
   try {
     qrcode.decode();
   } catch (e) {
-    setTimeout(scan, 300);
+    setTimeout(scan, 200);
   }
 }
 /******/ })()

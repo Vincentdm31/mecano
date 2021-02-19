@@ -1,14 +1,15 @@
 const qrcode = window.qrcode;
 
-const video = document.createElement("video");
-const canvasElement = document.getElementById("qr-canvas");
-const canvas = canvasElement.getContext("2d");
+let video = document.createElement("video");
+let canvasElement = document.getElementById("qr-canvas");
+let canvas = canvasElement.getContext("2d");
 
-const qrResult = document.getElementById("qr-result");
-const outputData = document.getElementById("outputData");
-const btnScanQR = document.getElementById("btn-scan-qr");
+let qrResult = document.getElementById("qr-result");
+let outputData = document.getElementById("outputData");
+let btnScanQR = document.getElementById("btn-scan-qr");
+let btnStopQR = document.getElementById("btn-stop-qr");
 
-const qrCodeResult = document.getElementById("qr-code-result");
+let qrCodeResult = document.getElementById("qr-code-result");
 
 
 let scanning = false;
@@ -18,7 +19,8 @@ qrcode.callback = res => {
     outputData.innerText = res;
     qrCodeResult.value = res;
     scanning = false;
-
+    btnScanQR.classList.remove('hide');
+    btnStopQR.classList.add('hide');
     video.srcObject.getTracks().forEach(track => {
       track.stop();
     });
@@ -30,6 +32,8 @@ qrcode.callback = res => {
 };
 
 btnScanQR.onclick = () => {
+  btnScanQR.classList.add('hide');
+  btnStopQR.classList.remove('hide');
   navigator.mediaDevices
     .getUserMedia({ video: { facingMode: "environment" } })
     .then(function(stream) {
@@ -42,8 +46,19 @@ btnScanQR.onclick = () => {
       video.play();
       tick();
       scan();
-    });
+    });  
 };
+
+btnStopQR.onclick = () => {
+    scanning = false;
+    video.srcObject.getTracks().forEach(track => {
+      track.stop();
+    });
+    qrResult.hidden = true;
+    canvasElement.hidden = true;
+    btnScanQR.classList.remove('hide');
+    btnStopQR.classList.add('hide');
+}
 
 function tick() {
   canvasElement.height = video.videoHeight;
@@ -55,8 +70,8 @@ function tick() {
 
 function scan() {
   try {
-    qrcode.decode();
+     qrcode.decode();
   } catch (e) {
-    setTimeout(scan, 300);
+    setTimeout(scan, 200);
   }
 }

@@ -42,6 +42,11 @@ Route::group(['middleware' => ['admin']], function () {
 Route::middleware('auth')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::resource('interventions', InterventionController::class);
+    Route::get('/resumeIntervention',  [InterventionController::class, 'resumeIntervention'])->name('resumeIntervention');
+    Route::get('/joinIntervention',  [InterventionController::class, 'joinIntervention'])->name('joinIntervention');
+    Route::get('/goToIntervention',  [InterventionController::class, 'goToIntervention'])->name('goToIntervention');
+    Route::get('/goToJoinIntervention',  [InterventionController::class, 'goToJoinIntervention'])->name('goToJoinIntervention');
+
     Route::resource('timeinterventions', TimeInterventionController::class);
 
     Route::post('/addOperation',  [InterventionController::class, 'addOperation'])->name('addOperation');

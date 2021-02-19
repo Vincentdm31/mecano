@@ -2,8 +2,11 @@
 @section('content')
 <div class="container mt-5">
     <div class="grix xs1 sm3">
-        <div class="card rounded-1 shadow-1 pos-sm2">
-            <div class="card-content">
+        <div class="card rounded-2 shadow-1 pos-sm2">
+            <div class="card-header pl-3 pr-3 p-0">
+                <p class="bd-b-solid bd-orange bd-3 pb-2">Nouveau véhicule</p>
+            </div>
+            <div class="card-content p-0 pl-3 pr-3">
                 <form class="form-material" method="POST" action="{{ route('vehicules.store') }}">
                     @csrf
                     <div class="grix xs1 txt-center">
@@ -21,7 +24,7 @@
                         </div>
                     </div>
                     <div class="txt-center">
-                        <button type="submit" class="btn rounded-1 orange dark-1 rounded-2 txt-white mt-5">
+                        <button type="submit" class="btn rounded-1 orange dark-1 rounded-2 txt-white mt-3 mb-3">
                             Ajouter
                         </button>
                     </div>
@@ -31,5 +34,3 @@
     </div>
 </div>
 @endsection
-
-

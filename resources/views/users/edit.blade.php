@@ -3,7 +3,10 @@
 @section('content')
 <div class="container grix xs1 sm3 mt-5">
     <div class="card pos-sm2 shadow-1 rounded-1">
-        <div class="card-content">
+        <div class="card-header pl-3 pr-3 p-0">
+            <p class="bd-b-solid bd-orange bd-3 pb-2">Edition utilisateur</p>
+        </div>
+        <div class="card-content p-0 pl-3 pr-3">
             <form class="form-material" method="POST" action="{{route('users.update', ['user' => $user->id])}}">
                 @method('PUT')
                 @csrf
@@ -22,10 +25,10 @@
                             <option <?php echo $user->is_admin == 1 ? 'selected' : '' ?> value="0">Membre</option>
                             <option <?php echo $user->is_admin == 1 ? 'selected' : '' ?> value="1">Admin</option>
                         </select>
-                    </div>                  
+                    </div>
                 </div>
                 <div class="txt-center">
-                    <button type="submit" class="btn orange dark-1 txt-white rounded-1 mt-5">Mettre à jour</button>
+                    <button type="submit" class="btn orange dark-1 txt-white rounded-1 mt-3 mb-3">Mettre à jour</button>
                 </div>
             </form>
         </div>

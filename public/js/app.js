@@ -3499,6 +3499,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/scss/user.scss":
+/*!**********************************!*\
+  !*** ./resources/scss/user.scss ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
 /***/ "./resources/scss/qrcode.scss":
 /*!************************************!*\
   !*** ./resources/scss/qrcode.scss ***!
@@ -3587,6 +3600,7 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 			["./resources/js/app.js"],
 /******/ 			["./resources/scss/app.scss"],
 /******/ 			["./resources/scss/home.scss"],
+/******/ 			["./resources/scss/user.scss"],
 /******/ 			["./resources/scss/qrcode.scss"]
 /******/ 		];
 /******/ 		// no chunk on demand loading

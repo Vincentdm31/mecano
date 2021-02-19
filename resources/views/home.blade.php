@@ -30,14 +30,14 @@
         <div class="h100">
             <form class="form-material h100" method="POST" action="{{ route('interventions.store') }}">
                 @csrf
-                <button type="submit" class="btn airforce dark-4 rounded-1 shadow-1 h100 w100">Nouvelle</button>
+                <button type="submit" class="btn green dark-1 txt-white hoverable-1 rounded-1 shadow-1 h100 w100">Nouvelle</button>
             </form>
         </div>
         <div class="h100">
-            <a href="" class="btn airforce dark-4 rounded-1 shadow-1 w100 h100 d-flex fx-center vcenter">Rejoindre</a>
+            <a href="{{ route('joinIntervention') }}" class="btn cyan dark-1 txt-white hoverable-1 rounded-1 shadow-1 w100 h100 d-flex fx-center vcenter">Rejoindre</a>
         </div>
         <div class="h100">
-            <a href="" class="btn airforce dark-4 rounded-1 shadow-1 w100 h100 d-flex fx-center vcenter">Reprendre</a>
+            <a href="{{ route('resumeIntervention') }}" class="btn orange dark-1 hoverable-1 txt-white rounded-1 shadow-1 w100 h100 d-flex fx-center vcenter">Reprendre</a>
         </div>
     </div>
 </div>

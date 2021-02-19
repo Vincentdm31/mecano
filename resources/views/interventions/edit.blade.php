@@ -17,45 +17,50 @@ $date = Carbon::now();
         </button>
         <div class="modal white shadow-1 rounded-2 mt-4" id="modal-recap" data-ax="modal">
             <div class="card rounded-2 m-0 overflow-visible">
-                <a href="" data-target="modal-comment" style="position:absolute;right:0;top:0;font-size:3rem;" class="<?php echo (empty($intervention->observations) ? 'hide' : 'txt-blue') ?> fas fa-comment modal-trigger"></a>
+                <a href="" data-target="modal-comment" style="position:absolute;right:0;top:0;font-size:2.5rem;" class="<?php echo (empty($intervention->observations) ? 'hide' : 'txt-white') ?> fas fa-comment modal-trigger"></a>
                 <div class="card-header rounded-tl2 rounded-tr2 orange dark-1 p-3 recap-infos">
                     <div class="grix txt-white md3">
                         <p class="pl-2 lh-normal">{{\Carbon\Carbon::parse($intervention->created_at)->isoFormat('LLLL')}}</p>
                         <p class="pl-2 lh-normal">Créateur : {{ $intervention->created_by }}</p>
                         <p class="pl-2 lh-normal">Ref Intervention : {{ $intervention->id }}</p>
                     </div>
+                    @foreach($intervention->users as $user)
+                    <span class="txt-white">{{ $user->name }}</span>
+                    @endforeach
                 </div>
                 <div class="card-content p-3">
                     <div class="grix xs1 md2 gutter-xs5">
-                        <div class="p-2 txt-airforce txt-dark-4 rounded-1 light-shadow-2">
-                            <p class="bd-b-solid bd-white bd-2 pb-2 mb-3">Véhicule</p>
+                        <div class="p-2 txt-airforce txt-dark-4 rounded-2 light-shadow-2">
+                            <p class="bd-b-solid bd-orange bd-2 pb-2 mb-3">Véhicule</p>
                             @if(empty($intervention->vehicule_id))
                             <p class="txt-orange pb-2">Aucun véhicule sélectionné</p>
                             @else
-                            <p class="">{{$intervention->vehiculeList->marque}}</p>
-                            <p class="">{{$intervention->vehiculeList->modele}}</p>
-                            <p class="">{{$intervention->vehiculeList->immat}}</p>
-                            @if(empty($intervention->km_vehicule))
-                            <p class="txt-orange">Saisir kilométrage</p>
-                            @else
-                            <p class="">{{$intervention->km_vehicule}} Km</p>
-                            @endif
+                                <div class="grix xs2">
+                                    <p class="">{{$intervention->vehiculeList->marque}}</p>
+                                    <p class="">{{$intervention->vehiculeList->modele}}</p>
+                                    <p class="">{{$intervention->vehiculeList->immat}}</p>
+                                    @if(empty($intervention->km_vehicule))
+                                    <p class="txt-orange">Saisir kilométrage</p>
+                                    @else
+                                    <p class="">{{$intervention->km_vehicule}} Km</p>
+                                    @endif
+                                </div>
                             @endif
                         </div>
-                        <div class="p-2 txt-airforce txt-dark-4 rounded-1 shadow-2">
-                            <p class="txt-airforce txt-dark-4 bd-b-solid bd-white bd-2 pb-2 mb-3">Déplacements</p>
+                        <div class="p-2 txt-airforce txt-dark-4 rounded-2 light-shadow-2">
+                            <p class="txt-airforce txt-dark-4 bd-b-solid bd-orange bd-2 pb-2 mb-3">Déplacements</p>
                             @if(empty($intervention->start_deplacement_aller))
                             <p class="txt-orange pb-2">Aucun déplacement</p>
                             @else
                             <div class="grix xs1 sm2">
-                                <div class="txt-white">
+                                <div class="txt-airforce txt-dark-4">
                                     <p class="txt-orange">Aller</p>
                                     <p>{{ Carbon::parse($intervention->start_deplacement_aller)->format('d/m/Y h:m:s')  }}</p>
                                     @if(!empty($intervention->end_deplacement_aller))
                                     <p>{{ Carbon::parse($intervention->end_deplacement_aller)->format('d/m/Y h:m:s')  }}</p>
                                     @endif
                                 </div>
-                                <div class="txt-white">
+                                <div class="txt-airforce txt-dark-4">
                                     <p class="txt-orange">Retour</p>
                                     @if(!empty($intervention->start_deplacement_retour))
                                     <p>{{ Carbon::parse($intervention->start_deplacement_retour)->format('d/m/Y h:m:s')  }}</p>
@@ -71,19 +76,19 @@ $date = Carbon::now();
                 </div>
                 <div class="card-footer p-3 white">
                     <div class="grix xs1 sm2 gutter-xs5">
-                        <div class="p-2">
-                            <p class="txt-airforce bd-b-solid bd-white bd-2 pb-2">Liste des opérations</p>
+                        <div class="p-2 light-shadow-2 rounded-2">
+                            <p class="txt-airforce txt-dark-4 bd-b-solid bd-orange bd-2 pb-2">Liste des opérations</p>
                             @if(!$intervention->categories()->exists())
                             <p class="txt-orange">Aucune opération en cours</p>
                             @else
                             <div class="grix xs2">
                                 @foreach( $intervention->categories as $operation)
-                                <div class="my-auto mx-auto txt-airforce">
+                                <div class="my-auto mx-auto txt-airforce txt-dark-4">
                                     <p>{{ $operation->name }}</p>
                                 </div>
                                 <div class="grix xs2 gutter-xs2">
                                     <div class="my-auto ml-auto">
-                                        <button data-target="edit-operation-{{ $operation->id }}" class="btn rounded-1 txt-blue modal-trigger mx-auto">
+                                        <button data-target="edit-operation-{{ $operation->id }}" class="btn rounded-1 white light-shadow-3 txt-blue modal-trigger mx-auto">
                                             <i class="fas fa-comment-medical <?php echo (isset($operation->pivot->observations) ? 'txt-orange' : '') ?>"></i>
                                         </button>
 
@@ -95,7 +100,7 @@ $date = Carbon::now();
                                             <input hidden name="intervention_id" value="{{ $intervention->id }}" />
                                             <input hidden name="categorie_id" value="{{ $operation->id}}" />
                                             <div class="mx-auto">
-                                                <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-white"><span class="outline-text outline-invert"><i class="fas fa-trash txt-red"></i></span></button>
+                                                <button type="submit" class="btn light-shadow-3 rounded-1 outline opening txt-white"><span class="outline-text outline-invert"><i class="fas fa-trash txt-red"></i></span></button>
                                             </div>
                                         </form>
                                     </div>
@@ -104,22 +109,22 @@ $date = Carbon::now();
                             </div>
                             @endif
                         </div>
-                        <div class="p-2">
-                            <p class="txt-airforce bd-b-solid bd-white bd-2 pb-2">Liste des pièces</p>
+                        <div class="p-2 rounded-2 light-shadow-2">
+                            <p class="txt-airforce txt-dark-4 bd-b-solid bd-orange bd-2 pb-2">Liste des pièces</p>
                             @if(!$intervention->pieces()->exists())
                             <p class=" txt-orange">Aucune pièce utilisée</p>
                             @else
-                            <div class="grix xs2 md4">
+                            <div class="grix xs2 md4 txt-airforce txt-dark-4">
                                 @foreach( $intervention->pieces as $piece)
-                                <div class="my-auto mx-auto txt-airforce">
+                                <div class="my-auto mx-auto">
                                     <p>{{ $piece->name }}</p>
                                 </div>
-                                <div class="my-auto mx-auto txt-airforce">
+                                <div class="my-auto mx-auto">
                                     <p>x{{ $piece->pivot->qte }}</p>
                                 </div>
                                 <div class="grix xs2 col-xs2 gutter-xs2">
                                     <div class="my-auto ml-auto">
-                                        <button data-target="edit-piece-{{ $piece->id }}" class="btn rounded-1 txt-blue modal-trigger mx-auto">
+                                        <button data-target="edit-piece-{{ $piece->id }}" class="btn rounded-1 white light-shadow-3 txt-blue modal-trigger mx-auto">
                                             <i class="fas fa-comment-medical <?php echo (isset($piece->pivot->observations) ? 'txt-orange' : '') ?>"></i>
                                         </button>
 
@@ -131,7 +136,7 @@ $date = Carbon::now();
                                             <input hidden name="intervention_id" value="{{ $intervention->id }}" />
                                             <input hidden name="piece_id" value="{{ $piece->id}}" />
                                             <div class="mx-auto">
-                                                <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-white"><span class="outline-text outline-invert"><i class="fas fa-trash txt-red"></i></span></button>
+                                                <button type="submit" class="btn light-shadow-3 rounded-1 outline opening txt-white"><span class="outline-text outline-invert"><i class="fas fa-trash txt-red"></i></span></button>
                                             </div>
                                         </form>
                                     </div>
@@ -148,7 +153,7 @@ $date = Carbon::now();
 </div>
 <!-- Actions -->
 <div class="container mt-5">
-    <div class="tab rounded-3 full-width white shadow-2" id="example-tab" data-ax="tab">
+    <div class="tab rounded-3 full-width white shadow-1" id="example-tab" data-ax="tab">
         <ul class="tab-menu light-shadow-1 rounded-tl2 rounded-tr2 txt-black">
             <li class="tab-link">
                 <a href="#tab-vehicule">Véhicule</a>
@@ -310,21 +315,27 @@ $date = Carbon::now();
         </div>
         <!-- Tab opération -->
         <div id="tab-operation" class="p-3 container">
-            <form class="form-material container" method="POST" action="{{ route('addOperation')}}">
-                @csrf
-                <div class="form-field">
-                    <label for="operation">Opération</label>
-                    <select class="form-control rounded-1 txt-airforce txt-dark-4" name="categorie_id">
-                        @foreach ( $categories as $categorie)
-                        <option class="grey light-4 txt-airforce txt-dark-4" value="{{ $categorie->id }}">{{ $categorie->name }}</option>
-                        @endforeach
-                    </select>
+            <div class="grix xs1 md2">
+                <div class="d-flex vcenter">
+                    <form class="form-material container" method="POST" action="{{ route('addOperation')}}">
+                        @csrf
+                        <div class="form-field">
+                            <label for="operation">Opération</label>
+                            <select class="form-control rounded-1 txt-airforce txt-dark-4" name="categorie_id">
+                                @foreach ( $categories as $categorie)
+                                <option class="grey light-4 txt-airforce txt-dark-4" value="{{ $categorie->id }}">{{ $categorie->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <input hidden name="intervention_id" value="{{ $intervention->id }}">
+                        <div class="txt-center">
+                            <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange mt-4"><span class="outline-text outline-invert">Valider</span></button>
+                        </div>
+                    </form>
                 </div>
-                <input hidden name="intervention_id" value="{{ $intervention->id }}">
-                <div class="txt-center">
-                    <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange mt-4"><span class="outline-text outline-invert">Valider</span></button>
-                </div>
-            </form>
+                <img src="{{ asset('/images/operation.png') }}" class="responsive-media p-3" alt="">
+            </div>
+
         </div>
         <!-- Tab pièce -->
         <div id="tab-piece" class="p-3">
@@ -334,6 +345,7 @@ $date = Carbon::now();
                         @csrf
                         <div class="txt-center">
                             <a id="btn-scan-qr" class="btn rounded-1 shadow-1 orange dark-1 txt-white">SCAN</a>
+                            <a id="btn-stop-qr" class="btn rounded-1 shadow-1 orange dark-1 txt-white hide">STOP</a>
                         </div>
                         <canvas hidden="" id="qr-canvas"></canvas>
                         <div id="qr-result" hidden="">
@@ -355,24 +367,29 @@ $date = Carbon::now();
                     </form>
                 </div>
                 <img src="{{ asset('/images/qrcode.png') }}" class="p-3 responsive-media" alt="">
-
             </div>
         </div>
         <!-- Tab observations -->
         <div id="tab-observation" class="p-3 container">
-            <form class="form-material container" method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
-                @method('PUT')
-                @csrf
-                <div class="grix xs1 txt-center">
-                    <div class="form-field">
-                        <textarea type="number" name="observations" class="form-control txt-center grey txt-airforce txt-dark-4">{{ $intervention->observations }}</textarea>
-                        <label for="observations" class="">Observations</label>
-                    </div>
+            <div class="grix xs1 md2">
+                <div class="d-flex vcenter">
+                    <form class="form-material container" method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
+                        @method('PUT')
+                        @csrf
+                        <div class="grix xs1 txt-center">
+                            <div class="form-field">
+                                <textarea type="number" name="observations" class="form-control txt-center grey txt-airforce txt-dark-4">{{ $intervention->observations }}</textarea>
+                                <label for="observations" class="">Observations</label>
+                            </div>
+                        </div>
+                        <div class="txt-center">
+                            <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange mt-4"><span class="outline-text outline-invert">Envoyer</span></button>
+                        </div>
+                    </form>
                 </div>
-                <div class="txt-center">
-                    <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange mt-4"><span class="outline-text outline-invert">Envoyer</span></button>
-                </div>
-            </form>
+                <img src="{{ asset('/images/note.svg') }}" class="responsive-media p-3" alt="">
+            </div>
+
         </div>
         <!-- Tab gestion -->
         <div id="tab-gestion" class="p-3">

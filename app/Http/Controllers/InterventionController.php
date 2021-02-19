@@ -50,6 +50,7 @@ class InterventionController extends Controller
         }
         $intervention->state = "doing";
         $intervention->created_by = Auth::user()->name;
+        $intervention->user_id = Auth::user()->id;
         $intervention->save();
         $intervention->users()->attach(Auth::user()->id);
         return redirect(route('interventions.edit', ['intervention' => $intervention]));
@@ -73,7 +74,7 @@ class InterventionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(Request $request, $id)
-    {
+    {   
         $intervention =  Intervention::find($id);
         $vehicules = Vehicule::all();
         $search = $request->get('selectVehicule');
@@ -213,7 +214,37 @@ class InterventionController extends Controller
             $intervention->pieces()->detach($piece_id);
         }
         
-        
         return redirect(route('interventions.edit', ['intervention' => $intervention]))->with('toast', 'removepiece');
+    }
+
+    public function resumeIntervention(){
+
+        $interventions = Intervention::Where('state', 'like', 'pause')->get();
+        return view('interventions.resume', ['interventions' => $interventions]);
+    }
+
+    public function goToIntervention(Request $request){
+
+        $id = $request->input('intervention');
+        $intervention = Intervention::find($id);
+        $intervention->state="doing";
+        $intervention->save();
+        return redirect(route('interventions.edit', ['intervention' => $intervention]));
+    }
+
+    public function joinIntervention(){
+
+        $interventions = Intervention::Where('user_id', '!=', Auth::id())->get();
+        return view('interventions.join', ['interventions' => $interventions]);
+    }
+
+    public function goToJoinIntervention(Request $request){
+        $id = $request->input('intervention');
+        $intervention = Intervention::find($id);
+        $intervention->users()->attach(Auth::id());
+        $intervention->state="doing";
+        $intervention->save();
+
+        return redirect(route('interventions.edit', ['intervention' => $intervention]));
     }
 }
