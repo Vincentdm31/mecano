@@ -21,8 +21,8 @@ class Controller extends BaseController
 
         foreach (json_decode($response->getBody()) as $item) {
 
-            echo($item['id']);
-            echo($item['title']);
+            echo($item->id);
+            echo($item->title);
         }
     }
 }
