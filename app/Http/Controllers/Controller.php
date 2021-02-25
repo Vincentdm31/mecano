@@ -25,7 +25,7 @@ class Controller extends BaseController
             $vehicule = new Vehicule();
             $vehicule->marque = $item->title;
             $vehicule->modele = "test";
-            $vehicule->immat = "test";
+            $vehicule->immat = "testt";
             $vehicule->save();
             // TEST API
         }
