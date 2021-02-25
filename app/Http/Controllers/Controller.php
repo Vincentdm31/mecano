@@ -13,10 +13,14 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function test(){
+    public function test()
+    {
 
-            $response = Http::get('https://my-json-server.typicode.com/typicode/demo/posts');
+        $response = Http::get('https://my-json-server.typicode.com/typicode/demo/posts');
 
-            dd(json_decode($response->getBody()));
+
+        foreach (json_decode($response) as $item) {
+            print_r($item); // this is your area from json response
+        }
     }
 }
