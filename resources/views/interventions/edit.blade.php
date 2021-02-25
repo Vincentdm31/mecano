@@ -11,7 +11,7 @@ $date = Carbon::now();
 
 ?>
 <div class="container mt-5">
-    <div class="container txt-center d-flex vcenter">
+    <div class="container d-flex vcenter">
         <button data-target="modal-recap" class="mx-auto btn rounded-1 txt-white shadow-1 orange dark-1 modal-trigger">
             Voir le récapitulatif
         </button>
@@ -36,7 +36,7 @@ $date = Carbon::now();
                 <div class="card-content p-3">
                     <div class="grix xs1 md2 gutter-xs5">
                         <div class="p-2 txt-airforce txt-dark-4 rounded-2 light-shadow-2">
-                            <p class="bd-b-solid bd-orange bd-2 pb-2 mb-3"><i class="fas fa-car mr-4 font-s4 txt-airforce txt-dark-4"></i>Véhicule</p>
+                            <p class="bd-b-solid bd-orange bd-2 pb-2 mb-3 pl-2"><i class="fas fa-car font-s4 txt-airforce txt-dark-4 mr-4"></i>Véhicule</p>
                             @if(empty($intervention->vehicule_id))
                             <p class="txt-orange pb-2">Aucun véhicule sélectionné</p>
                             @else
@@ -53,7 +53,7 @@ $date = Carbon::now();
                             @endif
                         </div>
                         <div class="p-2 txt-airforce txt-dark-4 rounded-2 light-shadow-2">
-                            <p class="txt-airforce txt-dark-4 bd-b-solid bd-orange bd-2 pb-2 mb-3"><i class="fas fa-car-crash font-s4 mr-4 txt-airforce txt-dark-4"></i>Déplacements</p>
+                            <p class="txt-airforce txt-dark-4 bd-b-solid bd-orange bd-2 pb-2 mb-3 pl-2"><i class="fas fa-car-crash font-s4 mr-4 txt-airforce txt-dark-4"></i>Déplacements</p>
                             @if(empty($intervention->start_deplacement_aller))
                             <p class="txt-orange pb-2">Aucun déplacement</p>
                             @else
@@ -82,7 +82,7 @@ $date = Carbon::now();
                 <div class="card-footer p-3 white">
                     <div class="grix xs1 sm2 gutter-xs5">
                         <div class="p-2 light-shadow-2 rounded-2">
-                            <p class="txt-airforce txt-dark-4 bd-b-solid bd-orange bd-2 pb-2"><i class="fas fa-tools font-s4 mr-4 txt-airforce txt-dark-4"></i>Liste des opérations</p>
+                            <p class="txt-airforce txt-dark-4 bd-b-solid bd-orange bd-2 pb-2 pl-2"><i class="fas fa-tools font-s4 mr-4 txt-airforce txt-dark-4"></i>Liste des opérations</p>
                             @if(!$intervention->categories()->exists())
                             <p class="txt-orange">Aucune opération en cours</p>
                             @else
@@ -115,7 +115,7 @@ $date = Carbon::now();
                             @endif
                         </div>
                         <div class="p-2 rounded-2 light-shadow-2">
-                            <p class="txt-airforce txt-dark-4 bd-b-solid bd-orange bd-2 pb-2"><i class="fas fa-cogs mr-4 font-s4 txt-airforce txt-dark-4"></i>Liste des pièces</p>
+                            <p class="txt-airforce txt-dark-4 bd-b-solid bd-orange bd-2 pb-2 pl-2"><i class="fas fa-cogs mr-4 font-s4 txt-airforce txt-dark-4"></i>Liste des pièces</p>
                             @if(!$intervention->pieces()->exists())
                             <p class=" txt-orange">Aucune pièce utilisée</p>
                             @else
