@@ -24,10 +24,10 @@ $date = Carbon::now();
             <div class="card rounded-2 m-0 overflow-visible">
                 <a href="" data-target="modal-comment" style="position:absolute;right:0;top:0;font-size:2.5rem;" class="<?php echo (empty($intervention->observations) ? 'hide' : 'txt-white') ?> fas fa-comment modal-trigger"></a>
                 <div class="card-header rounded-tl2 rounded-tr2 orange dark-1 p-3 recap-infos">
-                    <div class="grix txt-white md3">
-                        <p class="pl-2 lh-normal">{{\Carbon\Carbon::parse($intervention->created_at)->isoFormat('LLLL')}}</p>
-                        <p class="pl-2 lh-normal">Créateur : {{ $intervention->created_by }}</p>
-                        <p class="pl-2 lh-normal">Ref Intervention : {{ $intervention->id }}</p>
+                    <div class="grix txt-white gutter-xs5 md3">
+                        <p class="pl-2 lh-normal mr-auto"><i class="fas fa-clipboard-list mr-2 font-s4 txt-white"></i>{{ $intervention->id }}</p>
+                        <p class="pl-2 lh-normal mr-auto"><i class="far fa-id-card mr-2 font-s4 txt-white"></i>{{ $intervention->created_by }}</p>
+                        <p class="pl-2 lh-normal mr-auto"><i class="fas fa-calendar-alt mr-2 font-s4 txt-white"></i>{{\Carbon\Carbon::parse($intervention->created_at)->isoFormat('LLLL')}}</p>
                     </div>
                     @foreach($intervention->users as $user)
                     <span class="txt-white">{{ $user->name }}</span>
@@ -36,7 +36,7 @@ $date = Carbon::now();
                 <div class="card-content p-3">
                     <div class="grix xs1 md2 gutter-xs5">
                         <div class="p-2 txt-airforce txt-dark-4 rounded-2 light-shadow-2">
-                            <p class="bd-b-solid bd-orange bd-2 pb-2 mb-3">Véhicule</p>
+                            <p class="bd-b-solid bd-orange bd-2 pb-2 mb-3"><i class="fas fa-car mr-4 font-s4 txt-airforce txt-dark-4"></i>Véhicule</p>
                             @if(empty($intervention->vehicule_id))
                             <p class="txt-orange pb-2">Aucun véhicule sélectionné</p>
                             @else
@@ -53,7 +53,7 @@ $date = Carbon::now();
                             @endif
                         </div>
                         <div class="p-2 txt-airforce txt-dark-4 rounded-2 light-shadow-2">
-                            <p class="txt-airforce txt-dark-4 bd-b-solid bd-orange bd-2 pb-2 mb-3">Déplacements</p>
+                            <p class="txt-airforce txt-dark-4 bd-b-solid bd-orange bd-2 pb-2 mb-3"><i class="fas fa-car-crash font-s4 mr-4 txt-airforce txt-dark-4"></i>Déplacements</p>
                             @if(empty($intervention->start_deplacement_aller))
                             <p class="txt-orange pb-2">Aucun déplacement</p>
                             @else
@@ -82,7 +82,7 @@ $date = Carbon::now();
                 <div class="card-footer p-3 white">
                     <div class="grix xs1 sm2 gutter-xs5">
                         <div class="p-2 light-shadow-2 rounded-2">
-                            <p class="txt-airforce txt-dark-4 bd-b-solid bd-orange bd-2 pb-2">Liste des opérations</p>
+                            <p class="txt-airforce txt-dark-4 bd-b-solid bd-orange bd-2 pb-2"><i class="fas fa-tools font-s4 mr-4 txt-airforce txt-dark-4"></i>Liste des opérations</p>
                             @if(!$intervention->categories()->exists())
                             <p class="txt-orange">Aucune opération en cours</p>
                             @else
@@ -115,7 +115,7 @@ $date = Carbon::now();
                             @endif
                         </div>
                         <div class="p-2 rounded-2 light-shadow-2">
-                            <p class="txt-airforce txt-dark-4 bd-b-solid bd-orange bd-2 pb-2">Liste des pièces</p>
+                            <p class="txt-airforce txt-dark-4 bd-b-solid bd-orange bd-2 pb-2"><i class="fas fa-cogs mr-4 font-s4 txt-airforce txt-dark-4"></i>Liste des pièces</p>
                             @if(!$intervention->pieces()->exists())
                             <p class=" txt-orange">Aucune pièce utilisée</p>
                             @else
@@ -157,7 +157,7 @@ $date = Carbon::now();
     </div>
 </div>
 <!-- Actions -->
-<div class="container mt-5">
+<div class="container mt-5 mb-5">
     <div class="tab rounded-3 full-width white shadow-1" id="example-tab" data-ax="tab">
         <ul class="tab-menu light-shadow-1 rounded-tl2 rounded-tr2 txt-black">
             <li class="tab-link">
@@ -503,7 +503,7 @@ $date = Carbon::now();
 @elseif(session('toast') == 'removepiece')
 <script>
     toast.change('Pièce supprimée', {
-        classes: "rounded-1 green light-2 shadow-2"
+        classes: "rounded-1 red light-2 shadow-2"
     });
     toast.show();
 </script>
@@ -524,7 +524,7 @@ $date = Carbon::now();
 @elseif(session('toast') == 'removeoperation')
 <script>
     toast.change('Opération supprimée', {
-        classes: "rounded-1 green light-2 shadow-2"
+        classes: "rounded-1 red dark-1 shadow-2"
     });
     toast.show();
 </script>
