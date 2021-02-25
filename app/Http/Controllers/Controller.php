@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Facade\FlareClient\Http\Client;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -13,8 +14,9 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     public function test(){
-            $response = Http::get('https://my-json-server.typicode.com/typicode/demo/posts')->json();
 
-            echo($response);
+            $response = Http::get('https://my-json-server.typicode.com/typicode/demo/posts');
+
+            dd(json_decode($response->getBody()));
     }
 }
