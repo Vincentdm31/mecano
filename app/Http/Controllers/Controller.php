@@ -13,7 +13,7 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     public function test(){
-            $response = Http::get('https://my-json-server.typicode.com/typicode/demo/posts')->body();
+            $response = Http::get('https://my-json-server.typicode.com/typicode/demo/posts')->json();
 
             echo($response);
     }
