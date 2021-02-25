@@ -85,8 +85,7 @@ class DatabaseSeeder extends Seeder
             ['name' => 'PBM Ventilation'], ['name' => 'PBM Clim'], ['name' => 'Rétroviseur'], ['name' => 'Eclairage'],
             ['name' => 'Signalisation'], ['name' => 'PREPA CT'], ['name' => 'Contrôle general'], ['name' => 'Contrôle Niveaux'],
             ['name' => 'Nettoyage'], ['name' => 'Convoyage'], ['name' => 'Déplacement'], ['name' => 'Carrosserie'],
-            ['name' => 'Courroie + galet'], ['name' => 'Pompe à eau'], ['name' => 'Géométrie'], ['name' => 'Diagnostic'],
-
+            ['name' => 'Courroie + galet'], ['name' => 'Pompe à eau'], ['name' => 'Géométrie'], ['name' => 'Diagnostic'],            
         ]);
     }
 }
