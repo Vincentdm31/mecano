@@ -20,7 +20,9 @@ class Controller extends BaseController
 
 
         foreach (json_decode($response->getBody()) as $item) {
-            print_r($item); // this is your area from json response
+
+            echo($item['id']);
+            echo($item['title']);
         }
     }
 }
