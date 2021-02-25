@@ -19,7 +19,7 @@ class Controller extends BaseController
         $response = Http::get('https://my-json-server.typicode.com/typicode/demo/posts');
 
 
-        foreach (json_decode($response) as $item) {
+        foreach (json_decode($response->getBody()) as $item) {
             print_r($item); // this is your area from json response
         }
     }
