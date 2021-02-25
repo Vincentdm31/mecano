@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Vehicule;
 use Facade\FlareClient\Http\Client;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -21,8 +22,11 @@ class Controller extends BaseController
 
         foreach (json_decode($response->getBody()) as $item) {
 
-            echo($item->id);
-            echo($item->title);
+            $vehicule = new Vehicule();
+            $vehicule->marque = $item->title;
+            $vehicule->modele = "test";
+            $vehicule->immat = "test";
+            $vehicule->save();
         }
     }
 }
