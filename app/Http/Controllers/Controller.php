@@ -14,7 +14,7 @@ class Controller extends BaseController
 
     public function test(){
             $response = Http::get('https://my-json-server.typicode.com/typicode/demo/posts')->json();
-
+            $response = json_decode($response);
             echo($response);
     }
 }
