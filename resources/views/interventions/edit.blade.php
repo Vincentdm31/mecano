@@ -40,16 +40,16 @@ $date = Carbon::now();
                             @if(empty($intervention->vehicule_id))
                             <p class="txt-orange pb-2">Aucun véhicule sélectionné</p>
                             @else
-                                <div class="grix xs2">
-                                    <p class="">{{$intervention->vehiculeList->marque}}</p>
-                                    <p class="">{{$intervention->vehiculeList->modele}}</p>
-                                    <p class="">{{$intervention->vehiculeList->immat}}</p>
-                                    @if(empty($intervention->km_vehicule))
-                                    <p class="txt-orange">Saisir kilométrage</p>
-                                    @else
-                                    <p class="">{{$intervention->km_vehicule}} Km</p>
-                                    @endif
-                                </div>
+                            <div class="grix xs2">
+                                <p class="">{{$intervention->vehiculeList->marque}}</p>
+                                <p class="">{{$intervention->vehiculeList->modele}}</p>
+                                <p class="">{{$intervention->vehiculeList->immat}}</p>
+                                @if(empty($intervention->km_vehicule))
+                                <p class="txt-orange">Saisir kilométrage</p>
+                                @else
+                                <p class="">{{$intervention->km_vehicule}} Km</p>
+                                @endif
+                            </div>
                             @endif
                         </div>
                         <div class="p-2 txt-airforce txt-dark-4 rounded-2 light-shadow-2">
@@ -488,8 +488,8 @@ $date = Carbon::now();
 
 @if(session('toast') == 'nopieceqte')
 <script>
-    toast.change('Pas assez de pièces', {
-        classes: "rounded-1 red light-2 shadow-2 mt-5"
+    toast.change('Pas assez de pièces <?php echo('<br/> Stock dispo : ' . request()->pieceqte) ?>', {
+        classes: "rounded-1 red dark-1 shadow-2 mt-5"
     });
     toast.show();
 </script>
@@ -503,7 +503,7 @@ $date = Carbon::now();
 @elseif(session('toast') == 'removepiece')
 <script>
     toast.change('Pièce supprimée', {
-        classes: "rounded-1 red light-2 shadow-2"
+        classes: "rounded-1 red dark-1 shadow-2"
     });
     toast.show();
 </script>

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CategorieController;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
@@ -37,6 +39,9 @@ Route::group(['middleware' => ['admin']], function () {
     Route::resource('pieces', PieceController::class);
     Route::get('/searchPiece',  [PieceController::class, 'searchPiece']);
 
+    Route::resource('categories', CategorieController::class);
+    Route::get('/searchCategorie',  [CategorieController::class, 'searchCategorie']);
+
 });
 
 Route::middleware('auth')->group(function () {
@@ -57,4 +62,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/addPiece',  [InterventionController::class, 'addPiece'])->name('addPiece');
     Route::put('/editPiece',  [InterventionController::class, 'editPiece'])->name('editPiece');
     Route::put('/deletePiece',  [InterventionController::class, 'deletePiece'])->name('deletePiece');
+
+    Route::resource('test', Controller::class);
+    Route::get('/test',  [Controller::class, 'test'])->name('test');
+
+
+
+
 });

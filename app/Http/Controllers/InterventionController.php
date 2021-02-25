@@ -184,7 +184,7 @@ class InterventionController extends Controller
             $piece->save();
             $intervention->pieces()->sync([$pieceId => [ 'qte' => $qte]], false);
         }else{
-            return redirect(route('interventions.edit', ['intervention' => $intervention]))->with('toast', 'nopieceqte' );
+            return redirect(route('interventions.edit', ['intervention' => $intervention, 'pieceqte' => $piece->qte]))->with('toast', 'nopieceqte');
         }
         
         return redirect(route('interventions.edit', ['intervention' => $intervention]))->with('toast', 'addpiece' );

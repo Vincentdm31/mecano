@@ -7,7 +7,7 @@
 <!-- ADMIN VIEW -->
 @if(Auth()->user()->is_admin)
 <div class="container home">
-    <div class="grix xs1 md4 gutter-xs4 mt-5 h100">
+    <div class="grix xs1 md5 gutter-xs4 mt-5 home h100">
         <div>
             <a href="" class="btn orange dark-2 txt-white d-flex vcenter fx-center rounded-1 shadow-1 hoverable-1 h100 w100 mb-2">Interventions</a>
         </div>
@@ -20,12 +20,15 @@
         <div>
             <a href="{{ route('pieces.index') }}" class="btn green dark-2 txt-white d-flex vcenter fx-center rounded-1 shadow-1 hoverable-1 h100 w100 mb-2">Gestion pièces</a>
         </div>
+        <div>
+            <a href="{{ route('categories.index') }}" class="btn cyan dark-2 txt-white d-flex vcenter fx-center rounded-1 shadow-1 hoverable-1 h100 w100 mb-2">Gestion catégories</a>
+        </div>
     </div>
 </div>
 
 <!-- USER VIEW -->
 @else
-<div class="container mt-3">
+<div class="container home mt-3">
     <div class="grix xs1 gutter-xs5 md4 home">
         <div class="h100">
             <form class="form-material h100" method="POST" action="{{ route('interventions.store') }}">
@@ -41,6 +44,10 @@
         </div>
         <div class="h100">
             <a href="{{ route('resumeIntervention') }}" class="btn orange dark-1 hoverable-1 txt-white rounded-1 shadow-1 w100 h100 d-flex fx-center vcenter">Reprendre</a>
+        </div>
+
+        <div class="h100">
+            <a href="{{ route('test') }}" class="btn orange dark-1 hoverable-1 txt-white rounded-1 shadow-1 w100 h100 d-flex fx-center vcenter">test</a>
         </div>
     </div>
 </div>

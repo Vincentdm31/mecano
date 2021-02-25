@@ -14,7 +14,8 @@ class CategorieController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Categorie::all();
+        return view('categories.index', ['categories' => $categories]);
     }
 
     /**
@@ -24,7 +25,7 @@ class CategorieController extends Controller
      */
     public function create()
     {
-        //
+        return view('categories.create');
     }
 
     /**
@@ -35,13 +36,20 @@ class CategorieController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $inputs = $request->except('_token', 'created_at', 'updated_at');
+        $categorie = new Categorie();
+        foreach ($inputs as $key => $value) {
+            $categorie->$key = $value;
+        }
+
+        $categorie->save();
+        return redirect(route('categories.index'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Categorie  $categorie
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show(Categorie $categorie)
@@ -52,34 +60,55 @@ class CategorieController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Categorie  $categorie
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Categorie $categorie)
-    {
-        //
+    public function edit($id)
+    {   
+        $categorie = Categorie::find($id);
+        return view('categories.edit', ['categorie' => $categorie ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Categorie  $categorie
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Categorie $categorie)
-    {
-        //
+    public function update(Request $request, $id)
+    {   
+        $inputs = $request->except('_token', '_method', 'updated_at');
+        $categorie = Categorie::find($id);
+        foreach ($inputs as $key => $value){
+            $categorie->$key = $value;
+        }
+        $categorie->save();
+
+       return redirect(route('categories.index'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Categorie  $categorie
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Categorie $categorie)
+    public function destroy($id)
     {
-        //
+        $categorie = Categorie::find($id);
+        $categorie->delete();
+        
+        return redirect(route('categories.index'));
+    }
+
+    public function searchCategorie(Request $request)
+    {
+        $search = $request->get('searchCategorie');
+
+        $categories = Categorie::Where('name', 'like', '%'.$search.'%')
+
+                    ->get();
+        return view('categories.index', ['categories' => $categories]);
     }
 }
