@@ -19,9 +19,9 @@
 
 <body class="layout">
     <header>
-        <nav class="navbar test txt-white shadow-1">
-            <a href="{{ url('/') }}" class="navbar-brand">Mecalcis</a>
-
+        <nav class="navbar dark txt-white shadow-1">
+            <a href="{{ url('/') }}" class="navbar-brand hide-sm-down">Mecalcis</a>
+            <button data-target="sidenav" class="txt-white btn rounded-1 transparent sidenav-trigger hide-md-up"><i class="fas fa-bars mr-1"></i>Menu</button>
             <div class="navbar-menu ml-auto">
                 @guest
                 <a class="navbar-link {{ Request::routeIs('login') ? 'active' : '' }}" href="{{ route('login') }}">{{ __('Login') }}</a>
@@ -44,6 +44,31 @@
             </div>
         </nav>
     </header>
+
+    <div class="sidenav shadow-1 dark-light" id="sidenav" data-ax="sidenav">
+        <div class="sidenav-header p-2">
+            <p class="mr-auto orange-custom font-s5 bd-b-solid bd-orange bd-light-2 bd-2 pb-4">Alcis Groupe</p>
+        </div>
+        <div class="txt-white">
+            @if(Auth()->user()->is_admin)
+            <a href="" class="sidenav-link btn orange dark-2 txt-white d-flex vcenter fx-center rounded-1 shadow-1 hoverable-1 h100 w100 mb-2">Interventions</a>
+            <a href="{{ route('users.index') }}" class="sidenav-link btn red dark-2 txt-white d-flex vcenter fx-center rounded-1 shadow-1 hoverable-1 h100 w100 mb-2">Gestion utilisateurs</a>
+            <a href="{{ route('vehicules.index') }}" class="sidenav-link btn airforce dark-2 txt-white d-flex vcenter fx-center rounded-1 shadow-1 hoverable-1 h100 w100 mb-2">Gestion véhicules</a>
+            <a href="{{ route('pieces.index') }}" class="sidenav-link btn green dark-2 txt-white d-flex vcenter fx-center rounded-1 shadow-1 hoverable-1 h100 w100 mb-2">Gestion pièces</a>
+            <a href="{{ route('categories.index') }}" class="sidenav-link btn cyan dark-2 txt-white d-flex vcenter fx-center rounded-1 shadow-1 hoverable-1 h100 w100 mb-2">Gestion catégories</a>
+            @else
+            <form class="form-material sidenav-link" method="POST" action="{{ route('interventions.store') }}">
+                @csrf
+                <button type="submit" class="btn txt-orange transparent p-0">Nouvelle</button>
+            </form>
+            <a href="{{ route('interventions.index') }}" class="sidenav-link txt-white">Liste complète</a>
+            <a href="{{ route('joinIntervention') }}" class="sidenav-link">Rejoindre</a>
+            <a href="{{ route('resumeIntervention') }}" class="sidenav-link">Reprendre</a>
+            <a href="{{ route('test') }}" class="sidenav-link">API</a>
+            @endif
+        </div>
+
+    </div>
 
     <main>
         @yield('content')

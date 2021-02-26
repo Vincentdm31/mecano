@@ -7226,6 +7226,14 @@ body {
   }
 }
 
-.test {
+.dark {
   background-color: #1b1b1b;
+}
+
+.dark-light {
+  background-color: #2f2f2f;
+}
+
+.orange-custom {
+  color: #ff9027;
 }
