@@ -40,7 +40,7 @@ class TimeInterventionController extends Controller
      */
     public function store(Request $request)
     {
-        $inputs = $request->except('_method', '_token');
+        $inputs = $request->except('_token');
         $vehicules = Vehicule::all();
         $categories = Categorie::all();
         $interventionID = $request->input('intervention_id');
@@ -64,7 +64,7 @@ class TimeInterventionController extends Controller
         }
 
 
-        return redirect(route('interventions.edit', ['intervention' => $intervention, 'vehicules' => $vehicules, 'categories' => $categories]));
+        return redirect(route('interventions.edit', ['intervention' => $intervention]));
     }
 
     /**
@@ -124,6 +124,6 @@ class TimeInterventionController extends Controller
             $totaltime += $timetoseconds;
         }
 
-        echo($totaltime);
+        dd($totaltime);
     }
 }

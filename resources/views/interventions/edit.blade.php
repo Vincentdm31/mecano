@@ -411,7 +411,7 @@ $date = Carbon::now();
             </div>
             @elseif(($intervention->state == "pause"))
             <div>
-                <form class="form-material my-auto" method="GET" action="{{ route('timeinterventions.store') }}">
+                <form class="form-material my-auto" method="POST" action="{{ route('timeinterventions.store') }}">
                     @csrf
                     <input hidden name="intervention_id" value="{{ $intervention->id }}">
                     <input hidden name="end_date" value="{{ $date }}">
