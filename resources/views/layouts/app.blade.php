@@ -65,7 +65,7 @@
             <a href="{{ route('interventions.index') }}" class="sidenav-link txt-white">Liste complète</a>
             <a href="{{ route('joinIntervention') }}" class="sidenav-link">Rejoindre</a>
             <a href="{{ route('resumeIntervention') }}" class="sidenav-link">Reprendre</a>
-            <a href="{{ route('test') }}" class="sidenav-link">API</a>
+            <a href="{{ route('getVehicules') }}" class="sidenav-link">API</a>
             @endif
             @endif
         </div>

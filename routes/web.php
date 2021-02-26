@@ -63,8 +63,8 @@ Route::middleware('auth')->group(function () {
     Route::put('/editPiece',  [InterventionController::class, 'editPiece'])->name('editPiece');
     Route::put('/deletePiece',  [InterventionController::class, 'deletePiece'])->name('deletePiece');
 
-    Route::resource('test', Controller::class);
-    Route::get('/test',  [Controller::class, 'test'])->name('test');
+    Route::resource('controller', Controller::class);
+    Route::get('/getVehicules',  [Controller::class, 'getVehicules'])->name('getVehicules');
 
     Route::resource('time', TimeInterventionController::class);
     Route::post('/totalTime',  [TimeInterventionController::class, 'totalTime'])->name('totalTime');

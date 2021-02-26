@@ -47,7 +47,7 @@
         </div>
 
         <div class="h100">
-            <a href="{{ route('test') }}" class="btn orange dark-1 hoverable-1 txt-white rounded-1 shadow-1 w100 h100 d-flex fx-center vcenter">test</a>
+            <a href="{{ route('getVehicules') }}" class="btn amaranth dark-1 hoverable-1 txt-white rounded-1 shadow-1 w100 h100 d-flex fx-center vcenter">API</a>
         </div>
     </div>
 </div>

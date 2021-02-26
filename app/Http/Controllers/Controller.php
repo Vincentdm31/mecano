@@ -14,7 +14,7 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function test()
+    public function getVehicules()
     {
 
         $response = Http::get('https://my-json-server.typicode.com/typicode/demo/posts');
