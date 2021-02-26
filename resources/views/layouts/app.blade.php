@@ -51,11 +51,11 @@
         </div>
         <div class="txt-white">
             @if(Auth()->user()->is_admin)
-            <a href="" class="sidenav-link btn orange dark-2 txt-white d-flex vcenter fx-center rounded-1 shadow-1 hoverable-1 h100 w100 mb-2">Interventions</a>
-            <a href="{{ route('users.index') }}" class="sidenav-link btn red dark-2 txt-white d-flex vcenter fx-center rounded-1 shadow-1 hoverable-1 h100 w100 mb-2">Gestion utilisateurs</a>
-            <a href="{{ route('vehicules.index') }}" class="sidenav-link btn airforce dark-2 txt-white d-flex vcenter fx-center rounded-1 shadow-1 hoverable-1 h100 w100 mb-2">Gestion véhicules</a>
-            <a href="{{ route('pieces.index') }}" class="sidenav-link btn green dark-2 txt-white d-flex vcenter fx-center rounded-1 shadow-1 hoverable-1 h100 w100 mb-2">Gestion pièces</a>
-            <a href="{{ route('categories.index') }}" class="sidenav-link btn cyan dark-2 txt-white d-flex vcenter fx-center rounded-1 shadow-1 hoverable-1 h100 w100 mb-2">Gestion catégories</a>
+            <a href="" class="sidenav-link">Interventions</a>
+            <a href="{{ route('users.index') }}" class="sidenav-link">Gestion utilisateurs</a>
+            <a href="{{ route('vehicules.index') }}" class="sidenav-link">Gestion véhicules</a>
+            <a href="{{ route('pieces.index') }}" class="sidenav-link">Gestion pièces</a>
+            <a href="{{ route('categories.index') }}" class="sidenav-link">Gestion catégories</a>
             @else
             <form class="form-material sidenav-link" method="POST" action="{{ route('interventions.store') }}">
                 @csrf
