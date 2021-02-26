@@ -6,6 +6,7 @@ use App\Models\Categorie;
 use App\Models\Intervention;
 use App\Models\TimeIntervention;
 use App\Models\Vehicule;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use SebastianBergmann\Environment\Console;
 
@@ -109,5 +110,20 @@ class TimeInterventionController extends Controller
     public function destroy(TimeIntervention $timeIntervention)
     {
         //
+    }
+
+    
+    public function totalTime(Request $request){
+
+        $id = $request->input('intervention_id');
+        $dates = TimeIntervention::Where('intervention_id', 'like', $id)->get();
+        $totaltime = 0;
+
+        foreach ($dates as $date){
+            $timetoseconds = Carbon::parse($date->end_date)->diffInSeconds(Carbon::parse($date->start_date));
+            $totaltime += $timetoseconds;
+        }
+
+        echo($totaltime);
     }
 }

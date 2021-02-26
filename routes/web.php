@@ -66,6 +66,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('test', Controller::class);
     Route::get('/test',  [Controller::class, 'test'])->name('test');
 
+    Route::resource('time', TimeInterventionController::class);
+    Route::post('/totalTime',  [TimeInterventionController::class, 'totalTime'])->name('totalTime');
+
+
 
 
 

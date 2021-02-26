@@ -111,4 +111,5 @@ class CategorieController extends Controller
                     ->get();
         return view('categories.index', ['categories' => $categories]);
     }
+    
 }
