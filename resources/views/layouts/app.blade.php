@@ -50,6 +50,7 @@
             <p class="mr-auto orange-custom font-s5 bd-b-solid bd-orange bd-light-2 bd-2 pb-4">Alcis Groupe</p>
         </div>
         <div class="txt-white">
+            @if(Auth()->check())
             @if(Auth()->user()->is_admin)
             <a href="" class="sidenav-link">Interventions</a>
             <a href="{{ route('users.index') }}" class="sidenav-link">Gestion utilisateurs</a>
@@ -65,6 +66,7 @@
             <a href="{{ route('joinIntervention') }}" class="sidenav-link">Rejoindre</a>
             <a href="{{ route('resumeIntervention') }}" class="sidenav-link">Reprendre</a>
             <a href="{{ route('test') }}" class="sidenav-link">API</a>
+            @endif
             @endif
         </div>
 
