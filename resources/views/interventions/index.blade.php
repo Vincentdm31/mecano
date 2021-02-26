@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 <div class="container">
-    <p class="txt-airforce txt-dark-4 txt-center h5 mt-5">Liste des interventions</p>
+    <p class="txt-airforce txt-dark-4 txt-center h5 mt-5">Liste des Interventions</p>
     <div class="container shadow-1 rounded-2 mt-5">
         <div class="responsive-table">
             <table class="table striped">
