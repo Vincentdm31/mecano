@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Vehicule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class VehiculeController extends Controller
 {
@@ -114,5 +115,22 @@ class VehiculeController extends Controller
                     ->orWhere('immat', 'like', '%'.$search.'%')
                     ->get();
         return view('vehicules.index', ['vehicules' => $vehicules]);
+    }
+
+    public function getVehicules()
+    {
+
+        $response = Http::get('https://my-json-server.typicode.com/typicode/demo/posts');
+
+
+        foreach (json_decode($response->getBody()) as $item) {
+
+            $vehicule = new Vehicule();
+            $vehicule->marque = $item->title;
+            $vehicule->modele = "test";
+            $vehicule->immat = "testt";
+            $vehicule->save();
+            // TEST API
+        }
     }
 }

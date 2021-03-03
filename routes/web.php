@@ -64,7 +64,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/deletePiece',  [InterventionController::class, 'deletePiece'])->name('deletePiece');
 
     Route::resource('controller', Controller::class);
-    Route::get('/getVehicules',  [Controller::class, 'getVehicules'])->name('getVehicules');
+    Route::get('/getVehicules',  [VehiculeController::class, 'getVehicules'])->name('getVehicules');
 
     Route::resource('time', TimeInterventionController::class);
     Route::post('/totalTime',  [TimeInterventionController::class, 'totalTime'])->name('totalTime');
