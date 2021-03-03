@@ -59,6 +59,7 @@
             <a href="{{ route('vehicules.index') }}" class="sidenav-link">Gestion véhicules</a>
             <a href="{{ route('pieces.index') }}" class="sidenav-link">Gestion pièces</a>
             <a href="{{ route('categories.index') }}" class="sidenav-link">Gestion catégories</a>
+            <a href="{{ route('getVehicules') }}" class="sidenav-link">API</a>
             @else
             <form class="form-material sidenav-link" method="POST" action="{{ route('interventions.store') }}">
                 @csrf
@@ -67,7 +68,6 @@
             <a href="{{ route('interventions.index') }}" class="sidenav-link txt-white">Liste complète</a>
             <a href="{{ route('joinIntervention') }}" class="sidenav-link">Rejoindre</a>
             <a href="{{ route('resumeIntervention') }}" class="sidenav-link">Reprendre</a>
-            <a href="{{ route('getVehicules') }}" class="sidenav-link">API</a>
             @endif
             @endif
         </div>
