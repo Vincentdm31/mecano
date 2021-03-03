@@ -116,7 +116,7 @@ class TimeInterventionController extends Controller
     public function totalTime(Request $request){
 
         $id = $request->input('intervention_id');
-        $dates = TimeIntervention::Where('intervention_id', 'like', $id)->get();
+        $dates = TimeIntervention::Where('intervention_id', 'like', $id)->whereNotNull('end_date')->get();
         $totaltime = 0;
 
         foreach ($dates as $date){

@@ -1,3 +1,7 @@
 .state-pause {
   background-color: orange;
 }
+
+.state-doing {
+  background-color: #019f01;
+}

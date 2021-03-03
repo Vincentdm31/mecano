@@ -20,7 +20,7 @@
                 <tbody>
                     @foreach($interventions as $intervention)
                     <tr>
-                        <td class="txt-center <?php echo('state-' . $intervention->state)?>">{{ $intervention->id }}</td>
+                        <td class="txt-center txt-white <?php echo('state-' . $intervention->state)?>">{{ $intervention->id }}</td>
                         <td class="txt-center">{{ $intervention->created_by }}</td>
                         <td class="txt-center">{{ $intervention->created_at }}</td>
 
