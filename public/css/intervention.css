@@ -13,3 +13,7 @@ html {
   background-position: center center;
   background-attachment: fixed;
 }
+
+.modal-overlay.active {
+  background-color: rgba(0, 0, 0, 0.8) !important;
+}
