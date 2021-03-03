@@ -65,6 +65,10 @@
 @endsection
 
 @section('extra-js')
+<script>
+    let toast = new Axentix.Toast();
+</script>
+
 @if(session('toast') == 'vehiculeUpdate')
 <script>
     toast.change('Véhicules mis à jour', {
