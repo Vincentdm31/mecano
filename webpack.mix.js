@@ -17,6 +17,7 @@ mix
     .sass("resources/scss/app.scss","public/css")
     .sass("resources/scss/home.scss","public/css")
     .sass("resources/scss/user.scss","public/css")
+    .sass("resources/scss/intervention.scss","public/css")
     .sass("resources/scss/qrcode.scss","public/css");
 
 mix.inProduction() ? mix.version() : "";

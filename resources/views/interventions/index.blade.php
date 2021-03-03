@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('extra-css')
+<link href="{{ mix('css/intervention.css') }}" rel="stylesheet">
+@endsection
 @section('content')
 <div class="container">
     <p class="txt-airforce txt-dark-4 txt-center h5 mt-5">Liste des Interventions</p>
@@ -17,7 +20,7 @@
                 <tbody>
                     @foreach($interventions as $intervention)
                     <tr>
-                        <td class="txt-center">{{ $intervention->id }}</td>
+                        <td class="txt-center <?php echo('state-' . $intervention->state)?>">{{ $intervention->id }}</td>
                         <td class="txt-center">{{ $intervention->created_by }}</td>
                         <td class="txt-center">{{ $intervention->created_at }}</td>
 
