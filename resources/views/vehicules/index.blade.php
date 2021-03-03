@@ -63,3 +63,13 @@
     </div>
 </div>
 @endsection
+
+@section('extra-js')
+@if(session('toast') == 'vehiculeUpdate')
+<script>
+    toast.change('Véhicules mis à jour', {
+        classes: "rounded-1 green dark-1 shadow-2 mt-5"
+    });
+    toast.show();
+</script>
+@endsection

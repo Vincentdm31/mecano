@@ -132,5 +132,7 @@ class VehiculeController extends Controller
             $vehicule->save();
             // TEST API
         }
+
+        return redirect(route('vehicules.index'))->with('toast', 'vehiculeUpdate');
     }
 }
