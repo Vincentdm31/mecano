@@ -68,8 +68,9 @@
 @if(session('toast') == 'vehiculeUpdate')
 <script>
     toast.change('Véhicules mis à jour', {
-        classes: "rounded-1 green dark-1 shadow-2 mt-5"
+        classes: "rounded-1 green dark-2 shadow-2 mt-5"
     });
     toast.show();
 </script>
+@endif
 @endsection
