@@ -19,6 +19,7 @@
 
 <body class="layout">
     <header>
+    <div class="navbar-fixed">
         <nav class="navbar dark txt-white shadow-1">
             <a href="{{ url('/') }}" class="navbar-brand hide-sm-down">Mecalcis</a>
             <button data-target="sidenav" class="txt-white btn rounded-1 transparent sidenav-trigger hide-md-up"><i class="fas fa-bars mr-1"></i>Menu</button>
@@ -43,6 +44,7 @@
                 @endguest
             </div>
         </nav>
+    </div>
     </header>
 
     <div class="sidenav shadow-1 dark-light" id="sidenav" data-ax="sidenav">

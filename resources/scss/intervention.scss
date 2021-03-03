@@ -5,3 +5,11 @@
 .state-doing{
     background-color: rgb(1, 159, 1);
 }
+
+html{
+    background-image: url('/images/abstract.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+}

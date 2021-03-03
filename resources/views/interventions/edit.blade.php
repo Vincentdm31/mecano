@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('extra-css')
 <link href="{{ mix('css/qrcode.css') }}" rel="stylesheet">
+<link href="{{ mix('css/intervention.css') }}" rel="stylesheet">
 @endsection
 @section('content')
 <?php
@@ -12,7 +13,7 @@ $date = Carbon::now();
 ?>
 <div class="container mt-5">
     <div class="container d-flex vcenter">
-        <button data-target="modal-recap" class="mx-auto btn rounded-1 txt-white shadow-1 orange dark-1 modal-trigger">
+        <button data-target="modal-recap" class="mx-auto btn rounded-1 txt-orange txt-dark-1 shadow-1 grey light-4 modal-trigger">
             Voir le récapitulatif
         </button>
         @if(Auth()->user()->name != $intervention->created_by)
@@ -185,65 +186,72 @@ $date = Carbon::now();
 
         <!-- Tab Déplacement -->
         <div id="tab-deplacement" class="p-3 container">
-            @if(empty($intervention->start_deplacement_aller) || empty($intervention->end_deplacement_aller))
-            <p class="txt-airforce txt-dark-4 txt-center">Déplacements ALLER</p>
-            @endif
-            @if(empty($intervention->start_deplacement_aller))
-            <div>
-                <form method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
-                    @method('PUT')
-                    @csrf
-                    <div class="txt-center">
-                        <input hidden value="{{ $date }}" name="start_deplacement_aller" />
-                        <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange"><span class="outline-text outline-invert">Début</span></button>
+            <div class="grix xs1 md2">
+                <div>
+                    @if(empty($intervention->start_deplacement_aller) || empty($intervention->end_deplacement_aller))
+                    <p class="txt-airforce txt-dark-4 txt-center">Déplacements ALLER</p>
+                    @endif
+                    @if(empty($intervention->start_deplacement_aller))
+                    <div>
+                        <form method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
+                            @method('PUT')
+                            @csrf
+                            <div class="txt-center">
+                                <input hidden value="{{ $date }}" name="start_deplacement_aller" />
+                                <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange"><span class="outline-text outline-invert">Début</span></button>
+                            </div>
+                        </form>
                     </div>
-                </form>
-            </div>
-            @endif
-            <!--End Déplacement Interventions Aller -->
-            @if(!empty($intervention->start_deplacement_aller) && empty($intervention->end_deplacement_aller))
-            <div class="">
-                <form method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
-                    @method('PUT')
-                    @csrf
-                    <div class="txt-center">
-                        <input hidden value="{{ $date }}" name="end_deplacement_aller" />
-                        <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange"><span class="outline-text outline-invert">Fin</span></button>
+                    @endif
+                    <!--End Déplacement Interventions Aller -->
+                    @if(!empty($intervention->start_deplacement_aller) && empty($intervention->end_deplacement_aller))
+                    <div class="">
+                        <form method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
+                            @method('PUT')
+                            @csrf
+                            <div class="txt-center">
+                                <input hidden value="{{ $date }}" name="end_deplacement_aller" />
+                                <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange"><span class="outline-text outline-invert">Fin</span></button>
+                            </div>
+                        </form>
                     </div>
-                </form>
-            </div>
-            @endif
-            <!--Start Déplacement Interventions Retour -->
-            @if(!empty($intervention->end_deplacement_aller) && empty($intervention->start_deplacement_retour))
-            <p class="txt-airforce txt-dark-4 txt-center">Déplacements Retour</p>
-            <div class="">
-                <form method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
-                    @method('PUT')
-                    @csrf
-                    <div class="txt-center">
-                        <input hidden value="{{ $date }}" name="start_deplacement_retour" />
-                        <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange"><span class="outline-text outline-invert">Début</span></button>
+                    @endif
+                    <!--Start Déplacement Interventions Retour -->
+                    @if(!empty($intervention->end_deplacement_aller) && empty($intervention->start_deplacement_retour))
+                    <p class="txt-airforce txt-dark-4 txt-center">Déplacements Retour</p>
+                    <div class="">
+                        <form method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
+                            @method('PUT')
+                            @csrf
+                            <div class="txt-center">
+                                <input hidden value="{{ $date }}" name="start_deplacement_retour" />
+                                <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange"><span class="outline-text outline-invert">Début</span></button>
+                            </div>
+                        </form>
                     </div>
-                </form>
-            </div>
-            @endif
-            <!--End Déplacement Interventions Retour -->
-            @if(!empty($intervention->start_deplacement_retour) && empty($intervention->end_deplacement_retour))
-            <p class="txt-airforce txt-dark-4 txt-center">Déplacements Retour</p>
-            <div class="">
-                <form method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
-                    @method('PUT')
-                    @csrf
-                    <div class="txt-center">
-                        <input hidden value="{{ $date }}" name="end_deplacement_retour" />
-                        <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange"><span class="outline-text outline-invert">Fin</span></button>
+                    @endif
+                    <!--End Déplacement Interventions Retour -->
+                    @if(!empty($intervention->start_deplacement_retour) && empty($intervention->end_deplacement_retour))
+                    <p class="txt-airforce txt-dark-4 txt-center">Déplacements Retour</p>
+                    <div class="">
+                        <form method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
+                            @method('PUT')
+                            @csrf
+                            <div class="txt-center">
+                                <input hidden value="{{ $date }}" name="end_deplacement_retour" />
+                                <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange"><span class="outline-text outline-invert">Fin</span></button>
+                            </div>
+                        </form>
                     </div>
-                </form>
+                    @endif
+                    @if(!empty($intervention->start_deplacement_retour) && !empty($intervention->end_deplacement_retour) && !empty($intervention->end_deplacement_aller) && !empty($intervention->start_deplacement_retour))
+                    <p class="txt-center txt-airforce txt-dark-4">Déplacements enregistrés</p>
+                    @endif
+                </div>
+                <img src="{{ asset('/images/deplacement.svg') }}" class="responsive-media p-3" alt="">
+
             </div>
-            @endif
-            @if(!empty($intervention->start_deplacement_retour) && !empty($intervention->end_deplacement_retour) && !empty($intervention->end_deplacement_aller) && !empty($intervention->start_deplacement_retour))
-            <p class="txt-center txt-airforce txt-dark-4">Déplacements enregistrés</p>
-            @endif
+
         </div>
         <!-- TAB Véhicule -->
         <div id="tab-vehicule" class="p-4">
@@ -300,23 +308,29 @@ $date = Carbon::now();
         </div>
         <!-- TAB Kilométrage -->
         <div id="tab-kilometrage" class="p-3 container">
-            @if(!empty($intervention->km_vehicule))
-            <p class="txt-center txt-airforce txt-dark-4">Kilométrage enregistré</p>
-            @else
-            <form class="form-material container" method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
-                @method('PUT')
-                @csrf
-                <div class="grix xs1 txt-center">
-                    <div class="form-field">
-                        <input type="number" id="km_vehicule" name="km_vehicule" value="{{ $intervention->km_vehicule }}" class="form-control txt-center txt-airforce txt-dark-4" />
-                        <label for="km_vehicule" class="">Kilométrage</label>
-                    </div>
+            <div class="grix xs1 md2">
+                <div>
+                    @if(!empty($intervention->km_vehicule))
+                    <p class="txt-center txt-airforce txt-dark-4">Kilométrage enregistré</p>
+                    @else
+                    <form class="form-material container" method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
+                        @method('PUT')
+                        @csrf
+                        <div class="grix xs1 txt-center">
+                            <div class="form-field">
+                                <input type="number" id="km_vehicule" name="km_vehicule" value="{{ $intervention->km_vehicule }}" class="form-control txt-center txt-airforce txt-dark-4" />
+                                <label for="km_vehicule" class="">Kilométrage</label>
+                            </div>
+                        </div>
+                        <div class="txt-center">
+                            <button type="submit" class="btn shadow-1 outline opening txt-orange ml-auto vself-center rounded-2 mt-4"><span class="outline-text outline-invert">Valider</span></button>
+                        </div>
+                    </form>
+                    @endif
                 </div>
-                <div class="txt-center">
-                    <button type="submit" class="btn shadow-1 outline opening txt-orange ml-auto vself-center rounded-2 mt-4"><span class="outline-text outline-invert">Valider</span></button>
-                </div>
-            </form>
-            @endif
+                <img src="{{ asset('/images/km.png') }}" class="responsive-media p-3" alt="">
+            </div>
+
         </div>
         <!-- Tab opération -->
         <div id="tab-operation" class="p-3 container">
@@ -398,37 +412,42 @@ $date = Carbon::now();
         </div>
         <!-- Tab gestion -->
         <div id="tab-gestion" class="p-3">
-            @if($intervention->state == "doing")
-            <div>
-                <form class="form-material" method="POST" action="{{ route('timeinterventions.store') }}">
-                    @csrf
-                    <input hidden name="intervention_id" value="{{ $intervention->id }}">
-                    <input hidden name="start_date" value="{{ $date }}">
-                    <div class="txt-center">
-                        <button type="submit" class="btn txt-center rounded-1 outline opening txt-orange"><span class="outline-text outline-invert">Pause</span></button>
+            <div class="grix xs1 md2">
+                <div>
+                    @if($intervention->state == "doing")
+                    <div>
+                        <form class="form-material" method="POST" action="{{ route('timeinterventions.store') }}">
+                            @csrf
+                            <input hidden name="intervention_id" value="{{ $intervention->id }}">
+                            <input hidden name="start_date" value="{{ $date }}">
+                            <div class="txt-center">
+                                <button type="submit" class="btn txt-center rounded-1 outline opening txt-orange"><span class="outline-text outline-invert">Pause</span></button>
+                            </div>
+                        </form>
                     </div>
-                </form>
-            </div>
-            @elseif(($intervention->state == "pause"))
-            <div>
-                <form class="form-material my-auto" method="POST" action="{{ route('timeinterventions.store') }}">
-                    @csrf
-                    <input hidden name="intervention_id" value="{{ $intervention->id }}">
-                    <input hidden name="end_date" value="{{ $date }}">
-                    <div class="txt-center">
-                        <button type="submit" class="btn rounded-1 outline opening txt-orange"><span class="outline-text outline-invert">Reprendre</span></button>
+                    @elseif(($intervention->state == "pause"))
+                    <div>
+                        <form class="form-material my-auto" method="POST" action="{{ route('timeinterventions.store') }}">
+                            @csrf
+                            <input hidden name="intervention_id" value="{{ $intervention->id }}">
+                            <input hidden name="end_date" value="{{ $date }}">
+                            <div class="txt-center">
+                                <button type="submit" class="btn rounded-1 outline opening txt-orange"><span class="outline-text outline-invert">Reprendre</span></button>
+                            </div>
+                        </form>
                     </div>
-                </form>
-            </div>
-            @endif
-            <div>
-                <form class="form-material my-auto" method="POST" action= "{{ route('totalTime')}}">
-                    @csrf
-                    <input hidden name="intervention_id" value="{{ $intervention->id }}">
-                    <div class="txt-center">
-                        <button type="submit" class="btn rounded-1 outline opening txt-orange"><span class="outline-text outline-invert">test time</span></button>
+                    @endif
+                    <div>
+                        <form class="form-material my-auto" method="POST" action="{{ route('totalTime')}}">
+                            @csrf
+                            <input hidden name="intervention_id" value="{{ $intervention->id }}">
+                            <div class="txt-center">
+                                <button type="submit" class="btn rounded-1 outline opening txt-orange"><span class="outline-text outline-invert">test time</span></button>
+                            </div>
+                        </form>
                     </div>
-                </form>
+                </div>
+                <img src="{{ asset('/images/pause.svg') }}" class="responsive-media p-3" alt="">
             </div>
         </div>
     </div>
@@ -497,7 +516,7 @@ $date = Carbon::now();
 
 @if(session('toast') == 'nopieceqte')
 <script>
-    toast.change('Pas assez de pièces <?php echo('<br/> Stock dispo : ' . request()->pieceqte) ?>', {
+    toast.change('Pas assez de pièces <?php echo ('<br/> Stock dispo : ' . request()->pieceqte) ?>', {
         classes: "rounded-1 red dark-1 shadow-2 mt-5"
     });
     toast.show();
