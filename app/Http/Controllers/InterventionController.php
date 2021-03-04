@@ -53,7 +53,7 @@ class InterventionController extends Controller
         $intervention->user_id = Auth::user()->id;
         $intervention->save();
         $intervention->users()->attach(Auth::user()->id);
-        return redirect(route('interventions.edit', ['intervention' => $intervention]));
+        return redirect(route('stepOne', ['intervention' => $intervention, 'id' => $intervention->id]));
     }
 
     /**
@@ -75,6 +75,7 @@ class InterventionController extends Controller
      */
     public function edit(Request $request, $id)
     {   
+        
         $intervention =  Intervention::find($id);
         if(Auth()->user()->name != $intervention->created_by){
             $intervention->users()->attach(Auth::id());
@@ -119,20 +120,6 @@ class InterventionController extends Controller
     public function destroy(Intervention $intervention)
     {
         //
-    }
-
-    public function selectVehicule(Request $request)
-    {
-        $interventionID = $request->get('intervention_id');
-        $search = $request->get('selectVehicule');
-        $intervention = Intervention::find($interventionID);
-        $categories = Categorie::all();
-        $pieces = Piece::all();
-        $vehicules = Vehicule::Where('immat', 'like', '%' . $search . '%')
-            ->orWhere('marque', 'like', '%' . $search . '%')
-            ->get();
-
-        return view('interventions.edit', ['intervention' => $intervention, 'vehicules' => $vehicules, 'categories' => $categories, 'pieces' => $pieces]);
     }
 
     public function addOperation(Request $request){
@@ -257,5 +244,85 @@ class InterventionController extends Controller
         $intervention->users()->detach(Auth::id());
 
         return redirect(route('interventions.index'));
+    }
+
+    public function stepOne(Request $request){
+        
+        $inputs = $request->except('_token', '_method');
+        $intervention_id = $request->id;
+        $vehicules = Vehicule::all();
+        $intervention = Intervention::find($intervention_id);
+
+        return view('interventions.step1', ['intervention' => $intervention, 'vehicules' => $vehicules]);
+        
+    }
+
+    public function searchIntervVehicule(Request $request)
+    {   
+        $search = $request->get('searchIntervVehicule');
+        $intervention_id = $request->id;
+        $intervention = Intervention::find($intervention_id);
+        $vehicules = Vehicule::Where('immat', 'like', '%' . $search . '%')
+            ->orWhere('marque', 'like', '%' . $search . '%')
+            ->get();
+
+        return view('interventions.step1', ['intervention' => $intervention, 'vehicules' => $vehicules, 'id' => $intervention_id]);
+    }
+
+    public function selectVehicule(Request $request){
+        
+        $inputs = $request->except('_token', '_method');
+
+        $intervention_id = $request->id;
+        $intervention = Intervention::find($intervention_id);
+
+        foreach ( $inputs as $key => $value){
+            $intervention->$key = $value;
+        }
+        $intervention->save();
+
+        return view('interventions.step1',['intervention' => $intervention]);
+
+    }
+
+    public function stepTwo(Request $request){
+        
+        $inputs = $request->except('_token', '_method');
+        $id = $request->id;
+        $intervention = Intervention::find($id);
+
+        return view('interventions.step2', ['intervention' => $intervention]);
+        
+    }
+
+    public function needMove(Request $request){
+
+        $inputs = $request->except('_token', '_method');
+        $id = $request->id;
+        $needMove = $request->needMove;
+
+        $intervention = Intervention::find($id);
+        $intervention->needMove = $needMove;
+
+        $intervention->save();
+
+        return view('interventions.step2', ['intervention' => $intervention]);
+
+    }
+
+    public function setDeplacement(Request $request){
+
+        $inputs = $request->except('_token', '_method');
+
+        $intervention_id = $request->id;
+        $intervention = Intervention::find($intervention_id);
+
+        foreach ( $inputs as $key => $value){
+            $intervention->$key = $value;
+        }
+        $intervention->save();
+
+        return view('interventions.step2', ['intervention' => $intervention]);
+
     }
 }
