@@ -204,47 +204,6 @@ $date = Carbon::now();
             @endif
 
         </div>
-        <!-- TAB Véhicule -->
-        <div id="tab-vehicule" class="p-4">
-            @if(!empty($intervention->vehicule_id))
-            <div class="grix xs1 sm2">
-                <div class=my-auto>
-                    <p class="txt-center txt-airforce txt-dark-4">Véhicule enregistré</p>
-                </div>
-                <div>
-                    <img src="{{ asset('/images/car.svg') }}" class="responsive-media p-3" alt="">
-                </div>
-            </div>
-
-            @endif
-
-        </div>
-        <!-- TAB Kilométrage -->
-        <div id="tab-kilometrage" class="p-3 container">
-            <div class="grix xs1 md2">
-                <div>
-                    @if(!empty($intervention->km_vehicule))
-                    <p class="txt-center txt-airforce txt-dark-4">Kilométrage enregistré</p>
-                    @else
-                    <form class="form-material container" method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
-                        @method('PUT')
-                        @csrf
-                        <div class="grix xs1 txt-center">
-                            <div class="form-field">
-                                <input type="number" id="km_vehicule" name="km_vehicule" value="{{ $intervention->km_vehicule }}" class="form-control txt-center txt-airforce txt-dark-4" />
-                                <label for="km_vehicule" class="">Kilométrage</label>
-                            </div>
-                        </div>
-                        <div class="txt-center">
-                            <button type="submit" class="btn shadow-1 outline opening txt-orange ml-auto vself-center rounded-2 mt-4"><span class="outline-text outline-invert">Valider</span></button>
-                        </div>
-                    </form>
-                    @endif
-                </div>
-                <img src="{{ asset('/images/km.png') }}" class="responsive-media p-3" alt="">
-            </div>
-
-        </div>
         <!-- Tab opération -->
         <div id="tab-operation" class="p-3 container">
             <div class="grix xs1 md2">
@@ -300,28 +259,6 @@ $date = Carbon::now();
                 </div>
                 <img src="{{ asset('/images/qrcode.png') }}" class="p-3 responsive-media" alt="">
             </div>
-        </div>
-        <!-- Tab observations -->
-        <div id="tab-observation" class="p-3 container">
-            <div class="grix xs1 md2">
-                <div class="d-flex vcenter">
-                    <form class="form-material container" method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
-                        @method('PUT')
-                        @csrf
-                        <div class="grix xs1 txt-center">
-                            <div class="form-field">
-                                <textarea type="number" name="observations" class="form-control txt-center grey txt-airforce txt-dark-4">{{ $intervention->observations }}</textarea>
-                                <label for="observations" class="">Observations</label>
-                            </div>
-                        </div>
-                        <div class="txt-center">
-                            <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange mt-4"><span class="outline-text outline-invert">Envoyer</span></button>
-                        </div>
-                    </form>
-                </div>
-                <img src="{{ asset('/images/note.svg') }}" class="responsive-media p-3" alt="">
-            </div>
-
         </div>
         <!-- Tab gestion -->
         <div id="tab-gestion" class="p-3">
