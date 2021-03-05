@@ -84,12 +84,12 @@ $date = Carbon::now();
                         @else
                         <div class="grix xs1 md2">
                             @foreach( $intervention->operations as $operation)
-                            <div class="my-auto pl-5 txt-airforce txt-dark-4">
-                                <li>
+                            <div class="my-auto pl-5 txt-airforce txt-dark-4 pb-2">
+                                <li class="mb-2 mt-3">
                                     {{ $operation->operationList->name}}
                                 </li>
                                 @foreach($operation->pieces as $piece)
-                                <em class="ml-5"> {{$piece->pieceList->name }}</em><br>
+                                <em class="ml-5 mb-5 pb-5"><b> {{$piece->pieceList->name }}</b><span class="ml-3">x{{$piece->qte}}</span></em><br>
                                 @endforeach
                             </div>
                             <div class="grix xs3 gutter-xs2">
@@ -130,9 +130,6 @@ $date = Carbon::now();
         <ul class="tab-menu light-shadow-1 rounded-tl2 rounded-tr2 txt-black">
             <li class="tab-link">
                 <a href="#tab-operation">Opération</a>
-            </li>
-            <li class="tab-link">
-                <a href="#tab-piece">Pièce</a>
             </li>
             <li class="tab-link">
                 <a href="#tab-gestion">Gestion</a>

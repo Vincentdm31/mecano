@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Piece;
 use App\Models\PieceList;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class PieceListController extends Controller
 {
@@ -33,13 +35,21 @@ class PieceListController extends Controller
     public function store(Request $request)
     {
         $inputs = $request->except('_token', 'created_at', 'updated_at');
-        $piecesList = new PieceList();
+        $text = $request->ref;
+
+        $pieceList = new PieceList();
         foreach ($inputs as $key => $value) {
-            $piecesList->$key = $value;
+            $pieceList->$key = $value;
         }
+
+        $qrcode = QrCode::size(200)->generate($text);
         
-        $piecesList->save();
-        return redirect(route('piecesList.index'));
+        Storage::put('/public/images/'.'qr-'.$text.'.svg' , $qrcode);
+
+        $pieceList->path = 'qr-' . $text . '.svg';
+        $pieceList->save();
+
+        return redirect(route('piecesList.show', ['piecesList' => $pieceList->id]));
     }
 
     /**
@@ -83,6 +93,14 @@ class PieceListController extends Controller
         $pieceList->save();
 
        return redirect(route('piecesList.index'));
+    }
+
+    public function destroy($id)
+    {
+        $pieceList = PieceList::find($id);
+        $pieceList->delete();
+
+        return redirect(route('piecesList.index'))->with('toast', 'pieceListDelete');
     }
 
     // /**

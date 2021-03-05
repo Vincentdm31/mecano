@@ -3,7 +3,7 @@
 <div class="container mt-5">
     <div class="grix xs1 sm3 container">
         <div class="col-sm1 mx-auto my-auto">
-            <a href="{{ route('pieces.create') }}" class="btn rounded-1 orange dark-1 txt-white">Ajouter</a>
+            <a href="{{ route('piecesList.create') }}" class="btn rounded-1 orange dark-1 txt-white">Ajouter</a>
         </div>
         <div class="col-sm2">
             <form class="form-material" method="GET" action="searchPiecesList">

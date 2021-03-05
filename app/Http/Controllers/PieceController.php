@@ -28,8 +28,11 @@ class PieceController extends Controller
         $piece->piece_id = $pieceId;
         $piece->operation_id = $operationId;
         $piece->qte = $qte;
-
         $piece->save();
+
+        $pieceListId = PieceList::find($pieceId);
+        $pieceListId->qte -= $qte;
+        $pieceListId->save();
 
         return redirect(route('interventions.edit', ['intervention' => $intervention]))->with('toast', 'pieceStore');
 

@@ -9,7 +9,7 @@
             <p>Prix : {{ $pieceList->price }} €/u</p>
             <p>Quantité : {{ $pieceList->qte }}</p>
         </div>
-        <img src="{{ asset('storage/images/'.$pieceList->img) }}" class="responsive-media p-3">
+        <img src="{{ asset('storage/images/'.$pieceList->path) }}" class="responsive-media p-3">
     </div>
 
 </div>

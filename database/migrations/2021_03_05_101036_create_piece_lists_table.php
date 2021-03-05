@@ -19,7 +19,7 @@ class CreatePieceListsTable extends Migration
             $table->string('ref')->unique();
             $table->float('price');
             $table->float('qte');
-            $table->string('img')->nullable();
+            $table->string('path')->nullable();
             $table->timestamps();
         });
     }
