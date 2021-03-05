@@ -37,7 +37,7 @@ class PieceListController extends Controller
         foreach ($inputs as $key => $value) {
             $piecesList->$key = $value;
         }
-
+        
         $piecesList->save();
         return redirect(route('piecesList.index'));
     }
