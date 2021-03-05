@@ -7,7 +7,7 @@
         <div class="container p-0 pt-1">
             <p class="bd-b-solid bd-orange bd-3 pb-2 h5">Nouvelle pièce</p>
         </div>
-        <form action="{{ route('pieces.store') }}" enctype="multipart/form-data" method="POST" class="form-material container txt-airforce txt-dark-4">
+        <form action="{{ route('piecesList.store') }}" enctype="multipart/form-data" method="POST" class="form-material container txt-airforce txt-dark-4">
             @csrf
             <div class="form-field">
                 <input required type="text" name="name" class="form-control txt-airforce txt-dark-4"></input>

@@ -9,7 +9,9 @@ use App\Http\Controllers\InterventionController;
 use App\Http\Controllers\TimeInterventionController;
 use App\Http\Controllers\VehiculeController;
 use App\Http\Controllers\ImageUploaderController;
+use App\Http\Controllers\OperationListController;
 use App\Http\Controllers\PieceController;
+use App\Http\Controllers\PieceListController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -76,7 +78,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/addPiece',  [InterventionController::class, 'addPiece'])->name('addPiece');
     Route::put('/editPiece',  [InterventionController::class, 'editPiece'])->name('editPiece');
     Route::put('/deletePiece',  [InterventionController::class, 'deletePiece'])->name('deletePiece');
-    Route::get('/searchPiece',  [PieceController::class, 'searchPiece']);
 
     // Timer Intervention
     Route::resource('time', TimeInterventionController::class);
@@ -86,7 +87,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/searchVehicule',  [VehiculeController::class, 'searchVehicule']);
     Route::get('/getVehicules',  [VehiculeController::class, 'getVehicules'])->name('getVehicules');
     
-
+    // Stepper Intervention
     Route::get('/intervention/step1', [InterventionController::class, 'stepOne'])->name('stepOne');
     Route::post('/intervention/step2', [InterventionController::class, 'stepTwo'])->name('stepTwo');
+
+    //PieceList
+    Route::resource('piecesList', PieceListController::class);
+    Route::get('/searchPiecesList',  [PieceListController::class, 'searchPiecesList']);
+
+    //OperationList
+    Route::resource('operationsList', OperationListController::class);
+    Route::get('/searchOperationsList',  [OperationListController::class, 'searchOperationsList']);
+
 });

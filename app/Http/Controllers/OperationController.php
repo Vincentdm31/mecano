@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\TimeOperation;
+use App\Models\Operation;
 use Illuminate\Http\Request;
 
-class TimeOperationController extends Controller
+class OperationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class TimeOperationController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\TimeOperation  $timeOperation
+     * @param  \App\Models\Operation  $operation
      * @return \Illuminate\Http\Response
      */
-    public function show(TimeOperation $timeOperation)
+    public function show(Operation $operation)
     {
         //
     }
@@ -52,10 +52,10 @@ class TimeOperationController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\TimeOperation  $timeOperation
+     * @param  \App\Models\Operation  $operation
      * @return \Illuminate\Http\Response
      */
-    public function edit(TimeOperation $timeOperation)
+    public function edit(Operation $operation)
     {
         //
     }
@@ -64,10 +64,10 @@ class TimeOperationController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\TimeOperation  $timeOperation
+     * @param  \App\Models\Operation  $operation
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, TimeOperation $timeOperation)
+    public function update(Request $request, Operation $operation)
     {
         //
     }
@@ -75,10 +75,10 @@ class TimeOperationController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\TimeOperation  $timeOperation
+     * @param  \App\Models\Operation  $operation
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TimeOperation $timeOperation)
+    public function destroy(Operation $operation)
     {
         //
     }

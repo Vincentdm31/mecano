@@ -6,12 +6,12 @@
             <a href="{{ route('pieces.create') }}" class="btn rounded-1 orange dark-1 txt-white">Ajouter</a>
         </div>
         <div class="col-sm2">
-            <form class="form-material" method="GET" action="searchPiece">
+            <form class="form-material" method="GET" action="searchPiecesList">
                 @csrf
                 <div class="grix xs5">
                     <div class="form-field pos-xs1 col-xs4">
-                        <input type="text" name="searchPiece" id="searchPiece" class="form-control" />
-                        <label for="searchPiece">Rechercher</label>
+                        <input type="text" name="searchPiecesList" id="searchPiecesList" class="form-control" />
+                        <label for="searchPiecesList">Rechercher</label>
                     </div>
                     <button type="submit" class="btn circle orange dark-1 txt-white search-icon vself-center rounded-4"><i class="fa fa-search"></i></button>
                 </div>
@@ -34,22 +34,22 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($pieces as $piece)
+                    @foreach($piecesList as $pieceList)
                     <tr>
-                        <td class="txt-center">{{ $piece->id }}</td>
-                        <td class="txt-center">{{ $piece->name }}</td>
-                        <td class="txt-center">{{ $piece->ref }}</td>
-                        <td class="txt-center">{{ $piece->qte }}</td>
+                        <td class="txt-center">{{ $pieceList->id }}</td>
+                        <td class="txt-center">{{ $pieceList->name }}</td>
+                        <td class="txt-center">{{ $pieceList->ref }}</td>
+                        <td class="txt-center">{{ $pieceList->qte }}</td>
                         <td>
                             <div class="grix xs3 gutter-xs2">
                             <div class="ml-auto">
-                                    <a class="btn circle blue dark-1 txt-white push" href="{{route('pieces.show', ['piece' => $piece->id])}}"><i class="fas fa-eye"></i></a>
+                                    <a class="btn circle blue dark-1 txt-white push" href="{{route('piecesList.show', ['piecesList' => $pieceList->id])}}"><i class="fas fa-eye"></i></a>
                                 </div>
                                 <div class="mx-auto">
-                                    <a class="btn circle green dark-1 txt-white push" href="{{route('pieces.edit', ['piece' => $piece->id])}}"><i class="fas fa-pen"></i></a>
+                                    <a class="btn circle green dark-1 txt-white push" href="{{route('piecesList.edit', ['piecesList' => $pieceList->id])}}"><i class="fas fa-pen"></i></a>
                                 </div>
                                 <div>
-                                    <form method="POST" action="{{route('pieces.destroy', ['piece' => $piece->id])}}">
+                                    <form method="POST" action="{{route('piecesList.destroy', ['piecesList' => $pieceList->id])}}">
                                         @method('DELETE')
                                         @csrf
                                         <button type="submit" onclick="return confirm('Confirmer la suppression ?')" class="btn circle red dark-1 txt-white push"><i class="fas fa-trash"></i></button>

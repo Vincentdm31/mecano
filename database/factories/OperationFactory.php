@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\TimeOperation;
+use App\Models\Operation;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class TimeOperationFactory extends Factory
+class OperationFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = TimeOperation::class;
+    protected $model = Operation::class;
 
     /**
      * Define the model's default state.

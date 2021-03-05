@@ -18,10 +18,10 @@
             <a href="{{ route('vehicules.index') }}" class="btn airforce dark-2 txt-white d-flex vcenter fx-center rounded-1 shadow-1 hoverable-1 h100 w100 mb-2">Gestion véhicules</a>
         </div>
         <div>
-            <a href="{{ route('pieces.index') }}" class="btn green dark-2 txt-white d-flex vcenter fx-center rounded-1 shadow-1 hoverable-1 h100 w100 mb-2">Gestion pièces</a>
+            <a href="{{ route('piecesList.index') }}" class="btn green dark-2 txt-white d-flex vcenter fx-center rounded-1 shadow-1 hoverable-1 h100 w100 mb-2">Gestion pièces</a>
         </div>
         <div>
-            <a href="{{ route('categories.index') }}" class="btn cyan dark-2 txt-white d-flex vcenter fx-center rounded-1 shadow-1 hoverable-1 h100 w100 mb-2">Gestion catégories</a>
+            <a href="{{ route('operationsList.index') }}" class="btn cyan dark-2 txt-white d-flex vcenter fx-center rounded-1 shadow-1 hoverable-1 h100 w100 mb-2">Gestion opérations</a>
         </div>
         <div>
             <a href="{{ route('getVehicules') }}" class="btn amaranth dark-1 hoverable-1 txt-white rounded-1 shadow-1 w100 h100 d-flex fx-center vcenter">API</a>

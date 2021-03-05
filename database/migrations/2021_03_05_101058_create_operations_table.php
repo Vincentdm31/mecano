@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCategorieInterventionTable extends Migration
+class CreateOperationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,16 @@ class CreateCategorieInterventionTable extends Migration
      */
     public function up()
     {
-        Schema::create('categorie_intervention', function (Blueprint $table) {
+        Schema::create('operations', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->text('observations')->nullable();
-            $table->bigInteger('categorie_id')->unsigned();
-            $table->bigInteger('intervention_id')->unsigned();
 
-            $table->foreign('categorie_id')->references('id')->on('categories')
-                ->onDelete('cascade')->onUpdate('cascade');
+            $table->bigInteger('intervention_id')->unsigned()->nullable();
             $table->foreign('intervention_id')->references('id')->on('interventions')
+                ->onDelete('cascade')->onUpdate('cascade');
+
+            $table->bigInteger('operation_id')->unsigned()->nullable();
+            $table->foreign('operation_id')->references('id')->on('operation_lists')
                 ->onDelete('cascade')->onUpdate('cascade');
         });
     }
@@ -34,6 +34,6 @@ class CreateCategorieInterventionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('categorie_intervention');
+        Schema::dropIfExists('operations');
     }
 }

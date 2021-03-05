@@ -21,13 +21,8 @@ class Intervention extends Model
         return $this->belongsToMany(User::class)->distinct();
     }
 
-    public function pieces()
+    public function operations()
     {
-        return $this->belongsToMany(Piece::class)->withPivot('id', 'observations' , 'qte');
-    }
-
-    public function categories()
-    {
-        return $this->belongsToMany(Categorie::class)->withPivot('id', 'observations');
+        return $this->hasMany(Operation::class)->withPivot('id', 'observations');
     }
 }

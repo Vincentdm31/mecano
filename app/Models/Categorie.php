@@ -11,6 +11,12 @@ class Categorie extends Model
 
     public function intervention()
     {
-        return $this->belongsToMany(Intervention::class)->withPivot('id');
+        return $this->belongsTo(Intervention::class)->withPivot('id');
     }
+
+    public function pieces()
+    {
+        return $this->hasMany(Piece::class)->withPivot('id');
+    }
+
 }

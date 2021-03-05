@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCategorieInterventionPieceTable extends Migration
+class CreatePiecesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,19 @@ class CreateCategorieInterventionPieceTable extends Migration
      */
     public function up()
     {
-        Schema::create('categorie_intervention_piece', function (Blueprint $table) {
+        Schema::dropIfExists('pieces');
+        Schema::create('pieces', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->text('observations')->nullable();
-            $table->bigInteger('categorie_id')->unsigned();
-            $table->bigInteger('piece_id')->unsigned();
 
-            $table->foreign('categorie_id')->references('id')->on('categorie_intervention')
+            $table->bigInteger('piece_id')->unsigned()->nullable();
+            $table->foreign('piece_id')->references('id')->on('piece_lists')
                 ->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('piece_id')->references('id')->on('pieces')
+
+            $table->bigInteger('operation_id')->unsigned()->nullable();
+            $table->foreign('operation_id')->references('id')->on('operations')
                 ->onDelete('cascade')->onUpdate('cascade');
+            
         });
     }
 
@@ -34,6 +36,6 @@ class CreateCategorieInterventionPieceTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('categorie_intervention_piece');
+        Schema::dropIfExists('pieces');
     }
 }

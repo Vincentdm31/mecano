@@ -1,16 +1,13 @@
 @extends('layouts.app')
-@section('pageTitle')
-Add Car
-@endsection
 @section('content')
 <div class="container mt-5">
     <div class="grix xs1 sm3">
         <div class="card rounded-2 shadow-1 pos-sm2">
             <div class="card-header pl-3 pr-3 p-0">
-                <p class="bd-b-solid bd-orange bd-3 pb-2">Nouvel catégorie</p>
+                <p class="bd-b-solid bd-orange bd-3 pb-2">Nouvelle opération</p>
             </div>
             <div class="card-content pl-3 pr-3 p-0">
-                <form class="form-material" method="POST" action="{{ route('categories.store') }}">
+                <form class="form-material" method="POST" action="{{ route('operationsList.store') }}">
                     @csrf
                     <div class="grix xs1 txt-center">
                         <div class="form-field">

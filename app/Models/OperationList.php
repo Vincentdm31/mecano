@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Piece extends Model
+class OperationList extends Model
 {
     use HasFactory;
 
-    public function pieceList()
+    public function operation()
     {
-        return $this->hasOne(PieceList::class);
+        return $this->belongsTo(Operation::class);
     }
 }
