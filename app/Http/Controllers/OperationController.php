@@ -46,8 +46,8 @@ class OperationController extends Controller
         }
 
         $operation->save();
-        
-        return redirect(route('interventions.edit', ['intervention' => $intervention_id]));
+
+        return redirect(route('interventions.edit', ['intervention' => $intervention_id]))->with('toast', 'addOperation');
     }
 
     /**
@@ -76,12 +76,20 @@ class OperationController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Operation  $operation
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Operation $operation)
+    public function update(Request $request, $id)
     {
-        //
+        $inputs = $request->except('_token', '_method', 'updated_at');
+        $intervention = $request->intervention_id;
+        $operation = Operation::find($id);
+        foreach ($inputs as $key => $value) {
+            $operation->$key = $value;
+        }
+        $operation->save();
+
+        return redirect(route('interventions.edit', ['intervention' => $intervention]))->with('toast', 'update');
     }
 
     /**
@@ -90,8 +98,14 @@ class OperationController extends Controller
      * @param  \App\Models\Operation  $operation
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Operation $operation)
-    {
-        //
+    public function destroy(Request $request, $id)
+    {   
+        $intervention = $request->intervention_id;
+ 
+        $operation = Operation::find($id);
+        $operation->delete();
+
+        return redirect(route('interventions.edit', ['intervention' => $intervention]))->with('toast', 'removeOperation');
+
     }
 }

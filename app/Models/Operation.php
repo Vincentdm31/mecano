@@ -19,4 +19,9 @@ class Operation extends Model
         return $this->belongsTo(Intervention::class);
 
     }
+
+    public function pieces()
+    {
+        return $this->hasMany(Piece::class);
+    }
 }

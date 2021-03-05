@@ -17,6 +17,7 @@ class CreatePiecesTable extends Migration
         Schema::create('pieces', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->integer('qte');
 
             $table->bigInteger('piece_id')->unsigned()->nullable();
             $table->foreign('piece_id')->references('id')->on('piece_lists')

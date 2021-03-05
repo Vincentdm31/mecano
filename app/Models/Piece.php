@@ -11,6 +11,7 @@ class Piece extends Model
 
     public function pieceList()
     {
-        return $this->hasOne(PieceList::class);
+        return $this->hasOne(PieceList::class, 'id', 'piece_id');
+
     }
 }

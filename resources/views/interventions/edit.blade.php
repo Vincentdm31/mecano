@@ -77,30 +77,37 @@ $date = Carbon::now();
                     </div>
                 </div>
                 <div class="card-footer p-3 white">
-
                     <div class="p-2 shadow-2 rounded-2">
                         <p class="txt-airforce txt-dark-4 bd-b-solid bd-orange bd-2 pb-2 pl-2"><i class="fas fa-tools font-s4 mr-4 txt-airforce txt-dark-4"></i>Liste des opérations</p>
                         @if(!$intervention->operations()->exists())
                         <p class="txt-orange pl-3">Aucune opération en cours</p>
                         @else
-                        <div class="grix xs2">
+                        <div class="grix xs1 md2">
                             @foreach( $intervention->operations as $operation)
-                            <div class="my-auto mx-auto txt-airforce txt-dark-4">
-                                <p>{{ $operation->operationList->name}}</p>
+                            <div class="my-auto pl-5 txt-airforce txt-dark-4">
+                                <li>
+                                    {{ $operation->operationList->name}}
+                                </li>
+                                @foreach($operation->pieces as $piece)
+                                <em class="ml-5"> {{$piece->pieceList->name }}</em><br>
+                                @endforeach
                             </div>
-                            <div class="grix xs2 gutter-xs2">
+                            <div class="grix xs3 gutter-xs2">
                                 <div class="my-auto ml-auto">
-                                    <button data-target="edit-operation-{{ $operation->id }}" class="btn rounded-1 white light-shadow-3 txt-blue modal-trigger mx-auto">
-                                        <i class="fas fa-comment-medical <?php echo (isset($operation->pivot->observations) ? 'txt-orange' : '') ?>"></i>
+                                    <button data-target="add-piece-operation-{{ $operation->id }}" class="btn rounded-1 white light-shadow-3 txt-blue modal-trigger mx-auto">
+                                        <i class="fas fa-tools txt-blue"></i>
                                     </button>
-
+                                </div>
+                                <div class="my-auto mx-auto">
+                                    <button data-target="edit-operation-{{ $operation->id }}" class="btn rounded-1 white light-shadow-3 txt-blue modal-trigger mx-auto">
+                                        <i class="fas fa-comment-medical <?php echo (isset($operation->op_comment) ? 'txt-orange' : '') ?>"></i>
+                                    </button>
                                 </div>
                                 <div class="mr-auto my-auto">
-                                    <form class="form-material" method="POST" action="{{ route('deleteOperation') }}">
-                                        @method('PUT')
+                                    <form class="form-material" method="POST" action="{{ route('operations.destroy', ['operation' => $operation->id]) }}">
+                                        @method('DELETE')
                                         @csrf
                                         <input hidden name="intervention_id" value="{{ $intervention->id }}" />
-                                        <input hidden name="categorie_id" value="{{ $operation->id}}" />
                                         <div class="mx-auto">
                                             <button type="submit" class="btn light-shadow-3 rounded-1 outline opening txt-white"><span class="outline-text outline-invert"><i class="fas fa-trash txt-red"></i></span></button>
                                         </div>
@@ -188,38 +195,6 @@ $date = Carbon::now();
             </div>
 
         </div>
-        <!-- Tab pièce -->
-        <div id="tab-piece" class="p-3">
-            <div class="grix xs1 md2 container">
-                <div class="d-flex my-auto mx-auto w100 ">
-                    <form class="form-material w100" method="POST" action="{{ route('addPiece')}}">
-                        @csrf
-                        <div class="txt-center">
-                            <a id="btn-scan-qr" class="btn rounded-1 shadow-1 orange dark-1 txt-white">SCAN</a>
-                            <a id="btn-stop-qr" class="btn rounded-1 shadow-1 orange dark-1 txt-white hide">STOP</a>
-                        </div>
-                        <canvas hidden="" id="qr-canvas"></canvas>
-                        <div id="qr-result" hidden="">
-                            <b>Data:</b> <span id="outputData"></span>
-                        </div>
-
-                        <div class="form-field">
-                            <input required type="text" id="qr-code-result" name="piece-ref" class="form-control txt-airforce txt-dark-4"></input>
-                            <label for="qte">Pièce</label>
-                        </div>
-                        <div class="form-field">
-                            <input required type="number" name="qte" class="form-control txt-airforce txt-dark-4"></input>
-                            <label for="qte">Quantité</label>
-                        </div>
-                        <input hidden name="intervention-id" value="{{ $intervention->id }}">
-                        <div class="txt-center">
-                            <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange mt-4"><span class="outline-text outline-invert">Valider</span></button>
-                        </div>
-                    </form>
-                </div>
-                <img src="{{ asset('/images/qrcode.png') }}" class="p-3 responsive-media" alt="">
-            </div>
-        </div>
         <!-- Tab gestion -->
         <div id="tab-gestion" class="p-3">
             <div class="grix xs1 md2">
@@ -266,21 +241,50 @@ $date = Carbon::now();
 
 @foreach( $intervention->operations as $operation)
 <div class="modal white shadow-1 p-4 rounded-2" id="edit-operation-{{ $operation->id }}" data-ax="modal">
-    <form class="form-material" method="POST" action="{{ route('editOperation') }}">
+    <form class="form-material" method="POST" action="{{ route('operations.update', ['operation' => $operation->id]) }}">
         @method('PUT')
         @csrf
         <div class="grix xs1 txt-center">
+            <input name="intervention_id" hidden value="{{ $intervention->id }}"></input>
             <div class="form-field">
-                <textarea type="text" id="operation-observations" name="observations" class="form-control txt-airforce txt-dark-4">{{ $operation->operationList->name}}</textarea>
-                <input hidden name="intervention_id" value="{{ $intervention->id }}" />
-                <input hidden name="categorie_id" value="{{ $operation->id}}" />
-                <label for="observations" class="">Observations</label>
+                <textarea type="text" id="op_comment" name="op_comment" class="form-control txt-airforce txt-dark-4">{{ $operation->op_comment}}</textarea>
+                <label for="op_comment" class="">Observations</label>
             </div>
         </div>
         <div class="txt-center">
             <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange mt-4"><span class="outline-text outline-invert">Envoyer</span></button>
         </div>
     </form>
+</div>
+
+<div class="modal white shadow-1 p-4 rounded-2" id="add-piece-operation-{{ $operation->id }}" data-ax="modal">
+    <div class="d-flex my-auto mx-auto w100 ">
+        <form class="form-material w100" method="POST" action="{{ route('pieces.store') }}">
+            @csrf
+            <div class="txt-center">
+                <a id="btn-scan-qr" class="btn rounded-1 shadow-1 orange dark-1 txt-white">SCAN</a>
+                <a id="btn-stop-qr" class="btn rounded-1 shadow-1 orange dark-1 txt-white hide">STOP</a>
+            </div>
+            <canvas hidden="" id="qr-canvas"></canvas>
+            <div id="qr-result" hidden="">
+                <b>Data:</b> <span id="outputData"></span>
+            </div>
+
+            <div class="form-field">
+                <input required type="text" id="qr-code-result" name="pieceref" class="form-control txt-airforce txt-dark-4"></input>
+                <label for="pieceref">Pièce</label>
+            </div>
+            <div class="form-field">
+                <input required type="number" name="qte" class="form-control txt-airforce txt-dark-4"></input>
+                <label for="qte">Quantité</label>
+            </div>
+            <input hidden name="interventionId" value="{{ $intervention->id }}">
+            <input hidden name="operationId" value="{{ $operation->id }}">
+            <div class="txt-center">
+                <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange mt-4"><span class="outline-text outline-invert">Valider</span></button>
+            </div>
+        </form>
+    </div>
 </div>
 @endforeach
 
@@ -290,7 +294,7 @@ $date = Carbon::now();
         @csrf
         <div class="grix xs1 txt-center">
             <div class="form-field">
-                <textarea type="number" name="observations" class="form-control txt-center grey txt-airforce txt-dark-4">{{ $intervention->observations }}</textarea>
+                <textarea type="text" name="observations" class="form-control txt-center grey txt-airforce txt-dark-4">{{ $intervention->observations }}</textarea>
                 <label for="observations" class="">Observations</label>
             </div>
         </div>
@@ -311,17 +315,17 @@ $date = Carbon::now();
     let toast = new Axentix.Toast();
 </script>
 
-@if(session('toast') == 'nopieceqte')
+@if(session('toast') == 'notEnoughQte')
 <script>
-    toast.change('Pas assez de pièces <?php echo ('<br/> Stock dispo : ' . request()->pieceqte) ?>', {
+    toast.change('Pas assez de pièces <?php echo ('<br/> Stock dispo : ' . request()->pieceQte) ?>', {
         classes: "rounded-1 red dark-1 shadow-2 mt-5"
     });
     toast.show();
 </script>
-@elseif(session('toast') == 'addpiece')
+@elseif(session('toast') == 'pieceStore')
 <script>
     toast.change('Pièce ajoutée', {
-        classes: "rounded-1 green light-2 shadow-2"
+        classes: "rounded-1 green txt-white shadow-2"
     });
     toast.show();
 </script>
@@ -339,14 +343,14 @@ $date = Carbon::now();
     });
     toast.show();
 </script>
-@elseif(session('toast') == 'addoperation')
+@elseif(session('toast') == 'addOperation')
 <script>
     toast.change('Opération ajoutée', {
-        classes: "rounded-1 green light-2 shadow-2"
+        classes: "rounded-1 green txt-white shadow-2"
     });
     toast.show();
 </script>
-@elseif(session('toast') == 'removeoperation')
+@elseif(session('toast') == 'removeOperation')
 <script>
     toast.change('Opération supprimée', {
         classes: "rounded-1 red dark-1 shadow-2"
