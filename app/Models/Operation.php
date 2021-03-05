@@ -11,7 +11,7 @@ class Operation extends Model
 
     public function operationList()
     {
-        return $this->hasOne(OperationList::class);
+        return $this->hasOne(OperationList::class, 'id', 'operation_id');
     }
 
     public function intervention()

@@ -35,48 +35,47 @@ $date = Carbon::now();
                 @endif
                 @if(isset($intervention->needMove) && $intervention->needMove == 1)
                 <div class="grix xs1 md2">
+                    @if(empty($intervention->start_deplacement_aller))
                     <div class="d-flex my-auto fx-col">
-                        @if(empty($intervention->start_deplacement_aller) || empty($intervention->end_deplacement_aller))
                         <div>
                             <p class="txt-airforce txt-dark-4 txt-center mb-2">Déplacements ALLER</p>
+                            <div>
+                                <form method="POST" action="{{ route('setDeplacement')}}">
+                                    @method('PUT')
+                                    @csrf
+                                    <div class="txt-center">
+                                        <input hidden value="{{ $date }}" name="start_deplacement_aller" />
+                                        <input hidden name="id" value="{{ $intervention->id }}"></input>
+                                        <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange small"><span class="outline-text outline-invert">Début</span></button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-                        @endif
-                        @if(empty($intervention->start_deplacement_aller))
-                        <div>
-                            <form method="POST" action="{{ route('setDeplacement')}}">
-                                @method('PUT')
-                                @csrf
-                                <div class="txt-center">
-                                    <input hidden value="{{ $date }}" name="start_deplacement_aller" />
-                                    <input hidden name="id" value="{{ $intervention->id }}"></input>
-                                    <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange small"><span class="outline-text outline-invert">Début</span></button>
-                                </div>
-                            </form>
-                        </div>
-                        @endif
-
-                        <!--End Déplacement Interventions Aller -->
-                        @if(!empty($intervention->start_deplacement_aller) && empty($intervention->end_deplacement_aller))
-                        <div class="">
-                            <form method="POST" action="{{ route('setDeplacement')}}">
-                                @method('PUT')
-                                @csrf
-                                <div class="txt-center">
-                                    <input hidden value="{{ $date }}" name="end_deplacement_aller" />
-                                    <input hidden name="id" value="{{ $intervention->id }}"></input>
-                                    <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange"><span class="outline-text outline-invert">Fin</span></button>
-                                </div>
-                            </form>
-                        </div>
-                        @endif
-
-                        @if(!empty($intervention->start_deplacement_retour) && !empty($intervention->end_deplacement_retour) && !empty($intervention->end_deplacement_aller) && !empty($intervention->start_deplacement_retour))
-                        <p class="txt-center txt-airforce txt-dark-4">Déplacements enregistrés</p>
-                        @endif
                     </div>
                     <img src="{{ asset('/images/deplacement.svg') }}" class="responsive-media p-3" alt="">
+                    @endif
+
+                    <!--End Déplacement Interventions Aller -->
+                    @if(!empty($intervention->start_deplacement_aller) && empty($intervention->end_deplacement_aller))
+                    <div class="d-flex my-auto fx-col">
+                        <div>
+                            <p class="txt-airforce txt-dark-4 txt-center mb-2">Déplacements Aller</p>
+                        </div>
+                        <form method="POST" action="{{ route('setDeplacement')}}">
+                            @method('PUT')
+                            @csrf
+                            <div class="txt-center">
+                                <input hidden value="{{ $date }}" name="end_deplacement_aller" />
+                                <input hidden name="id" value="{{ $intervention->id }}"></input>
+                                <button type="submit" class="btn small shadow-1 rounded-1 outline opening txt-orange"><span class="outline-text outline-invert">Fin</span></button>
+                            </div>
+                        </form>
+                    </div>
+                    <img src="{{ asset('/images/deplacement.svg') }}" class="responsive-media p-3" alt="">
+                    @endif
 
                 </div>
+
                 @endif
                 @if(isset($intervention->needMove) && $intervention->needMove == 0)
                 <div class="card-footer m-0 p-0">
@@ -91,22 +90,27 @@ $date = Carbon::now();
                     </form>
                 </div>
                 @endif
-            </div>
-            @if($intervention->needMove ==1 && !empty($intervention->end_deplacement_aller))
-            <div class="card-footer m-0 p-0">
+
+                @if($intervention->needMove ==1 && !empty($intervention->end_deplacement_aller))
                 <p class="txt-center">Déplacements enregistrés</p>
-                <form action="{{ route('stepTwo') }}" method="POST">
-                    @csrf
-                    <input hidden name="id" value="{{ $intervention->id }}" /></input>
-                    <div class="d-flex fx-center">
-                        <button type="submit" class="btn shadow-1 airforce dark-3 ml-auto txt-white rounded-1 hide-md-down mb-2 mr-2 small">Suivant</button>
-                        <button type="submit" class="btn shadow-1 red dark-3 txt-white rounded-1 hide-md-up mb-2 mr-2 small">Suivant</button>
-                    </div>
-                </form>
+            </div>
+            <div class="card-footer m-0 p-0">
+                <div class="">
+                    <form action="{{ route('interventions.edit', ['intervention' => $intervention->id]) }}">
+                        @csrf
+                        <input hidden name="id" value="{{ $intervention->id }}" /></input>
+                        <div class="d-flex fx-center">
+                            <button type="submit" class="btn shadow-1 airforce dark-3 ml-auto txt-white rounded-1 hide-md-down mb-2 mr-2 small">Suivant</button>
+                            <button type="submit" class="btn shadow-1 red dark-3 txt-white rounded-1 hide-md-up mb-2 mr-2 small">Suivant</button>
+                        </div>
+                    </form>
+                </div>
+
             </div>
             @endif
         </div>
     </div>
+</div>
 </div>
 @endsection
 

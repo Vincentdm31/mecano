@@ -23,6 +23,6 @@ class Intervention extends Model
 
     public function operations()
     {
-        return $this->hasMany(Operation::class)->withPivot('id', 'observations');
+        return $this->hasMany(Operation::class);
     }
 }

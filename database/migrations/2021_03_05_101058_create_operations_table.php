@@ -16,7 +16,8 @@ class CreateOperationsTable extends Migration
         Schema::create('operations', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-
+            $table->text('op_comment')->nullable();
+            
             $table->bigInteger('intervention_id')->unsigned()->nullable();
             $table->foreign('intervention_id')->references('id')->on('interventions')
                 ->onDelete('cascade')->onUpdate('cascade');

@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Categorie;
 use App\Models\Intervention;
+use App\Models\Operation;
+use App\Models\OperationList;
 use App\Models\Piece;
+use App\Models\PieceList;
 use App\Models\Vehicule;
 use Exception;
 use Illuminate\Http\Request;
@@ -80,14 +83,19 @@ class InterventionController extends Controller
         if(Auth()->user()->name != $intervention->created_by){
             $intervention->users()->attach(Auth::id());
         }
+
+        $operationsList = OperationList::all();
+        $piecesList = PieceList::all();
+        $operations = Operation::all();
+        $pieces = Piece::all();
+
         $vehicules = Vehicule::all();
+
         $search = $request->get('selectVehicule');
         $vehicules = Vehicule::Where('immat', 'like', '%' . $search . '%')
             ->get();
-        $categories = Categorie::all();
-        $pieces = Piece::all();
 
-        return view('interventions.edit', ['intervention' => $intervention, 'vehicules' => $vehicules, 'categories' => $categories, 'pieces' => $pieces])->with('toast', 'update');
+        return view('interventions.edit', ['intervention' => $intervention, 'vehicules' => $vehicules, 'operationsList' => $operationsList, 'piecesList' => $piecesList, 'operations' => $operations, 'pieces' => $pieces])->with('toast', 'update');
     }
 
     /**
