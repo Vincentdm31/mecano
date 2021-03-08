@@ -34,7 +34,7 @@
                     <a href="{{ route('getVehicules') }}" class="navbar-link">API</a>
 
                     @else
-                    <div>
+                    <div class="d-flex fx-row">
                         <form class="form-material navbar-link" method="POST" action="{{ route('interventions.store') }}">
                             @csrf
                             <button type="submit" class="btn txt-orange transparent p-0">Nouvelle</button>
