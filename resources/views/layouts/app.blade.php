@@ -32,17 +32,6 @@
                     <a href="{{ route('piecesList.index') }}" class="navbar-link">Gestion pièces</a>
                     <a href="{{ route('operationsList.index') }}" class="navbar-link">Gestion catégories</a>
                     <a href="{{ route('getVehicules') }}" class="navbar-link">API</a>
-
-                    @else
-                    <div class="d-flex fx-row">
-                        <form class="form-material navbar-link" method="POST" action="{{ route('interventions.store') }}">
-                            @csrf
-                            <button type="submit" class="btn txt-orange transparent p-0">Nouvelle</button>
-                        </form>
-                        <a href="{{ route('interventions.index') }}" class="navbar-link txt-white">Liste complète</a>
-                        <a href="{{ route('joinIntervention') }}" class="navbar-link">Rejoindre</a>
-                        <a href="{{ route('resumeIntervention') }}" class="navbar-link">Reprendre</a>
-                    </div>
                     @endif
                     @endif
                 </div>
