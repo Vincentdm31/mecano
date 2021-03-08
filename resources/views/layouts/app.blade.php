@@ -19,32 +19,53 @@
 
 <body class="layout">
     <header>
-    <div class="navbar-fixed">
-        <nav class="navbar dark txt-white shadow-1">
-            <a href="{{ url('/') }}" class="navbar-brand hide-sm-down">Mecalcis</a>
-            <button data-target="sidenav" class="txt-white btn rounded-1 transparent sidenav-trigger hide-md-up"><i class="fas fa-bars mr-1"></i>Menu</button>
-            <div class="navbar-menu ml-auto">
-                @guest
-                <a class="navbar-link {{ Request::routeIs('login') ? 'active' : '' }}" href="{{ route('login') }}">{{ __('Login') }}</a>
+        <div class="navbar-fixed">
+            <nav class="navbar dark txt-white shadow-1">
+                <a href="{{ url('/') }}" class="navbar-brand hide-sm-down">Mecalcis</a>
+                <button data-target="sidenav" class="txt-white btn rounded-1 transparent sidenav-trigger hide-md-up"><i class="fas fa-bars mr-1"></i>Menu</button>
+                <div class="navbar-menu ml-auto hide-sm-down">
+                    @if(Auth()->user()->is_admin)
+                    <a href="{{ route('interventions.index') }}" class="navbar-link">Interventions</a>
+                    <a href="{{ route('users.index') }}" class="navbar-link">Gestion utilisateurs</a>
+                    <a href="{{ route('vehicules.index') }}" class="navbar-link">Gestion véhicules</a>
+                    <a href="{{ route('piecesList.index') }}" class="navbar-link">Gestion pièces</a>
+                    <a href="{{ route('operationsList.index') }}" class="navbar-link">Gestion catégories</a>
+                    <a href="{{ route('getVehicules') }}" class="navbar-link">API</a>
 
-                @if (Route::has('register'))
-                <a class="navbar-link {{ Request::routeIs('register') ? 'active' : '' }}" href="{{ route('register') }}">{{ __('Register') }}</a>
-                @endif
+                    @else
+                    <div>
+                        <form class="form-material navbar-link" method="POST" action="{{ route('interventions.store') }}">
+                            @csrf
+                            <button type="submit" class="btn txt-orange transparent p-0">Nouvelle</button>
+                        </form>
+                        <a href="{{ route('interventions.index') }}" class="navbar-link txt-white">Liste complète</a>
+                        <a href="{{ route('joinIntervention') }}" class="navbar-link">Rejoindre</a>
+                        <a href="{{ route('resumeIntervention') }}" class="navbar-link">Reprendre</a>
+                    </div>
+                    @endif
+                </div>
+                <div class="ml-auto d-flex fx-row">
+                    @guest
+                    <a class="navbar-link {{ Request::routeIs('login') ? 'active' : '' }}" href="{{ route('login') }}">{{ __('Login') }}</a>
 
-                @else
-                <span class="mr-2">{{ Auth::user()->name }}</span>
+                    @if (Route::has('register'))
+                    <a class="navbar-link {{ Request::routeIs('register') ? 'active' : '' }}" href="{{ route('register') }}">{{ __('Register') }}</a>
+                    @endif
 
-                <a href="{{ route('logout') }}" class="navbar-link" onclick="event.preventDefault(); document.getElementById('form-logout').submit();">
-                    {{ __('Logout') }}
-                </a>
+                    @else
+                    <span class="mr-2">{{ Auth::user()->name }}</span>
 
-                <form id="form-logout" action="{{ route('logout') }}" method="POST" class="hide">
-                    @csrf
-                </form>
-                @endguest
-            </div>
-        </nav>
-    </div>
+                    <a href="{{ route('logout') }}" class="navbar-link" onclick="event.preventDefault(); document.getElementById('form-logout').submit();">
+                        {{ __('Logout') }}
+                    </a>
+
+                    <form id="form-logout" action="{{ route('logout') }}" method="POST" class="hide">
+                        @csrf
+                    </form>
+                    @endguest
+                </div>
+            </nav>
+        </div>
     </header>
 
     <div class="sidenav shadow-1 dark-light" id="sidenav" data-ax="sidenav">
@@ -54,11 +75,11 @@
         <div class="txt-white">
             @if(Auth()->check())
             @if(Auth()->user()->is_admin)
-            <a href="" class="sidenav-link">Interventions</a>
+            <a href="{{ route('interventions.index') }}" class="sidenav-link">Interventions</a>
             <a href="{{ route('users.index') }}" class="sidenav-link">Gestion utilisateurs</a>
             <a href="{{ route('vehicules.index') }}" class="sidenav-link">Gestion véhicules</a>
-            <a href="{{ route('pieces.index') }}" class="sidenav-link">Gestion pièces</a>
-            <a href="{{ route('categories.index') }}" class="sidenav-link">Gestion catégories</a>
+            <a href="{{ route('piecesList.index') }}" class="sidenav-link">Gestion pièces</a>
+            <a href="{{ route('operationsList.index') }}" class="sidenav-link">Gestion catégories</a>
             <a href="{{ route('getVehicules') }}" class="sidenav-link">API</a>
             @else
             <form class="form-material sidenav-link" method="POST" action="{{ route('interventions.store') }}">

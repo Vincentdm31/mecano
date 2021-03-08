@@ -4,9 +4,9 @@
 @endsection
 @section('content')
 <div class="container">
-    <p class="txt-airforce txt-dark-4 txt-center h5 mt-5">Liste des Interventions</p>
+    <p class="txt-white txt-center h5 mt-5">Liste des Interventions</p>
     <div class="container shadow-1 rounded-2 mt-5">
-        <div class="responsive-table">
+        <div class="responsive-table grey light-4 rounded-2">
             <table class="table striped">
                 <thead>
                     <tr>
@@ -20,7 +20,7 @@
                 <tbody>
                     @foreach($interventions as $intervention)
                     <tr>
-                        <td class="txt-center txt-white <?php echo('state-' . $intervention->state)?>">{{ $intervention->id }}</td>
+                        <td class="txt-center txt-white <?php echo ('state-' . $intervention->state) ?>">{{ $intervention->id }}</td>
                         <td class="txt-center">{{ $intervention->created_by }}</td>
                         <td class="txt-center">{{ $intervention->created_at }}</td>
 

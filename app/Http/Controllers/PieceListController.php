@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Piece;
 use App\Models\PieceList;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -43,8 +42,8 @@ class PieceListController extends Controller
         }
 
         $qrcode = QrCode::size(200)->generate($text);
-        
-        Storage::put('/public/images/'.'qr-'.$text.'.svg' , $qrcode);
+
+        Storage::put('/public/images/' . 'qr-' . $text . '.svg', $qrcode);
 
         $pieceList->path = 'qr-' . $text . '.svg';
         $pieceList->save();
@@ -71,9 +70,9 @@ class PieceListController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {   
+    {
         $pieceList = PieceList::find($id);
-        return view('pieces.edit', ['pieceList' => $pieceList ]);
+        return view('pieces.edit', ['pieceList' => $pieceList]);
     }
 
     /**
@@ -84,15 +83,15 @@ class PieceListController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {   
+    {
         $inputs = $request->except('_token', '_method', 'updated_at');
         $pieceList = PieceList::find($id);
-        foreach ($inputs as $key => $value){
+        foreach ($inputs as $key => $value) {
             $pieceList->$key = $value;
         }
         $pieceList->save();
 
-       return redirect(route('piecesList.index'));
+        return redirect(route('piecesList.index'));
     }
 
     public function destroy($id)
@@ -113,7 +112,7 @@ class PieceListController extends Controller
     // {
     //     $pieceList = PieceList::find($id);
     //     $pieceList->delete();
-        
+
     //     return redirect(route('piecesList.index'));
     // }
 
@@ -126,7 +125,7 @@ class PieceListController extends Controller
     //                 ->get();
     //     return view('pieces.index', ['piecesList' => $piecesList]);
     // }
-    
+
 
     // /**
     //  * Store a newly created resource in storage.
@@ -175,7 +174,7 @@ class PieceListController extends Controller
     // {   
     //     $piece = Piece::find($id);
     //     return view('pieces.edit', ['piece' => $piece]);
-        
+
     // }
 
     // /**
@@ -196,7 +195,7 @@ class PieceListController extends Controller
     //         $piece->$key = $value;
     //     }
     //     $piece->save();
-        
+
     //     if ($request->hasFile('img')) {
     //         $custom_file_name = $request->file('img')->getClientOriginalName();
     //         $path = $request->file('img')->storeAs('public/images', $custom_file_name);
@@ -204,7 +203,7 @@ class PieceListController extends Controller
     //         $piece->img = $custom_file_name;
     //         $piece->save();
     //     }
-        
+
     //    return redirect(route('pieces.index'));
     // }
 

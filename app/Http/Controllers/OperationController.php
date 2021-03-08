@@ -40,8 +40,7 @@ class OperationController extends Controller
 
         $operation = new Operation();
 
-        foreach($inputs as $key => $value)
-        {
+        foreach ($inputs as $key => $value) {
             $operation->$key = $value;
         }
 
@@ -99,13 +98,12 @@ class OperationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request, $id)
-    {   
+    {
         $intervention = $request->intervention_id;
- 
+
         $operation = Operation::find($id);
         $operation->delete();
 
         return redirect(route('interventions.edit', ['intervention' => $intervention]))->with('toast', 'removeOperation');
-
     }
 }

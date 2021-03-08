@@ -92,28 +92,7 @@ $date = Carbon::now();
                                 <em class="ml-5 mb-5 pb-5"><b> {{$piece->pieceList->name }}</b><span class="ml-3">x{{$piece->qte}}</span></em><br>
                                 @endforeach
                             </div>
-                            <div class="grix xs3 gutter-xs2">
-                                <div class="my-auto ml-auto">
-                                    <button data-target="add-piece-operation-{{ $operation->id }}" class="btn rounded-1 white light-shadow-3 txt-blue modal-trigger mx-auto">
-                                        <i class="fas fa-tools txt-blue"></i>
-                                    </button>
-                                </div>
-                                <div class="my-auto mx-auto">
-                                    <button data-target="edit-operation-{{ $operation->id }}" class="btn rounded-1 white light-shadow-3 txt-blue modal-trigger mx-auto">
-                                        <i class="fas fa-comment-medical <?php echo (isset($operation->op_comment) ? 'txt-orange' : '') ?>"></i>
-                                    </button>
-                                </div>
-                                <div class="mr-auto my-auto">
-                                    <form class="form-material" method="POST" action="{{ route('operations.destroy', ['operation' => $operation->id]) }}">
-                                        @method('DELETE')
-                                        @csrf
-                                        <input hidden name="intervention_id" value="{{ $intervention->id }}" />
-                                        <div class="mx-auto">
-                                            <button type="submit" class="btn light-shadow-3 rounded-1 outline opening txt-white"><span class="outline-text outline-invert"><i class="fas fa-trash txt-red"></i></span></button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
+
                             @endforeach
                         </div>
                         @endif
@@ -126,10 +105,10 @@ $date = Carbon::now();
 </div>
 <!-- Actions -->
 <div class="container mt-5 mb-5">
-    <div class="tab rounded-3 full-width white shadow-1" id="example-tab" data-ax="tab">
+    <div class="tab rounded-3 full-width white shadow-1 container" id="example-tab" data-ax="tab">
         <ul class="tab-menu light-shadow-1 rounded-tl2 rounded-tr2 txt-black">
             <li class="tab-link">
-                <a href="#tab-operation">Opération</a>
+                <a href="#tab-operation">Mes opérations</a>
             </li>
             <li class="tab-link">
                 <a href="#tab-gestion">Gestion</a>
@@ -170,25 +149,55 @@ $date = Carbon::now();
         </div>
         <!-- Tab opération -->
         <div id="tab-operation" class="p-3 container">
-            <div class="grix xs1 md2">
-                <div class="d-flex vcenter">
-                    <form class="form-material container" method="POST" action="{{ route('operations.store')}}">
-                        @csrf
-                        <div class="form-field">
-                            <label for="operation">Opération</label>
-                            <select class="form-control rounded-1 txt-airforce txt-dark-4" name="operation_id">
-                                @foreach ( $operationsList as $operationList)
-                                <option class="grey light-4 txt-airforce txt-dark-4" value="{{ $operationList->id }}">{{ $operationList->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <input hidden name="intervention_id" value="{{ $intervention->id }}">
-                        <div class="txt-center">
-                            <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange mt-4"><span class="outline-text outline-invert">Valider</span></button>
-                        </div>
-                    </form>
+            <div class="grix xs1 sm2 ">
+                <div class="">
+                    <p class="h6 txt-center "><b> Mes opérations</b></p>
                 </div>
-                <img src="{{ asset('/images/operation.png') }}" class="responsive-media p-3" alt="">
+                <div class="d-flex pos-row-xs1 pos-sm2">
+                    <button data-target="modal-new-operation" class="mx-auto my-auto btn rounded-1 txt-white shadow-1 orange dark-1 modal-trigger">
+                        Nouvelle opération
+                    </button>
+                </div>
+            </div>
+            <div>
+                @if(!$intervention->operations()->exists())
+                <p class="txt-orange pl-3 txt-center">Aucune opération</p>
+                @else
+                <div class="grix xs1 md2">
+                    @foreach( $intervention->operations as $operation)
+                    <div class="my-auto pl-5 txt-airforce txt-dark-4 pb-2">
+                        <li class="mb-2 mt-3">
+                            {{ $operation->operationList->name}}
+                        </li>
+                        @foreach($operation->pieces as $piece)
+                        <em class="ml-5 mb-5 pb-5"><b> {{$piece->pieceList->name }}</b><span class="ml-3">x{{$piece->qte}}</span></em><br>
+                        @endforeach
+                    </div>
+                    <div class="grix xs3 gutter-xs2">
+                        <div class="my-auto ml-auto">
+                            <button data-target="add-piece-operation-{{ $operation->id }}" class="btn rounded-1 white light-shadow-3 txt-blue modal-trigger mx-auto">
+                                <i class="fas fa-tools txt-amaranth txt-dark-3"></i>
+                            </button>
+                        </div>
+                        <div class="my-auto mx-auto">
+                            <button data-target="edit-operation-{{ $operation->id }}" class="btn rounded-1 white light-shadow-3 txt-blue modal-trigger mx-auto">
+                                <i class="fas fa-comment-medical <?php echo (isset($operation->op_comment) ? 'txt-orange' : '') ?>"></i>
+                            </button>
+                        </div>
+                        <div class="mr-auto my-auto">
+                            <form class="form-material" method="POST" action="{{ route('operations.destroy', ['operation' => $operation->id]) }}">
+                                @method('DELETE')
+                                @csrf
+                                <input hidden name="intervention_id" value="{{ $intervention->id }}" />
+                                <div class="mx-auto">
+                                    <button type="submit" class="btn light-shadow-3 rounded-1 outline opening txt-white"><span class="outline-text outline-invert"><i class="fas fa-trash txt-red"></i></span></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+                @endif
             </div>
 
         </div>
@@ -299,6 +308,29 @@ $date = Carbon::now();
             <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange mt-2 mb-2"><span class="outline-text outline-invert">Envoyer</span></button>
         </div>
     </form>
+</div>
+
+<div class="modal grey light-4 rounded-2 p-2" id="modal-new-operation" data-ax="modal">
+    <div class="grix xs1 md2">
+        <div class="d-flex vcenter">
+            <form class="form-material container" method="POST" action="{{ route('operations.store')}}">
+                @csrf
+                <div class="form-field">
+                    <label for="operation">Opération</label>
+                    <select class="form-control rounded-1 txt-airforce txt-dark-4" name="operation_id">
+                        @foreach ( $operationsList as $operationList)
+                        <option class="grey light-4 txt-airforce txt-dark-4" value="{{ $operationList->id }}">{{ $operationList->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <input hidden name="intervention_id" value="{{ $intervention->id }}">
+                <div class="txt-center">
+                    <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange mt-4"><span class="outline-text outline-invert">Valider</span></button>
+                </div>
+            </form>
+        </div>
+        <img src="{{ asset('/images/operation.png') }}" class="responsive-media p-3" alt="">
+    </div>
 </div>
 
 @endsection

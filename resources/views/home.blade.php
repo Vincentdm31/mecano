@@ -9,7 +9,7 @@
 <div class="container home">
     <div class="grix xs1 md6 gutter-xs4 mt-5 home h100">
         <div>
-            <a href="" class="btn orange dark-2 txt-white d-flex vcenter fx-center rounded-1 shadow-1 hoverable-1 h100 w100 mb-2">Interventions</a>
+            <a href="{{ route('interventions.index') }}" class="btn orange dark-2 txt-white d-flex vcenter fx-center rounded-1 shadow-1 hoverable-1 h100 w100 mb-2">Interventions</a>
         </div>
         <div>
             <a href="{{ route('users.index') }}" class="btn red dark-2 txt-white d-flex vcenter fx-center rounded-1 shadow-1 hoverable-1 h100 w100 mb-2">Gestion utilisateurs</a>
@@ -36,17 +36,17 @@
         <div class="h100">
             <form class="form-material h100" method="POST" action="{{ route('interventions.store') }}">
                 @csrf
-                <button type="submit" class="btn green dark-1 txt-white hoverable-1 rounded-1 shadow-1 h100 w100">Nouvelle</button>
+                <button type="submit" class="btn cyan dark-4 txt-white hoverable-1 rounded-1 shadow-1 h100 w100">Nouvelle intervention</button>
             </form>
         </div>
         <div class="h100">
-            <a href="{{ route('interventions.index') }}" class="btn red dark-1 txt-white hoverable-1 rounded-1 shadow-1 w100 h100 d-flex fx-center vcenter">Liste complète</a>
+            <a href="{{ route('interventions.index') }}" class="btn red dark-4 txt-white hoverable-1 rounded-1 shadow-1 w100 h100 d-flex fx-center vcenter">Liste complète</a>
         </div>
         <div class="h100">
-            <a href="{{ route('joinIntervention') }}" class="btn cyan dark-1 txt-white hoverable-1 rounded-1 shadow-1 w100 h100 d-flex fx-center vcenter">Rejoindre</a>
+            <a href="{{ route('joinIntervention') }}" class="btn green dark-4 txt-white hoverable-1 rounded-1 shadow-1 w100 h100 d-flex fx-center vcenter">Rejoindre une intervention</a>
         </div>
         <div class="h100">
-            <a href="{{ route('resumeIntervention') }}" class="btn orange dark-1 hoverable-1 txt-white rounded-1 shadow-1 w100 h100 d-flex fx-center vcenter">Reprendre</a>
+            <a href="{{ route('resumeIntervention') }}" class="btn orange dark-4 hoverable-1 txt-white rounded-1 shadow-1 w100 h100 d-flex fx-center vcenter">Reprendre une intervention</a>
         </div>
     </div>
 </div>
