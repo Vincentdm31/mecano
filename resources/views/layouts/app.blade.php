@@ -24,6 +24,7 @@
                 <a href="{{ url('/') }}" class="navbar-brand hide-sm-down">Mecalcis</a>
                 <button data-target="sidenav" class="txt-white btn rounded-1 transparent sidenav-trigger hide-md-up"><i class="fas fa-bars mr-1"></i>Menu</button>
                 <div class="navbar-menu ml-auto hide-sm-down">
+                    @if(Auth()->check())
                     @if(Auth()->user()->is_admin)
                     <a href="{{ route('interventions.index') }}" class="navbar-link">Interventions</a>
                     <a href="{{ route('users.index') }}" class="navbar-link">Gestion utilisateurs</a>
@@ -42,6 +43,7 @@
                         <a href="{{ route('joinIntervention') }}" class="navbar-link">Rejoindre</a>
                         <a href="{{ route('resumeIntervention') }}" class="navbar-link">Reprendre</a>
                     </div>
+                    @endif
                     @endif
                 </div>
                 <div class="ml-auto d-flex fx-row">
