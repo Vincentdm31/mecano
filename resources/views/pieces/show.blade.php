@@ -2,17 +2,32 @@
 
 @section('content')
 <div class="container mt-5">
-    <div class="container shadow-1 grix xs1 md3 mt-5">
-        <div class="p-3">
-            <p id="name">Nom : {{ $pieceList->name }}</p>
-            <p id="ref">Ref : {{ $pieceList->ref }}</p>
-            <p>Prix : {{ $pieceList->price }} €/u</p>
-            <p>Quantité : {{ $pieceList->qte }}</p>
+    <div class="container d-flex h100 mt-5">
+        <div class="container card my-auto mx-auto shadow-2">
+            <div class="card-header dark txt-white">
+                <div class="grix xs1 md2">
+                    <div>
+                        <p id="name">Nom: {{ $pieceList->name }}</p>
+                        <p id="ref">Référence: {{ $pieceList->ref }}</p>
+                    </div>
+                    <div class="mx-auto">
+                        <p>Prix : {{ $pieceList->price }} €/u</p>
+                        <p>Stock disponible : {{ $pieceList->qte }}</p>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="card-content d-flex fx-col">
+                <img src="{{ asset('storage/images/'.$pieceList->path) }}" id="imgPiece" class="responsive-media mx-auto p-3">
+                <button id="btn" class="btn orange dark-1 txt-white large mx-auto dark-2 mt-5" onclick="PrintElem(btn)">Imprimer</button>
+            </div>
+
         </div>
-        <img src="{{ asset('storage/images/'.$pieceList->path) }}" id="imgPiece" class="responsive-media p-3">
-        di
-        <button id="btn" class="btn blue dark-2" onclick="PrintElem(btn)">Imprimer</button>
     </div>
+
+</div>
+</div>
 
 </div>
 
