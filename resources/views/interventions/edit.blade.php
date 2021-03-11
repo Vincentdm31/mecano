@@ -185,7 +185,7 @@ $date = Carbon::now();
                                     <input hidden name="start_date" value="{{ $date }}">
                                     <div class="txt-center">
                                         <button type="submit" class="btn rounded-1 white light-shadow-3 txt-blue mx-auto">
-                                            <i class="fas fa-pause txt-orange txt-dark-3"></i>
+                                            <i class="fas fa-pause txt-orange txt-dark-1"></i>
                                         </button>
                                     </div>
                                 </form>
