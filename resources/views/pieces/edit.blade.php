@@ -38,7 +38,6 @@
 
 @endsection
 
-
 @section('extra-js')
 <script>
     let toast = new Axentix.Toast();

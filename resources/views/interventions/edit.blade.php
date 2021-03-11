@@ -163,7 +163,7 @@ $date = Carbon::now();
                 @if(!$intervention->operations()->exists())
                 <p class="txt-orange pl-3 txt-center">Aucune opération</p>
                 @else
-                <div class="grix xs1 md2">
+                <div class="grix xs1">
                     @foreach( $intervention->operations as $operation)
                     <div class="my-auto pl-5 txt-airforce txt-dark-4 pb-2">
                         <li class="mb-2 mt-3">
@@ -173,8 +173,41 @@ $date = Carbon::now();
                         <em class="ml-5 mb-5 pb-5"><b> {{$piece->pieceList->name }}</b><span class="ml-3">x{{$piece->qte}}</span></em><br>
                         @endforeach
                     </div>
-                    <div class="grix xs3 gutter-xs2">
-                        <div class="my-auto ml-auto">
+                    <div class="grix xs2 md5 gutter-xs1">
+                        <div class="my-auto mx-auto">
+                            <!--  -->
+                            @if($operation->state)
+                            <div>
+                                <form class="form-material" method="POST" action="{{ route('timeoperations.store') }}">
+                                    @csrf
+                                    <input hidden name="intervention_id" value="{{ $intervention->id }}">
+                                    <input hidden name="operation_id" value="{{ $operation->id }}">
+                                    <input hidden name="start_date" value="{{ $date }}">
+                                    <div class="txt-center">
+                                        <button type="submit" class="btn rounded-1 white light-shadow-3 txt-blue mx-auto">
+                                            <i class="fas fa-pause txt-orange txt-dark-3"></i>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                            @elseif(!$operation->state)
+                            <div>
+                                <form class="form-material my-auto" method="POST" action="{{ route('timeoperations.store') }}">
+                                    @csrf
+                                    <input hidden name="intervention_id" value="{{ $intervention->id }}">
+                                    <input hidden name="operation_id" value="{{ $operation->id }}">
+
+                                    <input hidden name="end_date" value="{{ $date }}">
+                                    <div class="txt-center">
+                                        <button type="submit" class="btn rounded-1 white light-shadow-3 txt-blue mx-auto">
+                                            <i class="fas fa-play txt-green txt-dark-3"></i>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                            @endif
+                        </div>
+                        <div class="my-auto mx-auto">
                             <button data-target="add-piece-operation-{{ $operation->id }}" class="btn rounded-1 white light-shadow-3 txt-blue modal-trigger mx-auto">
                                 <i class="fas fa-tools txt-amaranth txt-dark-3"></i>
                             </button>
@@ -184,13 +217,25 @@ $date = Carbon::now();
                                 <i class="fas fa-comment-medical <?php echo (isset($operation->op_comment) ? 'txt-orange' : '') ?>"></i>
                             </button>
                         </div>
-                        <div class="mr-auto my-auto">
+                        <div class="mx-auto my-auto">
                             <form class="form-material" method="POST" action="{{ route('operations.destroy', ['operation' => $operation->id]) }}">
                                 @method('DELETE')
                                 @csrf
                                 <input hidden name="intervention_id" value="{{ $intervention->id }}" />
                                 <div class="mx-auto">
                                     <button type="submit" class="btn light-shadow-3 rounded-1 outline opening txt-white"><span class="outline-text outline-invert"><i class="fas fa-trash txt-red"></i></span></button>
+                                </div>
+                            </form>
+                        </div>
+                        <div>
+                            <form class="form-material my-auto" method="POST" action="{{ route('totalTimeOp')}}">
+                                @csrf
+                                <input hidden name="intervention_id" value="{{ $intervention->id }}">
+                                <input hidden name="operation_id" value="{{ $operation->id }}">
+                                <div class="txt-center">
+                                    <button type="submit" class="btn rounded-1 white light-shadow-3 txt-blue mx-auto">
+                                        <i class="fas fa-clock txt-green txt-dark-3"></i>
+                                    </button>
                                 </div>
                             </form>
                         </div>

@@ -11,6 +11,7 @@ use App\Http\Controllers\PieceController;
 use App\Http\Controllers\PieceListController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TimeInterventionController;
+use App\Http\Controllers\TimeOperationController;
 use App\Http\Controllers\VehiculeController;
 use App\Http\Controllers\UserController;
 
@@ -37,6 +38,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('interventions', InterventionController::class);
     Route::resource('timeinterventions', TimeInterventionController::class);
+    Route::resource('timeoperations', TimeOperationController::class);
     Route::resource('controller', Controller::class);
     Route::resource('vehicules', VehiculeController::class);
     Route::resource('pieces', PieceController::class);
@@ -74,6 +76,7 @@ Route::middleware('auth')->group(function () {
     // Timer Intervention
     Route::resource('time', TimeInterventionController::class);
     Route::post('/totalTime',  [TimeInterventionController::class, 'totalTime'])->name('totalTime');
+    Route::post('/totalTimeOp',  [TimeOperationController::class, 'totalTimeOp'])->name('totalTimeOp');
     
     // Véhicule
     Route::get('/searchVehicule',  [VehiculeController::class, 'searchVehicule']);

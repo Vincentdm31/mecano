@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Operation;
+use App\Models\PieceList;
 use Illuminate\Http\Request;
 
 class OperationController extends Controller
@@ -102,8 +103,17 @@ class OperationController extends Controller
         $intervention = $request->intervention_id;
 
         $operation = Operation::find($id);
-        $operation->delete();
+        
 
+        foreach($operation->pieces as $piece){
+            $pieceId = $piece->piece_id;
+            $pieceList = PieceList::find($pieceId);
+
+            $pieceList->qte += $piece->qte;
+            $pieceList->save();
+            
+        }
+        $operation->delete();
         return redirect(route('interventions.edit', ['intervention' => $intervention]))->with('toast', 'removeOperation');
     }
 }

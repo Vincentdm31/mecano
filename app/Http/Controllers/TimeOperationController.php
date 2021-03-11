@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Categorie;
-use App\Models\Intervention;
-use App\Models\TimeIntervention;
-use App\Models\Vehicule;
+use App\Models\Operation;
+use App\Models\TimeOperation;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use SebastianBergmann\Environment\Console;
 
-class TimeInterventionController extends Controller
+class TimeOperationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -40,38 +37,46 @@ class TimeInterventionController extends Controller
      */
     public function store(Request $request)
     {
-        $inputs = $request->except('_token');
+        $inputs = $request->except('_token', 'intervention_id');
         $interventionID = $request->input('intervention_id');
-        $intervention = Intervention::find($interventionID);
-        if ($intervention->state == "doing") {
-            $timer = new TimeIntervention();
+
+        $operationId = $request->input('operation_id');
+        $operation = Operation::find($operationId);
+
+        if ($operation->state) {
+            $timer = new TimeOperation();
+
             foreach ($inputs as $key => $value) {
                 $timer->$key = $value;
                 $timer->save();
             }
-            $intervention->state = "pause";
-            $intervention->save();
-        } else if ($intervention->state == "pause") {
-            $timer = TimeIntervention::Where('intervention_id', 'like', $interventionID)->latest()->first();
+
+            $operation->state = false;
+            $operation->save();
+
+        } else if (!$operation->state) {
+            $timer = TimeOperation::Where('operation_id', 'like', $operationId)->latest()->first();
+
             foreach ($inputs as $key => $value) {
                 $timer->$key = $value;
                 $timer->save();
             }
-            $intervention->state = "doing";
-            $intervention->save();
+
+            $operation->state = true;
+            $operation->save();
         }
 
-
-        return redirect(route('interventions.edit', ['intervention' => $intervention]));
+        return redirect(route('interventions.edit', ['intervention' => $interventionID]));
     }
+    
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\TimeIntervention  $timeIntervention
+     * @param  \App\Models\TimeOperation  $timeOperation
      * @return \Illuminate\Http\Response
      */
-    public function show(TimeIntervention $timeIntervention)
+    public function show(TimeOperation $timeOperation)
     {
         //
     }
@@ -79,10 +84,10 @@ class TimeInterventionController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\TimeIntervention  $timeIntervention
+     * @param  \App\Models\TimeOperation  $timeOperation
      * @return \Illuminate\Http\Response
      */
-    public function edit(TimeIntervention $timeIntervention)
+    public function edit(TimeOperation $timeOperation)
     {
         //
     }
@@ -91,10 +96,10 @@ class TimeInterventionController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\TimeIntervention  $timeIntervention
+     * @param  \App\Models\TimeOperation  $timeOperation
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, TimeIntervention $timeIntervention)
+    public function update(Request $request, TimeOperation $timeOperation)
     {
         //
     }
@@ -102,19 +107,18 @@ class TimeInterventionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\TimeIntervention  $timeIntervention
+     * @param  \App\Models\TimeOperation  $timeOperation
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TimeIntervention $timeIntervention)
+    public function destroy(TimeOperation $timeOperation)
     {
         //
     }
 
-    
-    public function totalTime(Request $request){
+    public function totalTimeOp(Request $request){
 
-        $id = $request->input('intervention_id');
-        $dates = TimeIntervention::Where('intervention_id', 'like', $id)->whereNotNull('end_date')->get();
+        $id = $request->input('operation_id');
+        $dates = TimeOperation::Where('operation_id', 'like', $id)->whereNotNull('end_date')->get();
         $totaltime = 0;
 
         foreach ($dates as $date){
