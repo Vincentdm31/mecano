@@ -41,7 +41,7 @@ btnScanQR.onclick = () => {
       qrResult.hidden = true;
       btnScanQR.hidden = true;
       canvasElement.hidden = false;
-      video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
+      video.setAttribute("playsinline", true);
       video.srcObject = stream;
       video.play();
       tick();
