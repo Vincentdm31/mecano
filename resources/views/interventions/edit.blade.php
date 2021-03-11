@@ -23,12 +23,12 @@ $date = Carbon::now();
         @endif
         <div class="modal white shadow-1 rounded-2 mt-4" id="modal-recap" data-ax="modal">
             <div class="card rounded-2 m-0 overflow-visible">
-                <a href="" data-target="modal-comment" style="position:absolute;right:0;top:0;font-size:2.5rem;" class="txt-white fas fa-comment modal-trigger"></a>
+                <a href="" data-target="modal-comment" style="position:absolute;right:5px;top:0;font-size:2.5rem;" class="txt-white fas fa-comment modal-trigger"></a>
                 <div class="card-header rounded-tl2 rounded-tr2 orange dark-1 p-3 recap-infos">
-                    <div class="grix txt-white gutter-xs5 md3">
-                        <p class="pl-2 lh-normal mr-auto"><i class="fas fa-clipboard-list mr-2 font-s4 txt-white"></i>{{ $intervention->id }}</p>
+                    <div class="grix txt-white gutter-xs5 xs2 md3">
                         <p class="pl-2 lh-normal mr-auto"><i class="far fa-id-card mr-2 font-s4 txt-white"></i>{{ $intervention->created_by }}</p>
-                        <p class="pl-2 lh-normal mr-auto"><i class="fas fa-calendar-alt mr-2 font-s4 txt-white"></i>{{\Carbon\Carbon::parse($intervention->created_at)->isoFormat('LLLL')}}</p>
+                        <p class="pl-2 lh-normal mr-auto"><i class="fas fa-clipboard-list mr-2 font-s4 txt-white"></i>{{ $intervention->id }}</p>
+                        <p class="pl-2 lh-normal mr-auto col-xs2"><i class="fas fa-calendar-alt mr-2 font-s4 txt-white"></i>{{\Carbon\Carbon::parse($intervention->created_at)->isoFormat('LLLL')}}</p>
                     </div>
                     @foreach($intervention->users as $user)
                     <span class="txt-white">{{ $user->name }}</span>
