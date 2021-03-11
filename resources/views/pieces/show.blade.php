@@ -36,6 +36,17 @@
 
 @section('extra-js')
 <script>
+    let toast = new Axentix.Toast();
+</script>
+@if(session('toast') == 'addSuccess')
+<script>
+    toast.change('Pièce enregistrée avec succés', {
+        classes: "rounded-1 green dark-1 txt-white shadow-2 mt-5"
+    });
+    toast.show();
+</script>
+@endif
+<script>
     function PrintElem(elem) {
         let path = document.getElementById('imgPiece').src;
         let name = document.getElementById('name').innerHTML;

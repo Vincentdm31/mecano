@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\PieceList;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -37,6 +38,7 @@ class PieceListController extends Controller
         $text = $request->ref;
 
         $pieceList = new PieceList();
+
         foreach ($inputs as $key => $value) {
             $pieceList->$key = $value;
         }
@@ -46,9 +48,16 @@ class PieceListController extends Controller
         Storage::put('/public/images/' . 'qr-' . $text . '.svg', $qrcode);
 
         $pieceList->path = 'qr-' . $text . '.svg';
-        $pieceList->save();
 
-        return redirect(route('piecesList.show', ['piecesList' => $pieceList->id]));
+        try{
+             $pieceList->save();
+        }
+        catch(Exception $e)
+        {
+            return redirect(route('piecesList.create', ['piecesList' => $pieceList->id]))->with('toast', 'errorDuplicate');
+        }
+
+        return redirect(route('piecesList.show', ['piecesList' => $pieceList->id]))->with('toast', 'addSuccess');
     }
 
     /**
@@ -86,12 +95,29 @@ class PieceListController extends Controller
     {
         $inputs = $request->except('_token', '_method', 'updated_at');
         $pieceList = PieceList::find($id);
+
+        $newPath = $request->ref;
+
+        if($pieceList->ref != $newPath){
+            Storage::delete('/public/images/' . $pieceList->path);
+
+            $pieceList->path = 'qr-' . $newPath . '.svg';
+
+            $qrcode = QrCode::size(200)->generate($newPath);
+            Storage::put('/public/images/' . 'qr-' . $newPath . '.svg', $qrcode);
+        }
+        
         foreach ($inputs as $key => $value) {
             $pieceList->$key = $value;
         }
-        $pieceList->save();
 
-        return redirect(route('piecesList.index'));
+        try{
+            $pieceList->save();
+        }catch(Exception $e){
+            return redirect(route('piecesList.edit', ['piecesList' => $pieceList->id]))->with('toast', 'errorDuplicate');
+        }
+
+        return redirect(route('piecesList.index'))->with('toast', 'editSuccess');
     }
 
     public function destroy($id)
@@ -102,6 +128,16 @@ class PieceListController extends Controller
         Storage::delete('/public/images/' . $path);
         $pieceList->delete();
 
-        return redirect(route('piecesList.index'))->with('toast', 'pieceListDelete');
+        return redirect(route('piecesList.index'))->with('toast', 'pieceListDelete')->with('toast', 'deleteSuccess');
+    }
+
+    public function searchPiecesList(Request $request)
+    {
+        $search = $request->get('searchPiecesList');
+
+        $piecesList = PieceList::Where('ref', 'like', '%'.$search.'%')
+                            ->orWhere('name', 'like', '%'.$search.'%')
+                            ->get();
+        return view('pieces.index', ['piecesList' => $piecesList]);
     }
 }

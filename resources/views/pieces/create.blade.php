@@ -34,3 +34,17 @@
     
 </div>
 @endsection
+
+@section('extra-js')
+<script>
+    let toast = new Axentix.Toast();
+</script>
+@if(session('toast') == 'errorDuplicate')
+<script>
+    toast.change('Nom ou Référence déjà utilisé</br> Veuillez réessayer', {
+        classes: "rounded-1 red dark-1 shadow-2 mt-5"
+    });
+    toast.show();
+</script>
+@endif
+@endsection

@@ -65,3 +65,24 @@
     </div>
 </div>
 @endsection
+
+@section('extra-js')
+<script>
+    let toast = new Axentix.Toast();
+</script>
+@if(session('toast') == 'editSuccess')
+<script>
+    toast.change('Pièce éditée avec succés', {
+        classes: "rounded-1 green dark-1 txt-white shadow-2 mt-5"
+    });
+    toast.show();
+</script>
+@elseif(session('toast') == 'deleteSuccess')
+<script>
+    toast.change('Pièce supprimée avec succés', {
+        classes: "rounded-1 red dark-1 txt-white shadow-2 mt-5"
+    });
+    toast.show();
+</script>
+@endif
+@endsection

@@ -7,7 +7,7 @@
             <p class="bd-b-solid bd-orange bd-3 pb-2 h5">Editer pièce</p>
         </div>
         <div class="card-content">
-            <form class="form-material" method="POST" enctype="multipart/form-data" action="{{route('piecesList.update', ['piecesList' => $pieceList->id])}}">
+            <form class="form-material" method="POST" action="{{route('piecesList.update', ['piecesList' => $pieceList->id])}}">
                 @method('PUT')
                 @csrf
                 <div class="grix xs1">
@@ -27,10 +27,6 @@
                         <input type="number" id="price" name="price" class="form-control" value="{{$pieceList->qte}}" />
                         <label for="price">Prix</label>
                     </div>
-                    <div class="form-field">
-                        <input type="file" name="img" class="form-control"></input>
-                    </div>
-
                 </div>
                 <div class="txt-center">
                     <button type="submit" class="btn orange dark-1 txt-white rounded-1 mt-5">Mettre à jour</button>
@@ -40,4 +36,19 @@
     </div>
 </div>
 
+@endsection
+
+
+@section('extra-js')
+<script>
+    let toast = new Axentix.Toast();
+</script>
+@if(session('toast') == 'errorDuplicate')
+<script>
+    toast.change('Nom ou référence déjà utilisé', {
+        classes: "rounded-1 red dark-1 txt-white shadow-2 mt-5"
+    });
+    toast.show();
+</script>
+@endif
 @endsection
