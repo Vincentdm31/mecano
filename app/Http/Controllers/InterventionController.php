@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Categorie;
 use App\Models\Intervention;
 use App\Models\Operation;
 use App\Models\OperationList;
@@ -12,6 +11,10 @@ use App\Models\Vehicule;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
+use LaravelDaily\Invoices\Invoice;
+use LaravelDaily\Invoices\Classes\Party;
+use LaravelDaily\Invoices\Classes\InvoiceItem;
 
 class InterventionController extends Controller
 {
@@ -332,5 +335,77 @@ class InterventionController extends Controller
 
         return view('interventions.step2', ['intervention' => $intervention]);
 
+    }
+
+    public function exportPDF($id)
+    {      
+        $intervention = Intervention::find($id);
+        
+        $itemList = array();
+
+        foreach($intervention->operations as $operation){
+            array_push($itemList,( new InvoiceItem())->title('Opération - ' . $operation->operationList->name)->quantity(1)->pricePerUnit(0));
+
+            foreach($operation->pieces as $piece){
+                array_push($itemList,( new InvoiceItem())->title('Pièce - ' .$piece->PieceList->name)->quantity($piece->qte)->pricePerUnit($piece->pieceList->price));
+            }
+        }
+
+
+        $client = new Party([
+            'name'          => 'Alcis Meca',
+            'address'       => '130 Route de Castres 31130 Balma'
+        ]);
+
+        $customer = new Party([
+            'name'          => 'Alcis Groupe',
+            'address'       => '130 Route de Castres 31130 Balma'
+        ]);
+           
+        $items = [
+            (new InvoiceItem())->title('Service 1')->pricePerUnit(47.79)->quantity(2)->discount(10),
+            (new InvoiceItem())->title('Service 2')->pricePerUnit(71.96)->quantity(2),
+            (new InvoiceItem())->title('Service 3')->pricePerUnit(4.56),
+            (new InvoiceItem())->title('Service 4')->pricePerUnit(87.51)->quantity(7)->discount(4)->units('kg'),
+            (new InvoiceItem())->title('Service 5')->pricePerUnit(71.09)->quantity(7)->discountByPercent(9),
+            (new InvoiceItem())->title('Service 6')->pricePerUnit(76.32)->quantity(9),
+            (new InvoiceItem())->title('Service 7')->pricePerUnit(58.18)->quantity(3)->discount(3),
+            (new InvoiceItem())->title('Service 8')->pricePerUnit(42.99)->quantity(4)->discountByPercent(3),
+            (new InvoiceItem())->title('Service 9')->pricePerUnit(33.24)->quantity(6)->units('m2'),
+        ];
+
+        $notes = [
+            'your multiline',
+            'additional notes',
+            'in regards of delivery or something else',
+        ];
+        $notes = implode("<br>", $notes);
+
+        $invoice = Invoice::make('Facture atelier mécanique')
+
+            ->sequence(456674444552543)
+            ->serialNumberFormat('{SEQUENCE}{SERIES}')
+            ->seller($client)
+            ->buyer($customer)
+            ->date(now()->subWeeks(3))
+            ->dateFormat('m/d/Y')
+            ->payUntilDays(14)
+            ->currencySymbol('€')
+            ->currencyCode('€')
+            ->currencyFormat('{VALUE} {SYMBOL}')
+            ->currencyThousandsSeparator('.')
+            ->currencyDecimalPoint(',')
+            ->filename($client->name . ' ' . $customer->name)
+            ->addItems($itemList)
+            ->notes($notes)
+            ->logo(public_path('images/logoFact.png'))
+            // You can additionally save generated invoice to configured disk
+            ->save('public');
+
+        $link = $invoice->url();
+        // Then send email to party with link
+
+        // And return invoice itself to browser or have a different view
+        return $invoice->stream();
     }
 }

@@ -15,6 +15,9 @@
                         <th class="txt-center">Date de création</th>
                         <th class="txt-center">Immatriculation</th>
                         <th class="txt-center">Rejoindre</th>
+                        @if(Auth()->user()->is_admin)
+                        <th class="txt-center">Facture</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -28,7 +31,13 @@
                         <td class="txt-center">
                             <a class="btn circle orange dark-1 txt-white push" href="{{route('interventions.edit', ['intervention' => $intervention->id])}}"><i class="fas fa-pen"></i></a>
                         </td>
+                        @if(Auth()->user()->is_admin)
+                        <td class="txt-center">
+                            <a class="btn circle blue dark-1 txt-white push" href="{{route('exportPDF', ['id' => $intervention->id])}}"><i class="fas fa-file-pdf"></i></a>
+                        </td>
+                        @endif
                     </tr>
+
                     @endforeach
                 </tbody>
 

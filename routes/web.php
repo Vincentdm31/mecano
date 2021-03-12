@@ -97,5 +97,5 @@ Route::middleware('auth')->group(function () {
     //Operation
     Route::resource('operations', OperationController::class);
     
-
+    Route::get('/exportPDF/{id}', [InterventionController::class, 'exportPDF'])->name('exportPDF');
 });

@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('extra-css')
 <link href="{{ mix('css/home.css') }}" rel="stylesheet">
+
 @endsection
 
 @section('content')
@@ -52,7 +53,7 @@
 </div>
 @endif
 
-
+<a href="{{route('exportPDF') }}" class="btn"> PDF</a>
 
 @endsection
 
