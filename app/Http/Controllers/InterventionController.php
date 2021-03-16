@@ -80,10 +80,10 @@ class InterventionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(Request $request, $id)
-    {   
-        
+    {
+
         $intervention =  Intervention::find($id);
-        if(Auth()->user()->name != $intervention->created_by){
+        if (Auth()->user()->name != $intervention->created_by) {
             $intervention->users()->attach(Auth::id());
         }
 
@@ -133,73 +133,78 @@ class InterventionController extends Controller
         //
     }
 
-    public function addOperation(Request $request){
+    public function addOperation(Request $request)
+    {
         $interventionId = $request->get('intervention_id');
         $categorieId = $request->get('categorie_id');
         $intervention = Intervention::find($interventionId);
         $intervention->categories()->attach($categorieId);
 
-        return redirect(route('interventions.edit', ['intervention' => $intervention]))->with('toast', 'addoperation' );
+        return redirect(route('interventions.edit', ['intervention' => $intervention]))->with('toast', 'addoperation');
     }
 
-    public function editOperation(Request $request){
+    public function editOperation(Request $request)
+    {
         $interventionId = $request->get('intervention_id');
         $observation = $request->input('observations');
         $categorie_id = $request->get('categorie_id');
         $intervention = Intervention::find($interventionId);
-        $intervention->categories()->sync([$categorie_id => [ 'observations' => $observation]], false);
-        
-        return redirect(route('interventions.edit', ['intervention' => $intervention]))->with('toast', 'comment' );
+        $intervention->categories()->sync([$categorie_id => ['observations' => $observation]], false);
+
+        return redirect(route('interventions.edit', ['intervention' => $intervention]))->with('toast', 'comment');
     }
-    
-    public function deleteOperation(Request $request){
+
+    public function deleteOperation(Request $request)
+    {
         $interventionId = $request->get('intervention_id');
         $categorie_id = $request->get('categorie_id');
         $intervention = Intervention::find($interventionId);
         $intervention->categories()->detach($categorie_id);
-        
-        return redirect(route('interventions.edit', ['intervention' => $intervention]))->with('toast', 'removeoperation' );
+
+        return redirect(route('interventions.edit', ['intervention' => $intervention]))->with('toast', 'removeoperation');
     }
 
-    public function addPiece(Request $request){
+    public function addPiece(Request $request)
+    {
 
         $interventionId = $request->get('intervention-id');
         $pieceRef = $request->get('piece-ref');
         $qte = $request->get('qte');
-    
+
         $intervention = Intervention::find($interventionId);
 
-        try{
+        try {
             $pieceId = Piece::Where('ref', 'like', '%' . $pieceRef . '%')->value('id');
             $piece = Piece::findOrFail($pieceId);
-        }
-        catch (Exception $e){
+        } catch (Exception $e) {
             dd('Pièce introuvable.');
         }
-        
-        if( $piece->qte >= $qte){
+
+        if ($piece->qte >= $qte) {
             $piece->qte -= $qte;
             $piece->save();
-            $intervention->pieces()->sync([$pieceId => [ 'qte' => $qte]], false);
-        }else{
+            $intervention->pieces()->sync([$pieceId => ['qte' => $qte]], false);
+        } else {
             return redirect(route('interventions.edit', ['intervention' => $intervention, 'pieceqte' => $piece->qte]))->with('toast', 'nopieceqte');
         }
-        
-        return redirect(route('interventions.edit', ['intervention' => $intervention]))->with('toast', 'addpiece' );
+
+        return redirect(route('interventions.edit', ['intervention' => $intervention]))->with('toast', 'addpiece');
     }
 
-    public function editPiece(Request $request){
+    public function editPiece(Request $request)
+    {
         $interventionId = $request->get('intervention_id');
         $piece_id = $request->get('piece_id');
         $observations = $request->get('observations');
         $intervention = Intervention::find($interventionId);
 
-        $intervention->pieces()->sync([$piece_id => [ 'observations' => $observations]], false);
-        
-        return redirect(route('interventions.edit', ['intervention' => $intervention]))->with('toast', 'comment' );
+        $intervention->pieces()->sync([$piece_id => ['observations' => $observations]], false);
+
+        return redirect(route('interventions.edit', ['intervention' => $intervention]))->with('toast', 'comment');
     }
 
-    public function deletePiece(Request $request){
+    public function deletePiece(Request $request)
+    {
         $interventionId = $request->get('intervention_id');
         $piece_id = $request->get('piece_id');
         $intervention = Intervention::find($interventionId);
@@ -207,49 +212,54 @@ class InterventionController extends Controller
         $piece = Piece::find($piece_id);
         $qte = $intervention->pieces()->find($piece_id)->pivot->qte;
 
-        if($intervention->pieces()->find($piece_id)->pivot->qte > 1){
-            $intervention->pieces()->sync([$piece_id => [ 'qte' => $qte -1]], false);
-            $piece->qte ++;
+        if ($intervention->pieces()->find($piece_id)->pivot->qte > 1) {
+            $intervention->pieces()->sync([$piece_id => ['qte' => $qte - 1]], false);
+            $piece->qte++;
             $piece->save();
-        }else{
+        } else {
             $intervention->pieces()->detach($piece_id);
         }
-        
+
         return redirect(route('interventions.edit', ['intervention' => $intervention]))->with('toast', 'removepiece');
     }
 
-    public function resumeIntervention(){
+    public function resumeIntervention()
+    {
 
         $interventions = Intervention::Where('state', 'like', 'pause')->get();
         return view('interventions.resume', ['interventions' => $interventions]);
     }
 
-    public function goToIntervention(Request $request){
+    public function goToIntervention(Request $request)
+    {
 
         $id = $request->input('intervention');
         $intervention = Intervention::find($id);
-        $intervention->state="doing";
+        $intervention->state = "doing";
         $intervention->save();
         return redirect(route('interventions.edit', ['intervention' => $intervention]));
     }
 
-    public function joinIntervention(){
+    public function joinIntervention()
+    {
 
         $interventions = Intervention::Where('user_id', '!=', Auth::id())->get();
         return view('interventions.join', ['interventions' => $interventions]);
     }
 
-    public function goToJoinIntervention(Request $request){
+    public function goToJoinIntervention(Request $request)
+    {
         $id = $request->input('intervention');
         $intervention = Intervention::find($id);
         $intervention->users()->attach(Auth::id());
-        $intervention->state="doing";
+        $intervention->state = "doing";
         $intervention->save();
 
         return redirect(route('interventions.edit', ['intervention' => $intervention]));
     }
 
-    public function leaveIntervention(Request $request){
+    public function leaveIntervention(Request $request)
+    {
         $id = $request->input('intervention');
         $intervention = Intervention::find($id);
         $intervention->users()->detach(Auth::id());
@@ -257,19 +267,19 @@ class InterventionController extends Controller
         return redirect(route('interventions.index'));
     }
 
-    public function stepOne(Request $request){
-        
+    public function stepOne(Request $request)
+    {
+
         $inputs = $request->except('_token', '_method');
         $intervention_id = $request->id;
         $vehicules = Vehicule::all();
         $intervention = Intervention::find($intervention_id);
 
         return view('interventions.step1', ['intervention' => $intervention, 'vehicules' => $vehicules]);
-        
     }
 
     public function searchIntervVehicule(Request $request)
-    {   
+    {
         $search = $request->get('searchIntervVehicule');
         $intervention_id = $request->id;
         $intervention = Intervention::find($intervention_id);
@@ -280,33 +290,34 @@ class InterventionController extends Controller
         return view('interventions.step1', ['intervention' => $intervention, 'vehicules' => $vehicules, 'id' => $intervention_id]);
     }
 
-    public function selectVehicule(Request $request){
-        
+    public function selectVehicule(Request $request)
+    {
+
         $inputs = $request->except('_token', '_method');
 
         $intervention_id = $request->id;
         $intervention = Intervention::find($intervention_id);
 
-        foreach ( $inputs as $key => $value){
+        foreach ($inputs as $key => $value) {
             $intervention->$key = $value;
         }
         $intervention->save();
 
-        return view('interventions.step1',['intervention' => $intervention]);
-
+        return view('interventions.step1', ['intervention' => $intervention]);
     }
 
-    public function stepTwo(Request $request){
-        
+    public function stepTwo(Request $request)
+    {
+
         $inputs = $request->except('_token', '_method');
         $id = $request->id;
         $intervention = Intervention::find($id);
 
         return view('interventions.step2', ['intervention' => $intervention]);
-        
     }
 
-    public function needMove(Request $request){
+    public function needMove(Request $request)
+    {
 
         $inputs = $request->except('_token', '_method');
         $id = $request->id;
@@ -318,36 +329,35 @@ class InterventionController extends Controller
         $intervention->save();
 
         return view('interventions.step2', ['intervention' => $intervention]);
-
     }
 
-    public function setDeplacement(Request $request){
+    public function setDeplacement(Request $request)
+    {
 
         $inputs = $request->except('_token', '_method');
 
         $intervention_id = $request->id;
         $intervention = Intervention::find($intervention_id);
 
-        foreach ( $inputs as $key => $value){
+        foreach ($inputs as $key => $value) {
             $intervention->$key = $value;
         }
         $intervention->save();
 
         return view('interventions.step2', ['intervention' => $intervention]);
-
     }
 
     public function exportPDF($id)
-    {      
+    {
         $intervention = Intervention::find($id);
-        
+
         $itemList = array();
 
-        foreach($intervention->operations as $operation){
-            array_push($itemList,( new InvoiceItem())->title('Opération - ' . $operation->operationList->name)->quantity(1)->pricePerUnit(0));
+        foreach ($intervention->operations as $operation) {
+            array_push($itemList, (new InvoiceItem())->title('Opération - ' . $operation->operationList->name)->quantity(1)->pricePerUnit(0));
 
-            foreach($operation->pieces as $piece){
-                array_push($itemList,( new InvoiceItem())->title('Pièce - ' .$piece->PieceList->name)->quantity($piece->qte)->pricePerUnit($piece->pieceList->price));
+            foreach ($operation->pieces as $piece) {
+                array_push($itemList, (new InvoiceItem())->title('Pièce - ' . $piece->PieceList->name)->quantity($piece->qte)->pricePerUnit($piece->pieceList->price));
             }
         }
 
@@ -361,7 +371,7 @@ class InterventionController extends Controller
             'name'          => 'Alcis Groupe',
             'address'       => '130 Route de Castres 31130 Balma'
         ]);
-           
+
         $items = [
             (new InvoiceItem())->title('Service 1')->pricePerUnit(47.79)->quantity(2)->discount(10),
             (new InvoiceItem())->title('Service 2')->pricePerUnit(71.96)->quantity(2),
@@ -375,15 +385,14 @@ class InterventionController extends Controller
         ];
 
         $notes = [
-            'your multiline',
-            'additional notes',
-            'in regards of delivery or something else',
+            '',
+            'Commentaires à ajouter ici'
         ];
         $notes = implode("<br>", $notes);
 
         $invoice = Invoice::make('Facture atelier mécanique')
 
-            ->sequence(456674444552543)
+            ->sequence($intervention->id)
             ->serialNumberFormat('{SEQUENCE}{SERIES}')
             ->seller($client)
             ->buyer($customer)
