@@ -53,7 +53,6 @@
 </div>
 @endif
 
-<a href="{{route('exportPDF') }}" class="btn"> PDF</a>
 
 @endsection
 
