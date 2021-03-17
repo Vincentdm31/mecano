@@ -296,11 +296,13 @@ $date = Carbon::now();
                             </div>
                         </form>
                     </div>
+                    @if($intervention->needMove && empty($intervention->end_deplacement_retour))
                     <div class="d-flex">
                         <button data-target="modal-end-deplacement" class="mx-auto my-auto btn rounded-1 txt-white shadow-1 orange dark-1 modal-trigger small">
                             Déplacement retour
                         </button>
                     </div>
+                    @endif
                     <div class="mt-2">
                         <form method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
                             @method('PUT')

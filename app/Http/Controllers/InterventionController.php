@@ -117,9 +117,8 @@ class InterventionController extends Controller
         }
         $intervention->save();
 
-        if($intervention->state = 'finish'){
-           return redirect( route('home'))->with('toast', 'endIntervention');
-
+        if ($intervention->state = 'finish') {
+            return redirect(route('home'))->with('toast', 'endIntervention');
         }
         return redirect(route('interventions.edit', ['intervention' => $intervention]))->with('toast', 'update');
     }
@@ -136,7 +135,8 @@ class InterventionController extends Controller
     {
         //
     }
-    public function adminIntervention(){
+    public function adminIntervention()
+    {
         $interventions = Intervention::Where('state', 'like', '%' . 'finish' . '%')->get();
 
         return view('interventions.adminIndex', ['interventions' => $interventions]);
@@ -405,7 +405,7 @@ class InterventionController extends Controller
             'Marque: ' . '<strong>' . $intervention->vehiculeList->marque . '</strong>',
             'Modèle: ' . '<strong>' . $intervention->vehiculeList->modele . '</strong>',
             'Kilométrage: ' . '<strong>' . $intervention->km_vehicule . '</strong>'
-            
+
         ];
 
         $notes = implode("<br>", $notes);
@@ -426,14 +426,10 @@ class InterventionController extends Controller
             ->filename($client->name . ' ' . $customer->name)
             ->addItems($itemList)
             ->notes($notes)
-            ->logo(public_path('images/logoFact.png'))
-            // You can additionally save generated invoice to configured disk
-            ->save('public');
+            ->logo(public_path('images/logoFact.png'));
+            // ->filename('toto')
+            // ->save('public');
 
-        $link = $invoice->url();
-        // Then send email to party with link
-
-        // And return invoice itself to browser or have a different view
         return $invoice->stream();
     }
 }
