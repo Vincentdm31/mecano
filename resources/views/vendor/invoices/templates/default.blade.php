@@ -146,7 +146,13 @@
                 </tr>
             </tbody>
         </table>
-
+        
+        @if($invoice->notes)
+            <p>
+                {{ trans('invoices::invoice.notes') }}: {!! $invoice->notes !!}
+            </p>
+        @endif
+        
         {{-- Seller - Buyer --}}
         <table class="table">
             <thead>
@@ -347,14 +353,7 @@
         <p class="text-right">
             {{ trans('invoices::invoice.amount_in_words') }}: {{ $invoice->getTotalAmountInWords() }}
         </p>
-
-        @if($invoice->notes)
-            <p>
-                {{ trans('invoices::invoice.notes') }}: {!! $invoice->notes !!}
-            </p>
-        @endif
-
-        
+      
         <p>
             {{ trans('invoices::invoice.pay_until') }}: {{ $invoice->getPayUntilDate() }}
         </p>
