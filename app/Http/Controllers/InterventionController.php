@@ -372,18 +372,6 @@ class InterventionController extends Controller
             'address'       => '130 Route de Castres 31130 Balma'
         ]);
 
-        $items = [
-            (new InvoiceItem())->title('Service 1')->pricePerUnit(47.79)->quantity(2)->discount(10),
-            (new InvoiceItem())->title('Service 2')->pricePerUnit(71.96)->quantity(2),
-            (new InvoiceItem())->title('Service 3')->pricePerUnit(4.56),
-            (new InvoiceItem())->title('Service 4')->pricePerUnit(87.51)->quantity(7)->discount(4)->units('kg'),
-            (new InvoiceItem())->title('Service 5')->pricePerUnit(71.09)->quantity(7)->discountByPercent(9),
-            (new InvoiceItem())->title('Service 6')->pricePerUnit(76.32)->quantity(9),
-            (new InvoiceItem())->title('Service 7')->pricePerUnit(58.18)->quantity(3)->discount(3),
-            (new InvoiceItem())->title('Service 8')->pricePerUnit(42.99)->quantity(4)->discountByPercent(3),
-            (new InvoiceItem())->title('Service 9')->pricePerUnit(33.24)->quantity(6)->units('m2'),
-        ];
-
         $notes = [
             '',
             'Commentaires à ajouter ici'
