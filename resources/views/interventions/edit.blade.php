@@ -301,6 +301,16 @@ $date = Carbon::now();
                             Déplacement retour
                         </button>
                     </div>
+                    <div class="mt-2">
+                        <form method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
+                            @method('PUT')
+                            @csrf
+                            <div class="txt-center">
+                                <input hidden value="finish" name="state" />
+                                <button type="submit" class="btn shadow-1 rounded-1 red small">Terminer l'intervention</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
                 <img src="{{ asset('/images/pause.svg') }}" class="responsive-media p-5" alt="">
             </div>

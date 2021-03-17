@@ -10,7 +10,7 @@
 <div class="container home">
     <div class="grix xs1 md6 gutter-xs4 mt-5 home h100">
         <div>
-            <a href="{{ route('interventions.index') }}" class="btn blue txt-white d-flex vcenter fx-center rounded-1 shadow-1 hoverable-1 h100 w100 mb-2">Interventions</a>
+            <a href="{{ route('adminIntervention') }}" class="btn blue txt-white d-flex vcenter fx-center rounded-1 shadow-1 hoverable-1 h100 w100 mb-2">Interventions</a>
         </div>
         <div>
             <a href="{{ route('users.index') }}" class="btn blue dark-3 txt-white d-flex vcenter fx-center rounded-1 shadow-1 hoverable-1 h100 w100 mb-2">Gestion utilisateurs</a>
@@ -73,6 +73,13 @@
 <script>
     toast.change("Vous n'avez pas accés à cette page", {
         classes: "rounded-1 red txt-white shadow-2 mt-5"
+    });
+    toast.show();
+</script>
+@elseif(session('toast') == 'endIntervention')
+<script>
+    toast.change('Intervention terminée', {
+        classes: "rounded-1 red dark-1 shadow-2 mt-5"
     });
     toast.show();
 </script>

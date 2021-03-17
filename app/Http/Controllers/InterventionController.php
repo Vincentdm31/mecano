@@ -117,6 +117,10 @@ class InterventionController extends Controller
         }
         $intervention->save();
 
+        if($intervention->state = 'finish'){
+           return redirect( route('home'))->with('toast', 'endIntervention');
+
+        }
         return redirect(route('interventions.edit', ['intervention' => $intervention]))->with('toast', 'update');
     }
 
@@ -131,6 +135,11 @@ class InterventionController extends Controller
     public function destroy(Intervention $intervention)
     {
         //
+    }
+    public function adminIntervention(){
+        $interventions = Intervention::Where('state', 'like', '%' . 'finish' . '%')->get();
+
+        return view('interventions.adminIndex', ['interventions' => $interventions]);
     }
 
     public function addOperation(Request $request)
