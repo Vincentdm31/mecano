@@ -392,10 +392,10 @@ class InterventionController extends Controller
             '',
             '',
             '',
-            'Immat: ' . $intervention->vehiculeList->immat,
-            'Marque: ' . $intervention->vehiculeList->marque,
-            'Modèle: ' . $intervention->vehiculeList->modele,
-            'Kilométrage: ' . $intervention->km_vehicule
+            'Immat: ' . '<strong>' . $intervention->vehiculeList->immat . '</strong>',
+            'Marque: ' . '<strong>' . $intervention->vehiculeList->marque . '</strong>',
+            'Modèle: ' . '<strong>' . $intervention->vehiculeList->modele . '</strong>',
+            'Kilométrage: ' . '<strong>' . $intervention->km_vehicule . '</strong>'
             
         ];
 

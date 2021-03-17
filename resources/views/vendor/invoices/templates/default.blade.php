@@ -169,7 +169,7 @@
             <tr>
                 <td class="border-1 pl-0">
                     @if($invoice->notes)
-                    <p class="strong">
+                    <p class="">
                         {{ trans('invoices::invoice.notes') }}: {!! $invoice->notes !!}
                     </p>
                     @endif
