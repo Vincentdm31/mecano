@@ -391,6 +391,7 @@ class InterventionController extends Controller
         $notes = [
             '',
             '',
+            '',
             'Immat: ' . $intervention->vehiculeList->immat,
             'Marque: ' . $intervention->vehiculeList->marque,
             'Modèle: ' . $intervention->vehiculeList->modele,
@@ -408,7 +409,6 @@ class InterventionController extends Controller
             ->buyer($customer)
             ->date(now())
             ->dateFormat('d/m/Y')
-            ->payUntilDays(14)
             ->currencySymbol('€')
             ->currencyCode('€')
             ->currencyFormat('{VALUE} {SYMBOL}')
