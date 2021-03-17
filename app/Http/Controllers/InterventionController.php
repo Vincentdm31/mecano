@@ -278,8 +278,6 @@ class InterventionController extends Controller
 
     public function stepOne(Request $request)
     {
-
-        $inputs = $request->except('_token', '_method');
         $intervention_id = $request->id;
         $vehicules = Vehicule::all();
         $intervention = Intervention::find($intervention_id);
@@ -317,8 +315,6 @@ class InterventionController extends Controller
 
     public function stepTwo(Request $request)
     {
-
-        $inputs = $request->except('_token', '_method');
         $id = $request->id;
         $intervention = Intervention::find($id);
 
