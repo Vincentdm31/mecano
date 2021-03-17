@@ -27,7 +27,7 @@
                 <div class="navbar-menu ml-auto hide-sm-down">
                     @if(Auth()->check())
                     @if(Auth()->user()->is_admin)
-                    <a href="{{ route('interventions.index') }}" class="navbar-link">Interventions</a>
+                    <a href="{{ route('adminIntervention') }}" class="navbar-link">Interventions</a>
                     <a href="{{ route('users.index') }}" class="navbar-link">Gestion utilisateurs</a>
                     <a href="{{ route('vehicules.index') }}" class="navbar-link">Gestion véhicules</a>
                     <a href="{{ route('piecesList.index') }}" class="navbar-link">Gestion pièces</a>
@@ -67,7 +67,7 @@
         <div class="txt-white">
             @if(Auth()->check())
             @if(Auth()->user()->is_admin)
-            <a href="{{ route('interventions.index') }}" class="sidenav-link">Interventions</a>
+            <a href="{{ route('adminIntervention') }}" class="sidenav-link">Interventions</a>
             <a href="{{ route('users.index') }}" class="sidenav-link">Gestion utilisateurs</a>
             <a href="{{ route('vehicules.index') }}" class="sidenav-link">Gestion véhicules</a>
             <a href="{{ route('piecesList.index') }}" class="sidenav-link">Gestion pièces</a>
