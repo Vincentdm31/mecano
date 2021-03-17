@@ -390,8 +390,14 @@ class InterventionController extends Controller
 
         $notes = [
             '',
-            'Commentaires à ajouter ici'
+            '',
+            'Immat: ' . $intervention->vehiculeList->immat,
+            'Marque: ' . $intervention->vehiculeList->marque,
+            'Modèle: ' . $intervention->vehiculeList->modele,
+            'Kilométrage: ' . $intervention->km_vehicule
+            
         ];
+
         $notes = implode("<br>", $notes);
 
         $invoice = Invoice::make('Facture atelier mécanique')

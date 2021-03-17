@@ -30,7 +30,7 @@ return [
     'total_amount'    => 'Total amount',
     'pay_until'       => 'Please pay until',
     'amount_in_words' => 'Amount in words',
-    'notes'           => 'Notes',
+    'notes'           => 'Véhicule',
     'shipping'        => 'Shipping',
 
 ];
