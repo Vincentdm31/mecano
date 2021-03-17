@@ -13,7 +13,7 @@ $date = Carbon::now();
 ?>
 <div class="container mt-5">
     <div class="container d-flex vcenter">
-        <button data-target="modal-recap" class="mx-auto btn rounded-1 txt-orange txt-dark-1 shadow-1 grey light-4 modal-trigger">
+        <button data-target="modal-recap" class="mx-auto btn rounded-1 txt-white shadow-1 orange dark-1 modal-trigger small">
             Récapitulatif
         </button>
         @if(Auth()->user()->name != $intervention->created_by)
@@ -21,9 +21,14 @@ $date = Carbon::now();
             Quitter
         </a>
         @endif
+        <!-- Modal Recap -->
         <div class="modal white shadow-1 rounded-2 mt-4" id="modal-recap" data-ax="modal">
             <div class="card rounded-2 m-0 overflow-visible">
+                @if(!empty($intervention->observations))
+                <a href="" data-target="modal-comment" style="position:absolute;right:5px;top:0;font-size:2.5rem;" class="txt-white fas fa-comment-dots modal-trigger"></a>
+                @else
                 <a href="" data-target="modal-comment" style="position:absolute;right:5px;top:0;font-size:2.5rem;" class="txt-white fas fa-comment modal-trigger"></a>
+                @endif
                 <div class="card-header rounded-tl2 rounded-tr2 orange dark-1 p-3 recap-infos">
                     <div class="grix txt-white gutter-xs5 xs2 md3">
                         <p class="pl-2 lh-normal mr-auto"><i class="far fa-id-card mr-2 font-s4 txt-white"></i>{{ $intervention->created_by }}</p>
@@ -88,6 +93,9 @@ $date = Carbon::now();
                                 <li class="mb-2 mt-3">
                                     {{ $operation->operationList->name}}
                                 </li>
+                                @if(!$operation->pieces()->exists())
+                                <em class=" mb-5 pb-5 txt-orange txt-dark-1">Aucune pièce affectée</em>
+                                @endif
                                 @foreach($operation->pieces as $piece)
                                 <em class="ml-5 mb-5 pb-5"><b> {{$piece->pieceList->name }}</b><span class="ml-3">x{{$piece->qte}}</span></em><br>
                                 @endforeach
@@ -101,6 +109,7 @@ $date = Carbon::now();
                 </div>
             </div>
         </div>
+        <!-- End Modal Recap -->
     </div>
 </div>
 <!-- Actions -->
@@ -151,10 +160,10 @@ $date = Carbon::now();
         <div id="tab-operation" class="p-3 container">
             <div class="grix xs1 sm2 ">
                 <div class="">
-                    <p class="h6 txt-center "><b> Mes opérations</b></p>
+                    <p class="h6 txt-center "><i class="fas fa-hammer font-s4 mr-4 txt-airforce txt-dark-4"></i><b> Mes opérations</b></p>
                 </div>
                 <div class="d-flex pos-row-xs1 pos-sm2">
-                    <button data-target="modal-new-operation" class="mx-auto my-auto btn rounded-1 txt-white shadow-1 orange dark-1 modal-trigger">
+                    <button data-target="modal-new-operation" class="mx-auto my-auto btn rounded-1 txt-white shadow-1 orange dark-1 modal-trigger small">
                         Nouvelle opération
                     </button>
                 </div>
@@ -169,11 +178,26 @@ $date = Carbon::now();
                         <li class="mb-2 mt-3">
                             {{ $operation->operationList->name}}
                         </li>
+                        @if(!$operation->pieces()->exists())
+                        <em class=" mb-5 pb-5 txt-orange txt-dark-1">Aucune pièce affectée</em>
+                        @endif
                         @foreach($operation->pieces as $piece)
                         <em class="ml-5 mb-5 pb-5"><b> {{$piece->pieceList->name }}</b><span class="ml-3">x{{$piece->qte}}</span></em><br>
                         @endforeach
                     </div>
                     <div class="grix xs2 md5 gutter-xs1">
+
+                        <div class="my-auto mx-auto">
+                            <button data-target="add-piece-operation-{{ $operation->id }}" class="btn rounded-1 white light-shadow-3 txt-blue modal-trigger mx-auto">
+                                <i class="fas fa-tools txt-amaranth txt-dark-3"></i>
+                            </button>
+                        </div>
+                        <div class="my-auto mx-auto">
+                            <button data-target="edit-operation-{{ $operation->id }}" class="btn rounded-1 white light-shadow-3 txt-blue modal-trigger mx-auto">
+                                <i class="fas fa-comment-medical <?php echo (isset($operation->op_comment) ? 'txt-orange' : '') ?>"></i>
+                            </button>
+                        </div>
+
                         <div class="my-auto mx-auto">
                             <!--  -->
                             @if($operation->state)
@@ -206,16 +230,6 @@ $date = Carbon::now();
                                 </form>
                             </div>
                             @endif
-                        </div>
-                        <div class="my-auto mx-auto">
-                            <button data-target="add-piece-operation-{{ $operation->id }}" class="btn rounded-1 white light-shadow-3 txt-blue modal-trigger mx-auto">
-                                <i class="fas fa-tools txt-amaranth txt-dark-3"></i>
-                            </button>
-                        </div>
-                        <div class="my-auto mx-auto">
-                            <button data-target="edit-operation-{{ $operation->id }}" class="btn rounded-1 white light-shadow-3 txt-blue modal-trigger mx-auto">
-                                <i class="fas fa-comment-medical <?php echo (isset($operation->op_comment) ? 'txt-orange' : '') ?>"></i>
-                            </button>
                         </div>
                         <div class="mx-auto my-auto">
                             <form class="form-material" method="POST" action="{{ route('operations.destroy', ['operation' => $operation->id]) }}">
@@ -251,39 +265,44 @@ $date = Carbon::now();
             <div class="grix xs1 md2">
                 <div>
                     @if($intervention->state == "doing")
-                    <div>
+                    <div class="mb-2">
                         <form class="form-material" method="POST" action="{{ route('timeinterventions.store') }}">
                             @csrf
                             <input hidden name="intervention_id" value="{{ $intervention->id }}">
                             <input hidden name="start_date" value="{{ $date }}">
                             <div class="txt-center">
-                                <button type="submit" class="btn txt-center rounded-1 outline opening txt-orange"><span class="outline-text outline-invert">Pause</span></button>
+                                <button type="submit" class="btn txt-center rounded-1 outline opening txt-orange small"><span class="outline-text outline-invert">Pause</span></button>
                             </div>
                         </form>
                     </div>
                     @elseif(($intervention->state == "pause"))
-                    <div>
+                    <div class="mb-2">
                         <form class="form-material my-auto" method="POST" action="{{ route('timeinterventions.store') }}">
                             @csrf
                             <input hidden name="intervention_id" value="{{ $intervention->id }}">
                             <input hidden name="end_date" value="{{ $date }}">
-                            <div class="txt-center">
-                                <button type="submit" class="btn rounded-1 outline opening txt-orange"><span class="outline-text outline-invert">Reprendre</span></button>
+                            <div class="txt-center mb-2">
+                                <button type="submit" class="btn rounded-1 outline opening txt-orange small"><span class="outline-text outline-invert">Reprendre</span></button>
                             </div>
                         </form>
                     </div>
                     @endif
-                    <div>
+                    <div class="mb-2">
                         <form class="form-material my-auto" method="POST" action="{{ route('totalTime')}}">
                             @csrf
                             <input hidden name="intervention_id" value="{{ $intervention->id }}">
                             <div class="txt-center">
-                                <button type="submit" class="btn rounded-1 outline opening txt-orange"><span class="outline-text outline-invert">test time</span></button>
+                                <button type="submit" class="btn rounded-1 outline opening txt-orange small"><span class="outline-text outline-invert">test time</span></button>
                             </div>
                         </form>
                     </div>
+                    <div class="d-flex">
+                        <button data-target="modal-end-deplacement" class="mx-auto my-auto btn rounded-1 txt-white shadow-1 orange dark-1 modal-trigger small">
+                            Déplacement retour
+                        </button>
+                    </div>
                 </div>
-                <img src="{{ asset('/images/pause.svg') }}" class="responsive-media p-3" alt="">
+                <img src="{{ asset('/images/pause.svg') }}" class="responsive-media p-5" alt="">
             </div>
         </div>
     </div>
@@ -308,6 +327,7 @@ $date = Carbon::now();
     </form>
 </div>
 
+<!-- Modal pièces -->
 <div class="modal white shadow-1 p-4 rounded-2" id="add-piece-operation-{{ $operation->id }}" data-ax="modal">
     <div class="d-flex my-auto mx-auto w100 ">
         <form class="form-material w100" method="POST" action="{{ route('pieces.store') }}">
@@ -339,6 +359,7 @@ $date = Carbon::now();
 </div>
 @endforeach
 
+<!-- Modal comment global -->
 <div class="modal grey light-4 rounded-2 p-2" id="modal-comment" data-ax="modal">
     <form class="form-material container" method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
         @method('PUT')
@@ -355,6 +376,7 @@ $date = Carbon::now();
     </form>
 </div>
 
+<!-- Modal Opération -->
 <div class="modal grey light-4 rounded-2 p-2" id="modal-new-operation" data-ax="modal">
     <div class="grix xs1 md2">
         <div class="d-flex vcenter">
@@ -375,6 +397,51 @@ $date = Carbon::now();
             </form>
         </div>
         <img src="{{ asset('/images/operation.png') }}" class="responsive-media p-3" alt="">
+    </div>
+</div>
+
+<!-- Modal fin déplacement -->
+<div class="modal grey light-4 rounded-2 p-2" id="modal-end-deplacement" data-ax="modal">
+    <div class="grix xs1 md2">
+        @if(empty($intervention->start_deplacement_retour))
+        <div class="d-flex my-auto fx-col">
+            <div>
+                <p class="txt-airforce txt-dark-4 txt-center mb-2">Déplacements Retour</p>
+                <div>
+                    <form method="POST" action="{{ route('setEndDeplacement')}}">
+                        @method('PUT')
+                        @csrf
+                        <div class="txt-center">
+                            <input hidden value="{{ $date }}" name="start_deplacement_retour" />
+                            <input hidden name="id" value="{{ $intervention->id }}"></input>
+                            <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange small"><span class="outline-text outline-invert">Début</span></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <img src="{{ asset('/images/deplacement.svg') }}" class="responsive-media p-3" alt="">
+        @endif
+
+        <!--End Déplacement Interventions Aller -->
+        @if(!empty($intervention->start_deplacement_retour) && empty($intervention->end_deplacement_retour))
+        <div class="d-flex my-auto fx-col">
+            <div>
+                <p class="txt-airforce txt-dark-4 txt-center mb-2">Déplacements Retour</p>
+            </div>
+            <form method="POST" action="{{ route('setEndDeplacement')}}">
+                @method('PUT')
+                @csrf
+                <div class="txt-center">
+                    <input hidden value="{{ $date }}" name="end_deplacement_retour" />
+                    <input hidden name="id" value="{{ $intervention->id }}"></input>
+                    <button type="submit" class="btn small shadow-1 rounded-1 outline opening txt-orange"><span class="outline-text outline-invert">Fin</span></button>
+                </div>
+            </form>
+        </div>
+        <img src="{{ asset('/images/deplacement.svg') }}" class="responsive-media p-3" alt="">
+        @endif
+
     </div>
 </div>
 

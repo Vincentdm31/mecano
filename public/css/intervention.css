@@ -17,3 +17,7 @@ html {
 .modal-overlay.active {
   background-color: rgba(0, 0, 0, 0.8) !important;
 }
+
+.dark {
+  background-color: #1b1b1b;
+}

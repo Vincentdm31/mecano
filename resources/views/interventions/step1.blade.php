@@ -4,7 +4,7 @@
 @endsection
 @section('content')
 <div class="container h100 d-flex">
-    <div class="vself-center container card overflow-visible shadow-1 rounded-2 grey light-4">
+    <div class="vself-center container card overflow-visible shadow-1 rounded-2 white">
         @if(empty($intervention->vehicule_id))
         <div class="card-header p-1 bd-b-solid bd-orange bd-dark-1 bd-2 m-0 ml-4 mr-4">
             <p class="txt-airforce txt-dark-4 h6">Choix du véhicule</p>
@@ -57,7 +57,7 @@
             </div>
             @else
             <div class="card-header p-1 bd-b-solid bd-orange bd-dark-1 bd-2 m-0 ml-4 mr-4">
-                <p class="txt-airforce txt-dark-4 h6">Véhicule enregistré</p>
+                <p class="txt-airforce txt-dark-4 h6"><i class="fas fa-car font-s4 txt-airforce txt-dark-4 mr-4"></i>Véhicule enregistré</p>
             </div>
             <div class="card-content">
                 <p>Marque : {{ $intervention->vehiculeList->marque }}</p>

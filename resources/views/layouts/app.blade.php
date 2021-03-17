@@ -18,7 +18,7 @@
     @yield('extra-css')
 </head>
 
-<body class="layout">
+<body class="layout grey light-4">
     <header>
         <div class="navbar-fixed">
             <nav class="navbar dark txt-white shadow-1">
@@ -60,7 +60,7 @@
         </div>
     </header>
 
-    <div class="sidenav shadow-1 dark-light" id="sidenav" data-ax="sidenav">
+    <div class="sidenav shadow-1 dark" id="sidenav" data-ax="sidenav">
         <div class="sidenav-header p-2">
             <p class="mr-auto orange-custom font-s5 bd-b-solid bd-orange bd-light-2 bd-2 pb-4">Alcis Groupe</p>
         </div>
@@ -76,7 +76,7 @@
             @else
             <form class="form-material sidenav-link" method="POST" action="{{ route('interventions.store') }}">
                 @csrf
-                <button type="submit" class="btn txt-orange transparent p-0">Nouvelle</button>
+                <button type="submit" class="btn txt-orange transparent p-0">Nouvelle opération</button>
             </form>
             <a href="{{ route('interventions.index') }}" class="sidenav-link txt-white">Liste complète</a>
             <a href="{{ route('joinIntervention') }}" class="sidenav-link">Rejoindre</a>
@@ -93,7 +93,6 @@
 
     <!-- Scripts -->
     <script src="{{ mix('js/app.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/neu-axentix@1.4.0/dist/js/neu-axentix.min.js"></script>
     @yield('extra-js')
 </body>
 

@@ -61,6 +61,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/selectVehicule',  [InterventionController::class, 'selectVehicule'])->name('selectVehicule');
     Route::post('/needMove',  [InterventionController::class, 'needMove'])->name('needMove');
     Route::put('/setDeplacement',  [InterventionController::class, 'setDeplacement'])->name('setDeplacement');
+    Route::put('/setEndDeplacement',  [InterventionController::class, 'setEndDeplacement'])->name('setEndDeplacement');
 
 
     // Opération

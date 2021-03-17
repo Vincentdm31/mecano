@@ -347,6 +347,22 @@ class InterventionController extends Controller
         return view('interventions.step2', ['intervention' => $intervention]);
     }
 
+    public function setEndDeplacement(Request $request)
+    {
+
+        $inputs = $request->except('_token', '_method');
+
+        $intervention_id = $request->id;
+        $intervention = Intervention::find($intervention_id);
+
+        foreach ($inputs as $key => $value) {
+            $intervention->$key = $value;
+        }
+        $intervention->save();
+
+        return redirect(route('interventions.edit', ['intervention' => $intervention]));
+    }
+
     public function exportPDF($id)
     {
         $intervention = Intervention::find($id);
