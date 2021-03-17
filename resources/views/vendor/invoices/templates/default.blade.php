@@ -72,7 +72,8 @@
         .table td {
             padding: 0.75rem;
             vertical-align: top;
-            border-top: 1px solid #dee2e6;
+            border-top: 2px solid #dee2e6;
+            border-bottom: 1px solid #dee2e6;
         }
 
         .table thead th {
