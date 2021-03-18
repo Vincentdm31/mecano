@@ -13,6 +13,7 @@ class PieceListController extends Controller
     public function index()
     {
         $piecesList = PieceList::all();
+
         return view('pieces.index', ['piecesList' => $piecesList]);
     }
 
@@ -69,6 +70,7 @@ class PieceListController extends Controller
     public function show($id)
     {
         $pieceList = PieceList::find($id);
+
         return view('pieces.show', ['pieceList' => $pieceList]);
     }
 
@@ -81,6 +83,7 @@ class PieceListController extends Controller
     public function edit($id)
     {
         $pieceList = PieceList::find($id);
+
         return view('pieces.edit', ['pieceList' => $pieceList]);
     }
 
@@ -138,6 +141,7 @@ class PieceListController extends Controller
         $piecesList = PieceList::Where('ref', 'like', '%'.$search.'%')
                             ->orWhere('name', 'like', '%'.$search.'%')
                             ->get();
+                            
         return view('pieces.index', ['piecesList' => $piecesList]);
     }
 }

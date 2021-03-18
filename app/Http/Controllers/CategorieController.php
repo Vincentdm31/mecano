@@ -15,6 +15,7 @@ class CategorieController extends Controller
     public function index()
     {
         $categories = Categorie::all();
+
         return view('categories.index', ['categories' => $categories]);
     }
 
@@ -38,11 +39,13 @@ class CategorieController extends Controller
     {
         $inputs = $request->except('_token', 'created_at', 'updated_at');
         $categorie = new Categorie();
+
         foreach ($inputs as $key => $value) {
             $categorie->$key = $value;
         }
 
         $categorie->save();
+
         return redirect(route('categories.index'));
     }
 
@@ -66,6 +69,7 @@ class CategorieController extends Controller
     public function edit($id)
     {   
         $categorie = Categorie::find($id);
+
         return view('categories.edit', ['categorie' => $categorie ]);
     }
 
@@ -80,9 +84,11 @@ class CategorieController extends Controller
     {   
         $inputs = $request->except('_token', '_method', 'updated_at');
         $categorie = Categorie::find($id);
+
         foreach ($inputs as $key => $value){
             $categorie->$key = $value;
         }
+
         $categorie->save();
 
        return redirect(route('categories.index'));
@@ -106,9 +112,8 @@ class CategorieController extends Controller
     {
         $search = $request->get('searchCategorie');
 
-        $categories = Categorie::Where('name', 'like', '%'.$search.'%')
+        $categories = Categorie::Where('name', 'like', '%'.$search.'%')->get();
 
-                    ->get();
         return view('categories.index', ['categories' => $categories]);
     }
     

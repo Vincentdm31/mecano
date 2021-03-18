@@ -84,9 +84,11 @@ class OperationController extends Controller
         $inputs = $request->except('_token', '_method', 'updated_at');
         $intervention = $request->intervention_id;
         $operation = Operation::find($id);
+
         foreach ($inputs as $key => $value) {
             $operation->$key = $value;
         }
+
         $operation->save();
 
         return redirect(route('interventions.edit', ['intervention' => $intervention]))->with('toast', 'update');
@@ -113,7 +115,9 @@ class OperationController extends Controller
             $pieceList->save();
             
         }
+
         $operation->delete();
+        
         return redirect(route('interventions.edit', ['intervention' => $intervention]))->with('toast', 'removeOperation');
     }
 }

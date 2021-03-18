@@ -10,6 +10,7 @@ class OperationListController extends Controller
     public function index()
     {
         $operationsLists = OperationList::all();
+
         return view('operations.index', ['operationsLists' => $operationsLists]);
     }
 
@@ -33,11 +34,13 @@ class OperationListController extends Controller
     {
         $inputs = $request->except('_token', 'created_at', 'updated_at');
         $operationList = new OperationList();
+
         foreach ($inputs as $key => $value) {
             $operationList->$key = $value;
         }
 
         $operationList->save();
+
         return redirect(route('operationsList.index'));
     }
 
@@ -61,6 +64,7 @@ class OperationListController extends Controller
     public function edit($id)
     {   
         $operationList = OperationList::find($id);
+
         return view('operations.edit', ['operationList' => $operationList ]);
     }
 
@@ -75,9 +79,11 @@ class OperationListController extends Controller
     {   
         $inputs = $request->except('_token', '_method', 'updated_at');
         $operationList = OperationList::find($id);
+
         foreach ($inputs as $key => $value){
             $operationList->$key = $value;
         }
+
         $operationList->save();
 
        return redirect(route('operationsList.index'));
@@ -101,8 +107,8 @@ class OperationListController extends Controller
     {
         $search = $request->get('searchOperationsList');
 
-        $operationsLists = OperationList::Where('name', 'like', '%'.$search.'%')
-                            ->get();
+        $operationsLists = OperationList::Where('name', 'like', '%'.$search.'%')->get();
+
         return view('operations.index', ['operationsLists' => $operationsLists]);
     }
 }
