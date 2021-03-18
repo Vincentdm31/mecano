@@ -25,7 +25,7 @@ class InterventionController extends Controller
      */
     public function index()
     {
-        $interventions = Intervention::all();
+        $interventions = Intervention::Where('state', '!=', 'finish')->get();
 
         return view('interventions.index', ['interventions' => $interventions]);
     }
@@ -83,6 +83,7 @@ class InterventionController extends Controller
     {
 
         $intervention =  Intervention::find($id);
+
         if (Auth()->user()->name != $intervention->created_by) {
             $intervention->users()->attach(Auth::id());
         }
@@ -91,7 +92,6 @@ class InterventionController extends Controller
         $piecesList = PieceList::all();
         $operations = Operation::all();
         $pieces = Piece::all();
-
         $vehicules = Vehicule::all();
 
         $search = $request->get('selectVehicule');
@@ -251,7 +251,6 @@ class InterventionController extends Controller
 
     public function joinIntervention()
     {
-
         $interventions = Intervention::Where('user_id', '!=', Auth::id())->get();
         return view('interventions.join', ['interventions' => $interventions]);
     }

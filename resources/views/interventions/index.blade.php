@@ -31,7 +31,6 @@
 
                         <td class="txt-center">@if(!empty($intervention->vehicule_id)){{ $intervention->vehiculeList->immat }} @endif</td>
                         @if(!Auth()->user()->is_admin)
-                        
                         <td class="txt-center">
                             <a class="btn circle orange dark-1 txt-white push" href="{{route('interventions.edit', ['intervention' => $intervention->id])}}"><i class="fas fa-pen"></i></a>
                         </td>
