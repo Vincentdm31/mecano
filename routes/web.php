@@ -27,7 +27,7 @@ use App\Http\Controllers\UserController;
 */
 
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::group(['middleware' => ['admin']], function () {
     Route::get('/admin', [HomeController::class, 'adminView'])->name('admin.view');
