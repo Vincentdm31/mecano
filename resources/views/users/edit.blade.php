@@ -22,8 +22,12 @@
                     <div class="form-field">
                         <label for="is_admin">Rôle</label>
                         <select id="is_admin" name="is_admin" class="form-control txt-center" value="{{$user->is_admin}}">
-                            <option <?php echo $user->is_admin == 1 ? 'selected' : '' ?> value="0">Membre</option>
-                            <option <?php echo $user->is_admin == 1 ? 'selected' : '' ?> value="1">Admin</option>
+                            <option <?php echo $user->is_admin == 0 ? 'selected' : '' ?> value="0">Membre</option>
+                            <option <?php echo $user->is_admin == 1 ? 'selected' : '' ?> value="1">Magasinier</option>
+                            @if(Auth()->user()->is_admin > 2)
+                            <option <?php echo $user->is_admin == 2 ? 'selected' : '' ?> value="2">Admin</option>
+                            <option <?php echo $user->is_admin == 3 ? 'selected' : '' ?> value="3">Root</option>
+                            @endif
                         </select>
                     </div>
                 </div>

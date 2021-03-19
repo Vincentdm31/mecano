@@ -3,124 +3,82 @@
 <link href="{{ mix('css/intervention.css') }}" rel="stylesheet">
 @endsection
 @section('content')
-<?php
-
-use Carbon\Carbon;
-
-$date = Carbon::now();
-?>
-
-<div class="container h100">
-    <div class="container h100 d-flex">
-        <div class="vself-center container card overflow-visible shadow-1 rounded-2 grey light-4">
-            <div class="card-header p-1 bd-b-solid bd-orange bd-dark-1 bd-2 m-0 ml-4 mr-4">
-                <p class="txt-airforce txt-dark-4 h6">Déplacement ?</p>
-            </div>
-            <div class="card-content">
-                @if(!isset($intervention->needMove))
-                <div class="grix xs2" id="select-move">
-                    <form action="{{ route('needMove')}}" method="POST">
-                        @csrf
-                        <input hidden name="id" value="{{ $intervention->id }}"></input>
-                        <input hidden name="needMove" value="1"></input>
-                        <button type="submit" class="btn green dark-1 txt-white small rounded-1 w100">Oui</button>
-                    </form>
-                    <form action="{{ route('needMove')}}" method="POST">
-                        @csrf
-                        <input hidden name="id" value="{{ $intervention->id }}"></input>
-                        <input hidden name="needMove" value="0"></input>
-                        <button type="submit" class="btn red dark-1 txt-white small rounded-1 w100">Non</button>
-                    </form>
-                </div>
-                @endif
-                @if(isset($intervention->needMove) && $intervention->needMove == 1)
-                <div class="grix xs1 md2">
-                    @if(empty($intervention->start_deplacement_aller))
-                    <div class="d-flex my-auto fx-col">
-                        <div>
-                            <p class="txt-airforce txt-dark-4 txt-center mb-2">Déplacements ALLER</p>
-                            <div>
-                                <form method="POST" action="{{ route('setDeplacement')}}">
-                                    @method('PUT')
-                                    @csrf
-                                    <div class="txt-center">
-                                        <input hidden value="{{ $date }}" name="start_deplacement_aller" />
-                                        <input hidden name="id" value="{{ $intervention->id }}"></input>
-                                        <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange small"><span class="outline-text outline-invert">Début</span></button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <img src="{{ asset('/images/deplacement.svg') }}" class="responsive-media p-3" alt="">
-                    @endif
-
-                    <!--End Déplacement Interventions Aller -->
-                    @if(!empty($intervention->start_deplacement_aller) && empty($intervention->end_deplacement_aller))
-                    <div class="d-flex my-auto fx-col">
-                        <div>
-                            <p class="txt-airforce txt-dark-4 txt-center mb-2">Déplacements Aller</p>
-                        </div>
-                        <form method="POST" action="{{ route('setDeplacement')}}">
-                            @method('PUT')
+<div class="container h100 d-flex">
+    <div class="vself-center container card overflow-visible shadow-1 rounded-2 white">
+        @if(empty($intervention->vehicule_id))
+        <div class="card-header p-1 bd-b-solid bd-orange bd-dark-1 bd-2 m-0 ml-4 mr-4">
+            <p class="txt-airforce txt-dark-4 h6">Choix du véhicule</p>
+        </div>
+        <div class="card-content">
+            <div class="mt-2 mb-2 grix sm2 gutter-sm5">
+                <div class="my-auto">
+                    <div>
+                        <form class="form-material" method="GET" action="{{ route('searchIntervVehicule')}}">
                             @csrf
-                            <div class="txt-center">
-                                <input hidden value="{{ $date }}" name="end_deplacement_aller" />
-                                <input hidden name="id" value="{{ $intervention->id }}"></input>
-                                <button type="submit" class="btn small shadow-1 rounded-1 outline opening txt-orange"><span class="outline-text outline-invert">Fin</span></button>
+                            <div class="grix xs6">
+                                <div class="form-field pos-xs1 col-xs5">
+                                    <input type="text" name="searchIntervVehicule" id="searchIntervVehicule" class="form-control txt-airforce txt-dark-4" />
+                                    <input hidden name="id" value="{{ $intervention->id }}" /></input>
+                                    <label for="searchIntervVehicule">Rechercher</label>
+                                </div>
+                                <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange circle mx-auto vself-center rounded-4"><span class="outline-text outline-invert"><i class="fas fa-search"></i></span></button>
                             </div>
                         </form>
                     </div>
-                    <img src="{{ asset('/images/deplacement.svg') }}" class="responsive-media p-3" alt="">
-                    @endif
+                    <div class="mt-5">
+                        <form class="form-material" method="POST" action="{{ route('selectVehicule')}}">
+                            @method('PUT')
+                            @csrf
+                            <div class="form-field">
+                                <label for="select">Véhicule</label>
+                                <select class="form-control  txt-airforce txt-dark-4" name="vehicule_id">
+                                    @foreach ( $vehicules as $vehicule)
+                                    <option class="grey light-4 txt-airforce txt-dark-4" value="{{ $vehicule->id }}">{{ $vehicule->immat }} - {{ $vehicule->marque }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-field">
+                                <input type="number" name="km_vehicule" id="km_vehicule" class="form-control txt-airforce txt-dark-4" />
+                                <label for="km_vehicule">Kilométrage</label>
+                            </div>
+
+                            <input hidden name="id" value="{{ $intervention->id }}" /></input>
+
+                            <div class="txt-center">
+                                <button type="submit" class="btn shadow-1 outline opening txt-orange ml-auto vself-center rounded-2 mt-2 small"><span class="outline-text outline-invert">Valider</span></button>
+                            </div>
+                        </form>
+                    </div>
 
                 </div>
-
-                @endif
-                @if(isset($intervention->needMove) && $intervention->needMove == 0)
-                <div class="card-footer m-0 p-0">
-                    <p class="mb-2">L'intervention nécessite aucun déplacement.</p>
-                    <form action="{{ route('interventions.edit', ['intervention' => $intervention->id]) }}">
-                        @csrf
-                        <input hidden name="id" value="{{ $intervention->id }}" /></input>
-                        <div class="d-flex fx-center">
-                            <button type="submit" class="btn shadow-1 airforce dark-3 ml-auto txt-white rounded-1 hide-md-down mb-2 mr-2 small">Suivant</button>
-                            <button type="submit" class="btn shadow-1 red dark-3 txt-white rounded-1 hide-md-up mb-2 mr-2 small">Suivant</button>
-                        </div>
-                    </form>
+                <div class="d-flex my-auto">
+                    <img src="{{ asset('/images/car.svg') }}" class="responsive-media p-3" alt="">
                 </div>
-                @endif
-
-                @if($intervention->needMove ==1 && !empty($intervention->end_deplacement_aller))
-                <p class="txt-center">Déplacements enregistrés</p>
             </div>
-            <div class="card-footer m-0 p-0">
-                <div class="">
-                    <form action="{{ route('interventions.edit', ['intervention' => $intervention->id]) }}">
-                        @csrf
-                        <input hidden name="id" value="{{ $intervention->id }}" /></input>
-                        <div class="d-flex fx-center">
-                            <button type="submit" class="btn shadow-1 airforce dark-3 ml-auto txt-white rounded-1 hide-md-down mb-2 mr-2 small">Suivant</button>
-                            <button type="submit" class="btn shadow-1 red dark-3 txt-white rounded-1 hide-md-up mb-2 mr-2 small">Suivant</button>
-                        </div>
-                    </form>
-                </div>
+            @else
+            <div class="card-header p-1 bd-b-solid bd-orange bd-dark-1 bd-2 m-0 ml-4 mr-4">
+                <p class="txt-airforce txt-dark-4 h6"><i class="fas fa-car font-s4 txt-airforce txt-dark-4 mr-4"></i>Véhicule enregistré</p>
+            </div>
+            <div class="card-content">
+                <p>Marque : {{ $intervention->vehiculeList->marque }}</p>
+                <p>Modèle : {{ $intervention->vehiculeList->modele }}</p>
+                <p>Kilométrage : {{ $intervention->km_vehicule }} Km</p>
+            </div>
+            @endif
 
+            @if(!empty($intervention->vehicule_id))
+            <div class="card-footer m-0 p-0">
+                <form action="{{ route('interventions.edit', ['intervention' => $intervention->id]) }}" method="GET">
+                @csrf
+                @method('GET')
+                    <div class="d-flex fx-center">
+                        <button type="submit" class="btn shadow-1 airforce dark-3 ml-auto txt-white rounded-1 hide-md-down mb-2 mr-2 small">Suivant</button>
+                        <button type="submit" class="btn shadow-1 red dark-3 txt-white rounded-1 hide-md-up mb-2 mr-2 small">Suivant</button>
+                    </div>
+                </form>
             </div>
             @endif
         </div>
     </div>
 </div>
-</div>
-@endsection
-
-@section('extra-js')
-<script>
-    let btn_yes = document.getElementById('btn-yes');
-    let select_move = document.getElementById('select-move');
-
-    btn_yes.onclick = function() {
-        select_move.classList.add('hide');
-    }
-</script>
 @endsection

@@ -14,6 +14,7 @@ use App\Http\Controllers\TimeInterventionController;
 use App\Http\Controllers\TimeOperationController;
 use App\Http\Controllers\VehiculeController;
 use App\Http\Controllers\UserController;
+use App\Models\Storekeeper;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,11 +30,22 @@ use App\Http\Controllers\UserController;
 
 Auth::routes(['register' => false]);
 
+Route::group(['middleware' => ['storekeeper']], function () {
+    Route::get('/home/storekeeper', [HomeController::class, 'storeKeeperView'])->name('home.storekeeper');
+});
+
 Route::group(['middleware' => ['admin']], function () {
-    Route::get('/admin', [HomeController::class, 'adminView'])->name('admin.view');
+    Route::get('/home/admin', [HomeController::class, 'adminView'])->name('home.admin');
+});
+
+Route::group(['middleware' => ['root']], function () {
+    Route::get('/home/root', [HomeController::class, 'rootView'])->name('home.root');
 });
 
 Route::middleware('auth')->group(function () {
+
+    Route::get('/home/user', [HomeController::class, 'userView'])->name('home.user');
+    
     Route::get('/', [HomeController::class, 'index'])->name('home');
 
     Route::resource('interventions', InterventionController::class);
@@ -87,7 +99,7 @@ Route::middleware('auth')->group(function () {
     
     // Stepper Intervention
     Route::get('/intervention/step1', [InterventionController::class, 'stepOne'])->name('stepOne');
-    Route::post('/intervention/step2', [InterventionController::class, 'stepTwo'])->name('stepTwo');
+    Route::get('/intervention/step2', [InterventionController::class, 'stepTwo'])->name('stepTwo');
 
     //PieceList
     Route::resource('piecesList', PieceListController::class);
@@ -101,4 +113,5 @@ Route::middleware('auth')->group(function () {
     Route::resource('operations', OperationController::class);
     
     Route::get('/exportPDF/{id}', [InterventionController::class, 'exportPDF'])->name('exportPDF');
+
 });

@@ -7237,3 +7237,18 @@ body {
 .orange-custom {
   color: #ff9027;
 }
+
+.role1 {
+  background-color: green;
+  color: white !important;
+}
+
+.role2 {
+  background-color: #ff6600;
+  color: white !important;
+}
+
+.role3 {
+  background-color: maroon;
+  color: white !important;
+}

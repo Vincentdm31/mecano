@@ -13,15 +13,21 @@ class OperationListSeeder extends Seeder
      * @return void
      */
     public function run()
-    {
-        DB::table('operation_lists')->insert([
-            ['name' => 'Vidange'], ['name' => 'Pneumatique'], ['name' => 'Freinage'], ['name' => 'Distribution'],
-            ['name' => 'Embrayage'], ['name' => 'Boite de vitesse'], ['name' => 'Batterie'], ['name' => 'Alternateur'],
-            ['name' => 'Direction'], ['name' => 'Echappement'], ['name' => 'PBM Electrique'], ['name' => 'PBM Chauffage'],
-            ['name' => 'PBM Ventilation'], ['name' => 'PBM Clim'], ['name' => 'Rétroviseur'], ['name' => 'Eclairage'],
-            ['name' => 'Signalisation'], ['name' => 'PREPA CT'], ['name' => 'Contrôle general'], ['name' => 'Contrôle Niveaux'],
-            ['name' => 'Nettoyage'], ['name' => 'Convoyage'], ['name' => 'Déplacement'], ['name' => 'Carrosserie'],
-            ['name' => 'Courroie + galet'], ['name' => 'Pompe à eau'], ['name' => 'Géométrie'], ['name' => 'Diagnostic'],            
-        ]);
+    {   
+
+        $opList = ['Vidange simple', 'Vidange intermédiaire', 'Vidange complète', 'Pneumatique', 'Montage Pneu', 'Freinage', 'Géométrie',
+                    'Contrôle des niveaux', 'Nettoyage', 'Révision simple', 'Révision complète', 'Distribution', 'Embrayage', 'Boite de vitesse',
+                    'Forfait Batterie', 'Alternateur', 'Direction', 'Echappement', 'PBM Electrique', 'PBM Chauffage', 'PBM Ventilation', 'PBM Clim', 'Rétroviseur',
+                    'Eclairage', 'PREPA CT', 'Convoyage', 'Déplacement', 'Carrosserie', 'Courroie + galet', 'Pompe à eau', 'Géométrie', 
+                    'Diagnostic'
+                  ];
+
+        sort($opList);
+
+        foreach($opList as $item){
+            DB::table('operation_lists')->insert([
+                'name' => $item
+            ]);
+        }
     }
 }

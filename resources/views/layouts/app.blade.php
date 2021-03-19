@@ -9,7 +9,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Mecalcis') }}</title>
 
     <!-- Styles -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet" />
@@ -22,17 +22,29 @@
     <header>
         <div class="navbar-fixed">
             <nav class="navbar dark txt-white shadow-1">
-                <a href="{{ url('/') }}" class="navbar-brand hide-sm-down">Mecalcis</a>
+                @if(Auth()->check())
+                @if(Auth()->user()->is_admin== 0)
+                <a href="{{ route('home.user') }}" class="navbar-brand hide-sm-down">Accueil</a>
+                @elseif(Auth()->user()->is_admin == 1)
+                <a href="{{ route('home.storekeeper') }}" class="navbar-brand hide-sm-down">Accueil</a>
+                @elseif(Auth()->user()->is_admin == 2)
+                <a href="{{ route('home.admin') }}" class="navbar-brand hide-sm-down">Accueil</a>
+                @elseif(Auth()->user()->is_admin == 3)
+                <a href="{{ route('home.root') }}" class="navbar-brand hide-sm-down">Accueil</a>
+                @endif
+                @endif
                 <button data-target="sidenav" class="txt-white btn rounded-1 transparent sidenav-trigger hide-md-up"><i class="fas fa-bars mr-1"></i>Menu</button>
                 <div class="navbar-menu ml-auto hide-sm-down">
                     @if(Auth()->check())
-                    @if(Auth()->user()->is_admin)
+                    @if(Auth()->user()->is_admin > 1)
                     <a href="{{ route('adminIntervention') }}" class="navbar-link">Interventions</a>
                     <a href="{{ route('users.index') }}" class="navbar-link">Gestion utilisateurs</a>
                     <a href="{{ route('vehicules.index') }}" class="navbar-link">Gestion véhicules</a>
                     <a href="{{ route('piecesList.index') }}" class="navbar-link">Gestion pièces</a>
                     <a href="{{ route('operationsList.index') }}" class="navbar-link">Gestion catégories</a>
+                    @if(Auth()->user()->is_admin > 2)
                     <a href="{{ route('getVehicules') }}" class="navbar-link">API</a>
+                    @endif
                     @endif
                     @endif
                 </div>
@@ -66,13 +78,15 @@
         </div>
         <div class="txt-white">
             @if(Auth()->check())
-            @if(Auth()->user()->is_admin)
+            @if(Auth()->user()->is_admin > 1)
             <a href="{{ route('adminIntervention') }}" class="sidenav-link">Interventions</a>
             <a href="{{ route('users.index') }}" class="sidenav-link">Gestion utilisateurs</a>
             <a href="{{ route('vehicules.index') }}" class="sidenav-link">Gestion véhicules</a>
             <a href="{{ route('piecesList.index') }}" class="sidenav-link">Gestion pièces</a>
             <a href="{{ route('operationsList.index') }}" class="sidenav-link">Gestion catégories</a>
+            @if(Auth()->user()->is_admin > 2)
             <a href="{{ route('getVehicules') }}" class="sidenav-link">API</a>
+            @endif
             @else
             <form class="form-material sidenav-link" method="POST" action="{{ route('interventions.store') }}">
                 @csrf

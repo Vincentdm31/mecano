@@ -196,11 +196,20 @@ class InterventionController extends Controller
 
     public function stepOne(Request $request)
     {
+        $id = $request->id;
+        $intervention = Intervention::find($id);
+        $vehicules = Vehicule::all();
+
+        return view('interventions.step1', ['intervention' => $intervention, 'vehicules' => $vehicules]);
+    }
+
+    public function stepTwo(Request $request)
+    {
         $intervention_id = $request->id;
         $vehicules = Vehicule::all();
         $intervention = Intervention::find($intervention_id);
 
-        return view('interventions.step1', ['intervention' => $intervention, 'vehicules' => $vehicules]);
+        return view('interventions.step2', ['intervention' => $intervention, 'vehicules' => $vehicules]);
     }
 
     public function searchIntervVehicule(Request $request)
@@ -213,7 +222,7 @@ class InterventionController extends Controller
             ->orWhere('marque', 'like', '%' . $search . '%')
             ->get();
 
-        return view('interventions.step1', ['intervention' => $intervention, 'vehicules' => $vehicules, 'id' => $intervention_id]);
+        return view('interventions.step2', ['intervention' => $intervention, 'vehicules' => $vehicules, 'id' => $intervention_id]);
     }
 
     public function selectVehicule(Request $request)
@@ -230,28 +239,22 @@ class InterventionController extends Controller
 
         $intervention->save();
 
-        return view('interventions.step1', ['intervention' => $intervention]);
-    }
-
-    public function stepTwo(Request $request)
-    {
-        $id = $request->id;
-        $intervention = Intervention::find($id);
-
         return view('interventions.step2', ['intervention' => $intervention]);
     }
+
+    
 
     public function needMove(Request $request)
     {
         $id = $request->id;
         $needMove = $request->needMove;
-
+        $vehicules = Vehicule::all();
         $intervention = Intervention::find($id);
         $intervention->needMove = $needMove;
 
         $intervention->save();
 
-        return view('interventions.step2', ['intervention' => $intervention]);
+        return view('interventions.step1', ['intervention' => $intervention, 'vehicules' => $vehicules]);
     }
 
     public function setDeplacement(Request $request)
@@ -268,7 +271,7 @@ class InterventionController extends Controller
 
         $intervention->save();
 
-        return view('interventions.step2', ['intervention' => $intervention]);
+        return view('interventions.step1', ['intervention' => $intervention]);
     }
 
     public function setEndDeplacement(Request $request)

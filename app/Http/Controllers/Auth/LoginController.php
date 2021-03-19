@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -21,6 +23,23 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
+    protected function authenticated()
+    {
+        if (Auth::check() && Auth()->user()->is_admin == 0){ // do your magic here
+            return redirect()->route('home.user');
+        }
+        else if (Auth::check() && Auth()->user()->is_admin == 1){ // do your magic here
+            return redirect()->route('home.storekeeper');
+        }
+        else if (Auth::check() && Auth()->user()->is_admin == 2){ // do your magic here
+            return redirect()->route('home.admin');
+        }
+        else if (Auth::check() && Auth()->user()->is_admin == 3){ // do your magic here
+            return redirect()->route('home.root');
+        }
+
+        return redirect('/');
+    }
     /**
      * Where to redirect users after login.
      *

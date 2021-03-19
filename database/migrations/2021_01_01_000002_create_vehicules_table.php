@@ -18,7 +18,9 @@ class CreateVehiculesTable extends Migration
             $table->id();
             $table->string('marque');
             $table->string('modele');
-            $table->string('immat');
+            $table->string('immat', 5)->unique();
+            $table->integer('categorie')->nullable();
+            $table->integer('year')->nullable();
             $table->timestamps();
         });
     }

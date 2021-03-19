@@ -20,8 +20,8 @@
         </div>
     </div>
 
-    <div class="container mt-5 shadow-1">
-        <div class="responsive-table">
+    <div class="container mt-5 shadow-1 rounded-2">
+        <div class="responsive-table rounded-2">
             <table class="table striped ">
                 <thead>
                     <tr>
@@ -34,7 +34,7 @@
                 <tbody>
                     @foreach($users as $user)
                     <tr>
-                        <td class="txt-center <?php echo($user->is_admin ? 'orange dark-1 txt-white' : '') ?>">{{ $user->id }}</td>
+                        <td class="txt-center <?php echo('role' . $user->is_admin) ?>">{{ $user->id }}</td>
                         <td class="txt-center">{{ $user->name }}</td>
                         <td class="txt-center">{{ $user->email }}</td>
                         <td>

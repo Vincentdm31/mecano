@@ -16,6 +16,7 @@ class CreateOperationListsTable extends Migration
         Schema::create('operation_lists', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->integer('price')->default(0);
             $table->timestamps();
         });
     }

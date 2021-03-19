@@ -89,6 +89,7 @@ $date = Carbon::now();
                         @else
                         <div class="grix xs1 md2">
                             @foreach( $intervention->operations as $operation)
+                            @if($operation->state == 'finish')
                             <div class="my-auto pl-5 txt-airforce txt-dark-4 pb-2">
                                 <li class="mb-2 mt-3">
                                     {{ $operation->operationList->name}}
@@ -100,7 +101,9 @@ $date = Carbon::now();
                                 <em class="ml-5 mb-5 pb-5"><b> {{$piece->pieceList->name }}</b><span class="ml-3">x{{$piece->qte}}</span></em><br>
                                 @endforeach
                             </div>
-
+                            @else
+                            <p class="txt-orange pl-3">Aucune opération terminée</p>
+                            @endif
                             @endforeach
                         </div>
                         @endif

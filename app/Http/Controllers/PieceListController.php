@@ -137,7 +137,7 @@ class PieceListController extends Controller
     public function searchPiecesList(Request $request)
     {
         $search = $request->get('searchPiecesList');
-
+        
         $piecesList = PieceList::Where('ref', 'like', '%'.$search.'%')
                             ->orWhere('name', 'like', '%'.$search.'%')
                             ->get();
