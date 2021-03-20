@@ -45,7 +45,7 @@ Route::group(['middleware' => ['root']], function () {
 Route::middleware('auth')->group(function () {
 
     Route::get('/home/user', [HomeController::class, 'userView'])->name('home.user');
-    
+
     Route::get('/', [HomeController::class, 'index'])->name('home');
 
     Route::resource('interventions', InterventionController::class);
@@ -78,25 +78,17 @@ Route::middleware('auth')->group(function () {
 
 
 
-    // Opération
-    Route::post('/addOperation',  [InterventionController::class, 'addOperation'])->name('addOperation');
-    Route::put('/editOperation',  [InterventionController::class, 'editOperation'])->name('editOperation');
-    Route::put('/deleteOperation',  [InterventionController::class, 'deleteOperation'])->name('deleteOperation');
 
-    // Pièce
-    Route::post('/addPiece',  [InterventionController::class, 'addPiece'])->name('addPiece');
-    Route::put('/editPiece',  [InterventionController::class, 'editPiece'])->name('editPiece');
-    Route::put('/deletePiece',  [InterventionController::class, 'deletePiece'])->name('deletePiece');
 
     // Timer Intervention
     Route::resource('time', TimeInterventionController::class);
     Route::post('/totalTime',  [TimeInterventionController::class, 'totalTime'])->name('totalTime');
     Route::post('/totalTimeOp',  [TimeOperationController::class, 'totalTimeOp'])->name('totalTimeOp');
-    
+
     // Véhicule
     Route::get('/searchVehicule',  [VehiculeController::class, 'searchVehicule']);
     Route::get('/getVehicules',  [VehiculeController::class, 'getVehicules'])->name('getVehicules');
-    
+
     // Stepper Intervention
     Route::get('/intervention/step1', [InterventionController::class, 'stepOne'])->name('stepOne');
     Route::get('/intervention/step2', [InterventionController::class, 'stepTwo'])->name('stepTwo');
@@ -111,7 +103,6 @@ Route::middleware('auth')->group(function () {
 
     //Operation
     Route::resource('operations', OperationController::class);
-    
-    Route::get('/exportPDF/{id}', [InterventionController::class, 'exportPDF'])->name('exportPDF');
 
+    Route::get('/exportPDF/{id}', [InterventionController::class, 'exportPDF'])->name('exportPDF');
 });

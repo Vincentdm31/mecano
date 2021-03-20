@@ -70,9 +70,17 @@ class InterventionController extends Controller
             $intervention->users()->attach(Auth::id());
         }
 
-        $operationsList = OperationList::all();
-        $piecesList = PieceList::all();
         $operations = Operation::all();
+
+        $operationsId = array();
+
+        foreach ($operations as $op) {
+            array_push($operationsId, $op->operation_id);
+        }
+
+        $operationsList = OperationList::whereNotIn('id', $operationsId)->get();
+
+        $piecesList = PieceList::all();
         $pieces = Piece::all();
         $vehicules = Vehicule::all();
 

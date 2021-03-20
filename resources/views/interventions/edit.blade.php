@@ -101,7 +101,22 @@ $date = Carbon::now();
                                 <em class=" mb-5 pb-5 txt-orange txt-dark-1">Aucune pièce affectée</em>
                                 @endif
                                 @foreach($operation->pieces as $piece)
-                                <em class="ml-5 mb-5 pb-5"><b> {{$piece->pieceList->name }}</b><span class="ml-3">x{{$piece->qte}}</span></em><br>
+                                <div class="grix xs2">
+                                    <div>
+                                        <em class="ml-5 mb-5 pb-5"><b> {{$piece->pieceList->name }}</b><span class="ml-3">x{{$piece->qte}}</span></em>
+                                    </div>
+                                    <div>
+                                        <form method="POST" action="{{ route('pieces.destroy',  ['piece' => $piece->id])}}">
+                                            @method('PUT')
+                                            @csrf
+                                            <div class="txt-center">
+                                                <input hidden value="{{ $intervention->id }}" name="interventionId" />
+                                                <button type="submit" class="btn light-shadow-1 rounded-1 small txt-red"><i class="fas fa-trash"></i></button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
                                 @endforeach
                             </div>
                             @endif
@@ -269,7 +284,7 @@ $date = Carbon::now();
                                     <input hidden value="finish" name="state" />
                                     <input hidden value="{{ $intervention->id }}" name="intervention_id" />
                                     <button type="submit" class="btn shadow-1 rounded-1 white light-shadow-3 mx-auto">
-                                        <i class="far fa-stop-circle txt-red txt-dark-2 "></i>
+                                        <i class="fas fa-check txt-green txt-dark-2 "></i>
                                     </button>
                                 </div>
                             </form>

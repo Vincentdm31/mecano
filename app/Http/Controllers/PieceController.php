@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Intervention;
 use App\Models\Piece;
 use App\Models\PieceList;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class PieceController extends Controller
 {
     public function store(Request $request)
-    {   
+    {
         $refPiece = $request->pieceref;
         $operationId = $request->operationId;
         $intervention = $request->interventionId;
@@ -19,7 +19,7 @@ class PieceController extends Controller
         $pieceId = PieceList::Where('ref', 'like', '%' . $refPiece . '%')->get()->pluck('id')->implode('');
         $pieceQte = PieceList::Where('ref', 'like', '%' . $refPiece . '%')->get()->pluck('qte')->implode('');
 
-        if($pieceQte <= $qte){
+        if ($pieceQte <= $qte) {
             return redirect(route('interventions.edit', ['intervention' => $intervention, 'pieceQte' => $pieceQte]))->with('toast', 'notEnoughQte');
         }
 
@@ -35,6 +35,20 @@ class PieceController extends Controller
         $pieceListId->save();
 
         return redirect(route('interventions.edit', ['intervention' => $intervention]))->with('toast', 'pieceStore');
+    }
 
+    public function destroy(Request $request, $id)
+    {
+        dd('toto');
+        $intervention = Intervention::find($request->interventionId);
+        $piece = Piece::find($id);
+        $pieceList = PieceList::find($piece->piece_id);
+        $piece->qte -= 1;
+        $piece->save();
+
+        $pieceList->qte += 1;
+        $pieceList->save();
+
+        return redirect(route('interventions.edit', ['intervention' => $intervention]))->with('toast', 'pieceDelete');
     }
 }
