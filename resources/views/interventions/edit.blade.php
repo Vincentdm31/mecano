@@ -83,10 +83,13 @@ $date = Carbon::now();
                 </div>
                 <div class="card-footer p-3 white">
                     <div class="p-2 shadow-2 rounded-2">
-                        <p class="txt-airforce txt-dark-4 bd-b-solid bd-orange bd-2 pb-2 pl-2"><i class="fas fa-tools font-s4 mr-4 txt-airforce txt-dark-4"></i>Liste des opérations</p>
+                        <p class="txt-airforce txt-dark-4 bd-b-solid bd-orange bd-2 pb-2 pl-2"><i class="fas fa-tools font-s4 mr-4 txt-airforce txt-dark-4"></i>Liste des opérations terminées</p>
                         @if(!$intervention->operations()->exists())
                         <p class="txt-orange pl-3">Aucune opération en cours</p>
                         @else
+                        <p class="txt-green txt-dark-2"><span>{{ $opDoing->count()}} </span>opérations(s) en cours</p>
+                        <p class="txt-orange txt-dark-2"><span>{{ $opPause->count()}} </span>opération(s) en pause</p>
+                        <p class="txt-red txt-dark-2"><span>{{ $opEnd->count()}} </span>opération(s) terminée(s)</p>
                         <div class="grix xs1 md2">
                             @foreach( $intervention->operations as $operation)
                             @if($operation->state == 'finish')
@@ -101,8 +104,6 @@ $date = Carbon::now();
                                 <em class="ml-5 mb-5 pb-5"><b> {{$piece->pieceList->name }}</b><span class="ml-3">x{{$piece->qte}}</span></em><br>
                                 @endforeach
                             </div>
-                            @else
-                            <p class="txt-orange pl-3">Aucune opération terminée</p>
                             @endif
                             @endforeach
                         </div>
@@ -166,9 +167,11 @@ $date = Carbon::now();
                     <p class="h6 txt-center "><i class="fas fa-hammer font-s4 mr-4 txt-airforce txt-dark-4"></i><b> Mes opérations</b></p>
                 </div>
                 <div class="d-flex pos-row-xs1 pos-sm2">
-                    <button data-target="modal-new-operation" class="mx-auto my-auto btn rounded-1 txt-white shadow-1 orange dark-1 modal-trigger small">
-                        Nouvelle opération
-                    </button>
+                    @if( $opDoing->count() < 1 && $opPause->count() < 1 && $opEnd->count() < 1) <button data-target="modal-new-operation" class="mx-auto my-auto btn rounded-1 txt-white shadow-1 orange dark-1 modal-trigger small">Nouvelle opération</button>
+                                @elseif($opDoing->count() > 0)
+                                <button data-target="modal-new-operation" class="disabled mx-auto my-auto btn rounded-1 txt-white shadow-1 orange dark-1 modal-trigger small">Nouvelle opération</button>
+                                @elseif($opDoing->count() < 1) <button data-target="modal-new-operation" class="mx-auto my-auto btn rounded-1 txt-white shadow-1 orange dark-1 modal-trigger small">Nouvelle opération</button>
+                                    @endif
                 </div>
             </div>
             <div>
@@ -177,6 +180,7 @@ $date = Carbon::now();
                 @else
                 <div class="grix xs1">
                     @foreach( $intervention->operations as $operation)
+                    @if($operation->state != 'finish')
                     <div class="my-auto pl-5 txt-airforce txt-dark-4 pb-2">
                         <li class="mb-2 mt-3">
                             {{ $operation->operationList->name}}
@@ -203,7 +207,7 @@ $date = Carbon::now();
 
                         <div class="my-auto mx-auto">
                             <!--  -->
-                            @if($operation->state)
+                            @if($operation->state == 'doing')
                             <div>
                                 <form class="form-material" method="POST" action="{{ route('timeoperations.store') }}">
                                     @csrf
@@ -217,13 +221,12 @@ $date = Carbon::now();
                                     </div>
                                 </form>
                             </div>
-                            @elseif(!$operation->state)
+                            @elseif($operation->state == 'pause')
                             <div>
                                 <form class="form-material my-auto" method="POST" action="{{ route('timeoperations.store') }}">
                                     @csrf
                                     <input hidden name="intervention_id" value="{{ $intervention->id }}">
                                     <input hidden name="operation_id" value="{{ $operation->id }}">
-
                                     <input hidden name="end_date" value="{{ $date }}">
                                     <div class="txt-center">
                                         <button type="submit" class="btn rounded-1 white light-shadow-3 txt-blue mx-auto">
@@ -244,6 +247,7 @@ $date = Carbon::now();
                                 </div>
                             </form>
                         </div>
+                        <!-- TEST TIME OPERATION
                         <div>
                             <form class="form-material my-auto" method="POST" action="{{ route('totalTimeOp')}}">
                                 @csrf
@@ -256,7 +260,22 @@ $date = Carbon::now();
                                 </div>
                             </form>
                         </div>
+                         -->
+                        <div>
+                            <form method="POST" action="{{ route('operations.update',  ['operation' => $operation->id])}}">
+                                @method('PUT')
+                                @csrf
+                                <div class="txt-center">
+                                    <input hidden value="finish" name="state" />
+                                    <input hidden value="{{ $intervention->id }}" name="intervention_id" />
+                                    <button type="submit" class="btn shadow-1 rounded-1 white light-shadow-3 mx-auto">
+                                        <i class="far fa-stop-circle txt-red txt-dark-2 "></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
+                    @endif
                     @endforeach
                 </div>
                 @endif
@@ -312,7 +331,10 @@ $date = Carbon::now();
                             @csrf
                             <div class="txt-center">
                                 <input hidden value="finish" name="state" />
-                                <button type="submit" class="btn shadow-1 rounded-1 red small">Terminer l'intervention</button>
+                                @if($opDoing->count() < 1 && $opPause->count() < 1) <button type="submit" class="btn shadow-1 rounded-1 red small">Terminer l'intervention</button>
+                                        @else
+                                        <button type="submit" class="btn disabled shadow-1 rounded-1 red small">Terminer l'intervention</button>
+                                        @endif
                             </div>
                         </form>
                     </div>

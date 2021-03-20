@@ -9,47 +9,23 @@ use App\Models\Piece;
 use App\Models\PieceList;
 use App\Models\Vehicule;
 use Carbon\Carbon;
-use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Date;
 use LaravelDaily\Invoices\Invoice;
 use LaravelDaily\Invoices\Classes\Party;
 use LaravelDaily\Invoices\Classes\InvoiceItem;
 
 class InterventionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        $interventions = Intervention::Where('state', '!=', 'finish')->get();
+        $interventions = Intervention::where('state', '!=', 'finish')->get();
 
         return view('interventions.index', ['interventions' => $interventions]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('interventions.create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-
         $inputs = $request->except('_token', 'created_at', 'updated_at');
         $intervention = new Intervention();
 
@@ -61,10 +37,11 @@ class InterventionController extends Controller
         $intervention->created_by = Auth::user()->name;
         $intervention->user_id = Auth::user()->id;
         $intervention->start_intervention_time = Carbon::now();
+
         $intervention->save();
         $intervention->users()->attach(Auth::user()->id);
-        
-        return redirect(route('stepOne', ['intervention' => $intervention, 'id' => $intervention->id]));
+
+        return redirect(route('stepOne', ['id' => $intervention->id]));
     }
 
     /**
@@ -99,11 +76,25 @@ class InterventionController extends Controller
         $pieces = Piece::all();
         $vehicules = Vehicule::all();
 
+        $opDoing = Operation::Where('intervention_id', $id)
+            ->Where('state', 'like', 'doing')
+            ->get();
+
+        $opPause = Operation::Where('intervention_id', $id)
+            ->Where('state', 'pause')
+            ->get();
+        $opEnd = Operation::Where('intervention_id', $id)
+            ->Where('state', 'finish')
+            ->get();
+
         $search = $request->get('selectVehicule');
         $vehicules = Vehicule::Where('immat', 'like', '%' . $search . '%')
             ->get();
 
-        return view('interventions.edit', ['intervention' => $intervention, 'vehicules' => $vehicules, 'operationsList' => $operationsList, 'piecesList' => $piecesList, 'operations' => $operations, 'pieces' => $pieces])->with('toast', 'update');
+        return view('interventions.edit', [
+            'intervention' => $intervention, 'vehicules' => $vehicules, 'operationsList' => $operationsList, 'piecesList' => $piecesList,
+            'operations' => $operations, 'pieces' => $pieces, 'opDoing' => $opDoing, 'opEnd' => $opEnd, 'opPause' => $opPause
+        ])->with(['toast' => 'update']);
     }
 
     /**
@@ -242,7 +233,7 @@ class InterventionController extends Controller
         return view('interventions.step2', ['intervention' => $intervention]);
     }
 
-    
+
 
     public function needMove(Request $request)
     {
@@ -285,7 +276,7 @@ class InterventionController extends Controller
         foreach ($inputs as $key => $value) {
             $intervention->$key = $value;
         }
-        
+
         $intervention->save();
 
         return redirect(route('interventions.edit', ['intervention' => $intervention]));
@@ -346,8 +337,8 @@ class InterventionController extends Controller
             ->addItems($itemList)
             ->notes($notes)
             ->logo(public_path('images/logoFact.png'));
-            // ->filename('toto')
-            // ->save('public');
+        // ->filename('toto')
+        // ->save('public');
 
         return $invoice->stream();
     }

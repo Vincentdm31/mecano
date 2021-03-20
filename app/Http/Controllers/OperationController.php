@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Intervention;
 use App\Models\Operation;
 use App\Models\PieceList;
 use Illuminate\Http\Request;
@@ -47,7 +48,7 @@ class OperationController extends Controller
 
         $operation->save();
 
-        return redirect(route('interventions.edit', ['intervention' => $intervention_id]))->with('toast', 'addOperation');
+        return redirect(route('interventions.edit', ['intervention' => $intervention_id]))->with(['toast' => 'addOperation', 'opState' => 'notEnd']);
     }
 
     /**
@@ -82,7 +83,8 @@ class OperationController extends Controller
     public function update(Request $request, $id)
     {
         $inputs = $request->except('_token', '_method', 'updated_at');
-        $intervention = $request->intervention_id;
+        $interventionId = $request->intervention_id;
+        $intervention = Intervention::find($interventionId);
         $operation = Operation::find($id);
 
         foreach ($inputs as $key => $value) {
@@ -91,7 +93,7 @@ class OperationController extends Controller
 
         $operation->save();
 
-        return redirect(route('interventions.edit', ['intervention' => $intervention]))->with('toast', 'update');
+        return redirect(route('interventions.edit', ['intervention' => $intervention->id]))->with(['toast' => 'update']);
     }
 
     /**
@@ -105,19 +107,18 @@ class OperationController extends Controller
         $intervention = $request->intervention_id;
 
         $operation = Operation::find($id);
-        
 
-        foreach($operation->pieces as $piece){
+
+        foreach ($operation->pieces as $piece) {
             $pieceId = $piece->piece_id;
             $pieceList = PieceList::find($pieceId);
 
             $pieceList->qte += $piece->qte;
             $pieceList->save();
-            
         }
 
         $operation->delete();
-        
-        return redirect(route('interventions.edit', ['intervention' => $intervention]))->with('toast', 'removeOperation');
+
+        return redirect(route('interventions.edit', ['intervention' => $intervention->id]))->with('toast', 'removeOperation');
     }
 }

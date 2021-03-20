@@ -43,7 +43,7 @@ class TimeOperationController extends Controller
         $operationId = $request->input('operation_id');
         $operation = Operation::find($operationId);
 
-        if ($operation->state) {
+        if ($operation->state == 'doing') {
             $timer = new TimeOperation();
 
             foreach ($inputs as $key => $value) {
@@ -51,10 +51,9 @@ class TimeOperationController extends Controller
                 $timer->save();
             }
 
-            $operation->state = false;
+            $operation->state = 'pause';
             $operation->save();
-
-        } else if (!$operation->state) {
+        } else if ($operation->state == 'pause') {
             $timer = TimeOperation::Where('operation_id', 'like', $operationId)->latest()->first();
 
             foreach ($inputs as $key => $value) {
@@ -62,13 +61,13 @@ class TimeOperationController extends Controller
                 $timer->save();
             }
 
-            $operation->state = true;
+            $operation->state = 'doing';
             $operation->save();
         }
 
         return redirect(route('interventions.edit', ['intervention' => $interventionID]));
     }
-    
+
 
     /**
      * Display the specified resource.
@@ -115,13 +114,14 @@ class TimeOperationController extends Controller
         //
     }
 
-    public function totalTimeOp(Request $request){
+    public function totalTimeOp(Request $request)
+    {
 
         $id = $request->input('operation_id');
         $dates = TimeOperation::Where('operation_id', 'like', $id)->whereNotNull('end_date')->get();
         $totaltime = 0;
 
-        foreach ($dates as $date){
+        foreach ($dates as $date) {
             $timetoseconds = Carbon::parse($date->end_date)->diffInSeconds(Carbon::parse($date->start_date));
             $totaltime += $timetoseconds;
         }
