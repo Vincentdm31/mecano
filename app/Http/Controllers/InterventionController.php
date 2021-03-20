@@ -70,7 +70,7 @@ class InterventionController extends Controller
             $intervention->users()->attach(Auth::id());
         }
 
-        $operations = Operation::all();
+        $operations = Operation::where('intervention_id', $id)->get();
 
         $operationsId = array();
 
@@ -78,7 +78,7 @@ class InterventionController extends Controller
             array_push($operationsId, $op->operation_id);
         }
 
-        $operationsList = OperationList::whereNotIn('id', $operationsId)->get();
+        $operationsList = OperationList::all()->except($operationsId);
 
         $piecesList = PieceList::all();
         $pieces = Piece::all();

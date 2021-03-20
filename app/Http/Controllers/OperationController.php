@@ -82,7 +82,7 @@ class OperationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $inputs = $request->except('_token', '_method', 'updated_at');
+        $inputs = $request->except('_token', '_method', 'updated_at', 'interventionId');
         $interventionId = $request->intervention_id;
         $intervention = Intervention::find($interventionId);
         $operation = Operation::find($id);
@@ -108,7 +108,6 @@ class OperationController extends Controller
 
         $operation = Operation::find($id);
 
-
         foreach ($operation->pieces as $piece) {
             $pieceId = $piece->piece_id;
             $pieceList = PieceList::find($pieceId);
@@ -118,6 +117,23 @@ class OperationController extends Controller
         }
 
         $operation->delete();
+
+        return redirect(route('interventions.edit', ['intervention' => $intervention]))->with('toast', 'removeOperation');
+    }
+
+    public function editOperation(Request $request, $id)
+    {
+        $operation = Operation::find($id);
+        $intervention = Intervention::find($request->interventionId);
+        $operation->state = 'doing';
+
+        $operation->save();
+
+        $operationsList = Operation::where('state', 'doing')->get();
+        foreach ($operationsList as $op) {
+            $op->state = 'pause';
+            $op->save();
+        }
 
         return redirect(route('interventions.edit', ['intervention' => $intervention->id]))->with('toast', 'removeOperation');
     }

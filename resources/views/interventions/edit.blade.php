@@ -94,9 +94,26 @@ $date = Carbon::now();
                             @foreach( $intervention->operations as $operation)
                             @if($operation->state == 'finish')
                             <div class="my-auto pl-5 txt-airforce txt-dark-4 pb-2">
-                                <li class="mb-2 mt-3">
-                                    {{ $operation->operationList->name}}
-                                </li>
+                                <div class="grix xs2">
+                                    <div>
+                                        <li class="mb-2 mt-3">
+                                            {{ $operation->operationList->name}}
+                                        </li>
+                                    </div>
+                                    <div class="d-flex my-auto vbottom">
+                                        <div>
+                                            <form method="POST" action="{{ route('editOperation',  ['id' => $operation->id])}}">
+                                                @method('PUT')
+                                                @csrf
+                                                <div class="txt-center">
+                                                    <input hidden value="{{ $intervention->id }}" name="interventionId" />
+                                                    <input hidden value="doing" name="state" />
+                                                    <button type="submit" class="btn light-shadow-1 rounded-1 small txt-blue"><i class="fas fa-trash"></i></button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                                 @if(!$operation->pieces()->exists())
                                 <em class=" mb-5 pb-5 txt-orange txt-dark-1">Aucune pièce affectée</em>
                                 @endif
@@ -107,7 +124,7 @@ $date = Carbon::now();
                                     </div>
                                     <div>
                                         <form method="POST" action="{{ route('pieces.destroy',  ['piece' => $piece->id])}}">
-                                            @method('PUT')
+                                            @method('delete')
                                             @csrf
                                             <div class="txt-center">
                                                 <input hidden value="{{ $intervention->id }}" name="interventionId" />
