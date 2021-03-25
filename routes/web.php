@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InterventionController;
@@ -14,7 +13,7 @@ use App\Http\Controllers\TimeInterventionController;
 use App\Http\Controllers\TimeOperationController;
 use App\Http\Controllers\VehiculeController;
 use App\Http\Controllers\UserController;
-use App\Models\Storekeeper;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -32,14 +31,18 @@ Auth::routes(['register' => false]);
 
 Route::group(['middleware' => ['storekeeper']], function () {
     Route::get('/home/storekeeper', [HomeController::class, 'storeKeeperView'])->name('home.storekeeper');
+    Route::resource('piecesList', PieceListController::class);
 });
 
 Route::group(['middleware' => ['admin']], function () {
     Route::get('/home/admin', [HomeController::class, 'adminView'])->name('home.admin');
+    Route::resource('users', UserController::class);
+    Route::resource('operationsList', OperationListController::class);
 });
 
 Route::group(['middleware' => ['root']], function () {
     Route::get('/home/root', [HomeController::class, 'rootView'])->name('home.root');
+    Route::resource('vehicules', VehiculeController::class);
 });
 
 Route::middleware('auth')->group(function () {
@@ -52,16 +55,12 @@ Route::middleware('auth')->group(function () {
     Route::resource('timeinterventions', TimeInterventionController::class);
     Route::resource('timeoperations', TimeOperationController::class);
     Route::resource('controller', Controller::class);
-    Route::resource('vehicules', VehiculeController::class);
     Route::resource('pieces', PieceController::class);
-    Route::resource('categories', CategorieController::class);
-    Route::resource('users', UserController::class);
+
 
     // User
     Route::get('/searchUser',  [UserController::class, 'searchUser']);
 
-    // Catégorie
-    Route::get('/searchCategorie',  [CategorieController::class, 'searchCategorie']);
 
     // Intervention
     Route::get('/resumeIntervention',  [InterventionController::class, 'resumeIntervention'])->name('resumeIntervention');
@@ -94,11 +93,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/intervention/step2', [InterventionController::class, 'stepTwo'])->name('stepTwo');
 
     //PieceList
-    Route::resource('piecesList', PieceListController::class);
     Route::get('/searchPiecesList',  [PieceListController::class, 'searchPiecesList']);
 
     //OperationList
-    Route::resource('operationsList', OperationListController::class);
     Route::get('/searchOperationsList',  [OperationListController::class, 'searchOperationsList']);
 
     //Operation

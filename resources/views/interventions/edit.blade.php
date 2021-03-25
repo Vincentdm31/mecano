@@ -574,5 +574,12 @@ $date = Carbon::now();
     });
     toast.show();
 </script>
+@elseif(session('error') == 'restrictAccess')
+<script>
+    toast.change('Vous n\'avez pas accès à cette page', {
+        classes: "rounded-1 red dark-2 shadow-2"
+    });
+    toast.show();
+</script>
 @endif
 @endsection
