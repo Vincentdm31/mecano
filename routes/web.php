@@ -106,4 +106,6 @@ Route::middleware('auth')->group(function () {
     Route::put('/editOperation/{id}', [OperationController::class, 'editOperation'])->name('editOperation');
 
     Route::get('/searchOperationsList',  [OperationListController::class, 'searchOperationsList']);
+
+    Route::get('/exportPDF/{id}', [InterventionController::class, 'exportPDF'])->name('exportPDF');
 });
