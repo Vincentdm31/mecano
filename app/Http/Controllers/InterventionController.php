@@ -7,6 +7,7 @@ use App\Models\Operation;
 use App\Models\OperationList;
 use App\Models\Piece;
 use App\Models\PieceList;
+use App\Models\TimeIntervention;
 use App\Models\Vehicule;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -349,5 +350,26 @@ class InterventionController extends Controller
         // ->save('public');
 
         return $invoice->stream();
+    }
+
+    public function totalTime($id)
+    {
+        $intervention = Intervention::find($id);
+
+        $totalTimeIntervention = Carbon::parse($intervention->end_intervention_time)->diffInSeconds(Carbon::parse($intervention->start_intervention_time));
+
+        $pauseInterventionList = TimeIntervention::Where('intervention_id', 'like', $id)->whereNotNull('end_date')->get();
+
+        $totalTime = 0;
+        $timePauseIntervention = 0;
+
+        foreach ($pauseInterventionList as $pause) {
+            $timetoseconds = Carbon::parse($pause->end_date)->diffInSeconds(Carbon::parse($pause->start_date));
+            $timePauseIntervention += $timetoseconds;
+        }
+
+        $totalTime = $totalTimeIntervention - $timePauseIntervention;
+
+        dd($totalTime);
     }
 }

@@ -97,4 +97,6 @@ Route::middleware('auth')->group(function () {
     Route::resource('operations', OperationController::class);
     Route::put('/editOperation/{id}', [OperationController::class, 'editOperation'])->name('editOperation');
     Route::get('/searchOperationsList',  [OperationListController::class, 'searchOperationsList']);
+
+    Route::get('/totalTimeIntervention/{id}', [InterventionController::class, 'totalTime'])->name('totalTimeIntervention');
 });

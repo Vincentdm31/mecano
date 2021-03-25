@@ -146,8 +146,6 @@ class OperationController extends Controller
             $op->save();
         }
 
-
-
         return redirect(route('interventions.edit', ['intervention' => $intervention->id]))->with('toast', 'editOperation');
     }
 }
