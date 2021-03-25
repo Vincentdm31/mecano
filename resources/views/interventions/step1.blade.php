@@ -23,13 +23,13 @@ $date = Carbon::now();
                         @csrf
                         <input hidden name="id" value="{{ $intervention->id }}"></input>
                         <input hidden name="needMove" value="1"></input>
-                        <button type="submit" class="btn green dark-2 txt-white small rounded-1 w100">Oui</button>
+                        <button type="submit" class="btn green dark-3 txt-white small rounded-1 w100">Oui</button>
                     </form>
                     <form action="{{ route('needMove')}}" method="POST">
                         @csrf
                         <input hidden name="id" value="{{ $intervention->id }}"></input>
                         <input hidden name="needMove" value="0"></input>
-                        <button type="submit" class="btn red dark-2 txt-white small rounded-1 w100">Non</button>
+                        <button type="submit" class="btn red dark-3 txt-white small rounded-1 w100">Non</button>
                     </form>
                 </div>
                 @endif

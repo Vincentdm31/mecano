@@ -522,56 +522,56 @@ $date = Carbon::now();
 @if(session('toast') == 'notEnoughQte')
 <script>
     toast.change('Pas assez de pièces <?php echo ('<br/> Stock dispo : ' . request()->pieceQte) ?>', {
-        classes: "rounded-1 red dark-1 shadow-2 mt-5"
+        classes: "rounded-1 red dark-2 txt-white shadow-2 mt-5"
     });
     toast.show();
 </script>
 @elseif(session('toast') == 'pieceStore')
 <script>
     toast.change('Pièce ajoutée', {
-        classes: "rounded-1 green txt-white shadow-2"
+        classes: "rounded-1 green dark-2 txt-white shadow-2"
     });
     toast.show();
 </script>
 @elseif(session('toast') == 'removepiece')
 <script>
     toast.change('Pièce supprimée', {
-        classes: "rounded-1 red dark-1 shadow-2"
+        classes: "rounded-1 red dark-2 txt-white shadow-2"
     });
     toast.show();
 </script>
 @elseif(session('toast') == 'comment')
 <script>
     toast.change('Commentaire ajouté', {
-        classes: "rounded-1 green light-2 shadow-2"
+        classes: "rounded-1 green dark-2 txt-white shadow-2"
     });
     toast.show();
 </script>
 @elseif(session('toast') == 'addOperation')
 <script>
     toast.change('Opération ajoutée', {
-        classes: "rounded-1 green txt-white shadow-2"
+        classes: "rounded-1 green  dark-2 txt-white shadow-2"
     });
     toast.show();
 </script>
-@elseif(session('toast') == 'removeOperation')
+@elseif(session('toast') == 'editOperation')
 <script>
-    toast.change('Opération supprimée', {
-        classes: "rounded-1 red dark-1 shadow-2"
+    toast.change('Opération modifiée', {
+        classes: "rounded-1 green dark-2 txt-white shadow-2"
     });
     toast.show();
 </script>
 @elseif(session('toast') == 'update')
 <script>
     toast.change('Intervention mise à jour', {
-        classes: "rounded-1 green light-2 shadow-2"
+        classes: "rounded-1 green dark-2 txt-white shadow-2"
     });
     toast.show();
 </script>
 @elseif(session('error') == 'restrictAccess')
 <script>
     toast.change('Vous n\'avez pas accès à cette page', {
-        classes: "rounded-1 red dark-2 shadow-2"
+        classes: "rounded-1 red dark-2 txt-white shadow-2"
     });
     toast.show();
 </script>
