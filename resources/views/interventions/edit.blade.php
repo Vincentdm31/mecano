@@ -294,6 +294,7 @@ $date = Carbon::now();
                                 <div class="txt-center">
                                     <input hidden value="finish" name="state" />
                                     <input hidden value="{{ $intervention->id }}" name="intervention_id" />
+                                    <input hidden value="{{ $date }}" name="end_operation_time" />
                                     <button type="submit" class="btn shadow-1 rounded-1 w100 white light-shadow-3 mx-auto">
                                         <i class="fas fa-check txt-green txt-dark-2 "></i>
                                     </button>

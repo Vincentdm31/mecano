@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Intervention;
 use App\Models\Operation;
 use App\Models\PieceList;
+use App\Models\TimeOperation;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class OperationController extends Controller
@@ -46,6 +48,7 @@ class OperationController extends Controller
             $operation->$key = $value;
         }
 
+        $operation->start_operation_time = Carbon::now();
         $operation->save();
 
         return redirect(route('interventions.edit', ['intervention' => $intervention_id]))->with(['toast' => 'addOperation', 'opState' => 'notEnd']);
@@ -127,6 +130,14 @@ class OperationController extends Controller
         $intervention = Intervention::find($request->interventionId);
         $operation->state = 'doing';
 
+        // TimeOperation after finish
+        $timeOperation = new TimeOperation();
+        $timeOperation->operation_id = $id;
+        $timeOperation->start_date = $operation->end_operation_time;
+        $timeOperation->end_date = Carbon::now();
+        $timeOperation->save();
+
+        $operation->end_operation_time = null;
         $operation->save();
 
         $operationsList = Operation::where('state', 'doing')->get();
@@ -134,6 +145,8 @@ class OperationController extends Controller
             $op->state = 'pause';
             $op->save();
         }
+
+
 
         return redirect(route('interventions.edit', ['intervention' => $intervention->id]))->with('toast', 'editOperation');
     }

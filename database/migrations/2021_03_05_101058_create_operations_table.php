@@ -18,7 +18,9 @@ class CreateOperationsTable extends Migration
             $table->timestamps();
             $table->enum('state',  ['doing', 'pause', 'finish'])->default('doing');
             $table->text('op_comment')->nullable();
-            
+            $table->datetime('start_operation_time')->nullable();
+            $table->datetime('end_operation_time')->nullable();
+
             $table->bigInteger('intervention_id')->unsigned()->nullable();
             $table->foreign('intervention_id')->references('id')->on('interventions')
                 ->onDelete('cascade')->onUpdate('cascade');
