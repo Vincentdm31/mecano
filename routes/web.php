@@ -74,10 +74,12 @@ Route::middleware('auth')->group(function () {
     Route::put('/setDeplacement',  [InterventionController::class, 'setDeplacement'])->name('setDeplacement');
     Route::put('/setEndDeplacement',  [InterventionController::class, 'setEndDeplacement'])->name('setEndDeplacement');
     Route::get('/adminIntervention',  [InterventionController::class, 'adminIntervention'])->name('adminIntervention');
+    Route::get('/exportPDF/{id}', [InterventionController::class, 'exportPDF'])->name('exportPDF');
 
 
-
-
+    // Stepper Intervention
+    Route::get('/intervention/step1', [InterventionController::class, 'stepOne'])->name('stepOne');
+    Route::get('/intervention/step2', [InterventionController::class, 'stepTwo'])->name('stepTwo');
 
     // Timer Intervention
     Route::resource('time', TimeInterventionController::class);
@@ -88,21 +90,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/searchVehicule',  [VehiculeController::class, 'searchVehicule']);
     Route::get('/getVehicules',  [VehiculeController::class, 'getVehicules'])->name('getVehicules');
 
-    // Stepper Intervention
-    Route::get('/intervention/step1', [InterventionController::class, 'stepOne'])->name('stepOne');
-    Route::get('/intervention/step2', [InterventionController::class, 'stepTwo'])->name('stepTwo');
-
     //PieceList
     Route::get('/searchPiecesList',  [PieceListController::class, 'searchPiecesList']);
-
-    //OperationList
-    Route::get('/searchOperationsList',  [OperationListController::class, 'searchOperationsList']);
 
     //Operation
     Route::resource('operations', OperationController::class);
     Route::put('/editOperation/{id}', [OperationController::class, 'editOperation'])->name('editOperation');
-
     Route::get('/searchOperationsList',  [OperationListController::class, 'searchOperationsList']);
-
-    Route::get('/exportPDF/{id}', [InterventionController::class, 'exportPDF'])->name('exportPDF');
 });

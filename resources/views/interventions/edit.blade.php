@@ -93,25 +93,23 @@ $date = Carbon::now();
                         <div class="grix xs1 md2">
                             @foreach( $intervention->operations as $operation)
                             @if($operation->state == 'finish')
-                            <div class="my-auto pl-5 txt-airforce txt-dark-4 pb-2">
+                            <div class="my-auto pl-1 txt-airforce txt-dark-4 pb-2">
                                 <div class="grix xs2">
                                     <div>
                                         <li class="mb-2 mt-3">
                                             {{ $operation->operationList->name}}
                                         </li>
                                     </div>
-                                    <div class="d-flex my-auto vbottom">
-                                        <div>
-                                            <form method="POST" action="{{ route('editOperation',  ['id' => $operation->id])}}">
-                                                @method('PUT')
-                                                @csrf
-                                                <div class="txt-center">
-                                                    <input hidden value="{{ $intervention->id }}" name="interventionId" />
-                                                    <input hidden value="doing" name="state" />
-                                                    <button type="submit" class="btn light-shadow-1 rounded-1 small txt-blue"><i class="fas fa-trash"></i></button>
-                                                </div>
-                                            </form>
-                                        </div>
+                                    <div class="">
+                                        <form method="POST" class="" action="{{ route('editOperation',  ['id' => $operation->id])}}">
+                                            @method('PUT')
+                                            @csrf
+                                            <div class="">
+                                                <input hidden value="{{ $intervention->id }}" name="interventionId" />
+                                                <input hidden value="doing" name="state" />
+                                                <button type="submit" class="btn light-shadow-1 rounded-1 small txt-blue"><i class="fas fa-edit"></i></button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                                 @if(!$operation->pieces()->exists())
