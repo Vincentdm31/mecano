@@ -20,8 +20,6 @@
         </div>
     </div>
 
-
-    <!--  -->
     <div class="container mt-5 shadow-1">
         <div class="responsive-table">
             <table class="table striped ">
@@ -38,9 +36,9 @@
                     @foreach($vehicules as $vehicule)
                     <tr>
                         <td class="txt-center">{{ $vehicule->id }}</td>
-                        <td class="txt-center">{{ $vehicule->marque }}</td>
-                        <td class="txt-center">{{ $vehicule->modele }}</td>
-                        <td class="txt-center">{{ $vehicule->immat }}</td>
+                        <td class="txt-center">{{ $vehicule->mark }}</td>
+                        <td class="txt-center">{{ $vehicule->model }}</td>
+                        <td class="txt-center">{{ $vehicule->license_plate }}</td>
                         <td>
                             <div class="grix xs2 gutter-xs2">
                                 <div class="ml-auto">

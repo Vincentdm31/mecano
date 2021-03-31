@@ -33,7 +33,7 @@
                                 <label for="select">Véhicule</label>
                                 <select class="form-control  txt-airforce txt-dark-4" name="vehicule_id">
                                     @foreach ( $vehicules as $vehicule)
-                                    <option class="grey light-4 txt-airforce txt-dark-4" value="{{ $vehicule->id }}">{{ $vehicule->immat }} - {{ $vehicule->marque }}</option>
+                                    <option class="grey light-4 txt-airforce txt-dark-4" value="{{ $vehicule->id }}">{{ $vehicule->mark }} - {{ $vehicule->license_plate }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -60,8 +60,8 @@
                 <p class="txt-airforce txt-dark-4 h6"><i class="fas fa-car font-s4 txt-airforce txt-dark-4 mr-4"></i>Véhicule enregistré</p>
             </div>
             <div class="card-content">
-                <p>Marque : {{ $intervention->vehiculeList->marque }}</p>
-                <p>Modèle : {{ $intervention->vehiculeList->modele }}</p>
+                <p>Marque : {{ $intervention->vehiculeList->mark }}</p>
+                <p>Modèle : {{ $intervention->vehiculeList->model }}</p>
                 <p>Kilométrage : {{ $intervention->km_vehicule }} Km</p>
             </div>
             @endif

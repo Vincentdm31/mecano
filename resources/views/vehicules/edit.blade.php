@@ -12,16 +12,16 @@
                 @csrf
                 <div class="">
                     <div class="form-field">
-                        <input type="text" id="marque" name="marque" class="form-control" value="{{$vehicule->marque}}" />
-                        <label for="marque">Marque</label>
+                        <input type="text" name="mark" class="form-control" value="{{$vehicule->mark}}" />
+                        <label for="mark">Marque</label>
                     </div>
                     <div class="form-field">
-                        <input type="text" id="modele" name="modele" class="form-control" value="{{$vehicule->modele}}" />
-                        <label for="modele">Modele</label>
+                        <input type="text" name="model" class="form-control" value="{{$vehicule->model}}" />
+                        <label for="model">Modele</label>
                     </div>
                     <div class="form-field">
-                        <input type="text" id="immat" name="immat" class="form-control" value="{{$vehicule->immat}}" />
-                        <label for="immat">Immatriculation</label>
+                        <input type="text" name="license_plate" class="form-control" value="{{$vehicule->license_plate}}" />
+                        <label for="license_plate">Immatriculation</label>
                     </div>
                 </div>
                 <div class="txt-center">

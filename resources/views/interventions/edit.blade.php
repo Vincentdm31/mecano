@@ -44,9 +44,9 @@ $date = Carbon::now();
                         <div class="p-2 txt-airforce txt-dark-4 rounded-2 light-shadow-2">
                             <p class="bd-b-solid bd-orange bd-2 pb-2 mb-3 pl-2"><i class="fas fa-car font-s4 txt-airforce txt-dark-4 mr-4"></i>Véhicule</p>
                             <div class="grix xs2">
-                                <p class="">{{$intervention->vehiculeList->marque}}</p>
-                                <p class="">{{$intervention->vehiculeList->modele}}</p>
-                                <p class="">{{$intervention->vehiculeList->immat}}</p>
+                                <p class="">{{$intervention->vehiculeList->mark}}</p>
+                                <p class="">{{$intervention->vehiculeList->model}}</p>
+                                <p class="">{{$intervention->vehiculeList->license_plate}}</p>
                                 @if(empty($intervention->km_vehicule))
                                 <p class="txt-orange">Saisir kilométrage</p>
                                 @else
@@ -94,8 +94,8 @@ $date = Carbon::now();
                             @foreach( $intervention->operations as $operation)
                             @if($operation->state == 'finish')
                             <div class="my-auto pl-2 txt-airforce txt-dark-4">
-                                <div class="grix xs2 gutter-xs2 mb-2">
-                                    <div>
+                                <div class="grix xs3 mb-2">
+                                    <div class="col-xs2">
                                         <li class="mb-2 mt-3">
                                             {{ $operation->operationList->name}}
                                         </li>
@@ -114,11 +114,10 @@ $date = Carbon::now();
                                 <em class=" mb-5 txt-orange txt-dark-1">Aucune pièce affectée</em>
                                 @endif
                                 @foreach($operation->pieces as $piece)
-                                <div class="grix xs2">
+
                                     <div>
                                         <em class="ml-5 mb-5 mb-5"><b> {{$piece->pieceList->name }}</b><span class="ml-3">x{{$piece->qte}}</span></em>
                                     </div>
-                                </div>
                                 @endforeach
                             </div>
                             @endif

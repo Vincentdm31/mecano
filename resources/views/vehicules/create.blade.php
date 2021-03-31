@@ -11,16 +11,16 @@
                     @csrf
                     <div class="grix xs1 txt-center">
                         <div class="form-field">
-                            <input required type="text" id="marque" name="marque" class="form-control" />
-                            <label for="marque" class="">Marque</label>
+                            <input required type="text" name="mark" class="form-control" />
+                            <label for="mark" class="">Marque</label>
                         </div>
                         <div class="form-field">
-                            <input required type="text" id="modele" name="modele" class="form-control" />
-                            <label for="modele" class="">Modele</label>
+                            <input required type="text" name="model" class="form-control" />
+                            <label for="model" class="">Modele</label>
                         </div>
                         <div class="form-field">
-                            <input required id="immat" name="immat" class="form-control" />
-                            <label for="immat" class="">Immat</label>
+                            <input required id="immat" name="license_plate" class="form-control" />
+                            <label for="license_plate" class="">Immat</label>
                         </div>
                     </div>
                     <div class="txt-center">

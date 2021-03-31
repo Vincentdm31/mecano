@@ -83,7 +83,7 @@ class InterventionController extends Controller
 
         $piecesList = PieceList::all();
         $pieces = Piece::all();
-        $vehicules = Vehicule::all();
+
 
         $opDoing = Operation::Where('intervention_id', $id)
             ->Where('state', 'like', 'doing')
@@ -97,7 +97,7 @@ class InterventionController extends Controller
             ->get();
 
         $search = $request->get('selectVehicule');
-        $vehicules = Vehicule::Where('immat', 'like', '%' . $search . '%')
+        $vehicules = Vehicule::Where('license_plate', 'like', '%' . $search . '%')
             ->get();
 
         return view('interventions.edit', [
@@ -218,8 +218,8 @@ class InterventionController extends Controller
         $intervention_id = $request->id;
         $intervention = Intervention::find($intervention_id);
 
-        $vehicules = Vehicule::Where('immat', 'like', '%' . $search . '%')
-            ->orWhere('marque', 'like', '%' . $search . '%')
+        $vehicules = Vehicule::Where('license_plate', 'like', '%' . $search . '%')
+            ->orWhere('mark', 'like', '%' . $search . '%')
             ->get();
 
         return view('interventions.step2', ['intervention' => $intervention, 'vehicules' => $vehicules, 'id' => $intervention_id]);
@@ -320,9 +320,9 @@ class InterventionController extends Controller
             '',
             '',
             '',
-            'Immat: ' . '<strong>' . $intervention->vehiculeList->immat . '</strong>',
-            'Marque: ' . '<strong>' . $intervention->vehiculeList->marque . '</strong>',
-            'Modèle: ' . '<strong>' . $intervention->vehiculeList->modele . '</strong>',
+            'Immat: ' . '<strong>' . $intervention->vehiculeList->license_plate . '</strong>',
+            'Marque: ' . '<strong>' . $intervention->vehiculeList->mark . '</strong>',
+            'Modèle: ' . '<strong>' . $intervention->vehiculeList->model . '</strong>',
             'Kilométrage: ' . '<strong>' . $intervention->km_vehicule . '</strong>'
 
         ];

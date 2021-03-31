@@ -19,20 +19,11 @@ class VehiculeSeeder extends Seeder
         for ($i = 0; $i < 20; $i++) {
             DB::table('vehicules')->insert([
                 [
-                    'marque' => 'Peugeot',
-                    'modele' => Str::random(4),
-                    'immat' => Str::random(5)
-                ],
-                [
-                    'marque' => 'Renault',
-                    'modele' => Str::random(4),
-                    'immat' => Str::random(5)
-                ],
-                [
-                    'marque' => 'Citroen',
-                    'modele' => Str::random(4),
-                    'immat' => Str::random(5)
-                ],
+                    'mark' => 'Peugeot',
+                    'model' => Str::random(4),
+                    'license_plate' => Str::random(5),
+                    'category' => rand(1,3)
+                ]
             ]);
         }
     }

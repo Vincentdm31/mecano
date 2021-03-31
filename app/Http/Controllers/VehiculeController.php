@@ -110,9 +110,9 @@ class VehiculeController extends Controller
     {
         $search = $request->get('searchVehicule');
 
-        $vehicules = Vehicule::Where('marque', 'like', '%'.$search.'%')
-                    ->orWhere('modele', 'like', '%'.$search.'%')
-                    ->orWhere('immat', 'like', '%'.$search.'%')
+        $vehicules = Vehicule::Where('mark', 'like', '%'.$search.'%')
+                    ->orWhere('model', 'like', '%'.$search.'%')
+                    ->orWhere('license_plate', 'like', '%'.$search.'%')
                     ->get();
         return view('vehicules.index', ['vehicules' => $vehicules]);
     }
@@ -126,9 +126,9 @@ class VehiculeController extends Controller
         foreach (json_decode($response->getBody()) as $item) {
 
             $vehicule = new Vehicule();
-            $vehicule->marque = $item->title;
-            $vehicule->modele = "test";
-            $vehicule->immat = "testt";
+            $vehicule->mark = $item->title;
+            $vehicule->model = "test";
+            $vehicule->license_plate = "testt";
             $vehicule->save();
             // TEST API
         }

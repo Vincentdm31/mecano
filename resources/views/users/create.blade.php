@@ -27,11 +27,11 @@ Add Car
                         </div>
                         <div class="form-field">
                             <select required id="is_admin" name="is_admin" class="form-control">
-                                <option <?php 'value="0"' ?>>Membre</option>
-                                <option <?php 'value="1"' ?>>Magasinier</option>
+                                <option value='0'>Membre</option>
+                                <option value='1'>Magasinier</option>
                                 @if(Auth()->user()->is_admin == 3)
-                                <option <?php 'value="2"' ?>>Admin</option>
-                                <option <?php 'value="3"' ?>>Root</option>
+                                <option value='2'>Admin</option>
+                                <option value='3'>Root</option>
                                 @endif
                             </select>
                             <label for="is_admin">Rôle</label>
