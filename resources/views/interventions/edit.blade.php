@@ -358,10 +358,11 @@ $date = Carbon::now();
                             @csrf
                             <div class="txt-center">
                                 <input hidden value="finish" name="state" />
-                                @if($opDoing->count() < 1 && $opPause->count() < 1) <button type="submit" class="btn shadow-1 rounded-1 red small">Terminer l'intervention</button>
-                                        @else
-                                        <button type="submit" class="btn disabled shadow-1 rounded-1 red small">Terminer l'intervention</button>
-                                        @endif
+                                @if($opDoing->count() < 1 && $opPause->count() < 1 && !$intervention->needMove || $opDoing->count() < 1 && $opPause->count() < 1 && $intervention->needMove && !empty($intervention->end_deplacement_retour))
+                                                <button type="submit" class="btn shadow-1 rounded-1 red small">Terminer l'intervention</button>
+                                                @else
+                                                <button type="submit" class="btn disabled shadow-1 rounded-1 red small">Terminer l'intervention</button>
+                                                @endif
                             </div>
                         </form>
                     </div>
