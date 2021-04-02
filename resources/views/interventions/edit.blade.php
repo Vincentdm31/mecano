@@ -244,7 +244,7 @@ $date = Carbon::now();
         <a data-target="modal-comment" class="btn-modal-comment modal-trigger">Observations<span class="fas fa-comment pl-2 font-s3"></span></a>
         @endif
     </div>
-    <div class="card grey light-4 shadow-2 rounded-tl0 rounded-bl2 rounded-tr0 rounded-br4 m-2">
+    <div class="card grey light-4 light-shadow-2 rounded-tl0 rounded-bl2 rounded-tr0 rounded-br4 m-2 mb-5">
         <div class="card-header p-1 airforce dark-4 rounded-br4">
             <p class="txt-grey txt-light-4 m-1 font-s3"><i class="fas fa-car font-s4 txt-grey txt-light-4 mr-3 ml-2"></i>Véhicule</p>
         </div>
@@ -274,7 +274,7 @@ $date = Carbon::now();
         </div>
     </div>
 
-    <div class="card grey light-4 rounded-tl0 rounded-bl2 rounded-tr0 rounded-br2 m-2">
+    <div class="card grey light-4 rounded-tl0 light-shadow-2 rounded-bl2 rounded-tr0 rounded-br2 m-2 mb-5">
         <div class="card-header airforce dark-4 rounded-br4 p-1">
             <p class="txt-grey txt-light-4 m-1 font-s3"><i class="fas fa-tools font-s4 txt-grey txt-light-4 mr-3 ml-2"></i>Mes opérations</p>
         </div>
