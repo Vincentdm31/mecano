@@ -158,6 +158,7 @@ class VehiculeController extends Controller
             ->get();;
 
         dd($duplicates);
+        
         return redirect(route('vehicules.index'));
     }
 
