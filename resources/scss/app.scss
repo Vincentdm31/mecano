@@ -46,3 +46,25 @@ body{
     background-color: rgb(128, 0, 0);
     color:white !important;
 }
+
+.btn-tab-operation{
+    @extend .btn;
+    @extend .mx-auto;
+    @extend .my-auto;
+    @extend .orange;
+    @extend .rounded-1;
+    @extend .txt-white;
+    @extend .shadow-1;
+    @extend .dark-1;
+    @extend .small;
+}
+
+.btn-modal-comment{
+    @extend .btn;
+    @extend .orange;
+    @extend .rounded-2;
+    @extend .txt-white;
+    @extend .shadow-2;
+    @extend .dark-1;
+    @extend .small;
+}
