@@ -9,6 +9,14 @@ class Vehicule extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'id',
+        'mark',
+        'license_plate',
+        'capacity',
+        'model'
+    ];
+
     public function intervention()
     {
         return $this->belongsTo(Intervention::class);

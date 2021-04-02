@@ -3,13 +3,12 @@
 <link href="{{ mix('css/intervention.css') }}" rel="stylesheet">
 @endsection
 @section('content')
-<div class="container h100 d-flex">
-    <div class="vself-center container card overflow-visible shadow-1 rounded-2 white">
-        @if(empty($intervention->vehicule_id))
-        <div class="card-header p-1 bd-b-solid bd-orange bd-dark-1 bd-2 m-0 ml-4 mr-4">
-            <p class="txt-airforce txt-dark-4 h6">Choix du véhicule</p>
+<div class="container h100 d-flex pb-5">
+    <div class="vself-center container card overflow-visible shadow-1 rounded-3 white">
+        <div class="card-header p-0">
+            <p class="m-0 txt-grey txt-light-4 p-3 font-s2 airforce dark-4 mb-4 rounded-tr0 rounded-bl0 rounded-tl3 rounded-br4">Choix du véhicule</p>
         </div>
-        <div class="card-content">
+        <div class="card-content pl-4 pr-4 pt-0 pb-0">
             <div class="mt-2 mb-2 grix sm2 gutter-sm5">
                 <div class="my-auto">
                     <div>
@@ -21,7 +20,7 @@
                                     <input hidden name="id" value="{{ $intervention->id }}" /></input>
                                     <label for="searchIntervVehicule">Rechercher</label>
                                 </div>
-                                <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange circle mx-auto vself-center rounded-4"><span class="outline-text outline-invert"><i class="fas fa-search"></i></span></button>
+                                <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange circle mx-auto vself-center rounded-4 small"><span class="outline-text outline-invert"><i class="fas fa-search"></i></span></button>
                             </div>
                         </form>
                     </div>
@@ -44,40 +43,16 @@
 
                             <input hidden name="id" value="{{ $intervention->id }}" /></input>
 
-                            <div class="txt-center">
-                                <button type="submit" class="btn shadow-1 outline opening txt-orange ml-auto vself-center rounded-2 mt-2 small"><span class="outline-text outline-invert">Valider</span></button>
+                            <div class="txt-center pt-2">
+                                <button type="submit" class="btn orange dark-1 txt-white rounded-1"><i class="fas fa-check pl-3 pr-3"></i></button>
                             </div>
                         </form>
                     </div>
-
                 </div>
                 <div class="d-flex my-auto">
                     <img src="{{ asset('/images/car.svg') }}" class="responsive-media p-3" alt="">
                 </div>
             </div>
-            @else
-            <div class="card-header p-1 bd-b-solid bd-orange bd-dark-1 bd-2 m-0 ml-4 mr-4">
-                <p class="txt-airforce txt-dark-4 h6"><i class="fas fa-car font-s4 txt-airforce txt-dark-4 mr-4"></i>Véhicule enregistré</p>
-            </div>
-            <div class="card-content">
-                <p>Marque : {{ $intervention->vehiculeList->mark }}</p>
-                <p>Modèle : {{ $intervention->vehiculeList->model }}</p>
-                <p>Kilométrage : {{ $intervention->km_vehicule }} Km</p>
-            </div>
-            @endif
-
-            @if(!empty($intervention->vehicule_id))
-            <div class="card-footer m-0 p-0">
-                <form action="{{ route('interventions.edit', ['intervention' => $intervention->id]) }}" method="GET">
-                @csrf
-                @method('GET')
-                    <div class="d-flex fx-center">
-                        <button type="submit" class="btn shadow-1 airforce dark-3 ml-auto txt-white rounded-1 hide-md-down mb-2 mr-2 small">Suivant</button>
-                        <button type="submit" class="btn shadow-1 red dark-3 txt-white rounded-1 hide-md-up mb-2 mr-2 small">Suivant</button>
-                    </div>
-                </form>
-            </div>
-            @endif
         </div>
     </div>
 </div>

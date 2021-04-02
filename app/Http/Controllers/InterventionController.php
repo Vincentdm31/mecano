@@ -123,8 +123,7 @@ class InterventionController extends Controller
         }
 
         $intervention->save();
-
-        if ($intervention->state = 'finish') {
+        if ($intervention->state == 'finish') {
             $intervention->end_intervention_time = Carbon::now();
             $intervention->save();
             return redirect(route('home'))->with('toast', 'endIntervention');
@@ -133,16 +132,6 @@ class InterventionController extends Controller
         return redirect(route('interventions.edit', ['intervention' => $intervention]))->with('toast', 'update');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Intervention  $intervention
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Intervention $intervention)
-    {
-        //
-    }
     public function adminIntervention()
     {
         $interventions = Intervention::Where('state', 'like', '%' . 'finish' . '%')->get();
@@ -239,7 +228,8 @@ class InterventionController extends Controller
 
         $intervention->save();
 
-        return view('interventions.step2', ['intervention' => $intervention]);
+        return redirect(route('interventions.edit', ['intervention' => $intervention]));
+        
     }
 
 
@@ -254,6 +244,10 @@ class InterventionController extends Controller
 
         $intervention->save();
 
+        if (!$intervention->needMove) {
+            return view('interventions.step2', ['intervention' => $intervention, 'vehicules' => $vehicules]);
+        }
+
         return view('interventions.step1', ['intervention' => $intervention, 'vehicules' => $vehicules]);
     }
 
@@ -261,7 +255,7 @@ class InterventionController extends Controller
     {
 
         $inputs = $request->except('_token', '_method');
-
+        $vehicules = Vehicule::all();
         $intervention_id = $request->id;
         $intervention = Intervention::find($intervention_id);
 
@@ -270,6 +264,10 @@ class InterventionController extends Controller
         }
 
         $intervention->save();
+
+        if ($intervention->end_deplacement_aller != null) {
+            return view('interventions.step2', ['intervention' => $intervention, 'vehicules' => $vehicules]);
+        }
 
         return view('interventions.step1', ['intervention' => $intervention]);
     }

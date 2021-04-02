@@ -9,8 +9,8 @@
 use Carbon\Carbon;
 
 $date = Carbon::now();
-
 ?>
+
 <div class="container mt-5">
     <div class="container d-flex vcenter">
         <button data-target="modal-recap" class="mx-auto btn rounded-1 txt-white shadow-1 orange dark-1 modal-trigger small">
@@ -21,119 +21,12 @@ $date = Carbon::now();
             Quitter
         </a>
         @endif
-        <!-- Modal Recap -->
-        <div class="modal white shadow-1 rounded-2 mt-4" id="modal-recap" data-ax="modal">
-            <div class="card rounded-2 m-0 overflow-visible">
-                @if(!empty($intervention->observations))
-                <a href="" data-target="modal-comment" style="position:absolute;right:5px;top:0;font-size:2.5rem;" class="txt-white fas fa-comment-dots modal-trigger"></a>
-                @else
-                <a href="" data-target="modal-comment" style="position:absolute;right:5px;top:0;font-size:2.5rem;" class="txt-white fas fa-comment modal-trigger"></a>
-                @endif
-                <div class="card-header rounded-tl2 rounded-tr2 orange dark-1 p-3 recap-infos">
-                    <div class="grix txt-white gutter-xs5 xs2 md3">
-                        <p class="pl-2 lh-normal mr-auto"><i class="far fa-id-card mr-2 font-s4 txt-white"></i>{{ $intervention->created_by }}</p>
-                        <p class="pl-2 lh-normal mr-auto"><i class="fas fa-clipboard-list mr-2 font-s4 txt-white"></i>{{ $intervention->id }}</p>
-                        <p class="pl-2 lh-normal mr-auto col-xs2"><i class="fas fa-calendar-alt mr-2 font-s4 txt-white"></i>{{\Carbon\Carbon::parse($intervention->created_at)->isoFormat('LLLL')}}</p>
-                    </div>
-                    @foreach($intervention->users as $user)
-                    <span class="txt-white">{{ $user->name }}</span>
-                    @endforeach
-                </div>
-                <div class="card-content p-3">
-                    <div class="grix xs1 md2 gutter-xs5">
-                        <div class="p-2 txt-airforce txt-dark-4 rounded-2 light-shadow-2">
-                            <p class="bd-b-solid bd-orange bd-2 pb-2 mb-3 pl-2"><i class="fas fa-car font-s4 txt-airforce txt-dark-4 mr-4"></i>Véhicule</p>
-                            <div class="grix xs2">
-                                <p class="">{{$intervention->vehiculeList->mark}}</p>
-                                <p class="">{{$intervention->vehiculeList->model}}</p>
-                                <p class="">{{$intervention->vehiculeList->license_plate}}</p>
-                                @if(empty($intervention->km_vehicule))
-                                <p class="txt-orange">Saisir kilométrage</p>
-                                @else
-                                <p class="">{{$intervention->km_vehicule}} Km</p>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="p-2 txt-airforce txt-dark-4 rounded-2 light-shadow-2">
-                            <p class="txt-airforce txt-dark-4 bd-b-solid bd-orange bd-2 pb-2 mb-3 pl-2"><i class="fas fa-car-crash font-s4 mr-4 txt-airforce txt-dark-4"></i>Déplacements</p>
-                            @if(empty($intervention->start_deplacement_aller))
-                            <p class="txt-orange pl-3">Aucun déplacement</p>
-                            @else
-                            <div class="grix xs1 sm2">
-                                <div class="txt-airforce txt-dark-4">
-                                    <p class="txt-orange">Aller</p>
-                                    <p>{{ Carbon::parse($intervention->start_deplacement_aller)->format('d/m/Y h:m:s')  }}</p>
-                                    @if(!empty($intervention->end_deplacement_aller))
-                                    <p>{{ Carbon::parse($intervention->end_deplacement_aller)->format('d/m/Y h:m:s')  }}</p>
-                                    @endif
-                                </div>
-                                <div class="txt-airforce txt-dark-4">
-                                    <p class="txt-orange">Retour</p>
-                                    @if(!empty($intervention->start_deplacement_retour))
-                                    <p>{{ Carbon::parse($intervention->start_deplacement_retour)->format('d/m/Y h:m:s')  }}</p>
-                                    @endif
-                                    @if(!empty($intervention->end_deplacement_retour))
-                                    <p>{{ Carbon::parse($intervention->end_deplacement_retour)->format('d/m/Y h:m:s')  }}</p>
-                                    @endif
-                                </div>
-                            </div>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-                <div class="card-footer p-3 white">
-                    <div class="p-2 shadow-2 rounded-2">
-                        <p class="txt-airforce txt-dark-4 bd-b-solid bd-orange bd-2 pb-2 pl-2"><i class="fas fa-tools font-s4 mr-4 txt-airforce txt-dark-4"></i>Liste des opérations terminées</p>
-                        @if(!$intervention->operations()->exists())
-                        <p class="txt-orange pl-3">Aucune opération en cours</p>
-                        @else
-                        <p class="txt-green txt-dark-2"><span>{{ $opDoing->count()}} </span>opérations(s) en cours</p>
-                        <p class="txt-orange txt-dark-2"><span>{{ $opPause->count()}} </span>opération(s) en pause</p>
-                        <p class="txt-red txt-dark-2"><span>{{ $opEnd->count()}} </span>opération(s) terminée(s)</p>
-                        <div class="grix xs1 md2">
-                            @foreach( $intervention->operations as $operation)
-                            @if($operation->state == 'finish')
-                            <div class="my-auto pl-2 txt-airforce txt-dark-4">
-                                <div class="grix xs3 mb-2">
-                                    <div class="col-xs2">
-                                        <li class="mb-2 mt-3">
-                                            {{ $operation->operationList->name}}
-                                        </li>
-                                    </div>
-                                    <div class="d-flex vself-bottom mx-auto">
-                                        <form method="POST" class="" action="{{ route('editOperation',  ['id' => $operation->id])}}">
-                                            @method('PUT')
-                                            @csrf
-                                            <input hidden value="{{ $intervention->id }}" name="interventionId" />
-                                            <input hidden value="doing" name="state" />
-                                            <button type="submit" class="btn light-shadow-1 rounded-1 small txt-blue"><i class="fas fa-edit"></i></button>
-                                        </form>
-                                    </div>
-                                </div>
-                                @if(!$operation->pieces()->exists())
-                                <em class=" mb-5 txt-orange txt-dark-1">Aucune pièce affectée</em>
-                                @endif
-                                @foreach($operation->pieces as $piece)
 
-                                    <div>
-                                        <em class="ml-5 mb-5 mb-5"><b> {{$piece->pieceList->name }}</b><span class="ml-3">x{{$piece->qte}}</span></em>
-                                    </div>
-                                @endforeach
-                            </div>
-                            @endif
-                            @endforeach
-                        </div>
-                        @endif
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- End Modal Recap -->
     </div>
 </div>
 <!-- Actions -->
 <div class="container mt-5 mb-5">
-    <div class="tab rounded-3 full-width white shadow-1 container" id="example-tab" data-ax="tab">
+    <div class="tab rounded-3 full-width grey light-4 shadow-1 container" id="example-tab" data-ax="tab">
         <ul class="tab-menu light-shadow-1 rounded-tl2 rounded-tr2 txt-black">
             <li class="tab-link">
                 <a href="#tab-operation">Mes opérations</a>
@@ -178,9 +71,6 @@ $date = Carbon::now();
         <!-- Tab opération -->
         <div id="tab-operation" class="p-3 container">
             <div class="grix xs1 sm2 ">
-                <div class="">
-                    <p class="h6 txt-center "><i class="fas fa-hammer font-s4 mr-4 txt-airforce txt-dark-4"></i><b> Mes opérations</b></p>
-                </div>
                 <div class="d-flex pos-row-xs1 pos-sm2">
                     @if( $opDoing->count() < 1 && $opPause->count() < 1 && $opEnd->count() < 1) <button data-target="modal-new-operation" class="mx-auto my-auto btn rounded-1 txt-white shadow-1 orange dark-1 modal-trigger small">Nouvelle opération</button>
                                 @elseif($opDoing->count() > 0)
@@ -335,7 +225,7 @@ $date = Carbon::now();
                         </form>
                     </div>
                     @endif
-                    <div class="mb-2">
+                    <!-- <div class="mb-2">
                         <form class="form-material my-auto" method="POST" action="{{ route('totalTime')}}">
                             @csrf
                             <input hidden name="intervention_id" value="{{ $intervention->id }}">
@@ -343,7 +233,7 @@ $date = Carbon::now();
                                 <button type="submit" class="btn rounded-1 outline opening txt-orange small"><span class="outline-text outline-invert">test time</span></button>
                             </div>
                         </form>
-                    </div>
+                    </div> -->
                     @if($intervention->needMove && empty($intervention->end_deplacement_retour))
                     <div class="d-flex">
                         <button data-target="modal-end-deplacement" class="mx-auto my-auto btn rounded-1 txt-white shadow-1 orange dark-1 modal-trigger small">
@@ -371,7 +261,83 @@ $date = Carbon::now();
         </div>
     </div>
 </div>
-<!-- MODALS -->
+
+<!-- Modal Recap -->
+<div class="modal white rounded-2 rounded-tr0 rounded-tl0" id="modal-recap" data-ax="modal">
+    <div class="airforce dark-4 rounded-tr0 rounded-br4 rounded-bl4 w100 txt-center p-2">
+        <p class="m-0 font-s4 txt-white">Récapitulatif</p>
+    </div>
+    <div class="m-2 txt-center">
+        @if(!empty($intervention->observations))
+        <a data-target="modal-comment" class="btn orange dark-1 txt-white shadow-2 small rounded-2 modal-trigger">Observations<span class="fas fa-comment-dots pl-2 font-s3"></span></a>
+        @else
+        <a data-target="modal-comment" class="btn orange dark-1 txt-white shadow-2 small rounded-2 modal-trigger">Observations<span class="fas fa-comment pl-2 font-s3"></span></a>
+        @endif
+    </div>
+    <div class="card grey light-4 shadow-2 rounded-tl0 rounded-bl2 rounded-tr0 rounded-br4">
+        <div class="card-header p-1 airforce dark-4 rounded-br4">
+            <p class="txt-grey txt-light-4 m-1 font-s3"><i class="fas fa-car font-s4 txt-grey txt-light-4 mr-3 ml-2"></i>Véhicule</p>
+        </div>
+        <div class="card-content p-2">
+            <div class="grix xs2">
+                <div>
+                    <em class="font-s1 txt-orange txt-dark-1">Marque</em>
+                    <p class="m-0">{{ $intervention->vehiculeList->mark }}</p>
+                </div>
+                <div>
+                    <em class="font-s1 txt-orange txt-dark-1">Modèle</em>
+                    <p class="m-0">{{ $intervention->vehiculeList->model }}</p>
+                </div>
+                <div>
+                    <em class="font-s1 txt-orange txt-dark-1">Immatriculation</em>
+                    <p class="m-0">{{ $intervention->vehiculeList->license_plate }}</p>
+                </div>
+                <div>
+                    <em class="font-s1 txt-orange txt-dark-1">Kilométrage</em>
+                    @if(empty($intervention->km_vehicule))
+                    <p class="txt-orange m-0 font-s1">Saisir kilométrage</p>
+                    @else
+                    <p class="m-0">{{ $intervention->km_vehicule }} Km</p>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card grey light-4 rounded-tl0 rounded-bl2 rounded-tr0 rounded-br2">
+        <div class="card-header airforce dark-4 rounded-br4 p-1">
+            <p class="txt-grey txt-light-4 m-1 font-s3"><i class="fas fa-tools font-s4 txt-grey txt-light-4 mr-3 ml-2"></i>Mes opérations</p>
+        </div>
+        <div class="card-content p-2">
+            @foreach( $intervention->operations as $operation)
+            @if($operation->state == 'finish')
+            <div class="shadow-1 mb-2 rounded-1">
+                <div class="grix xs3 p-2">
+                    <div class="col-xs2 my-auto txt-center">
+                        {{ $operation->operationList->name}}
+                    </div>
+                    <div class="d-flex vself-bottom mx-auto">
+                        <form method="POST" class="" action="{{ route('editOperation',  ['id' => $operation->id])}}">
+                            @method('PUT')
+                            @csrf
+                            <input hidden value="{{ $intervention->id }}" name="interventionId" />
+                            <input hidden value="doing" name="state" />
+                            <button type="submit" class="btn light-shadow-1 rounded-1 small orange txt-white"><i class="fas fa-edit"></i></button>
+                        </form>
+                    </div>
+                </div>
+                @foreach($operation->pieces as $piece)
+                <div class="pb-2 p-3">
+                    <em class=""><b>{{ $piece->pieceList->name }}</b><span class="ml-3">x{{ $piece->qte }}</span></em>
+                </div>
+                @endforeach
+            </div>
+            @endif
+            @endforeach
+        </div>
+    </div>
+</div>
+<!-- End Modal Recap -->
 
 @foreach( $intervention->operations as $operation)
 <div class="modal white shadow-1 p-4 rounded-2" id="edit-operation-{{ $operation->id }}" data-ax="modal">

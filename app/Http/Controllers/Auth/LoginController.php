@@ -37,8 +37,6 @@ class LoginController extends Controller
         else if (Auth::check() && Auth()->user()->is_admin == 3){ // do your magic here
             return redirect()->route('home.root');
         }
-
-        return redirect('/');
     }
     /**
      * Where to redirect users after login.

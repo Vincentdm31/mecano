@@ -3,8 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Vehicule;
+use Facade\FlareClient\Http\Client as HttpClient;
+use GuzzleHttp\Client;
+use Illuminate\Http\Client\Request as ClientRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Request as FacadesRequest;
+use Symfony\Component\HttpFoundation\Request as HttpFoundationRequest;
 
 class VehiculeController extends Controller
 {
@@ -14,7 +20,7 @@ class VehiculeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {   
+    {
         $vehicules = Vehicule::all();
         return view('vehicules.index', ['vehicules' => $vehicules]);
     }
@@ -27,7 +33,6 @@ class VehiculeController extends Controller
     public function create()
     {
         return view('vehicules.create');
-        
     }
 
     /**
@@ -43,10 +48,9 @@ class VehiculeController extends Controller
         foreach ($inputs as $key => $value) {
             $vehicule->$key = $value;
         }
-        
+
         $vehicule->save();
         return redirect(route('vehicules.index'));
-        
     }
 
     /**
@@ -67,9 +71,9 @@ class VehiculeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {   
+    {
         $vehicule = Vehicule::find($id);
-        return view('vehicules.edit', ['vehicule' => $vehicule ]);
+        return view('vehicules.edit', ['vehicule' => $vehicule]);
     }
 
     /**
@@ -80,15 +84,15 @@ class VehiculeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {   
+    {
         $inputs = $request->except('_token', '_method', 'updated_at');
         $vehicule = Vehicule::find($id);
-        foreach ($inputs as $key => $value){
+        foreach ($inputs as $key => $value) {
             $vehicule->$key = $value;
         }
         $vehicule->save();
 
-       return redirect(route('vehicules.index'));
+        return redirect(route('vehicules.index'));
     }
 
     /**
@@ -101,8 +105,8 @@ class VehiculeController extends Controller
     {
         $vehicule = Vehicule::find($id);
         $vehicule->delete();
-        
-        
+
+
         return redirect(route('vehicules.index'));
     }
 
@@ -110,29 +114,69 @@ class VehiculeController extends Controller
     {
         $search = $request->get('searchVehicule');
 
-        $vehicules = Vehicule::Where('mark', 'like', '%'.$search.'%')
-                    ->orWhere('model', 'like', '%'.$search.'%')
-                    ->orWhere('license_plate', 'like', '%'.$search.'%')
-                    ->get();
+        $vehicules = Vehicule::Where('mark', 'like', '%' . $search . '%')
+            ->orWhere('model', 'like', '%' . $search . '%')
+            ->orWhere('license_plate', 'like', '%' . $search . '%')
+            ->get();
         return view('vehicules.index', ['vehicules' => $vehicules]);
     }
 
-    public function getVehicules()
+    public function getVehicles()
     {
+        $token = $this->getToken();
 
-        $response = Http::get('https://my-json-server.typicode.com/typicode/demo/posts');
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => 'Bearer ' . strval($token)
+        ];
 
+        $client = new client();
 
-        foreach (json_decode($response->getBody()) as $item) {
+        $response = $client->get('https://resource.isatis.app/api/vehicule', [
+            'headers' => $headers
+        ]);
 
-            $vehicule = new Vehicule();
-            $vehicule->mark = $item->title;
-            $vehicule->model = "test";
-            $vehicule->license_plate = "testt";
-            $vehicule->save();
-            // TEST API
+        $response = json_decode($response->getBody());
+
+        foreach ($response as $item) {
+
+            $vehicle = Vehicule::firstOrCreate([
+                'id' => $item->Id,
+                'mark' => $item->Brand,
+                'model' => $item->Model,
+                'capacity' => $item->Capacity,
+                'license_plate' => $item->Matriculation
+            ]);
+
+            $vehicle->save();
         }
 
-        return redirect(route('vehicules.index'))->with('toast', 'vehiculeUpdate');
+        $duplicates = DB::table('vehicules')
+            ->select('license_plate')
+            ->groupBy('license_plate')
+            ->havingRaw('COUNT(*) > 1')
+            ->get();;
+
+        dd($duplicates);
+        return redirect(route('vehicules.index'));
+    }
+
+    public function getToken()
+    {
+        $headers = [
+            'Content-Type' => 'application/json',
+        ];
+
+        $key = "9CD9A62A4D2841A78406A65625212929";
+
+        $client = new client();
+        $res = $client->post('https://resource.isatis.app/api/auth/token', [
+            'headers' => $headers,
+            'json' => $key
+        ]);
+
+        $res = json_decode($res->getBody());
+
+        return $res->Token;
     }
 }

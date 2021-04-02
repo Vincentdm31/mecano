@@ -10,8 +10,8 @@
   background-color: #9f0101;
 }
 
-html {
-  background-image: url("/images/abstract.jpg");
+body {
+  background-image: url("/images/test.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
@@ -19,7 +19,7 @@ html {
 }
 
 .modal-overlay.active {
-  background-color: rgba(0, 0, 0, 0.8) !important;
+  background-color: rgba(0, 0, 0, 0.646) !important;
 }
 
 .dark {

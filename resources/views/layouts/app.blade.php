@@ -12,7 +12,8 @@
     <title>{{ config('app.name', 'Mecalcis') }}</title>
 
     <!-- Styles -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" />
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     @yield('extra-css')
@@ -43,7 +44,7 @@
                     <a href="{{ route('piecesList.index') }}" class="navbar-link">Gestion pièces</a>
                     <a href="{{ route('operationsList.index') }}" class="navbar-link">Gestion catégories</a>
                     @if(Auth()->user()->is_admin > 2)
-                    <a href="{{ route('getVehicules') }}" class="navbar-link">API</a>
+                    <a href="{{ route('getVehicles') }}" class="navbar-link">API</a>
                     @endif
                     @endif
                     @endif
@@ -85,12 +86,12 @@
             <a href="{{ route('piecesList.index') }}" class="sidenav-link">Gestion pièces</a>
             <a href="{{ route('operationsList.index') }}" class="sidenav-link">Gestion catégories</a>
             @if(Auth()->user()->is_admin > 2)
-            <a href="{{ route('getVehicules') }}" class="sidenav-link">API</a>
+            <a href="{{ route('getVehicles') }}" class="sidenav-link">API</a>
             @endif
             @else
             <form class="form-material sidenav-link" method="POST" action="{{ route('interventions.store') }}">
                 @csrf
-                <button type="submit" class="btn txt-orange transparent p-0">Nouvelle opération</button>
+                <button type="submit" class="btn txt-orange transparent p-0 txt-left">Nouvelle intervention</button>
             </form>
             <a href="{{ route('interventions.index') }}" class="sidenav-link txt-white">Liste complète</a>
             <a href="{{ route('joinIntervention') }}" class="sidenav-link">Rejoindre</a>

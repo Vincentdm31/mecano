@@ -16,11 +16,11 @@ class CreateVehiculesTable extends Migration
         Schema::dropIfExists('vehicules');
         Schema::create('vehicules', function (Blueprint $table) {
             $table->id();
-            $table->string('mark');
-            $table->string('model');
-            $table->string('license_plate', 5)->unique();
-            $table->enum('category', ['1', '2', '3']);
-            $table->integer('year')->nullable();
+            $table->string('mark')->nullable();
+            $table->string('model')->nullable();
+            $table->string('license_plate')->nullable();
+            $table->enum('category', ['1', '2', '3'])->nullable();
+            $table->integer('capacity')->nullable();
             $table->timestamps();
         });
     }

@@ -88,7 +88,7 @@ Route::middleware('auth')->group(function () {
 
     // Véhicule
     Route::get('/searchVehicule',  [VehiculeController::class, 'searchVehicule']);
-    Route::get('/getVehicules',  [VehiculeController::class, 'getVehicules'])->name('getVehicules');
+    Route::get('/getVehicles',  [VehiculeController::class, 'getVehicles'])->name('getVehicles');
 
     //PieceList
     Route::get('/searchPiecesList',  [PieceListController::class, 'searchPiecesList']);
