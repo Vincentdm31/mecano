@@ -233,16 +233,15 @@ $date = Carbon::now();
             </div>
         </div>
     </div>
+    <div class="d-flex fx-center mt-2">
+        <button data-target="modal-help" class="mx-auto btn rounded-1 txt-white shadow-1 orange dark-1 modal-trigger small"><i class="far fa-lightbulb"></i></button>
+    </div>
 </div>
 
 <!-- Modal Recap -->
 <div class="modal white rounded-2" id="modal-recap" data-ax="modal">
     <div class="m-2 txt-center">
-        @if(!empty($intervention->observations))
-        <a data-target="modal-comment" class="btn-modal-comment modal-trigger">Observations<span class="fas fa-comment-dots pl-2 font-s3"></span></a>
-        @else
-        <a data-target="modal-comment" class="btn-modal-comment modal-trigger">Observations<span class="fas fa-comment pl-2 font-s3"></span></a>
-        @endif
+        <a data-target="modal-comment" class="btn-modal-comment modal-trigger">Observations<span class="<?php echo (!empty($intervention->observations) ? 'fas fa-comment-dots' : 'fas fa-comment') ?> pl-2 font-s3"></span></a>
     </div>
     <div class="card grey light-4 light-shadow-2 rounded-2 m-2 mb-5">
         <div class="card-header p-1 airforce dark-4">
@@ -461,6 +460,19 @@ $date = Carbon::now();
     </form>
 </div>
 
+<!-- Modal HELP -->
+<div class="modal grey light-4 rounded-2 p-2" id="modal-help" data-ax="modal">
+    <div class="modal-content">
+        <p class="w100 font-s4 pb-2 bd-b-solid bd-2 bd-orange bd-dark-1 mb-5">Légende</p>
+        <p><i class="fas fa-tools txt-amaranth txt-dark-3 mr-3"></i>Gestion des pièces</p>
+        <p><i class="fas fa-comment-medical txt-blue mr-3"></i>Commentaire opération</p>
+        <p><i class="fas fa-comment-medical txt-orange mr-3"></i>Opération commentée</p>
+        <p><i class="fas fa-pause txt-orange txt-dark-1 mr-3"></i>Mettre l'opération en pause</p>
+        <p><i class="fas fa-play txt-green txt-dark-3 mr-2"></i>Reprendre l'opération</p>
+        <p><i class="fas fa-trash txt-red txt-dark-1 mr-2"></i>Supprimer l'opération</p>
+        <p><i class="fas fa-check txt-green txt-dark-3 mr-2"></i>Terminer l'opération</p>
+    </div>
+</div>
 
 @endsection
 

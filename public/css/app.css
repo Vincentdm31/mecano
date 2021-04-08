@@ -5428,7 +5428,7 @@ textarea.form-control[rows] {
   border-color: #07363c !important;
 }
 
-.cyan.dark-4 {
+.cyan.dark-4, .cyan.btn-tab-operation {
   background-color: #0b5761;
   color: #fff;
 }
@@ -5467,7 +5467,7 @@ textarea.form-control[rows] {
   border-color: #1399aa !important;
 }
 
-.cyan.dark-1, .cyan.btn-modal-comment, .cyan.btn-tab-operation {
+.cyan.dark-1 {
   background-color: #17bacf;
   color: #000;
 }
@@ -5558,7 +5558,7 @@ textarea.form-control[rows] {
   border-color: #585007 !important;
 }
 
-.yellow.dark-4 {
+.yellow.dark-4, .yellow.btn-tab-operation {
   background-color: #7e730a;
   color: #fff;
 }
@@ -5597,7 +5597,7 @@ textarea.form-control[rows] {
   border-color: #cab70f !important;
 }
 
-.yellow.dark-1, .yellow.btn-modal-comment, .yellow.btn-tab-operation {
+.yellow.dark-1 {
   background-color: #edd815;
   color: #000;
 }
@@ -5688,7 +5688,7 @@ textarea.form-control[rows] {
   border-color: #5b2c00 !important;
 }
 
-.orange.dark-4, .dark-4.btn-modal-comment, .dark-4.btn-tab-operation {
+.orange.dark-4, .dark-4.btn-modal-comment, .btn-tab-operation {
   background-color: #844000;
   color: #fff;
 }
@@ -5727,7 +5727,7 @@ textarea.form-control[rows] {
   border-color: #d56700 !important;
 }
 
-.orange.dark-1, .btn-modal-comment, .btn-tab-operation {
+.orange.dark-1, .dark-1.btn-modal-comment, .dark-1.btn-tab-operation {
   background-color: #fe7b00;
   color: #000;
 }
@@ -5818,7 +5818,7 @@ textarea.form-control[rows] {
   border-color: #380538 !important;
 }
 
-.magenta.dark-4 {
+.magenta.dark-4, .magenta.btn-tab-operation {
   background-color: #5d095d;
   color: #fff;
 }
@@ -5857,7 +5857,7 @@ textarea.form-control[rows] {
   border-color: #a710a7 !important;
 }
 
-.magenta.dark-1, .magenta.btn-modal-comment, .magenta.btn-tab-operation {
+.magenta.dark-1 {
   background-color: #cc14cc;
   color: #fff;
 }
@@ -5948,7 +5948,7 @@ textarea.form-control[rows] {
   border-color: #042844 !important;
 }
 
-.blue.dark-4 {
+.blue.dark-4, .blue.btn-tab-operation {
   background-color: #063e6b;
   color: #fff;
 }
@@ -5987,7 +5987,7 @@ textarea.form-control[rows] {
   border-color: #0a6bb8 !important;
 }
 
-.blue.dark-1, .blue.btn-modal-comment, .blue.btn-tab-operation {
+.blue.dark-1 {
   background-color: #0c82df;
   color: #fff;
 }
@@ -6078,7 +6078,7 @@ textarea.form-control[rows] {
   border-color: #3d0606 !important;
 }
 
-.red.dark-4 {
+.red.dark-4, .red.btn-tab-operation {
   background-color: #620a0a;
   color: #fff;
 }
@@ -6117,7 +6117,7 @@ textarea.form-control[rows] {
   border-color: #ac1111 !important;
 }
 
-.red.dark-1, .red.btn-modal-comment, .red.btn-tab-operation {
+.red.dark-1 {
   background-color: #d11515;
   color: #fff;
 }
@@ -6208,7 +6208,7 @@ textarea.form-control[rows] {
   border-color: #063e06 !important;
 }
 
-.green.dark-4 {
+.green.dark-4, .green.btn-tab-operation {
   background-color: #0a630a;
   color: #fff;
 }
@@ -6247,7 +6247,7 @@ textarea.form-control[rows] {
   border-color: #12ad12 !important;
 }
 
-.green.dark-1, .green.btn-modal-comment, .green.btn-tab-operation {
+.green.dark-1 {
   background-color: #15d215;
   color: #000;
 }
@@ -6338,7 +6338,7 @@ textarea.form-control[rows] {
   border-color: #173129 !important;
 }
 
-.viride.dark-4 {
+.viride.dark-4, .viride.btn-tab-operation {
   background-color: #254c40;
   color: #fff;
 }
@@ -6377,7 +6377,7 @@ textarea.form-control[rows] {
   border-color: #3f836e !important;
 }
 
-.viride.dark-1, .viride.btn-modal-comment, .viride.btn-tab-operation {
+.viride.dark-1 {
   background-color: #4c9f85;
   color: #000;
 }
@@ -6468,7 +6468,7 @@ textarea.form-control[rows] {
   border-color: #372c1d !important;
 }
 
-.mole.dark-4 {
+.mole.dark-4, .mole.btn-tab-operation {
   background-color: #52412b;
   color: #fff;
 }
@@ -6507,7 +6507,7 @@ textarea.form-control[rows] {
   border-color: #886c47 !important;
 }
 
-.mole.dark-1, .mole.btn-modal-comment, .mole.btn-tab-operation {
+.mole.dark-1 {
   background-color: #a38155;
   color: #000;
 }
@@ -6598,7 +6598,7 @@ textarea.form-control[rows] {
   border-color: #380613 !important;
 }
 
-.amaranth.dark-4 {
+.amaranth.dark-4, .amaranth.btn-tab-operation {
   background-color: #5c0b1f;
   color: #fff;
 }
@@ -6637,7 +6637,7 @@ textarea.form-control[rows] {
   border-color: #a61337 !important;
 }
 
-.amaranth.dark-1, .amaranth.btn-modal-comment, .amaranth.btn-tab-operation {
+.amaranth.dark-1 {
   background-color: #ca1743;
   color: #fff;
 }
@@ -6728,7 +6728,7 @@ textarea.form-control[rows] {
   border-color: #162126 !important;
 }
 
-.airforce.dark-4 {
+.airforce.dark-4, .airforce.btn-tab-operation {
   background-color: #26373f;
   color: #fff;
 }
@@ -6767,7 +6767,7 @@ textarea.form-control[rows] {
   border-color: #446372 !important;
 }
 
-.airforce.dark-1, .airforce.btn-modal-comment, .airforce.btn-tab-operation {
+.airforce.dark-1 {
   background-color: #537a8c;
   color: #fff;
 }
@@ -6858,7 +6858,7 @@ textarea.form-control[rows] {
   border-color: #06361e !important;
 }
 
-.meadow.dark-4 {
+.meadow.dark-4, .meadow.btn-tab-operation {
   background-color: #0a5b32;
   color: #fff;
 }
@@ -6897,7 +6897,7 @@ textarea.form-control[rows] {
   border-color: #13a45b !important;
 }
 
-.meadow.dark-1, .meadow.btn-modal-comment, .meadow.btn-tab-operation {
+.meadow.dark-1 {
   background-color: #17c970;
   color: #000;
 }
@@ -6988,7 +6988,7 @@ textarea.form-control[rows] {
   border-color: #3f3f3f !important;
 }
 
-.grey.dark-4 {
+.grey.dark-4, .grey.btn-tab-operation {
   background-color: #535353;
   color: #fff;
 }
@@ -7027,7 +7027,7 @@ textarea.form-control[rows] {
   border-color: #7c7c7c !important;
 }
 
-.grey.dark-1, .grey.btn-modal-comment, .grey.btn-tab-operation {
+.grey.dark-1 {
   background-color: #919191;
   color: #000;
 }
@@ -7214,11 +7214,11 @@ body {
 }
 
 .tab .tab-menu {
-  --tab-active-color:#EA8527!important;
+  --tab-active-color: #ea8527 !important;
 }
 
 .form-material .form-field:not(.form-default) {
-  --form-material-color: #EA8527!important;
+  --form-material-color: #ea8527 !important;
 }
 
 @media screen and (max-width: 1279px) {
@@ -7252,4 +7252,8 @@ body {
 .role3 {
   background-color: maroon;
   color: white !important;
+}
+
+.bg-btn-modal-comment, .btn-modal-comment {
+  background-color: #fe7b00 !important;
 }

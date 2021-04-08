@@ -1,70 +1,74 @@
 @import "node_modules/axentix/src/scss/axentix";
 
-body{
-    font-family: 'Quicksand', sans-serif;
+body {
+    font-family: "Quicksand", sans-serif;
 }
 
-.tab .tab-menu{
-    --tab-active-color:#EA8527!important;
+.tab .tab-menu {
+    --tab-active-color: #ea8527 !important;
 }
 
 .form-material .form-field:not(.form-default) {
-    --form-material-color: #EA8527!important;
+    --form-material-color: #ea8527 !important;
 }
 
-.recap-infos{
-    @include responsive("md-down"){
-        p{
+.recap-infos {
+    @include responsive("md-down") {
+        p {
             font-size: 1rem;
         }
     }
 }
 
-.dark{
+.dark {
     background-color: rgb(27, 27, 27);
 }
 
-.dark-bg{
+.dark-bg {
     background-color: rgb(233, 233, 233);
 }
 
-.orange-custom{
+.orange-custom {
     color: #ff9027;
 }
 
-.role1{
+.role1 {
     background-color: green;
-    color:white !important;
+    color: white !important;
 }
 
-.role2{
+.role2 {
     background-color: rgb(255, 102, 0);
-    color:white !important;
+    color: white !important;
 }
 
-.role3{
+.role3 {
     background-color: rgb(128, 0, 0);
-    color:white !important;
+    color: white !important;
 }
 
-.btn-tab-operation{
-    @extend .btn;
-    @extend .mx-auto;
-    @extend .my-auto;
-    @extend .orange;
-    @extend .rounded-1;
-    @extend .txt-white;
-    @extend .shadow-1;
-    @extend .dark-1;
-    @extend .small;
+.btn-tab-operation {
+    @extend .btn,
+        .mx-auto,
+        .my-auto,
+        .orange,
+        .rounded-1,
+        .txt-white,
+        .shadow-1,
+        .dark-4,
+        .small;
 }
 
-.btn-modal-comment{
-    @extend .btn;
-    @extend .orange;
-    @extend .rounded-2;
-    @extend .txt-white;
-    @extend .shadow-2;
-    @extend .dark-1;
-    @extend .small;
+.btn-modal-comment {
+    @extend .btn,
+        .orange,
+        .bg-btn-modal-comment,
+        .rounded-2,
+        .txt-white,
+        .shadow-2,
+        .small;
+}
+
+.bg-btn-modal-comment {
+    background-color: #fe7b00 !important;
 }
