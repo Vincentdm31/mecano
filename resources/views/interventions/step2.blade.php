@@ -6,7 +6,7 @@
 <div class="container h100 d-flex pb-5">
     <div class="vself-center container card overflow-visible shadow-1 rounded-3 white">
         <div class="card-header p-0">
-            <p class="m-0 txt-grey txt-light-4 p-3 font-s2 airforce dark-4 mb-4 rounded-tr0 rounded-bl0 rounded-tl3 rounded-br4">Choix du véhicule</p>
+            <p class="m-0 txt-grey txt-light-4 p-3 font-s2 airforce dark-4 mb-4 rounded-tr0 rounded-bl0 rounded-tl3 rounded-br3">Choix du véhicule</p>
         </div>
         <div class="card-content pl-4 pr-4 pt-0 pb-0">
             <div class="mt-2 mb-2 grix sm2 gutter-sm5">
@@ -20,7 +20,9 @@
                                     <input hidden name="id" value="{{ $intervention->id }}" /></input>
                                     <label for="searchIntervVehicule">Rechercher</label>
                                 </div>
-                                <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange circle mx-auto vself-center rounded-4 small"><span class="outline-text outline-invert"><i class="fas fa-search"></i></span></button>
+                                <div class="d-flex vcenter">
+                                    <button type="submit" class="btn shadow-1 rounded-1 txt-orange circle rounded-4 small"><i class="fas fa-search"></i></button>
+                                </div>
                             </div>
                         </form>
                     </div>
