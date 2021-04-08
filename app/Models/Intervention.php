@@ -10,7 +10,7 @@ class Intervention extends Model
     use HasFactory;
 
     protected $fillable = ['qte'];
-    
+
     public function vehiculeList()
     {
         return $this->hasOne(Vehicule::class, 'id', 'vehicule_id');
@@ -23,6 +23,6 @@ class Intervention extends Model
 
     public function operations()
     {
-        return $this->hasMany(Operation::class);
+        return $this->hasMany(Operation::class)->orderBy('id', 'DESC');
     }
 }

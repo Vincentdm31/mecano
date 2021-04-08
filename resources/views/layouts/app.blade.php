@@ -75,7 +75,7 @@
 
     <div class="sidenav shadow-1 dark" id="sidenav" data-ax="sidenav">
         <div class="sidenav-header p-2">
-            <p class="mr-auto orange-custom font-s5 bd-b-solid bd-orange bd-light-2 bd-2 pb-4">Alcis Groupe</p>
+            <p class="w100 font-s5 bd-b-solid bd-orange bd-light-2 bd-2 pb-4 txt-white">Mecalcis</p>
         </div>
         <div class="txt-white">
             @if(Auth()->check())
@@ -99,7 +99,6 @@
             @endif
             @endif
         </div>
-
     </div>
 
     <main>
