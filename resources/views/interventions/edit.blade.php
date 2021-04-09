@@ -67,44 +67,38 @@ $date = Carbon::now();
 
         </div>
         <!-- Tab opération -->
-        <div id="tab-operation" class="p-3 container">
-            <div class="d-flex">
+        <div id="tab-operation" class="p-1 container">
+            <div class="d-flex mt-2">
                 @if( $opDoing->count() < 1 && $opPause->count() < 1 && $opEnd->count() < 1) <button data-target="modal-new-operation" class="btn-tab-operation modal-trigger">Nouvelle opération</button>
                             @elseif($opDoing->count() > 0)
                             <button data-target="modal-new-operation" class="disabled btn-tab-operation modal-trigger">Nouvelle opération</button>
                             @elseif($opDoing->count() < 1) <button data-target="modal-new-operation" class="btn-tab-operation modal-trigger">Nouvelle opération</button>
                                 @endif
             </div>
-            <div>
-                @if(!$intervention->operations()->exists())
-                <p class="txt-orange pl-3 txt-center">Aucune opération</p>
-                @else
-                <div class="grix xs1">
-                    @foreach( $intervention->operations as $operation)
-                    @if($operation->state != 'finish')
-                    <div class="my-auto pl-5 txt-airforce txt-dark-4 pb-2">
-                        <li class="mb-2 mt-3">
-                            {{ $operation->operationList->name}}
-                        </li>
-                        @if(!$operation->pieces()->exists())
-                        <em class=" mb-5 pb-5 txt-orange txt-dark-1">Aucune pièce affectée</em>
-                        @endif
-                        @foreach($operation->pieces as $piece)
-                        <div class="grix xs2">
-                            <em class="my-auto"><b> {{$piece->pieceList->name }}</b><span class="ml-3">x{{$piece->qte}}</span></em>
-                            <form method="POST" action="{{ route('pieces.destroy',  ['piece' => $piece->id])}}">
-                                @method('delete')
-                                @csrf
-                                <div class="txt-center">
-                                    <input hidden value="{{ $intervention->id }}" name="interventionId" />
-                                    <button type="submit" class="btn light-shadow-1 rounded-1 small txt-red"><i class="fas fa-trash"></i></button>
-                                </div>
-                            </form>
-                        </div>
-                        @endforeach
+            @if(!$intervention->operations()->exists())
+            <p class="txt-orange pl-3 txt-center">Aucune opération</p>
+            @else
+            @foreach( $intervention->operations as $operation)
+            @if($operation->state != 'finish')
+            <div class="card light-shadow-1 airforce dark-4 rounded-2">
+                <div class="card-header p-2">
+                    <p class="m-0 font-s3 txt-grey txt-light-4 txt-center">{{ $operation->operationList->name}}</p>
+                    @foreach($operation->pieces as $piece)
+                    <div class="grix xs3 p-1 mt-2">
+                        <p class="my-auto m-0 font-s2 col-xs2 txt-grey txt-light-4"><span class="mr-3 txt-grey txt-light-3">{{$piece->qte}}x</span>{{$piece->pieceList->name }}</p>
+                        <form method="POST" action="{{ route('pieces.destroy',  ['piece' => $piece->id])}}">
+                            @method('delete')
+                            @csrf
+                            <div class="txt-center">
+                                <input hidden value="{{ $intervention->id }}" name="interventionId" />
+                                <button type="submit" class="btn rounded-1 small txt-red"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </form>
                     </div>
-                    <div class="grix xs2 md5 gutter-xs1 grey light-3 p-2 rounded-2">
-
+                    @endforeach
+                </div>
+                <div class="card-content grey light-3 p-2">
+                    <div class="grix xs2 md5">
                         <div class="my-auto mx-auto">
                             <button data-target="add-piece-operation-{{ $operation->id }}" class="btn rounded-1 white light-shadow-3 txt-blue modal-trigger mx-auto">
                                 <i class="fas fa-tools txt-amaranth txt-dark-3"></i>
@@ -173,11 +167,11 @@ $date = Carbon::now();
                             </form>
                         </div>
                     </div>
-                    @endif
-                    @endforeach
                 </div>
-                @endif
             </div>
+            @endif
+            @endforeach
+            @endif
             <img src="{{ asset('/images/car.svg') }}" class="responsive-media p-3" alt="">
         </div>
         <!-- Tab gestion -->
@@ -277,10 +271,10 @@ $date = Carbon::now();
         <div class="card-header airforce dark-4 p-1">
             <p class="txt-grey txt-light-4 m-1 font-s3"><i class="fas fa-tools font-s4 txt-grey txt-light-4 mr-3 ml-2"></i>Mes opérations</p>
         </div>
-        <div class="card-content p-2">
+        <div class="card-content p-2 airforce dark-4">
             @foreach( $intervention->operations as $operation)
             @if($operation->state == 'finish')
-            <div class="shadow-1 mb-2 rounded-1">
+            <div class="shadow-1 mb-2 rounded-1 white">
                 <div class="grix xs3 p-2 pl-3">
                     <div class="col-xs2 my-auto">
                         {{ $operation->operationList->name}}
@@ -297,7 +291,7 @@ $date = Carbon::now();
                 </div>
                 @foreach($operation->pieces as $piece)
                 <div class="pb-2 p-3">
-                    <em class=""><b>{{ $piece->pieceList->name }}</b><span class="ml-3">x{{ $piece->qte }}</span></em>
+                    <p class=""><span class="mr-3 txt-grey txt-dark-4">{{ $piece->qte }}x</span>{{ $piece->pieceList->name }}</p>
                 </div>
                 @endforeach
             </div>

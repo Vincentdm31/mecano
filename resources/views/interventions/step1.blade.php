@@ -70,7 +70,6 @@ $date = Carbon::now();
                 </div>
                 <img src="{{ asset('/images/deplacement.svg') }}" class="responsive-media p-4" alt="">
                 @endif
-
             </div>
             @endif
         </div>
