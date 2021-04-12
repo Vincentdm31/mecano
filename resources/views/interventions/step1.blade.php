@@ -32,7 +32,7 @@ $date = Carbon::now();
             @endif
             @if(isset($intervention->needMove) && $intervention->needMove == 1)
             <div class="grix xs1 md2">
-                @if(empty($intervention->start_deplacement_aller))
+                @if(empty($intervention->start_move_begin))
                 <div class="d-flex my-auto fx-col">
                     <div>
                         <p class="txt-grey txt-light-4 p-3 font-s2 airforce dark-4 mb-5 rounded-tr0 rounded-bl0 rounded-tl3 rounded-br3">Déplacement ALLER</p>
@@ -41,7 +41,7 @@ $date = Carbon::now();
                                 @method('PUT')
                                 @csrf
                                 <div class="txt-center">
-                                    <input hidden value="{{ $date }}" name="start_deplacement_aller" />
+                                    <input hidden value="{{ $date }}" name="start_move_begin" />
                                     <input hidden name="id" value="{{ $intervention->id }}"></input>
                                     <button type="submit" class="btn txt-grey txt-light-4 shadow-1 rounded-1 orange dark-1 small">Début</button>
                                 </div>
@@ -53,7 +53,7 @@ $date = Carbon::now();
                 @endif
 
                 <!--End Déplacement Interventions Aller -->
-                @if(!empty($intervention->start_deplacement_aller) && empty($intervention->end_deplacement_aller))
+                @if(!empty($intervention->start_move_begin) && empty($intervention->end_move_begin))
                 <div class="d-flex my-auto fx-col">
                     <div>
                         <p class="txt-grey txt-light-4 p-3 font-s2 airforce dark-4 mb-5 rounded-tr0 rounded-bl0 rounded-tl3 rounded-br3">Déplacement ALLER</p>
@@ -62,7 +62,7 @@ $date = Carbon::now();
                         @method('PUT')
                         @csrf
                         <div class="txt-center">
-                            <input hidden value="{{ $date }}" name="end_deplacement_aller" />
+                            <input hidden value="{{ $date }}" name="end_move_begin" />
                             <input hidden name="id" value="{{ $intervention->id }}"></input>
                             <button type="submit" class="btn txt-grey txt-light-4 shadow-1 rounded-1 orange dark-1 small">Fin</button>
                         </div>

@@ -12,11 +12,11 @@ class CreateVehiculesTable extends Migration
      * @return void
      */
     public function up()
-    {   
+    {
         Schema::dropIfExists('vehicules');
         Schema::create('vehicules', function (Blueprint $table) {
             $table->id();
-            $table->string('mark')->nullable();
+            $table->string('brand')->nullable();
             $table->string('model')->nullable();
             $table->string('license_plate')->nullable();
             $table->enum('category', ['1', '2', '3'])->nullable();

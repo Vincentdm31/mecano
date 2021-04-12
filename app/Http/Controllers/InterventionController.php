@@ -208,7 +208,7 @@ class InterventionController extends Controller
         $intervention = Intervention::find($intervention_id);
 
         $vehicules = Vehicule::Where('license_plate', 'like', '%' . $search . '%')
-            ->orWhere('mark', 'like', '%' . $search . '%')
+            ->orWhere('brand', 'like', '%' . $search . '%')
             ->get();
 
         return view('interventions.step2', ['intervention' => $intervention, 'vehicules' => $vehicules, 'id' => $intervention_id]);
@@ -264,7 +264,7 @@ class InterventionController extends Controller
 
         $intervention->save();
 
-        if ($intervention->end_deplacement_aller != null) {
+        if ($intervention->end_move_begin != null) {
             return view('interventions.step2', ['intervention' => $intervention, 'vehicules' => $vehicules]);
         }
 
@@ -322,7 +322,7 @@ class InterventionController extends Controller
             '',
             '',
             'Immat: ' . '<strong>' . $intervention->vehiculeList->license_plate . '</strong>',
-            'Marque: ' . '<strong>' . $intervention->vehiculeList->mark . '</strong>',
+            'Marque: ' . '<strong>' . $intervention->vehiculeList->brand . '</strong>',
             'Modèle: ' . '<strong>' . $intervention->vehiculeList->model . '</strong>',
             'Kilométrage: ' . '<strong>' . $intervention->km_vehicule . '</strong>'
 

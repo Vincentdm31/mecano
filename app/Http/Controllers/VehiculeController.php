@@ -114,7 +114,7 @@ class VehiculeController extends Controller
     {
         $search = $request->get('searchVehicule');
 
-        $vehicules = Vehicule::Where('mark', 'like', '%' . $search . '%')
+        $vehicules = Vehicule::Where('brand', 'like', '%' . $search . '%')
             ->orWhere('model', 'like', '%' . $search . '%')
             ->orWhere('license_plate', 'like', '%' . $search . '%')
             ->get();
@@ -142,24 +142,20 @@ class VehiculeController extends Controller
 
             $vehicle = Vehicule::firstOrCreate([
                 'id' => $item->Id,
-                'mark' => $item->Brand,
+                'brand' => $item->Brand,
                 'model' => $item->Model,
                 'capacity' => $item->Capacity,
                 'license_plate' => $item->Matriculation
             ]);
 
-            if($item->Capacity > 22 )
-            {
+            if ($item->Capacity > 22) {
                 $vehicle->category = 3;
-            }
-            elseif($item->Capacity > 9)
-            {
+            } elseif ($item->Capacity > 9) {
                 $vehicle->category = 2;
-            }
-            else{
+            } else {
                 $vehicle->category = 1;
             }
-    
+
             $vehicle->save();
         }
 
@@ -170,7 +166,7 @@ class VehiculeController extends Controller
             ->get();;
 
         dd($duplicates);
-        
+
         return redirect(route('vehicules.index'));
     }
 

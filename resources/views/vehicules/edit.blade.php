@@ -12,8 +12,8 @@
                 @csrf
                 <div class="">
                     <div class="form-field">
-                        <input type="text" name="mark" class="form-control" value="{{$vehicule->mark}}" />
-                        <label for="mark">Marque</label>
+                        <input type="text" name="brand" class="form-control" value="{{$vehicule->brand}}" />
+                        <label for="brand">Marque</label>
                     </div>
                     <div class="form-field">
                         <input type="text" name="model" class="form-control" value="{{$vehicule->model}}" />

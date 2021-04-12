@@ -36,7 +36,7 @@
                     @foreach($vehicules as $vehicule)
                     <tr>
                         <td class="txt-center">{{ $vehicule->id }}</td>
-                        <td class="txt-center">{{ $vehicule->mark }}</td>
+                        <td class="txt-center">{{ $vehicule->brand }}</td>
                         <td class="txt-center">{{ $vehicule->model }}</td>
                         <td class="txt-center">{{ $vehicule->license_plate }}</td>
                         <td>

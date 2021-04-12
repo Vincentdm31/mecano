@@ -11,8 +11,8 @@
                     @csrf
                     <div class="grix xs1 txt-center">
                         <div class="form-field">
-                            <input required type="text" name="mark" class="form-control" />
-                            <label for="mark" class="">Marque</label>
+                            <input required type="text" name="brand" class="form-control" />
+                            <label for="brand" class="">Marque</label>
                         </div>
                         <div class="form-field">
                             <input required type="text" name="model" class="form-control" />

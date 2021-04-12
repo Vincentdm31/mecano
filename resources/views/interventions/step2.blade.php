@@ -34,7 +34,7 @@
                                 <label for="select">Véhicule</label>
                                 <select class="form-control  txt-airforce txt-dark-4" name="vehicule_id">
                                     @foreach ( $vehicules as $vehicule)
-                                    <option class="grey light-4 txt-airforce txt-dark-4" value="{{ $vehicule->id }}">{{ $vehicule->mark }} - {{ $vehicule->license_plate }}</option>
+                                    <option class="grey light-4 txt-airforce txt-dark-4" value="{{ $vehicule->id }}">{{ $vehicule->brand }} - {{ $vehicule->license_plate }}</option>
                                     @endforeach
                                 </select>
                             </div>

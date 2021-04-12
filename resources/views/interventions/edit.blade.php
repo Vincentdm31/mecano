@@ -37,28 +37,28 @@ $date = Carbon::now();
         <!-- Tab Déplacement -->
         <div id="tab-deplacement" class="p-3 container">
             <!--Start Déplacement Interventions Retour -->
-            @if(!empty($intervention->end_deplacement_aller) && empty($intervention->start_deplacement_retour))
+            @if(!empty($intervention->end_move_begin) && empty($intervention->start_move_return))
             <p class="txt-airforce txt-dark-4 txt-center">Déplacements Retour</p>
             <div class="">
                 <form method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
                     @method('PUT')
                     @csrf
                     <div class="txt-center">
-                        <input hidden value="{{ $date }}" name="start_deplacement_retour" />
+                        <input hidden value="{{ $date }}" name="start_move_return" />
                         <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange"><span class="outline-text outline-invert">Début</span></button>
                     </div>
                 </form>
             </div>
             @endif
             <!--End Déplacement Interventions Retour -->
-            @if(!empty($intervention->start_deplacement_retour) && empty($intervention->end_deplacement_retour))
+            @if(!empty($intervention->start_move_return) && empty($intervention->end_move_return))
             <p class="txt-airforce txt-dark-4 txt-center">Déplacements Retour</p>
             <div class="">
                 <form method="POST" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
                     @method('PUT')
                     @csrf
                     <div class="txt-center">
-                        <input hidden value="{{ $date }}" name="end_deplacement_retour" />
+                        <input hidden value="{{ $date }}" name="end_move_return" />
                         <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange"><span class="outline-text outline-invert">Fin</span></button>
                     </div>
                 </form>
@@ -201,7 +201,7 @@ $date = Carbon::now();
                         </form>
                     </div>
                     @endif
-                    @if($intervention->needMove && empty($intervention->end_deplacement_retour))
+                    @if($intervention->needMove && empty($intervention->end_move_return))
                     <div class="d-flex">
                         <button data-target="modal-end-deplacement" class="mx-auto my-auto btn rounded-1 txt-white shadow-1 orange dark-1 modal-trigger small">
                             Déplacement retour
@@ -214,7 +214,7 @@ $date = Carbon::now();
                             @csrf
                             <div class="txt-center">
                                 <input hidden value="finish" name="state" />
-                                @if($opDoing->count() < 1 && $opPause->count() < 1 && !$intervention->needMove || $opDoing->count() < 1 && $opPause->count() < 1 && $intervention->needMove && !empty($intervention->end_deplacement_retour))
+                                @if($opDoing->count() < 1 && $opPause->count() < 1 && !$intervention->needMove || $opDoing->count() < 1 && $opPause->count() < 1 && $intervention->needMove && !empty($intervention->end_move_return))
                                                 <button type="submit" class="btn shadow-1 rounded-1 red small">Terminer l'intervention</button>
                                                 @else
                                                 <button type="submit" class="btn disabled shadow-1 rounded-1 red small">Terminer l'intervention</button>
@@ -245,7 +245,7 @@ $date = Carbon::now();
             <div class="grix xs2">
                 <div>
                     <em class="font-s1 txt-orange txt-dark-1">Marque</em>
-                    <p class="m-0">{{ $intervention->vehiculeList->mark }}</p>
+                    <p class="m-0">{{ $intervention->vehiculeList->brand }}</p>
                 </div>
                 <div>
                     <em class="font-s1 txt-orange txt-dark-1">Modèle</em>
@@ -396,7 +396,7 @@ $date = Carbon::now();
 <!-- Modal fin déplacement -->
 <div class="modal grey light-4 rounded-2 p-2" id="modal-end-deplacement" data-ax="modal">
     <div class="grix xs1 md2">
-        @if(empty($intervention->start_deplacement_retour))
+        @if(empty($intervention->start_move_return))
         <div class="d-flex my-auto fx-col">
             <div>
                 <p class="txt-airforce txt-dark-4 txt-center mb-2">Déplacements Retour</p>
@@ -405,7 +405,7 @@ $date = Carbon::now();
                         @method('PUT')
                         @csrf
                         <div class="txt-center">
-                            <input hidden value="{{ $date }}" name="start_deplacement_retour" />
+                            <input hidden value="{{ $date }}" name="start_move_return" />
                             <input hidden name="id" value="{{ $intervention->id }}"></input>
                             <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange small"><span class="outline-text outline-invert">Début</span></button>
                         </div>
@@ -417,7 +417,7 @@ $date = Carbon::now();
         @endif
 
         <!--End Déplacement Interventions Aller -->
-        @if(!empty($intervention->start_deplacement_retour) && empty($intervention->end_deplacement_retour))
+        @if(!empty($intervention->start_move_return) && empty($intervention->end_move_return))
         <div class="d-flex my-auto fx-col">
             <div>
                 <p class="txt-airforce txt-dark-4 txt-center mb-2">Déplacements Retour</p>
@@ -426,7 +426,7 @@ $date = Carbon::now();
                 @method('PUT')
                 @csrf
                 <div class="txt-center">
-                    <input hidden value="{{ $date }}" name="end_deplacement_retour" />
+                    <input hidden value="{{ $date }}" name="end_move_return" />
                     <input hidden name="id" value="{{ $intervention->id }}"></input>
                     <button type="submit" class="btn small shadow-1 rounded-1 outline opening txt-orange"><span class="outline-text outline-invert">Fin</span></button>
                 </div>
