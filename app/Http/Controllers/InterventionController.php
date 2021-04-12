@@ -229,7 +229,6 @@ class InterventionController extends Controller
         $intervention->save();
 
         return redirect(route('interventions.edit', ['intervention' => $intervention]));
-        
     }
 
 
@@ -296,13 +295,17 @@ class InterventionController extends Controller
         $itemList = array();
 
         foreach ($intervention->operations as $operation) {
-            array_push($itemList, (new InvoiceItem())->title('Opération - ' . $operation->operationList->name)->quantity(1)->pricePerUnit(0));
+
+            $vehicleCateg = $intervention->vehiculeList->category;
+            $price = "price" . $vehicleCateg;
+            $pricePerUnit = $operation->operationList->$price;
+
+            array_push($itemList, (new InvoiceItem())->title('Opération - ' . $operation->operationList->name)->quantity(1)->pricePerUnit($pricePerUnit));
 
             foreach ($operation->pieces as $piece) {
                 array_push($itemList, (new InvoiceItem())->title('Pièce - ' . $piece->PieceList->name)->quantity($piece->qte)->pricePerUnit($piece->pieceList->price));
             }
         }
-
 
         $client = new Party([
             'name'          => 'Alcis Meca',
