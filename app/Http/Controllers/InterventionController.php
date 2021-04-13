@@ -298,9 +298,9 @@ class InterventionController extends Controller
 
             $vehicleCateg = $intervention->vehiculeList->category;
             $price = "price" . $vehicleCateg;
-            $pricePerUnit = $operation->operationList->$price;
+            $opPricePerUnit = $operation->operationList->$price;
 
-            array_push($itemList, (new InvoiceItem())->title('Opération - ' . $operation->operationList->name)->quantity(1)->pricePerUnit($pricePerUnit));
+            array_push($itemList, (new InvoiceItem())->title('Opération - ' . $operation->operationList->name)->quantity(1)->pricePerUnit($opPricePerUnit));
 
             foreach ($operation->pieces as $piece) {
                 array_push($itemList, (new InvoiceItem())->title('Pièce - ' . $piece->PieceList->name)->quantity($piece->qte)->pricePerUnit($piece->pieceList->price));

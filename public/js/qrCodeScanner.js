@@ -18,8 +18,8 @@ qrcode.callback = function (res) {
     outputData.innerText = res;
     qrCodeResult.value = res;
     scanning = false;
-    btnScanQR.classList.remove('hide');
-    btnStopQR.classList.add('hide');
+    btnScanQR.classList.remove("hide");
+    btnStopQR.classList.add("hide");
     video.srcObject.getTracks().forEach(function (track) {
       track.stop();
     });
@@ -30,8 +30,8 @@ qrcode.callback = function (res) {
 };
 
 btnScanQR.onclick = function () {
-  btnScanQR.classList.add('hide');
-  btnStopQR.classList.remove('hide');
+  btnScanQR.classList.add("hide");
+  btnStopQR.classList.remove("hide");
   navigator.mediaDevices.getUserMedia({
     video: {
       facingMode: "environment"
@@ -56,8 +56,8 @@ btnStopQR.onclick = function () {
   });
   qrResult.hidden = true;
   canvasElement.hidden = true;
-  btnScanQR.classList.remove('hide');
-  btnStopQR.classList.add('hide');
+  btnScanQR.classList.remove("hide");
+  btnStopQR.classList.add("hide");
 };
 
 function tick() {
