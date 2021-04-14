@@ -2,7 +2,7 @@
 
 body {
     font-family: "Quicksand", sans-serif;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 .tab .tab-menu {
@@ -47,17 +47,19 @@ body {
     background-color: rgb(141, 37, 37);
     color: white !important;
 }
+.dark {
+    background-color: rgb(32, 32, 32);
+}
 
 .btn-tab-operation {
     @extend .btn,
         .mx-auto,
         .my-auto,
-        .orange,
         .rounded-1,
         .txt-white,
         .shadow-1,
-        .dark-4,
-        .small;
+        .small,
+        .dark;
 }
 
 .btn-modal-comment {

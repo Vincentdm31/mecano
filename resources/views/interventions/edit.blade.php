@@ -169,7 +169,6 @@ $date = Carbon::now();
             @endif
             @endforeach
             @endif
-            <img src="{{ asset('/images/car.svg') }}" class="responsive-media p-3" alt="">
         </div>
         <!-- Tab gestion -->
         <div id="tab-gestion" class="p-3">
@@ -225,19 +224,41 @@ $date = Carbon::now();
         </div>
     </div>
 
-
-    <div class="d-flex fx-row fx-center mt-2">
-        <div class="">
-            @if( $opDoing->count() < 1 && $opPause->count() < 1 && $opEnd->count() < 1) <button data-target="modal-new-operation" class="btn-tab-operation modal-trigger">Nouvelle opération</button>
-                        @elseif($opDoing->count() > 0)
-                        <button data-target="modal-new-operation" class="disabled btn-tab-operation modal-trigger">Nouvelle opération</button>
-                        @elseif($opDoing->count() < 1) <button data-target="modal-new-operation" class="btn-tab-operation modal-trigger">Nouvelle opération</button>
-                            @endif
-        </div>
-
+    <div class="absolute-pos" style="bottom:0;left:0;transform:translate(50%,-50%);">
+        @if( $opDoing->count() < 1 && $opPause->count() < 1 && $opEnd->count() < 1) <button data-target="modal-new-operation" class="btn-tab-operation modal-trigger">Nouvelle opération</button>
+                    @elseif($opDoing->count() > 0)
+                    <button data-target="modal-new-operation" class="disabled btn-tab-operation modal-trigger">Nouvelle opération</button>
+                    @elseif($opDoing->count() < 1) <button data-target="modal-new-operation" class="btn-tab-operation modal-trigger">Nouvelle opération</button>
+                        @endif
     </div>
 
+
+
 </div>
+
+<div class="fab" id="fab" data-ax="fab">
+
+    <!-- Here is the fab-trigger -->
+    <button class="btn shadow-1 circle large dark txt-white fab-trigger">
+        <i class="fas fa-plus" aria-hidden="true"></i>
+    </button>
+
+    <!-- Here is the fab-menu -->
+    <div class="fab-menu">
+        <a href="{{ route('home') }}" class="btn shadow-1 circle orange dark-1 txt-white fab-item mb-3">
+            <i class="fas fa-pen" aria-hidden="true"></i>
+        </a>
+        <a href="{{ route('home') }}" class="btn shadow-1 circle red fab-item mb-3">
+            <i class="fas fa-paper-plane" aria-hidden="true"></i>
+        </a>
+        <a href="{{ route('home') }}" class="btn shadow-1 circle primary fab-item mb-3">
+            <i class="fas fa-download" aria-hidden="true"></i>
+        </a>
+    </div>
+</div>
+
+<!-- Overlay FAB -->
+<div id="fab-overlay" class="fab-overlay"></div>
 
 <!-- Modal Recap -->
 <div class="modal white rounded-2" id="modal-recap" data-ax="modal">
@@ -534,5 +555,25 @@ $date = Carbon::now();
     });
     toast.show();
 </script>
+
 @endif
+<script>
+    let fab = document.getElementById('fab');
+    let fabOverlay = document.getElementById('fab-overlay');
+    let overlay = false;
+
+    fab.addEventListener('click', function(event) {
+        fabOverlay.classList.add('active');
+        setTimeout(() => {
+            overlay = true;
+        }, 200);
+    });
+
+    document.body.onclick = function() {
+        if (overlay) {
+            fabOverlay.classList.remove('active');
+            overlay = false;
+        }
+    }
+</script>
 @endsection
