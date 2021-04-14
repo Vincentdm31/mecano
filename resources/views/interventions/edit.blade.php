@@ -153,13 +153,10 @@ $date = Carbon::now();
                             </form>
                         </div>
                         <div class="col-xs2 col-md1 w100 pl-4 pr-4">
-                            <form method="POST" action="{{ route('operations.update',  ['operation' => $operation->id])}}">
+                            <form method="POST" action="{{ route('finishOperation', ['operationId' => $operation->id, 'interventionId' => $intervention->id, 'state' => 'finish', 'endOperationTime' => $date])}}">
                                 @method('PUT')
                                 @csrf
                                 <div class="txt-center">
-                                    <input hidden value="finish" name="state" />
-                                    <input hidden value="{{ $intervention->id }}" name="intervention_id" />
-                                    <input hidden value="{{ $date }}" name="end_operation_time" />
                                     <button type="submit" class="btn shadow-1 rounded-1 w100 white light-shadow-3 mx-auto">
                                         <i class="fas fa-check txt-green txt-dark-2 "></i>
                                     </button>
@@ -280,11 +277,10 @@ $date = Carbon::now();
                         {{ $operation->operationList->name}}
                     </div>
                     <div class="d-flex vself-bottom mx-auto">
-                        <form method="POST" class="" action="{{ route('editOperation',  ['id' => $operation->id])}}">
+                        <form method="POST" class="" action="{{ route('editOperation',  ['id' => $operation->id, 'interventionId' => $intervention->id ] ) }}">
                             @method('PUT')
                             @csrf
-                            <input hidden value="{{ $intervention->id }}" name="interventionId" />
-                            <input hidden value="doing" name="state" />
+
                             <button type="submit" class="btn light-shadow-1 rounded-1 small orange txt-white"><i class="fas fa-edit"></i></button>
                         </form>
                     </div>

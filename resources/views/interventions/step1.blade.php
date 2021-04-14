@@ -33,7 +33,7 @@ $date = Carbon::now();
             @if(isset($intervention->needMove) && $intervention->needMove == 1)
             <div class="grix xs1 md2">
                 @if(empty($intervention->start_move_begin))
-                <div class="d-flex my-auto fx-col">
+                <div class="d-flex fx-col">
                     <div>
                         <p class="txt-grey txt-light-4 p-3 font-s2 airforce dark-4 mb-5 rounded-tr0 rounded-bl0 rounded-tl3 rounded-br3">Déplacement ALLER</p>
                         <div>
@@ -54,7 +54,7 @@ $date = Carbon::now();
 
                 <!--End Déplacement Interventions Aller -->
                 @if(!empty($intervention->start_move_begin) && empty($intervention->end_move_begin))
-                <div class="d-flex my-auto fx-col">
+                <div class="d-flex fx-col">
                     <div>
                         <p class="txt-grey txt-light-4 p-3 font-s2 airforce dark-4 mb-5 rounded-tr0 rounded-bl0 rounded-tl3 rounded-br3">Déplacement ALLER</p>
                     </div>

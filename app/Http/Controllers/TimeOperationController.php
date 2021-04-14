@@ -44,26 +44,20 @@ class TimeOperationController extends Controller
         $operation = Operation::find($operationId);
 
         if ($operation->state == 'doing') {
+
             $timer = new TimeOperation();
-
-            foreach ($inputs as $key => $value) {
-                $timer->$key = $value;
-                $timer->save();
-            }
-
             $operation->state = 'pause';
-            $operation->save();
         } else if ($operation->state == 'pause') {
+
             $timer = TimeOperation::Where('operation_id', 'like', $operationId)->latest()->first();
-
-            foreach ($inputs as $key => $value) {
-                $timer->$key = $value;
-                $timer->save();
-            }
-
             $operation->state = 'doing';
-            $operation->save();
         }
+
+        foreach ($inputs as $key => $value) {
+            $timer->$key = $value;
+            $timer->save();
+        }
+        $operation->save();
 
         return redirect(route('interventions.edit', ['intervention' => $interventionID]));
     }
