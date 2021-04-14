@@ -33,10 +33,10 @@ body {
   top: 0;
   height: 0%;
   background-color: rgba(0, 0, 0, 0);
-  transition: background-color ease;
 }
 
 .fab-overlay.active {
   height: 100%;
+  transition: background-color 0.4s ease;
   background-color: rgba(0, 0, 0, 0.646) !important;
 }
