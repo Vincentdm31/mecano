@@ -11,20 +11,26 @@ use Carbon\Carbon;
 $date = Carbon::now();
 ?>
 
-<div class="container mt-5">
-    <div class="container d-flex vcenter">
-        <button data-target="modal-recap" class="mx-auto btn rounded-1 txt-white shadow-1 orange dark-1 modal-trigger small">
-            Récapitulatif
-        </button>
-        @if(Auth()->user()->name != $intervention->created_by)
-        <a href="{{route('leaveIntervention', ['intervention' => $intervention->id])}}" class="btn rounded-1 txt-white shadow-1 red dark-1 mx-auto">
-            Quitter
-        </a>
-        @endif
+<div class="container">
+    <div class="grix xs2 mb-2 mt-3">
+        <div class="ml-auto">
+            <button data-target="modal-recap" class="mx-auto btn rounded-1 txt-white shadow-1 orange dark-1 modal-trigger small">
+                Récapitulatif
+            </button>
+            @if(Auth()->user()->name != $intervention->created_by)
+            <a href="{{route('leaveIntervention', ['intervention' => $intervention->id])}}" class="btn rounded-1 txt-white shadow-1 red dark-1 mx-auto">
+                Quitter
+            </a>
+            @endif
+        </div>
+        <div class="mx-auto">
+            <button data-target="modal-help" class="mx-auto btn rounded-1 txt-white shadow-1 orange dark-1 modal-trigger small"><i class="far fa-lightbulb"></i></button>
+        </div>
     </div>
 </div>
+
 <!-- Actions -->
-<div class="container mt-5 mb-5">
+<div class="container mb-5">
     <div class="tab rounded-3 full-width grey light-4 shadow-1 container" id="example-tab" data-ax="tab">
         <ul class="tab-menu light-shadow-1 rounded-tl2 rounded-tr2 txt-black">
             <li class="tab-link">
@@ -68,13 +74,7 @@ $date = Carbon::now();
         </div>
         <!-- Tab opération -->
         <div id="tab-operation" class="p-1 container">
-            <div class="d-flex mt-2">
-                @if( $opDoing->count() < 1 && $opPause->count() < 1 && $opEnd->count() < 1) <button data-target="modal-new-operation" class="btn-tab-operation modal-trigger">Nouvelle opération</button>
-                            @elseif($opDoing->count() > 0)
-                            <button data-target="modal-new-operation" class="disabled btn-tab-operation modal-trigger">Nouvelle opération</button>
-                            @elseif($opDoing->count() < 1) <button data-target="modal-new-operation" class="btn-tab-operation modal-trigger">Nouvelle opération</button>
-                                @endif
-            </div>
+
             @if(!$intervention->operations()->exists())
             <p class="txt-orange pl-3 txt-center">Aucune opération</p>
             @else
@@ -224,77 +224,78 @@ $date = Carbon::now();
             </div>
         </div>
     </div>
-    <div class="d-flex fx-center mt-2">
-        <button data-target="modal-help" class="mx-auto btn rounded-1 txt-white shadow-1 orange dark-1 modal-trigger small"><i class="far fa-lightbulb"></i></button>
+
+
+    <div class="d-flex fx-row fx-center mt-2">
+        <div class="">
+            @if( $opDoing->count() < 1 && $opPause->count() < 1 && $opEnd->count() < 1) <button data-target="modal-new-operation" class="btn-tab-operation modal-trigger">Nouvelle opération</button>
+                        @elseif($opDoing->count() > 0)
+                        <button data-target="modal-new-operation" class="disabled btn-tab-operation modal-trigger">Nouvelle opération</button>
+                        @elseif($opDoing->count() < 1) <button data-target="modal-new-operation" class="btn-tab-operation modal-trigger">Nouvelle opération</button>
+                            @endif
+        </div>
+
     </div>
+
 </div>
 
 <!-- Modal Recap -->
 <div class="modal white rounded-2" id="modal-recap" data-ax="modal">
     <div class="m-2 txt-center">
-        <a data-target="modal-comment" class="btn-modal-comment modal-trigger">Observations<span class="<?php echo (!empty($intervention->observations) ? 'fas fa-comment-dots' : 'fas fa-comment') ?> pl-2 font-s3"></span></a>
+        <a data-target="modal-comment" class="btn-modal-comment mb-2 modal-trigger">Observations<span class="<?php echo (!empty($intervention->observations) ? 'fas fa-comment-dots' : 'fas fa-comment') ?> pl-2 font-s3"></span></a>
     </div>
-    <div class="card grey light-4 light-shadow-2 rounded-2 m-2 mb-5">
-        <div class="card-header p-1 airforce dark-4">
-            <p class="txt-grey txt-light-4 m-1 font-s3"><i class="fas fa-car font-s4 txt-grey txt-light-4 mr-3 ml-2"></i>Véhicule</p>
+    <div class="card white light-shadow-2 rounded-2 m-2 mb-5">
+        <div class="card-header p-0">
+            <p class="txt-dark m-1 font-s3"><i class="fas fa-car font-s4 txt-dark mr-3 ml-2 mb-2"></i>Véhicule</p>
         </div>
         <div class="card-content p-2">
             <div class="grix xs2">
                 <div>
                     <em class="font-s1 txt-orange txt-dark-1">Marque</em>
-                    <p class="m-0">{{ $intervention->vehiculeList->brand }}</p>
+                    <p class="txt-airforce txt-dark-4 m-0">{{ $intervention->vehiculeList->brand }}</p>
                 </div>
                 <div>
                     <em class="font-s1 txt-orange txt-dark-1">Modèle</em>
-                    <p class="m-0">{{ $intervention->vehiculeList->model }}</p>
+                    <p class="txt-airforce txt-dark-4 m-0">{{ $intervention->vehiculeList->model }}</p>
                 </div>
                 <div>
                     <em class="font-s1 txt-orange txt-dark-1">Immatriculation</em>
-                    <p class="m-0">{{ $intervention->vehiculeList->license_plate }}</p>
+                    <p class="txt-airforce txt-dark-4 m-0">{{ $intervention->vehiculeList->license_plate }}</p>
                 </div>
                 <div>
                     @if(empty($intervention->km_vehicule))
-                    <button data-target="modal-km" class="btn orange dark-1 shadow-1 txt-white m-0 p-2 font-s2 rounded-2 modal-trigger">Saisir km</button>
+                    <button data-target="modal-km" class="btn orange dark-1 txt-white font-s2 rounded-2 modal-trigger small">Saisir km</button>
                     @else
                     <em class="font-s1 txt-orange txt-dark-1">Kilométrage</em>
-                    <p class="m-0">{{ $intervention->km_vehicule }} Km</p>
+                    <p class="txt-airforce txt-dark-4 m-0">{{ $intervention->km_vehicule }} Km</p>
                     @endif
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="card grey light-4 light-shadow-2 rounded-2 m-2 mb-5">
-        <div class="card-header airforce dark-4 p-1">
-            <p class="txt-grey txt-light-4 m-1 font-s3"><i class="fas fa-tools font-s4 txt-grey txt-light-4 mr-3 ml-2"></i>Mes opérations</p>
-        </div>
-        <div class="card-content p-2 airforce dark-4">
-            @foreach( $intervention->operations as $operation)
-            @if($operation->state == 'finish')
-            <div class="shadow-1 mb-2 rounded-1 white">
-                <div class="grix xs3 p-2 pl-3">
-                    <div class="col-xs2 my-auto">
-                        {{ $operation->operationList->name}}
-                    </div>
-                    <div class="d-flex vself-bottom mx-auto">
-                        <form method="POST" class="" action="{{ route('editOperation',  ['id' => $operation->id, 'interventionId' => $intervention->id ] ) }}">
-                            @method('PUT')
-                            @csrf
+    <p class="txt-dark pl-3 m-1 mb-4 font-s3"><i class="fas fa-tools font-s4 txt-dark mr-3 ml-2"></i>Mes opérations</p>
 
-                            <button type="submit" class="btn light-shadow-1 rounded-1 small orange txt-white"><i class="fas fa-edit"></i></button>
-                        </form>
-                    </div>
-                </div>
-                @foreach($operation->pieces as $piece)
-                <div class="pb-2 p-3">
-                    <p class=""><span class="mr-3 txt-grey txt-dark-4">{{ $piece->qte }}x</span>{{ $piece->pieceList->name }}</p>
-                </div>
-                @endforeach
-            </div>
-            @endif
-            @endforeach
+    @foreach( $intervention->operations as $operation)
+    @if($operation->state == 'finish')
+    <div class="card white overflow-visible shadow-1 m-4 rounded-2">
+        <div class="card-header p-1">
+            <p class="m-0 font-s2 txt-center txt-orange txt-dark-1">{{ $operation->operationList->name}}</p>
+            <form method="POST" class="" action="{{ route('editOperation',  ['id' => $operation->id, 'interventionId' => $intervention->id ] ) }}">
+                @method('PUT')
+                @csrf
+
+                <button type="submit" class="btn circle rounded-1 small airforce dark-4 txt-white" style="position:absolute;top:0;right:0;transform:translate(50%,-50%)"><i class="fas fa-pen"></i></button>
+            </form>
         </div>
+        @foreach($operation->pieces as $piece)
+        <p class="pl-3 m-0 mb-1 txt-airforce txt-dark-4"><span class="mr-3 txt-grey txt-dark-4">{{ $piece->qte }}x</span>{{ $piece->pieceList->name }}</p>
+        @endforeach
     </div>
+    @endif
+    @endforeach
+</div>
+</div>
 </div>
 <!-- End Modal Recap -->
 
@@ -463,6 +464,8 @@ $date = Carbon::now();
         <p><i class="fas fa-check txt-green txt-dark-3 mr-2"></i>Terminer l'opération</p>
     </div>
 </div>
+
+
 
 @endsection
 

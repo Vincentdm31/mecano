@@ -7211,6 +7211,7 @@ textarea.form-control[rows] {
 
 body {
   font-family: "Quicksand", sans-serif;
+  font-weight: 600;
 }
 
 .tab .tab-menu {
