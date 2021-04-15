@@ -37,6 +37,6 @@ body {
 
 .fab-overlay.active {
   height: 100%;
-  transition: background-color 0.4s ease;
-  background-color: rgba(0, 0, 0, 0.646) !important;
+  transition: background-color 0.3s ease;
+  background-color: rgba(0, 0, 0, 0.884) !important;
 }

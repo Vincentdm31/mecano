@@ -73,9 +73,9 @@
         </div>
     </header>
 
-    <div class="sidenav shadow-1 dark" id="sidenav" data-ax="sidenav">
+    <div class="sidenav large shadow-1 dark" id="sidenav" data-ax="sidenav">
         <div class="sidenav-header p-2">
-            <p class="w100 font-s5 bd-b-solid bd-orange bd-light-2 bd-2 pb-4 txt-white">Mecalcis</p>
+            <p class="w100 font-s5 bd-b-solid bd-grey bd-light-2 bd-2 pb-4 txt-white">Mecalcis</p>
         </div>
         <div class="txt-white">
             @if(Auth()->check())
@@ -89,9 +89,9 @@
             <a href="{{ route('getVehicles') }}" class="sidenav-link">API</a>
             @endif
             @else
-            <form class="form-material sidenav-link" method="POST" action="{{ route('interventions.store') }}">
+            <form class="form-material" method="POST" action="{{ route('interventions.store') }}">
                 @csrf
-                <button type="submit" class="btn txt-orange transparent p-0 txt-left">Nouvelle intervention</button>
+                <button type="submit" class="btn pl-3 orange dark-1 txt-white w100 txt-left">Nouvelle intervention</button>
             </form>
             <a href="{{ route('interventions.index') }}" class="sidenav-link txt-white">Liste complète</a>
             <a href="{{ route('joinIntervention') }}" class="sidenav-link">Rejoindre</a>

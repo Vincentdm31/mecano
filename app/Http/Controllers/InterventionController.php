@@ -25,14 +25,9 @@ class InterventionController extends Controller
         return view('interventions.index', ['interventions' => $interventions]);
     }
 
-    public function store(Request $request)
+    public function store()
     {
-        $inputs = $request->except('_token', 'created_at', 'updated_at');
         $intervention = new Intervention();
-
-        foreach ($inputs as $key => $value) {
-            $intervention->$key = $value;
-        }
 
         $intervention->state = "doing";
         $intervention->created_by = Auth::user()->name;
@@ -45,23 +40,6 @@ class InterventionController extends Controller
         return redirect(route('stepOne', ['id' => $intervention->id]));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Intervention $intervention)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Intervention  $intervention
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Request $request, $id)
     {
 

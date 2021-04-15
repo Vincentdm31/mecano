@@ -7228,7 +7228,7 @@ body {
   }
 }
 
-.dark, .btn-tab-operation {
+.dark {
   background-color: #1b1b1b;
 }
 
@@ -7238,6 +7238,10 @@ body {
 
 .orange-custom {
   color: #ff9027;
+}
+
+.orange-dark-1, .btn-tab-operation {
+  background-color: #fe7b00;
 }
 
 .role1 {
@@ -7255,7 +7259,7 @@ body {
   color: white !important;
 }
 
-.dark, .btn-tab-operation {
+.dark {
   background-color: #202020;
 }
 
