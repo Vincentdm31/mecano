@@ -21,34 +21,34 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => 'meca1',
                 'email' => 'meca1@meca.meca',
-                'password' => Hash::make('mecameca'),
+                'password' => Hash::make('alcismeca'),
                 'is_admin' => '0'
             ],
             [
                 'name' => 'meca2',
                 'email' => 'meca2@meca.meca',
-                'password' => Hash::make('mecameca'),
+                'password' => Hash::make('alcismeca'),
                 'is_admin' => '0'
             ],
             [
                 'name' => 'magasinier',
                 'email' => 'magasinier@meca.meca',
-                'password' => Hash::make('mecameca'),
+                'password' => Hash::make('alcismeca'),
                 'is_admin' => '1'
             ],
             [
                 'name' => 'admin',
                 'email' => 'admin@meca.meca',
-                'password' => Hash::make('mecameca'),
+                'password' => Hash::make('alcismeca'),
                 'is_admin' => '2'
             ],
             [
                 'name' => 'root',
                 'email' => 'root@meca.meca',
-                'password' => Hash::make('mecameca'),
+                'password' => Hash::make('alcismeca'),
                 'is_admin' => '3'
             ]
-        ]); 
+        ]);
 
         $this->call(OperationListSeeder::class);
         $this->call(PieceListSeeder::class);

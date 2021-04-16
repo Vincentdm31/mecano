@@ -36,9 +36,7 @@ class PieceController extends Controller
 
         return redirect(route('interventions.edit', ['intervention' => $intervention]))->with('toast', 'pieceStore');
     }
-    public function update()
-    {
-    }
+
     public function destroy(Request $request, $id)
     {
         $intervention = Intervention::find($request->interventionId);
@@ -48,7 +46,6 @@ class PieceController extends Controller
         if ($piece->qte > 0) {
             $piece->qte -= 1;
         }
-
 
         $piece->save();
 
