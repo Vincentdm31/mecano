@@ -55,6 +55,10 @@ body {
     background-color: rgb(32, 32, 32);
 }
 
+.bd-dark {
+    border-color: rgb(32, 32, 32);
+}
+
 .btn-tab-operation {
     @extend .btn,
         .mx-auto,

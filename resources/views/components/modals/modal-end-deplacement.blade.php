@@ -7,12 +7,12 @@ use Carbon\Carbon;
 $date = Carbon::now();
 ?>
 <!-- Modal fin déplacement -->
-<div class="modal grey light-4 rounded-2 p-2" id="modal-end-deplacement" data-ax="modal">
+<div class="modal grey light-4 rounded-2" id="modal-end-deplacement" data-ax="modal">
   <div class="grix xs1 md2">
     @if(empty($intervention->start_move_return))
     <div class="d-flex my-auto fx-col">
       <div>
-        <p class="txt-airforce txt-dark-4 txt-center mb-2">Déplacements Retour</p>
+        <p class="txt-center dark txt-grey txt-light-4 mb-4 m-0 p-3 font-s3">Déplacements Retour</p>
         <div>
           <form method="POST" action="{{ route('setEndDeplacement')}}">
             @method('PUT')
@@ -26,14 +26,14 @@ $date = Carbon::now();
         </div>
       </div>
     </div>
-    <img src="{{ asset('/images/deplacement.svg') }}" class="responsive-media p-3" alt="">
+    <img src="{{ asset('/images/deplacement.svg') }}" class="responsive-media p-4" alt="">
     @endif
 
     <!--End Déplacement Interventions Aller -->
     @if(!empty($intervention->start_move_return) && empty($intervention->end_move_return))
     <div class="d-flex my-auto fx-col">
       <div>
-        <p class="txt-airforce txt-dark-4 txt-center mb-2">Déplacements Retour</p>
+        <p class="txt-center dark txt-grey txt-light-4 mb-4 m-0 p-3 font-s3">Déplacements Retour</p>
       </div>
       <form method="POST" action="{{ route('setEndDeplacement')}}">
         @method('PUT')
@@ -45,7 +45,7 @@ $date = Carbon::now();
         </div>
       </form>
     </div>
-    <img src="{{ asset('/images/deplacement.svg') }}" class="responsive-media p-3" alt="">
+    <img src="{{ asset('/images/deplacement.svg') }}" class="responsive-media p-4" alt="">
     @endif
   </div>
 </div>

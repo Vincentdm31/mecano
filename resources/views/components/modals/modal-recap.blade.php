@@ -52,5 +52,4 @@
   @endforeach
 </div>
 <!-- End Modal Recap -->
-
 @endsection

@@ -7263,6 +7263,10 @@ body {
   background-color: #202020;
 }
 
+.bd-dark {
+  border-color: #202020;
+}
+
 .bg-btn-modal-comment, .btn-modal-comment {
   background-color: #fe7b00 !important;
 }
