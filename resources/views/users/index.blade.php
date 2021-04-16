@@ -34,7 +34,7 @@
                 <tbody>
                     @foreach($users as $user)
                     <tr>
-                        <td class="txt-center <?php echo('role' . $user->is_admin) ?>">{{ $user->id }}</td>
+                        <td class="txt-center <?php echo ('role' . $user->is_admin) ?>">{{ $user->id }}</td>
                         <td class="txt-center">{{ $user->name }}</td>
                         <td class="txt-center">{{ $user->email }}</td>
                         <td>
@@ -43,11 +43,13 @@
                                     <a class="btn circle blue dark-1 txt-white push" href="{{route('users.edit', ['user' => $user->id])}}"><i class="fas fa-pen"></i></a>
                                 </div>
                                 <div>
+                                    @if(Auth()->user()->role > 3)
                                     <form method="POST" action="{{route('users.destroy', ['user' => $user->id])}}">
                                         @method('DELETE')
                                         @csrf
                                         <button type="submit" onclick="return confirm('Confirmer la suppression ?')" class="btn circle red dark-1 txt-white push"><i class="fas fa-trash"></i></button>
                                     </form>
+                                    @endif
                                 </div>
                             </div>
                         </td>
