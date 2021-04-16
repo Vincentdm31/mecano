@@ -1,39 +1,33 @@
 @extends('layouts.app')
 @section('content')
 <div class="container">
-    <p class="txt-airforce txt-dark-4 txt-center h5 mt-5">Liste des interventions en pause</p>
-    <div class="container shadow-1 rounded-2 mt-5">
-        <div class="responsive-table">
-            <table class="table striped">
-                <thead>
-                    <tr>
-                        <th class="txt-center">#</th>
-                        <th class="txt-center">Créateur</th>
-                        <th class="txt-center">Date de création</th>
-                        <th class="txt-center">Immatriculation</th>
-                        <th class="txt-center">Reprendre</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($interventions as $intervention)
-                    <tr>
-                        <td class="txt-center">{{ $intervention->id }}</td>
-                        <td class="txt-center">{{ $intervention->created_by }}</td>
-                        <td class="txt-center">{{ $intervention->created_at }}</td>
+    <p class="txt-airforce txt-dark-4 txt-center h5 mt-5 mb-4">Liste des interventions<br>en pause</p>
 
-                        <td class="txt-center">@if(!empty($intervention->vehicule_id)){{ $intervention->vehiculeList->immat }} @endif</td>
-                        <td class="txt-center">
-                            <a class="btn circle orange dark-1 txt-white push" href="{{route('goToIntervention', ['intervention' => $intervention->id])}}"><i class="fas fa-pen"></i></a>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-
-            </table>
-            @if(empty($intervention))
-            <p class="txt-center txt-orange txt-dark-1">Aucune intervention en pause</p>
-            @endif
+    @foreach($interventions as $intervention)
+    @if(empty($intervention))
+    <p class="txt-center txt-orange txt-dark-1">Aucune intervention en pause</p>
+    @endif
+    <div class="card overflow-visible dark rounded-2">
+        <div class="grix xs2 p-3">
+            <div>
+                <p class="txt-orange m-0">Intervention n°</p>
+                <p class="txt-grey txt-light-4 m-0">{{ $intervention->id }}</p>
+            </div>
+            <div>
+                <p class="txt-orange m-0">Immatriculation</p>
+                <p class="txt-grey txt-light-4 m-0">{{ $intervention->vehiculeList->license_plate }}</p>
+            </div>
+            <div>
+                <p class="txt-orange m-0">Créée par</p>
+                <p class="txt-grey txt-light-4 m-0">{{ $intervention->created_by }}</p>
+            </div>
+            <div>
+                <p class="txt-orange m-0">Créée le</p>
+                <p class="txt-grey txt-light-4 m-0">{{ $intervention->created_at }}</p>
+            </div>
+            <a class="btn circle small orange dark-1 txt-white" style="position:absolute;top:0;right:0;transform:translate(50%,-50%)" href="{{route('goToIntervention', ['intervention' => $intervention->id])}}"><i class="fas fa-pen"></i></a>
         </div>
     </div>
+    @endforeach
 </div>
 @endsection

@@ -21,7 +21,7 @@
                         <td class="txt-center">{{ $intervention->created_by }}</td>
                         <td class="txt-center">{{ $intervention->created_at }}</td>
 
-                        <td class="txt-center">@if(!empty($intervention->vehicule_id)){{ $intervention->vehiculeList->immat }} @endif</td>
+                        <td class="txt-center">@if(!empty($intervention->vehicule_id)){{ $intervention->vehiculeList->license_plate }} @endif</td>
                         <td class="txt-center">
                             <a class="btn circle orange dark-1 txt-white push" href="{{route('goToJoinIntervention', ['intervention' => $intervention->id])}}"><i class="fas fa-pen"></i></a>
                         </td>
