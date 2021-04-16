@@ -18,8 +18,9 @@ $date = Carbon::now();
       @method('PUT')
       @csrf
       <input hidden value="finish" name="state" />
-      <button type="submit" class="<?php echo ($opDoing->count() < 1 && $opPause->count() < 1 && !$intervention->needMove || $opDoing->count() < 1 && $opPause->count() < 1 && $intervention->needMove && !empty($intervention->end_move_return) ? '' : 'hide') ?> btn mb-3 fab-item circle shadow-1 dark txt-green"><i class="fas fa-check" aria-hidden="true"></i></button>
+      <button onclick="confirm('Confirmer');" type="submit" class="<?php echo ($opDoing->count() < 1 && $opPause->count() < 1 && !$intervention->needMove || $opDoing->count() < 1 && $opPause->count() < 1 && $intervention->needMove && !empty($intervention->end_move_return) ? '' : 'hide') ?> btn mb-3 fab-item circle shadow-1 dark txt-green"><i class="fas fa-check" aria-hidden="true"></i></button>
     </form>
+
 
     @if($intervention->needMove && empty($intervention->end_move_return))
     <a data-target="modal-end-deplacement" class="btn shadow-1 circle dark txt-white fab-item mb-3 modal-trigger">
@@ -52,4 +53,7 @@ $date = Carbon::now();
     </a>
   </div>
 </div>
+
+<!-- Overlay FAB -->
+<div id="fab-overlay" class="fab-overlay"></div>
 @endsection

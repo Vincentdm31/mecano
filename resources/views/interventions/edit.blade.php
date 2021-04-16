@@ -37,10 +37,6 @@ $date = Carbon::now();
 
 @yield('fab')
 
-<!-- Overlay FAB -->
-<div id="fab-overlay" class="fab-overlay"></div>
-
-
 @yield('modal-recap')
 
 @foreach( $intervention->operations as $operation)
