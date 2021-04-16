@@ -31,46 +31,44 @@ $date = Carbon::now();
             </div>
             @endif
             @if(isset($intervention->needMove) && $intervention->needMove == 1)
-            <div class="grix xs1 md2">
-                @if(empty($intervention->start_move_begin))
-                <div class="d-flex fx-col">
+            @if(empty($intervention->start_move_begin))
+            <div class="d-flex fx-col">
+                <div>
+                    <p class="txt-grey txt-light-4 p-3 font-s2 dark mb-5 rounded-tr0 rounded-bl0 rounded-tl3 rounded-br3">Déplacement ALLER</p>
                     <div>
-                        <p class="txt-grey txt-light-4 p-3 font-s2 dark mb-5 rounded-tr0 rounded-bl0 rounded-tl3 rounded-br3">Déplacement ALLER</p>
-                        <div>
-                            <form method="POST" action="{{ route('setDeplacement')}}">
-                                @method('PUT')
-                                @csrf
-                                <div class="txt-center">
-                                    <input hidden value="{{ $date }}" name="start_move_begin" />
-                                    <input hidden name="id" value="{{ $intervention->id }}"></input>
-                                    <button type="submit" class="btn txt-grey txt-light-4 shadow-1 rounded-1 orange dark-1 small">Début</button>
-                                </div>
-                            </form>
-                        </div>
+                        <form method="POST" action="{{ route('setDeplacement')}}">
+                            @method('PUT')
+                            @csrf
+                            <div class="txt-center">
+                                <input hidden value="{{ $date }}" name="start_move_begin" />
+                                <input hidden name="id" value="{{ $intervention->id }}"></input>
+                                <button type="submit" class="btn txt-grey txt-light-4 shadow-1 rounded-1 orange dark-1 small">Début</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
-                <img src="{{ asset('/images/deplacement.svg') }}" class="responsive-media p-4" alt="">
-                @endif
-
-                <!--End Déplacement Interventions Aller -->
-                @if(!empty($intervention->start_move_begin) && empty($intervention->end_move_begin))
-                <div class="d-flex fx-col">
-                    <div>
-                        <p class="txt-grey txt-light-4 p-3 font-s2 dark mb-5 rounded-tr0 rounded-bl0 rounded-tl3 rounded-br3">Déplacement ALLER</p>
-                    </div>
-                    <form method="POST" action="{{ route('setDeplacement')}}">
-                        @method('PUT')
-                        @csrf
-                        <div class="txt-center">
-                            <input hidden value="{{ $date }}" name="end_move_begin" />
-                            <input hidden name="id" value="{{ $intervention->id }}"></input>
-                            <button type="submit" class="btn txt-grey txt-light-4 shadow-1 rounded-1 orange dark-1 small">Fin</button>
-                        </div>
-                    </form>
-                </div>
-                <img src="{{ asset('/images/deplacement.svg') }}" class="responsive-media p-4" alt="">
-                @endif
             </div>
+            <img src="{{ asset('/images/deplacement.svg') }}" class="responsive-media p-4" alt="">
+            @endif
+
+            <!--End Déplacement Interventions Aller -->
+            @if(!empty($intervention->start_move_begin) && empty($intervention->end_move_begin))
+            <div class="d-flex fx-col">
+                <div>
+                    <p class="txt-grey txt-light-4 p-3 font-s2 dark mb-5 rounded-tr0 rounded-bl0 rounded-tl3 rounded-br3">Déplacement ALLER</p>
+                </div>
+                <form method="POST" action="{{ route('setDeplacement')}}">
+                    @method('PUT')
+                    @csrf
+                    <div class="txt-center">
+                        <input hidden value="{{ $date }}" name="end_move_begin" />
+                        <input hidden name="id" value="{{ $intervention->id }}"></input>
+                        <button type="submit" class="btn txt-grey txt-light-4 shadow-1 rounded-1 orange dark-1 small">Fin</button>
+                    </div>
+                </form>
+            </div>
+            <img src="{{ asset('/images/deplacement.svg') }}" class="responsive-media p-4" alt="">
+            @endif
             @endif
         </div>
     </div>

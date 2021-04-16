@@ -15,7 +15,7 @@
         </div>
         <input hidden name="intervention_id" value="{{ $intervention->id }}">
         <div class="txt-center">
-          <button type="submit" class="btn shadow-1 rounded-1 outline opening txt-orange mt-4"><span class="outline-text outline-invert">Valider</span></button>
+          <button type="submit" class="btn shadow-1 rounded-1 orange txt-grey txt-light-4 mt-4">Valider</button>
         </div>
       </form>
     </div>
