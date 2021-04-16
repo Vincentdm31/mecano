@@ -18,10 +18,10 @@ class IsRoot
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user() &&  Auth::user()->is_admin > 2) {
+        if (Auth::user() &&  Auth::user()->role > 2) {
             return $next($request);
-       }
+        }
 
-       return Redirect::back()->with('error', 'restrictAccess');
+        return Redirect::back()->with('error', 'restrictAccess');
     }
 }

@@ -6,7 +6,7 @@
 
 @section('content')
 <!-- ADMIN VIEW -->
-@if(Auth()->user()->is_admin)
+@if(Auth()->user()->role)
 <div class="container home">
     <div class="grix xs1 md6 gutter-xs4 mt-5 home h100">
         <div>
@@ -54,8 +54,8 @@
 @endif
 
 <style>
-    .blue light-1{
-        background: linear-blue light-1(45deg, rgba(31,0,108,1) 0%, rgba(113,136,185,1) 99%);
+    .blue light-1 {
+        background: linear-blue light-1(45deg, rgba(31, 0, 108, 1) 0%, rgba(113, 136, 185, 1) 99%);
     }
 </style>
 

@@ -1,16 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container grix xs1 sm3 mt-5">
-    <div class="card pos-sm2 shadow-1 rounded-1">
+<div class="container h100 d-flex fx-center">
+    <div class="card vself-center dark shadow-1 rounded-1">
         <div class="card-header pl-3 pr-3 p-0">
-            <p class="bd-b-solid bd-orange bd-3 pb-2">Edition utilisateur</p>
+            <p class="txt-white pb-2">Edition utilisateur</p>
         </div>
         <div class="card-content p-0 pl-3 pr-3">
             <form class="form-material" method="POST" action="{{route('users.update', ['user' => $user->id])}}">
                 @method('PUT')
                 @csrf
-                <div class="grix xs1">
+                <div class="d-flex fx-col txt-white">
                     <div class="form-field">
                         <input type="text" id="name" name="name" class="form-control" value="{{$user->name}}" />
                         <label for="name">Nom</label>
@@ -20,13 +20,13 @@
                         <label for="email">Email</label>
                     </div>
                     <div class="form-field">
-                        <label for="is_admin">Rôle</label>
-                        <select id="is_admin" name="is_admin" class="form-control txt-center" value="{{$user->is_admin}}">
-                            <option <?php echo $user->is_admin == 0 ? 'selected' : '' ?> value="0">Membre</option>
-                            <option <?php echo $user->is_admin == 1 ? 'selected' : '' ?> value="1">Magasinier</option>
-                            @if(Auth()->user()->is_admin > 2)
-                            <option <?php echo $user->is_admin == 2 ? 'selected' : '' ?> value="2">Admin</option>
-                            <option <?php echo $user->is_admin == 3 ? 'selected' : '' ?> value="3">Root</option>
+                        <label for="role">Rôle</label>
+                        <select id="role" name="role" class="form-control txt-center" value="{{$user->role}}">
+                            <option <?php echo $user->role == 0 ? 'selected' : '' ?> class="txt-dark" value="0">Mécanicien</option>
+                            <option <?php echo $user->role == 1 ? 'selected' : '' ?> class="txt-dark" value="1">Magasinier</option>
+                            @if(Auth()->user()->role > 2)
+                            <option <?php echo $user->role == 2 ? 'selected' : '' ?> class="txt-dark" value="2">Admin</option>
+                            <option <?php echo $user->role == 3 ? 'selected' : '' ?> class="txt-dark" value="3">Root</option>
                             @endif
                         </select>
                     </div>

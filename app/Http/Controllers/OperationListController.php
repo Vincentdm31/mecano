@@ -90,7 +90,7 @@ class OperationListController extends Controller
     {
         $search = $request->get('searchOperationsList');
 
-        $operationsLists = OperationList::Where('name', 'like', '%' . $search . '%')->paginate(8);
+        $operationsLists = OperationList::Where('name', 'like', '%' . $search . '%')->orderBy('name')->paginate(8);
 
 
 

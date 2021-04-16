@@ -25,16 +25,13 @@ class LoginController extends Controller
 
     protected function authenticated()
     {
-        if (Auth::check() && Auth()->user()->is_admin == 0){ // do your magic here
+        if (Auth::check() && Auth()->user()->role == 0) { // do your magic here
             return redirect()->route('home.user');
-        }
-        else if (Auth::check() && Auth()->user()->is_admin == 1){ // do your magic here
+        } else if (Auth::check() && Auth()->user()->role == 1) { // do your magic here
             return redirect()->route('home.storekeeper');
-        }
-        else if (Auth::check() && Auth()->user()->is_admin == 2){ // do your magic here
+        } else if (Auth::check() && Auth()->user()->role == 2) { // do your magic here
             return redirect()->route('home.admin');
-        }
-        else if (Auth::check() && Auth()->user()->is_admin == 3){ // do your magic here
+        } else if (Auth::check() && Auth()->user()->role == 3) { // do your magic here
             return redirect()->route('home.root');
         }
     }

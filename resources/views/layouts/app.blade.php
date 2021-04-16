@@ -24,26 +24,26 @@
         <div class="navbar-fixed">
             <nav class="navbar dark txt-white shadow-1">
                 @if(Auth()->check())
-                @if(Auth()->user()->is_admin== 0)
+                @if(Auth()->user()->role== 0)
                 <a href="{{ route('home.user') }}" class="navbar-brand hide-sm-down">Accueil</a>
-                @elseif(Auth()->user()->is_admin == 1)
+                @elseif(Auth()->user()->role == 1)
                 <a href="{{ route('home.storekeeper') }}" class="navbar-brand hide-sm-down">Accueil</a>
-                @elseif(Auth()->user()->is_admin == 2)
+                @elseif(Auth()->user()->role == 2)
                 <a href="{{ route('home.admin') }}" class="navbar-brand hide-sm-down">Accueil</a>
-                @elseif(Auth()->user()->is_admin == 3)
+                @elseif(Auth()->user()->role == 3)
                 <a href="{{ route('home.root') }}" class="navbar-brand hide-sm-down">Accueil</a>
                 @endif
                 @endif
                 <button data-target="sidenav" class="txt-white btn rounded-1 transparent sidenav-trigger hide-md-up"><i class="fas fa-bars mr-1"></i>Menu</button>
                 <div class="navbar-menu ml-auto hide-sm-down">
                     @if(Auth()->check())
-                    @if(Auth()->user()->is_admin > 1)
+                    @if(Auth()->user()->role > 1)
                     <a href="{{ route('adminIntervention') }}" class="navbar-link">Interventions</a>
                     <a href="{{ route('users.index') }}" class="navbar-link">Gestion utilisateurs</a>
                     <a href="{{ route('vehicules.index') }}" class="navbar-link">Gestion véhicules</a>
                     <a href="{{ route('piecesList.index') }}" class="navbar-link">Gestion pièces</a>
                     <a href="{{ route('operationsList.index') }}" class="navbar-link">Gestion catégories</a>
-                    @if(Auth()->user()->is_admin > 2)
+                    @if(Auth()->user()->role > 2)
                     <a href="{{ route('getVehicles') }}" class="navbar-link">API</a>
                     @endif
                     @endif
@@ -79,13 +79,13 @@
         </div>
         <div class="txt-white">
             @if(Auth()->check())
-            @if(Auth()->user()->is_admin > 1)
+            @if(Auth()->user()->role > 1)
             <a href="{{ route('adminIntervention') }}" class="sidenav-link">Interventions</a>
             <a href="{{ route('users.index') }}" class="sidenav-link">Gestion utilisateurs</a>
             <a href="{{ route('vehicules.index') }}" class="sidenav-link">Gestion véhicules</a>
             <a href="{{ route('piecesList.index') }}" class="sidenav-link">Gestion pièces</a>
             <a href="{{ route('operationsList.index') }}" class="sidenav-link">Gestion catégories</a>
-            @if(Auth()->user()->is_admin > 2)
+            @if(Auth()->user()->role > 2)
             <a href="{{ route('getVehicles') }}" class="sidenav-link">API</a>
             @endif
             @else

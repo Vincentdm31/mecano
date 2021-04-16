@@ -22,31 +22,31 @@ class DatabaseSeeder extends Seeder
                 'name' => 'meca1',
                 'email' => 'meca1@meca.meca',
                 'password' => Hash::make('alcismeca'),
-                'is_admin' => '0'
+                'role' => '0'
             ],
             [
                 'name' => 'meca2',
                 'email' => 'meca2@meca.meca',
                 'password' => Hash::make('alcismeca'),
-                'is_admin' => '0'
+                'role' => '0'
             ],
             [
                 'name' => 'magasinier',
                 'email' => 'magasinier@meca.meca',
                 'password' => Hash::make('alcismeca'),
-                'is_admin' => '1'
+                'role' => '1'
             ],
             [
                 'name' => 'admin',
                 'email' => 'admin@meca.meca',
                 'password' => Hash::make('alcismeca'),
-                'is_admin' => '2'
+                'role' => '2'
             ],
             [
                 'name' => 'root',
                 'email' => 'root@meca.meca',
                 'password' => Hash::make('alcismeca'),
-                'is_admin' => '3'
+                'role' => '3'
             ]
         ]);
 

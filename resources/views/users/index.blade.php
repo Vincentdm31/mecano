@@ -19,45 +19,42 @@
             </form>
         </div>
     </div>
+    <!--  -->
+    <div class="grix xs1 sm2 gutter-xs5 container mt-5 container">
+        @foreach($users as $user)
+        <?php
 
-    <div class="container mt-5 shadow-1 rounded-2">
-        <div class="responsive-table rounded-2">
-            <table class="table striped ">
-                <thead>
-                    <tr>
-                        <th class="txt-center">#</th>
-                        <th class="txt-center">Name</th>
-                        <th class="txt-center">Email</th>
-                        <th class="txt-center">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($users as $user)
-                    <tr>
-                        <td class="txt-center <?php echo ('role' . $user->is_admin) ?>">{{ $user->id }}</td>
-                        <td class="txt-center">{{ $user->name }}</td>
-                        <td class="txt-center">{{ $user->email }}</td>
-                        <td>
-                            <div class="grix xs2 gutter-xs2">
-                                <div class="ml-auto">
-                                    <a class="btn circle blue dark-1 txt-white push" href="{{route('users.edit', ['user' => $user->id])}}"><i class="fas fa-pen"></i></a>
-                                </div>
-                                <div>
-                                    @if(Auth()->user()->role > 3)
-                                    <form method="POST" action="{{route('users.destroy', ['user' => $user->id])}}">
-                                        @method('DELETE')
-                                        @csrf
-                                        <button type="submit" onclick="return confirm('Confirmer la suppression ?')" class="btn circle red dark-1 txt-white push"><i class="fas fa-trash"></i></button>
-                                    </form>
-                                    @endif
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+        $roleArr = ['Mecanicien', 'Magasinier', 'Admin', 'Root'];
+        $role = $user->role;
+
+        $displayRole = $roleArr[$role];
+
+        ?>
+        <div class="card shadow-1 dark overflow-visible rounded-2 p-3 m-3">
+            <a class="btn circle blue dark-1 txt-white small absolute-pos" style="top:0;left:0;transform:translate(-50%, -50%)" href="{{route('users.edit', ['user' => $user->id])}}"><i class="fas fa-pen"></i></a>
+            @if(Auth()->user()->role > 2)
+            <form method="POST" action="{{route('users.destroy', ['user' => $user->id])}}">
+                @method('DELETE')
+                @csrf
+                <button type="submit" onclick="return confirm('Confirmer la suppression ?')" style="top:0;right:0;transform:translate(50%, -50%)" class="btn circle red dark-1 txt-white small absolute-pos"><i class="fas fa-trash"></i></button>
+            </form>
+            @endif
+            <div class="grix xs2">
+                <div>
+                    <p class="txt-orange m-0">Nom</p>
+                    <p class="txt-white m-0">{{ $user->name }}</p>
+                </div>
+                <div>
+                    <p class="txt-orange m-0">Statut</p>
+                    <p class="txt-white m-0">{{ $displayRole }}</p>
+                </div>
+            </div>
+            <div>
+                <p class="txt-orange m-0">Email</p>
+                <p class="txt-white m-0">{{ $user->email }}</p>
+            </div>
         </div>
+        @endforeach
     </div>
 </div>
 @endsection

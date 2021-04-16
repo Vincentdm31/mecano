@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('content')
 <div class="h100 d-flex fx-center">
-    <div class="vself-center card rounded-2 shadow-1 dark p-3">
+    <div class="card vself-center rounded-2 shadow-1 dark p-3">
         <div class="card-header pl-3 pr-3 p-0">
-            <p class=" pb-2 txt-grey txt-light-4">Nouvelle opération</p>
+            <p class="pb-2 txt-grey txt-light-4">Nouvelle opération</p>
         </div>
         <div class="card-content pl-3 pr-3 p-0">
             <form class="form-material" method="POST" action="{{ route('operationsList.store') }}">

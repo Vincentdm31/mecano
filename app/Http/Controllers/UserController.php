@@ -39,7 +39,7 @@ class UserController extends Controller
     {
         $inputs = $request->except('_token', 'created_at', 'updated_at', 'password');
         $password = $request->input('password');
-        $hashed = FacadesHash::make($password);    
+        $hashed = FacadesHash::make($password);
         $user = new User();
         foreach ($inputs as $key => $value) {
             $user->$key = $value;
@@ -83,7 +83,7 @@ class UserController extends Controller
     {
         $inputs = $request->except('_token', '_method', 'updated_at');
         $user = User::find($id);
-        foreach ($inputs as $key => $value){
+        foreach ($inputs as $key => $value) {
             $user->$key = $value;
         }
         $user->save();
@@ -100,8 +100,8 @@ class UserController extends Controller
     {
         $user = User::find($id);
         $user->delete();
-        
-        
+
+
         return redirect(route('users.index'))->with('toast', 'userDelete');
     }
 
@@ -109,10 +109,10 @@ class UserController extends Controller
     {
         $search = $request->get('searchUser');
 
-        $users = User::Where('name', 'like', '%'.$search.'%')
-                    ->orWhere('email', 'like', '%'.$search.'%')
-                    ->orWhere('is_admin', 'like', '%'.$search.'%')
-                    ->get();
+        $users = User::Where('name', 'like', '%' . $search . '%')
+            ->orWhere('email', 'like', '%' . $search . '%')
+            ->orWhere('role', 'like', '%' . $search . '%')
+            ->get();
         return view('users.index', ['users' => $users]);
     }
 }
