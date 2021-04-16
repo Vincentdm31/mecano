@@ -3,6 +3,11 @@
 body {
     font-family: "Quicksand", sans-serif;
     font-weight: 500;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 171, 80, 1) 92%
+    );
 }
 
 .tab .tab-menu {
@@ -22,11 +27,11 @@ body {
 }
 
 .dark {
-    background-color: rgb(27, 27, 27);
+    background-color: rgb(32, 32, 32);
 }
 
-.dark-bg {
-    background-color: rgb(233, 233, 233);
+.txt-dark {
+    color: rgb(32, 32, 32);
 }
 
 .orange-custom {
@@ -50,9 +55,6 @@ body {
 .role3 {
     background-color: rgb(141, 37, 37);
     color: white !important;
-}
-.dark {
-    background-color: rgb(32, 32, 32);
 }
 
 .bd-dark {
@@ -82,4 +84,9 @@ body {
 
 .bg-btn-modal-comment {
     background-color: #fe7b00 !important;
+}
+
+.pagination li.active {
+    background-color: #e2e2e2 !important;
+    color: rgb(32, 32, 32) !important;
 }

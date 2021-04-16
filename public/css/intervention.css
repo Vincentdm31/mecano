@@ -10,10 +10,6 @@
   background-color: #9f0101;
 }
 
-body {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #ffab50 92%);
-}
-
 .modal-overlay.active {
   background-color: rgba(0, 0, 0, 0.646) !important;
 }

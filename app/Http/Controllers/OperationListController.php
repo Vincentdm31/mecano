@@ -9,7 +9,7 @@ class OperationListController extends Controller
 {
     public function index()
     {
-        $operationsLists = OperationList::all();
+        $operationsLists = OperationList::orderBy('name')->paginate(12);
 
         return view('operations.index', ['operationsLists' => $operationsLists]);
     }
@@ -44,28 +44,11 @@ class OperationListController extends Controller
         return redirect(route('operationsList.index'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show(OperationList $operationList)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
-    {   
+    {
         $operationList = OperationList::find($id);
 
-        return view('operations.edit', ['operationList' => $operationList ]);
+        return view('operations.edit', ['operationList' => $operationList]);
     }
 
     /**
@@ -76,17 +59,17 @@ class OperationListController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {   
+    {
         $inputs = $request->except('_token', '_method', 'updated_at');
         $operationList = OperationList::find($id);
 
-        foreach ($inputs as $key => $value){
+        foreach ($inputs as $key => $value) {
             $operationList->$key = $value;
         }
 
         $operationList->save();
 
-       return redirect(route('operationsList.index'));
+        return redirect(route('operationsList.index'));
     }
 
     /**
@@ -99,7 +82,7 @@ class OperationListController extends Controller
     {
         $operationList = OperationList::find($id);
         $operationList->delete();
-        
+
         return redirect(route('operationsList.index'));
     }
 
@@ -107,7 +90,9 @@ class OperationListController extends Controller
     {
         $search = $request->get('searchOperationsList');
 
-        $operationsLists = OperationList::Where('name', 'like', '%'.$search.'%')->get();
+        $operationsLists = OperationList::Where('name', 'like', '%' . $search . '%')->paginate(8);
+
+
 
         return view('operations.index', ['operationsLists' => $operationsLists]);
     }

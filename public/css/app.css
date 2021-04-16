@@ -7212,6 +7212,7 @@ textarea.form-control[rows] {
 body {
   font-family: "Quicksand", sans-serif;
   font-weight: 500;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #ffab50 92%);
 }
 
 .tab .tab-menu {
@@ -7229,11 +7230,11 @@ body {
 }
 
 .dark {
-  background-color: #1b1b1b;
+  background-color: #202020;
 }
 
-.dark-bg {
-  background-color: #e9e9e9;
+.txt-dark {
+  color: #202020;
 }
 
 .orange-custom {
@@ -7259,14 +7260,15 @@ body {
   color: white !important;
 }
 
-.dark {
-  background-color: #202020;
-}
-
 .bd-dark {
   border-color: #202020;
 }
 
 .bg-btn-modal-comment, .btn-modal-comment {
   background-color: #fe7b00 !important;
+}
+
+.pagination li.active {
+  background-color: #e2e2e2 !important;
+  color: #202020 !important;
 }
