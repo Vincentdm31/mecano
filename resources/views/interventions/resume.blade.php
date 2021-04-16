@@ -1,13 +1,12 @@
 @extends('layouts.app')
 @section('content')
+<p class="txt-grey txt-light-4 txt-center h5 mt-5 mb-4 dark p-3">Liste des interventions<br>en pause</p>
 <div class="container">
-    <p class="txt-airforce txt-dark-4 txt-center h5 mt-5 mb-4">Liste des interventions<br>en pause</p>
-
     @foreach($interventions as $intervention)
     @if(empty($intervention))
     <p class="txt-center txt-orange txt-dark-1">Aucune intervention en pause</p>
     @endif
-    <div class="card overflow-visible dark rounded-2">
+    <div class="card overflow-visible dark rounded-2 m-2">
         <div class="grix xs2 p-3">
             <div>
                 <p class="txt-orange m-0">Intervention n°</p>

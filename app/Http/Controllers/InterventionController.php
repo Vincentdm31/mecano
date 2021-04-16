@@ -136,7 +136,9 @@ class InterventionController extends Controller
 
     public function joinIntervention()
     {
-        $interventions = Intervention::Where('user_id', '!=', Auth::id())->get();
+        $interventions = Intervention::Where('user_id', '!=', Auth::id())
+            ->where('state', '!=', 'finish')
+            ->get();
 
         return view('interventions.join', ['interventions' => $interventions]);
     }
