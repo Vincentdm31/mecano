@@ -19,42 +19,57 @@
             </form>
         </div>
     </div>
-    <!--  -->
-    <div class="grix xs1 sm2 gutter-xs5 container mt-5 container">
-        @foreach($users as $user)
-        <?php
 
-        $roleArr = ['Mecanicien', 'Magasinier', 'Admin', 'Root'];
-        $role = $user->role;
+    <div class="container mt-5">
+        <div class="responsive-table dark rounded-2">
+            <table class="table striped centered">
+                <thead>
+                    <tr class="txt-orange">
+                        <th class="txt-white">#</th>
+                        <th>Nom</th>
+                        <th>Email</th>
+                        <th>Statut</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($users as $user)
+                    <?php
 
-        $displayRole = $roleArr[$role];
+                    $roleArr = ['Mecanicien', 'Magasinier', 'Admin', 'Root'];
+                    $role = $user->role;
 
-        ?>
-        <div class="card shadow-1 dark overflow-visible rounded-2 p-3 m-3">
-            <a class="btn circle blue dark-1 txt-white small absolute-pos" style="top:0;left:0;transform:translate(-50%, -50%)" href="{{route('users.edit', ['user' => $user->id])}}"><i class="fas fa-pen"></i></a>
-            @if(Auth()->user()->role > 2)
-            <form method="POST" action="{{route('users.destroy', ['user' => $user->id])}}">
-                @method('DELETE')
-                @csrf
-                <button type="submit" onclick="return confirm('Confirmer la suppression ?')" style="top:0;right:0;transform:translate(50%, -50%)" class="btn circle red dark-1 txt-white small absolute-pos"><i class="fas fa-trash"></i></button>
-            </form>
-            @endif
-            <div class="grix xs2">
-                <div>
-                    <p class="txt-orange m-0">Nom</p>
-                    <p class="txt-white m-0">{{ $user->name }}</p>
-                </div>
-                <div>
-                    <p class="txt-orange m-0">Statut</p>
-                    <p class="txt-white m-0">{{ $displayRole }}</p>
-                </div>
-            </div>
-            <div>
-                <p class="txt-orange m-0">Email</p>
-                <p class="txt-white m-0">{{ $user->email }}</p>
-            </div>
+                    $displayRole = $roleArr[$role];
+
+                    ?>
+                    <tr class="txt-white">
+                        <td class="txt-orange">{{ $user->id }}</td>
+                        <td>{{ $user->name }}</td>
+                        <td>{{ $user->email }}</td>
+                        <td>{{ $displayRole }}</td>
+                        <td>
+                            <div class="grix xs2">
+                                <div>
+                                    <a class="btn circle blue dark-1 txt-white small" href="{{route('users.edit', ['user' => $user->id])}}"><i class="fas fa-pen"></i></a>
+                                </div>
+                                <div>
+                                    @if(Auth()->user()->role > 2)
+                                    <form method="POST" action="{{route('users.destroy', ['user' => $user->id])}}">
+                                        @method('DELETE')
+                                        @csrf
+                                        <button type="submit" onclick="return confirm('Confirmer la suppression ?')" class="btn circle red dark-1 txt-white small"><i class="fas fa-trash"></i></button>
+                                    </form>
+                                    @endif
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
-        @endforeach
     </div>
+    <!-- test -->
 </div>
+
 @endsection

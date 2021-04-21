@@ -9,7 +9,7 @@ class OperationListController extends Controller
 {
     public function index()
     {
-        $operationsLists = OperationList::orderBy('name')->paginate(12);
+        $operationsLists = OperationList::orderBy('name')->paginate(6);
 
         return view('operations.index', ['operationsLists' => $operationsLists]);
     }

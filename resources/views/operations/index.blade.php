@@ -19,31 +19,41 @@
             </form>
         </div>
     </div>
-    <!--  -->
     <div class="container mt-5">
-        <div class="grix xs2 md4 gutter-xs4 pt-4">
-            @foreach($operationsLists as $operationList)
-            <div class="card shadow-1 dark rounded-2">
-                <div class="d-flex fx-col txt-center">
-                    <p class="txt-grey txt-light-4 p-2 m-0">{{ $operationList->name }}</p>
-                    <div class="grix xs2 gutter-xs1 m-1">
-                        <div class="ml-auto">
-                            <a class="btn circle orange dark-1 txt-white small" href="{{ route('operationsList.edit', ['operationsList' => $operationList->id]) }}"><i class="fas fa-pen"></i></a>
-                        </div>
-                        <div class="mr-auto">
-                            <form method="POST" action="{{ route('operationsList.destroy', ['operationsList' => $operationList->id]) }}">
-                                @method('DELETE')
-                                @csrf
-                                <button type="submit" onclick="return confirm('Confirmer la suppression ?')" class="btn circle red dark-1 txt-white push small"><i class="fas fa-trash"></i></button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @endforeach
+        <div class="responsive-table dark rounded-2">
+            <table class="table striped centered">
+                <thead>
+                    <tr class="txt-orange">
+                        <th class="txt-white">#</th>
+                        <th>Nom</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($operationsLists as $operationList)
+                    <tr class="txt-white">
+                        <td>{{ $operationList->id }}</td>
+                        <td>{{ $operationList->name }}</td>
+                        <td>
+                            <div class="grix xs2">
+                                <div>
+                                    <a class="btn circle orange dark-1 txt-white small" href="{{ route('operationsList.edit', ['operationsList' => $operationList->id]) }}"><i class="fas fa-pen"></i></a>
+                                </div>
+                                <div>
+                                    <form method="POST" action="{{ route('operationsList.destroy', ['operationsList' => $operationList->id]) }}">
+                                        @method('DELETE')
+                                        @csrf
+                                        <button type="submit" onclick="return confirm('Confirmer la suppression ?')" class="btn circle red dark-1 txt-white push small"><i class="fas fa-trash"></i></button>
+                                    </form>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
     </div>
-    <!--  -->
 </div>
 <div class="d-flex fx-center mt-5">{{ $operationsLists->links('pagination') }}</div>
 @endsection

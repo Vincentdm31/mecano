@@ -20,35 +20,35 @@
         </div>
     </div>
 
-    <div class="container mt-5 shadow-1">
-        <div class="responsive-table">
-            <table class="table striped ">
-                <thead>
-                    <tr>
-                        <th class="txt-center">#</th>
+    <div class="container mt-5 shadow-1 rounded-2">
+        <div class="responsive-table rounded-2 dark">
+            <table class="table striped centered">
+                <thead class="txt-grey txt-light-4">
+                    <tr class="txt-orange">
+                        <th class="txt-center txt-white">#</th>
                         <th class="txt-center">Marque</th>
                         <th class="txt-center">Modèle</th>
                         <th class="txt-center">Immat</th>
-                        <th class="txt-center">Action</th>
+                        <th class="txt-center">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($vehicules as $vehicule)
-                    <tr>
-                        <td class="txt-center">{{ $vehicule->id }}</td>
+                    <tr class="txt-grey txt-light-4">
+                        <td class="txt-center txt-orange">{{ $vehicule->id }}</td>
                         <td class="txt-center">{{ $vehicule->brand }}</td>
                         <td class="txt-center">{{ $vehicule->model }}</td>
                         <td class="txt-center">{{ $vehicule->license_plate }}</td>
                         <td>
                             <div class="grix xs2 gutter-xs2">
                                 <div class="ml-auto">
-                                    <a class="btn circle blue dark-1 txt-white push" href="{{route('vehicules.edit', ['vehicule' => $vehicule->id])}}"><i class="fas fa-pen"></i></a>
+                                    <a class="btn circle blue dark-1 txt-white small" href="{{route('vehicules.edit', ['vehicule' => $vehicule->id])}}"><i class="fas fa-pen"></i></a>
                                 </div>
                                 <div>
                                     <form method="POST" action="{{route('vehicules.destroy', ['vehicule' => $vehicule->id])}}">
                                         @method('DELETE')
                                         @csrf
-                                        <button type="submit" onclick="return confirm('Confirmer la suppression ?')" class="btn circle red dark-1 txt-white push"><i class="fas fa-trash"></i></button>
+                                        <button type="submit" onclick="return confirm('Confirmer la suppression ?')" class="btn circle red dark-1 txt-white small"><i class="fas fa-trash"></i></button>
                                     </form>
                                 </div>
                             </div>
@@ -59,6 +59,8 @@
             </table>
         </div>
     </div>
+    <div class="d-flex fx-center mt-5">{{ $vehicules->links('pagination') }}</div>
+
 </div>
 @endsection
 

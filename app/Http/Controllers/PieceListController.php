@@ -12,7 +12,7 @@ class PieceListController extends Controller
 {
     public function index()
     {
-        $piecesList = PieceList::all();
+        $piecesList = PieceList::paginate(6);
 
         return view('pieces.index', ['piecesList' => $piecesList]);
     }
@@ -50,11 +50,9 @@ class PieceListController extends Controller
 
         $pieceList->path = 'qr-' . $text . '.svg';
 
-        try{
-             $pieceList->save();
-        }
-        catch(Exception $e)
-        {
+        try {
+            $pieceList->save();
+        } catch (Exception $e) {
             return redirect(route('piecesList.create', ['piecesList' => $pieceList->id]))->with('toast', 'errorDuplicate');
         }
 
@@ -101,7 +99,7 @@ class PieceListController extends Controller
 
         $newPath = $request->ref;
 
-        if($pieceList->ref != $newPath){
+        if ($pieceList->ref != $newPath) {
             Storage::delete('/public/images/' . $pieceList->path);
 
             $pieceList->path = 'qr-' . $newPath . '.svg';
@@ -109,14 +107,14 @@ class PieceListController extends Controller
             $qrcode = QrCode::size(200)->generate($newPath);
             Storage::put('/public/images/' . 'qr-' . $newPath . '.svg', $qrcode);
         }
-        
+
         foreach ($inputs as $key => $value) {
             $pieceList->$key = $value;
         }
 
-        try{
+        try {
             $pieceList->save();
-        }catch(Exception $e){
+        } catch (Exception $e) {
             return redirect(route('piecesList.edit', ['piecesList' => $pieceList->id]))->with('toast', 'errorDuplicate');
         }
 
@@ -137,11 +135,11 @@ class PieceListController extends Controller
     public function searchPiecesList(Request $request)
     {
         $search = $request->get('searchPiecesList');
-        
-        $piecesList = PieceList::Where('ref', 'like', '%'.$search.'%')
-                            ->orWhere('name', 'like', '%'.$search.'%')
-                            ->get();
-                            
+
+        $piecesList = PieceList::Where('ref', 'like', '%' . $search . '%')
+            ->orWhere('name', 'like', '%' . $search . '%')
+            ->get();
+
         return view('pieces.index', ['piecesList' => $piecesList]);
     }
 }

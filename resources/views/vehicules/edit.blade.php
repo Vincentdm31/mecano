@@ -1,16 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mt-5 grix xs1 sm3">
-    <div class="card shadow-1 pos-sm2 rounded-2">
+<div class="container h100 d-flex fx-center">
+    <div class="card shadow-1 rounded-2 dark vself-center pl-4 pr-4">
         <div class="card-header pl-3 pr-3 p-0">
-            <p class="bd-b-solid bd-orange bd-3 pb-2">Editer véhicule</p>
+            <p class="txt-grey txt-light-4 pb-2">Editer véhicule</p>
         </div>
         <div class="card-content p-0 pl-3 pr-3">
             <form class="form-material" method="POST" action="{{route('vehicules.update', ['vehicule' => $vehicule->id])}}">
                 @method('PUT')
                 @csrf
-                <div class="">
+                <div class="txt-white">
                     <div class="form-field">
                         <input type="text" name="brand" class="form-control" value="{{$vehicule->brand}}" />
                         <label for="brand">Marque</label>

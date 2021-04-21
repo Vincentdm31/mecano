@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<div class="container mt-5">
+<div class="container mt-2">
     <div class="grix xs1 sm3 container">
         <div class="col-sm1 mx-auto my-auto">
             <a href="{{ route('piecesList.create') }}" class="btn rounded-1 orange dark-1 txt-white">Ajouter</a>
@@ -19,14 +19,12 @@
         </div>
     </div>
 
-
-    <!--  -->
-    <div class="mt-5 shadow-1">
-        <div class="responsive-table">
-            <table class="table striped ">
-                <thead>
-                    <tr>
-                        <th class="txt-center">#</th>
+    <div class="mt-5 container dark rounded-2">
+        <div class="responsive-table rounded-2">
+            <table class="table striped centered">
+                <thead class="txt-white">
+                    <tr class="txt-orange">
+                        <th class="txt-center txt-white">#</th>
                         <th class="txt-center">Nom</th>
                         <th class="txt-center">Reférence</th>
                         <th class="txt-center">Quantité</th>
@@ -35,24 +33,24 @@
                 </thead>
                 <tbody>
                     @foreach($piecesList as $pieceList)
-                    <tr>
-                        <td class="txt-center">{{ $pieceList->id }}</td>
+                    <tr class="txt-white">
+                        <td class="txt-center txt-orange">{{ $pieceList->id }}</td>
                         <td class="txt-center">{{ $pieceList->name }}</td>
                         <td class="txt-center">{{ $pieceList->ref }}</td>
                         <td class="txt-center">{{ $pieceList->qte }}</td>
                         <td>
                             <div class="grix xs3 gutter-xs2">
-                            <div class="ml-auto">
-                                    <a class="btn circle blue dark-1 txt-white push" href="{{route('piecesList.show', ['piecesList' => $pieceList->id])}}"><i class="fas fa-eye"></i></a>
+                                <div class="ml-auto">
+                                    <a class="btn circle blue dark-1 txt-white small" href="{{route('piecesList.show', ['piecesList' => $pieceList->id])}}"><i class="fas fa-eye"></i></a>
                                 </div>
                                 <div class="mx-auto">
-                                    <a class="btn circle green dark-1 txt-white push" href="{{route('piecesList.edit', ['piecesList' => $pieceList->id])}}"><i class="fas fa-pen"></i></a>
+                                    <a class="btn circle green dark-3 txt-white small" href="{{route('piecesList.edit', ['piecesList' => $pieceList->id])}}"><i class="fas fa-pen"></i></a>
                                 </div>
                                 <div>
                                     <form method="POST" action="{{route('piecesList.destroy', ['piecesList' => $pieceList->id])}}">
                                         @method('DELETE')
                                         @csrf
-                                        <button type="submit" onclick="return confirm('Confirmer la suppression ?')" class="btn circle red dark-1 txt-white push"><i class="fas fa-trash"></i></button>
+                                        <button type="submit" onclick="return confirm('Confirmer la suppression ?')" class="btn circle red dark-1 txt-white small"><i class="fas fa-trash"></i></button>
                                     </form>
                                 </div>
                             </div>
@@ -63,6 +61,7 @@
             </table>
         </div>
     </div>
+    <div class="d-flex fx-center mt-2">{{ $piecesList->links('pagination') }}</div>
 </div>
 @endsection
 

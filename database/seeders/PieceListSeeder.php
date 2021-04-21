@@ -2,9 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Models\PieceList;
+use Exception;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Storage;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class PieceListSeeder extends Seeder
 {
@@ -15,25 +18,25 @@ class PieceListSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('piece_lists')->insert([
-            [
-                'name' => 'piece1',
-                'ref' => 'ref1',
-                'price' => '12',
-                'qte' => '5'
-            ],
-            [
-                'name' => 'piece2',
-                'ref' => 'ref2',
-                'price' => '14',
-                'qte' => '8'
-            ],
-            [
-                'name' => 'piece3',
-                'ref' => 'ref3',
-                'price' => '123',
-                'qte' => '55'
-            ]
-        ]);
+        for ($i = 0; $i < 50; $i++) {
+
+            $pieceList = new PieceList();
+            $pieceList->name = 'piece' . $i;
+            $pieceList->ref = 'ref' . $i;
+            $pieceList->price =  $i * 2;
+            $pieceList->qte =  $i + 5;
+
+            $qrcode = QrCode::size(200)->generate('ref' . $i);
+
+            Storage::put('/public/images/' . 'qr-' . 'ref' . $i . '.svg', $qrcode);
+
+            $pieceList->path = 'qr-' . 'ref' . $i . '.svg';
+
+            try {
+                $pieceList->save();
+            } catch (Exception $e) {
+                dd('Error' . $e);
+            }
+        }
     }
 }

@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container h100 d-flex fx-center">
-    <div class="card vself-center dark shadow-1 rounded-1">
+    <div class="card vself-center dark shadow-1 rounded-1 p-4">
         <div class="card-header pl-3 pr-3 p-0">
             <p class="txt-white pb-2">Edition utilisateur</p>
         </div>
