@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mt-5">
-    <div class="grix xs1 sm3 container mb-5">
+<div class="container mt-3">
+    <div class="grix xs1 sm3 container mb-3">
         <div class="col-sm1 mx-auto my-auto">
-            <a href="{{ route('operationsList.create') }}" class="btn rounded-1 orange dark-1 txt-white">Ajouter</a>
+            <a href="{{ route('operationsList.create') }}" class="btn rounded-1 orange dark-1 txt-white small">Ajouter</a>
         </div>
         <div class="col-sm2">
             <form class="form-material" method="GET" action="searchOperationsList">
@@ -14,7 +14,7 @@
                         <input type="text" name="searchOperationsList" id="searchOperationsList" class="form-control" />
                         <label for="searchOperationsList">Rechercher</label>
                     </div>
-                    <button type="submit" class="btn circle orange dark-1 txt-white search-icon vself-center rounded-4"><i class="fa fa-search"></i></button>
+                    <button type="submit" class="btn circle orange dark-1 txt-white search-icon vself-center rounded-4 small"><i class="fa fa-search"></i></button>
                 </div>
             </form>
         </div>
@@ -32,14 +32,14 @@
                 <tbody>
                     @foreach($operationsLists as $operationList)
                     <tr class="txt-white">
-                        <td>{{ $operationList->id }}</td>
+                        <td class="txt-orange">{{ $operationList->id }}</td>
                         <td>{{ $operationList->name }}</td>
                         <td>
-                            <div class="grix xs2">
-                                <div>
+                            <div class="grix xs2 gutter-xs4">
+                                <div class="ml-auto">
                                     <a class="btn circle orange dark-1 txt-white small" href="{{ route('operationsList.edit', ['operationsList' => $operationList->id]) }}"><i class="fas fa-pen"></i></a>
                                 </div>
-                                <div>
+                                <div class="mr-auto">
                                     <form method="POST" action="{{ route('operationsList.destroy', ['operationsList' => $operationList->id]) }}">
                                         @method('DELETE')
                                         @csrf
@@ -55,5 +55,5 @@
         </div>
     </div>
 </div>
-<div class="d-flex fx-center mt-5">{{ $operationsLists->links('pagination') }}</div>
+<div class="d-flex fx-center mt-3">{{ $operationsLists->links('pagination') }}</div>
 @endsection

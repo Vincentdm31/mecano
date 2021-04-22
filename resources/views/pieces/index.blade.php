@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('content')
-<div class="container mt-2">
+<div class="container mt-3">
     <div class="grix xs1 sm3 container">
         <div class="col-sm1 mx-auto my-auto">
-            <a href="{{ route('piecesList.create') }}" class="btn rounded-1 orange dark-1 txt-white">Ajouter</a>
+            <a href="{{ route('piecesList.create') }}" class="btn rounded-1 orange dark-1 txt-white small">Ajouter</a>
         </div>
         <div class="col-sm2">
             <form class="form-material" method="GET" action="searchPiecesList">
@@ -13,7 +13,7 @@
                         <input type="text" name="searchPiecesList" id="searchPiecesList" class="form-control" />
                         <label for="searchPiecesList">Rechercher</label>
                     </div>
-                    <button type="submit" class="btn circle orange dark-1 txt-white search-icon vself-center rounded-4"><i class="fa fa-search"></i></button>
+                    <button type="submit" class="btn circle orange dark-1 txt-white search-icon vself-center rounded-4 small"><i class="fa fa-search"></i></button>
                 </div>
             </form>
         </div>
@@ -44,9 +44,9 @@
                                     <a class="btn circle blue dark-1 txt-white small" href="{{route('piecesList.show', ['piecesList' => $pieceList->id])}}"><i class="fas fa-eye"></i></a>
                                 </div>
                                 <div class="mx-auto">
-                                    <a class="btn circle green dark-3 txt-white small" href="{{route('piecesList.edit', ['piecesList' => $pieceList->id])}}"><i class="fas fa-pen"></i></a>
+                                    <a class="btn circle orange dark-1 txt-white small" href="{{route('piecesList.edit', ['piecesList' => $pieceList->id])}}"><i class="fas fa-pen"></i></a>
                                 </div>
-                                <div>
+                                <div class="mr-auto">
                                     <form method="POST" action="{{route('piecesList.destroy', ['piecesList' => $pieceList->id])}}">
                                         @method('DELETE')
                                         @csrf
@@ -61,7 +61,7 @@
             </table>
         </div>
     </div>
-    <div class="d-flex fx-center mt-2">{{ $piecesList->links('pagination') }}</div>
+    <div class="d-flex fx-center mt-3">{{ $piecesList->links('pagination') }}</div>
 </div>
 @endsection
 

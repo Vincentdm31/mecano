@@ -12,7 +12,7 @@ class PieceListController extends Controller
 {
     public function index()
     {
-        $piecesList = PieceList::paginate(6);
+        $piecesList = PieceList::paginate(5);
 
         return view('pieces.index', ['piecesList' => $piecesList]);
     }
@@ -138,7 +138,7 @@ class PieceListController extends Controller
 
         $piecesList = PieceList::Where('ref', 'like', '%' . $search . '%')
             ->orWhere('name', 'like', '%' . $search . '%')
-            ->get();
+            ->paginate(5);
 
         return view('pieces.index', ['piecesList' => $piecesList]);
     }

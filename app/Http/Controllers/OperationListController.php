@@ -9,7 +9,7 @@ class OperationListController extends Controller
 {
     public function index()
     {
-        $operationsLists = OperationList::orderBy('name')->paginate(6);
+        $operationsLists = OperationList::orderBy('name')->paginate(5);
 
         return view('operations.index', ['operationsLists' => $operationsLists]);
     }
@@ -90,7 +90,7 @@ class OperationListController extends Controller
     {
         $search = $request->get('searchOperationsList');
 
-        $operationsLists = OperationList::Where('name', 'like', '%' . $search . '%')->orderBy('name')->paginate(8);
+        $operationsLists = OperationList::Where('name', 'like', '%' . $search . '%')->orderBy('name')->paginate(5);
 
 
 

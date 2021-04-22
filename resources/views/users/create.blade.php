@@ -11,12 +11,12 @@ Add Car
         <div class="card-content pl-3 pr-3 p-0 txt-white">
             <form class="form-material" method="POST" action="{{ route('users.store') }}">
                 @csrf
-                <div class="grix xs1 txt-center">
-                    <div class="form-field">
+                <div class="grix xs2 txt-center">
+                    <div class="form-field col-xs2">
                         <input required type="text" id="name" name="name" class="form-control" />
                         <label for="name" class="">Nom</label>
                     </div>
-                    <div class="form-field">
+                    <div class="form-field col-xs2">
                         <input required type="email" id="email" name="email" class="form-control" />
                         <label for="email" class="">Email</label>
                     </div>

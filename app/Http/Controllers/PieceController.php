@@ -16,8 +16,8 @@ class PieceController extends Controller
         $intervention = $request->interventionId;
         $qte = $request->qte;
 
-        $pieceId = PieceList::Where('ref', 'like', '%' . $refPiece . '%')->get()->pluck('id')->implode('');
-        $pieceQte = PieceList::Where('ref', 'like', '%' . $refPiece . '%')->get()->pluck('qte')->implode('');
+        $pieceId = PieceList::Where('ref', 'like', $refPiece)->get()->pluck('id')->implode('');
+        $pieceQte = PieceList::Where('ref', 'like', $refPiece)->get()->pluck('qte')->implode('');
 
         if ($pieceQte <= $qte) {
             return redirect(route('interventions.edit', ['intervention' => $intervention, 'pieceQte' => $pieceQte]))->with('toast', 'notEnoughQte');

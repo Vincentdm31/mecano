@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mt-5">
+<div class="container mt-3">
     <div class="grix xs1 sm3 container">
         <div class="col-sm1 mx-auto my-auto">
-            <a href="{{ route('vehicules.create') }}" class="btn rounded-1 orange dark-1 txt-white">Ajouter</a>
+            <a href="{{ route('vehicules.create') }}" class="btn rounded-1 orange dark-1 txt-white small">Ajouter ??</a>
         </div>
         <div class="col-sm2">
             <form class="form-material" method="GET" action="searchVehicule">
@@ -14,7 +14,7 @@
                         <input type="text" name="searchVehicule" id="searchVehicule" class="form-control" />
                         <label for="searchVehicule">Rechercher</label>
                     </div>
-                    <button type="submit" class="btn circle orange dark-1 txt-white search-icon vself-center rounded-4"><i class="fa fa-search"></i></button>
+                    <button type="submit" class="btn circle orange dark-1 txt-white search-icon vself-center rounded-4 small"><i class="fa fa-search"></i></button>
                 </div>
             </form>
         </div>
@@ -29,6 +29,7 @@
                         <th class="txt-center">Marque</th>
                         <th class="txt-center">Modèle</th>
                         <th class="txt-center">Immat</th>
+                        <th class="txt-center">Catégorie</th>
                         <th class="txt-center">Actions</th>
                     </tr>
                 </thead>
@@ -39,10 +40,11 @@
                         <td class="txt-center">{{ $vehicule->brand }}</td>
                         <td class="txt-center">{{ $vehicule->model }}</td>
                         <td class="txt-center">{{ $vehicule->license_plate }}</td>
+                        <td class="txt-center">{{ $vehicule->category }}</td>
                         <td>
                             <div class="grix xs2 gutter-xs2">
                                 <div class="ml-auto">
-                                    <a class="btn circle blue dark-1 txt-white small" href="{{route('vehicules.edit', ['vehicule' => $vehicule->id])}}"><i class="fas fa-pen"></i></a>
+                                    <a class="btn circle orange dark-1 txt-white small" href="{{route('vehicules.edit', ['vehicule' => $vehicule->id])}}"><i class="fas fa-pen"></i></a>
                                 </div>
                                 <div>
                                     <form method="POST" action="{{route('vehicules.destroy', ['vehicule' => $vehicule->id])}}">
@@ -59,7 +61,7 @@
             </table>
         </div>
     </div>
-    <div class="d-flex fx-center mt-5">{{ $vehicules->links('pagination') }}</div>
+    <div class="d-flex fx-center mt-3">{{ $vehicules->links('pagination') }}</div>
 
 </div>
 @endsection

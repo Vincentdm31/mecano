@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mt-5">
+<div class="container mt-3">
     <div class="grix xs1 sm3 container">
         <div class="col-sm1 mx-auto my-auto">
-            <a href="{{ route('users.create') }}" class="btn rounded-1 orange dark-1 txt-white">Ajouter</a>
+            <a href="{{ route('users.create') }}" class="btn rounded-1 orange dark-1 txt-white small">Ajouter</a>
         </div>
         <div class="col-sm2">
             <form class="form-material" method="GET" action="searchUser">
@@ -14,7 +14,7 @@
                         <input type="text" name="searchUser" id="searchUser" class="form-control" />
                         <label for="searchUser">Rechercher</label>
                     </div>
-                    <button type="submit" class="btn circle orange txt-white search-icon vself-center rounded-4"><i class="fa fa-search"></i></button>
+                    <button type="submit" class="btn circle orange dark-1 txt-white search-icon vself-center rounded-4 small"><i class="fa fa-search"></i></button>
                 </div>
             </form>
         </div>
@@ -34,6 +34,8 @@
                 </thead>
                 <tbody>
                     @foreach($users as $user)
+                    @if(Auth()->user()->role >= $user->role)
+
                     <?php
 
                     $roleArr = ['Mecanicien', 'Magasinier', 'Admin', 'Root'];
@@ -50,7 +52,7 @@
                         <td>
                             <div class="grix xs2">
                                 <div>
-                                    <a class="btn circle blue dark-1 txt-white small" href="{{route('users.edit', ['user' => $user->id])}}"><i class="fas fa-pen"></i></a>
+                                    <a class="btn circle orange dark-1 txt-white small" href="{{route('users.edit', ['user' => $user->id])}}"><i class="fas fa-pen"></i></a>
                                 </div>
                                 <div>
                                     @if(Auth()->user()->role > 2)
@@ -64,6 +66,7 @@
                             </div>
                         </td>
                     </tr>
+                                    @endif
                     @endforeach
                 </tbody>
             </table>
