@@ -14,11 +14,11 @@ $date = Carbon::now();
 
   <!-- Here is the fab-menu -->
   <div class="fab-menu">
-    <form method="POST" onsubmit="return confirm('Terminer l\'intervention ?');" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
+    <form method="POST" class="fab-item" onsubmit="return confirm('Terminer l\'intervention ?');" action="{{ route('interventions.update',  ['intervention' => $intervention->id])}}">
       @method('PUT')
       @csrf
       <input hidden value="finish" name="state" />
-      <button type="submit" class="<?php echo ($opDoing->count() < 1 && $opPause->count() < 1 && !$intervention->needMove || $opDoing->count() < 1 && $opPause->count() < 1 && $intervention->needMove && !empty($intervention->end_move_return) ? '' : 'hide') ?> btn mb-3 fab-item circle shadow-1 dark txt-green"><i class="fas fa-check" aria-hidden="true"></i></button>
+      <button type="submit" class="<?php echo ($opDoing->count() < 1 && $opPause->count() < 1 && !$intervention->needMove || $opDoing->count() < 1 && $opPause->count() < 1 && $intervention->needMove && !empty($intervention->end_move_return) ? '' : 'hide') ?> btn mb-3 circle shadow-1 dark txt-green"><i class="fas fa-check" aria-hidden="true"></i></button>
     </form>
 
 
@@ -29,19 +29,19 @@ $date = Carbon::now();
     @endif
 
     @if($intervention->state == "doing")
-    <form class="form-material h100" onsubmit="return confirm('Mettre l\'intervention en pause ?');" method="POST" action="{{ route('timeinterventions.store') }}">
+    <form class="form-material h100 fab-item" onsubmit="return confirm('Mettre l\'intervention en pause ?');" method="POST" action="{{ route('timeinterventions.store') }}">
       @csrf
       <input hidden name="intervention_id" value="{{ $intervention->id }}">
       <input hidden name="start_date" value="{{ $date }}">
-      <button type="submit" class="btn shadow-1 circle grey light-4 txt-orange txt-dark-1 fab-item mb-3"><i class="fas fa-pause"></i></button>
+      <button type="submit" class="btn shadow-1 circle grey light-4 txt-orange txt-dark-1 mb-3"><i class="fas fa-pause"></i></button>
     </form>
 
     @elseif(($intervention->state == "pause"))
-    <form class="form-material h100" onsubmit="return confirm('Reprendre l\'intervenion? ?');" method="POST" action="{{ route('timeinterventions.store') }}">
+    <form class="form-material h100 fab-item" onsubmit="return confirm('Reprendre l\'intervenion? ?');" method="POST" action="{{ route('timeinterventions.store') }}">
       @csrf
       <input hidden name="intervention_id" value="{{ $intervention->id }}">
       <input hidden name="end_date" value="{{ $date }}">
-      <button type="submit" class="btn shadow-1 circle grey light-4 txt-green txt-dark-1 fab-item mb-3"><i class="fas fa-play"></i></button>
+      <button type="submit" class="btn shadow-1 circle grey light-4 txt-green txt-dark-1 mb-3"><i class="fas fa-play"></i></button>
     </form>
     @endif
 
