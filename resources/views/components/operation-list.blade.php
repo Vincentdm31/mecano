@@ -128,11 +128,9 @@ $date = Carbon::now();
 <script>
 
 function removePieces(id){
-  console.log('rm_piece_' + id);
   let input = document.getElementById('rm_piece_' + id);
-  var person = window.prompt('Combien de pièces voulez vous supprimer ?');
-  console.log(input);
-  input.value = person;
+  var pieceCount = window.prompt('Combien de pièces voulez vous supprimer ?');
+  input.value = pieceCount;
 }
 
 </script>
