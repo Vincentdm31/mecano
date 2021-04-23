@@ -38,22 +38,25 @@ class PieceController extends Controller
     }
 
     public function destroy(Request $request, $id)
-    {
+    {   
+        $pieceCount = intVal($request->piece_count);
+
         $intervention = Intervention::find($request->interventionId);
         $piece = Piece::find($id);
         $pieceList = PieceList::find($piece->piece_id);
-
-        if ($piece->qte > 0) {
-            $piece->qte -= 1;
+        
+        
+        if ($piece->qte >= $pieceCount) {
+            $piece->qte -= $pieceCount;
+            $piece->save();
         }
-
-        $piece->save();
+        
 
         if ($piece->qte <= 0) {
             $piece->delete();
         }
 
-        $pieceList->qte += 1;
+        $pieceList->qte += $pieceCount;
         $pieceList->save();
 
         return redirect(route('interventions.edit', ['intervention' => $intervention]))->with('toast', 'pieceDelete');

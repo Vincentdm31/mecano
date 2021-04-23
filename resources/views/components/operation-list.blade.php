@@ -20,11 +20,12 @@ $date = Carbon::now();
         <div class="card overflow-visible rounded-1 grey light-4 p-1 ml-5 mr-5 mt-2 mb-3">
           <div class="card-header p-0">
             <p class="my-auto m-0 font-s2 col-xs2 txt-dark"><span class="mr-3 txt-orange txt-dark-1 font-w600 pl-3 font-s3">{{$piece->qte}}x</span>{{$piece->pieceList->name }}</p>
-            <form method="POST" onsubmit="return confirm('Supprimer la pièce ?');" action="{{ route('pieces.destroy',  ['piece' => $piece->id])}}">
+            <form method="POST" onsubmit="removePieces({{ $piece->id }});" action="{{ route('pieces.destroy', ['piece' => $piece->id])}}">
               @method('delete')
               @csrf
               <div class="txt-center">
                 <input hidden value="{{ $intervention->id }}" name="interventionId" />
+                <input hidden type="number" id="rm_piece_{{ $piece->id }}" name="piece_count" />
                 <button type="submit" class="btn rounded-1 bd-dark bd-light-4 bd-solid bd-3 circle small grey light-4 txt-orange txt-dark-1" style="position:absolute;top:0;right:0;transform:translate(50%,-50%)"><i class=" fas fa-trash"></i></button>
               </div>
             </form>
@@ -120,4 +121,20 @@ $date = Carbon::now();
 </div>
 </div>
 <!-- Test -->
+@endsection
+
+@section('extra-js')
+
+<script>
+
+function removePieces(id){
+  console.log('rm_piece_' + id);
+  let input = document.getElementById('rm_piece_' + id);
+  var person = window.prompt('Combien de pièces voulez vous supprimer ?');
+  console.log(input);
+  input.value = person;
+}
+
+</script>
+
 @endsection
