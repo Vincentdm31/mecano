@@ -20,7 +20,7 @@ $date = Carbon::now();
         <div class="card overflow-visible rounded-1 grey light-4 p-1 ml-5 mr-5 mt-2 mb-3">
           <div class="card-header p-0">
             <p class="my-auto m-0 font-s2 col-xs2 txt-dark"><span class="mr-3 txt-orange txt-dark-1 font-w600 pl-3 font-s3">{{$piece->qte}}x</span>{{$piece->pieceList->name }}</p>
-            <form method="POST" onsubmit="removePieces({{ $piece->id }});" action="{{ route('pieces.destroy', ['piece' => $piece->id])}}">
+            <form method="POST" onsubmit="removePieces('{{ $piece->id }}');" action="{{ route('pieces.destroy', ['piece' => $piece->id])}}">
               @method('delete')
               @csrf
               <div class="txt-center">
