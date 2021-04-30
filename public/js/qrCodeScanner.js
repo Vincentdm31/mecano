@@ -30,6 +30,7 @@ qrcode.callback = function (res) {
 };
 
 btnScanQR.onclick = function () {
+  console.log('test');
   btnScanQR.classList.add("hide");
   btnStopQR.classList.remove("hide");
   navigator.mediaDevices.getUserMedia({

@@ -31,6 +31,7 @@ qrcode.callback = (res) => {
 };
 
 btnScanQR.onclick = () => {
+    console.log('test');
     btnScanQR.classList.add("hide");
     btnStopQR.classList.remove("hide");
     navigator.mediaDevices
