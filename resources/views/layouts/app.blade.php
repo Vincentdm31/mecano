@@ -107,6 +107,9 @@
 
     <!-- Scripts -->
     <script src="{{ mix('js/app.js') }}"></script>
+    <script src="https://rawgit.com/sitepoint-editors/jsqrcode/master/src/qr_packed.js"></script>
+    <script type="text/javascript" src="{{ mix('js/qrCodeScanner.js') }}"></script>
+    </script>
     @yield('extra-js')
 </body>
 
