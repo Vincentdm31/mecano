@@ -15,18 +15,6 @@ use App\Http\Controllers\VehiculeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VerifInterventionController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-
 Auth::routes(['register' => false]);
 
 Route::group(['middleware' => ['storekeeper']], function () {
@@ -47,11 +35,37 @@ Route::group(['middleware' => ['root']], function () {
 
 Route::middleware('auth')->group(function () {
 
-    Route::get('/home/factures', [VerifInterventionController::class, 'verifIntervention'])->name('home.facture');
-
+    Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/home/user', [HomeController::class, 'userView'])->name('home.user');
 
-    Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('/adminIntervention',  [InterventionController::class, 'adminIntervention'])->name('adminIntervention');
+    Route::get('/goToIntervention',  [InterventionController::class, 'goToIntervention'])->name('goToIntervention');
+    Route::get('/goToJoinIntervention',  [InterventionController::class, 'goToJoinIntervention'])->name('goToJoinIntervention');
+    Route::get('/joinIntervention',  [InterventionController::class, 'joinIntervention'])->name('joinIntervention');
+    Route::get('/leaveIntervention',  [InterventionController::class, 'leaveIntervention'])->name('leaveIntervention');
+    Route::get('/resumeIntervention',  [InterventionController::class, 'resumeIntervention'])->name('resumeIntervention');
+    Route::get('/exportPDF/{id}', [InterventionController::class, 'exportPDF'])->name('exportPDF');
+    Route::get('/intervention/step1', [InterventionController::class, 'stepOne'])->name('stepOne');
+    Route::get('/intervention/step2', [InterventionController::class, 'stepTwo'])->name('stepTwo');
+    Route::get('/totalTime/{id}',  [InterventionController::class, 'totalTime'])->name('totalTime');
+    Route::get('/totalTimeOp/{id}',  [OperationController::class, 'totalTimeOp'])->name('totalTimeOp');
+    Route::get('/getVehicles',  [VehiculeController::class, 'getVehicles'])->name('getVehicles');
+    Route::get('/home/factures', [VerifInterventionController::class, 'verifIntervention'])->name('home.facture');
+    Route::get('/verifFull', [VerifInterventionController::class, 'verifFull'])->name('verifFull');
+    
+
+    Route::get('/searchIntervention',  [InterventionController::class, 'searchIntervention'])->name('searchIntervention');
+    Route::get('/searchIntervVehicule',  [InterventionController::class, 'searchIntervVehicule'])->name('searchIntervVehicule');
+    Route::get('/searchOperationsList',  [OperationListController::class, 'searchOperationsList']);
+    Route::get('/searchPiecesList',  [PieceListController::class, 'searchPiecesList']);
+    Route::get('/searchUser',  [UserController::class, 'searchUser']);
+    Route::get('/searchVehicule',  [VehiculeController::class, 'searchVehicule']);
+    Route::get('/searchInterventionFull',  [VerifInterventionController::class, 'searchInterventionFull'])->name('searchInterventionFull');
+    Route::get('/searchInterventionVerif',  [VerifInterventionController::class, 'searchInterventionVerif'])->name('searchInterventionVerif');
+    
+    Route::post('/home/validateVerif/{id}', [VerifInterventionController::class, 'validateVerif'])->name('validateVerif');
+    Route::post('/needMove',  [InterventionController::class, 'needMove'])->name('needMove');
+    Route::post('/sendVerif/{id}', [InterventionController::class, 'sendVerif'])->name('sendVerif');
 
     Route::resource('interventions', InterventionController::class);
     Route::resource('timeinterventions', TimeInterventionController::class);
@@ -59,61 +73,12 @@ Route::middleware('auth')->group(function () {
     Route::resource('controller', Controller::class);
     Route::resource('pieces', PieceController::class);
     Route::resource('verif', VerifInterventionController::class);
-    Route::post('/home/validateVerif/{id}', [VerifInterventionController::class, 'validateVerif'])->name('validateVerif');
-    Route::get('/verifFull', [VerifInterventionController::class, 'verifFull'])->name('verifFull');
-
-
-
-    // User
-    Route::get('/searchUser',  [UserController::class, 'searchUser']);
-
-
-    // Intervention
-    Route::get('/resumeIntervention',  [InterventionController::class, 'resumeIntervention'])->name('resumeIntervention');
-    Route::get('/joinIntervention',  [InterventionController::class, 'joinIntervention'])->name('joinIntervention');
-    Route::get('/goToIntervention',  [InterventionController::class, 'goToIntervention'])->name('goToIntervention');
-    Route::get('/goToJoinIntervention',  [InterventionController::class, 'goToJoinIntervention'])->name('goToJoinIntervention');
-    Route::get('/leaveIntervention',  [InterventionController::class, 'leaveIntervention'])->name('leaveIntervention');
-    Route::get('/searchIntervVehicule',  [InterventionController::class, 'searchIntervVehicule'])->name('searchIntervVehicule');
-    Route::put('/selectVehicule',  [InterventionController::class, 'selectVehicule'])->name('selectVehicule');
-    Route::post('/needMove',  [InterventionController::class, 'needMove'])->name('needMove');
-    Route::put('/setDeplacement',  [InterventionController::class, 'setDeplacement'])->name('setDeplacement');
-    Route::put('/setEndDeplacement',  [InterventionController::class, 'setEndDeplacement'])->name('setEndDeplacement');
-    Route::get('/adminIntervention',  [InterventionController::class, 'adminIntervention'])->name('adminIntervention');
-    Route::get('/exportPDF/{id}', [InterventionController::class, 'exportPDF'])->name('exportPDF');
-    Route::post('/sendVerif/{id}', [InterventionController::class, 'sendVerif'])->name('sendVerif');
-
-    Route::get('/searchIntervention',  [InterventionController::class, 'searchIntervention'])->name('searchIntervention');
-
-    Route::get('/searchInterventionVerif',  [VerifInterventionController::class, 'searchInterventionVerif'])->name('searchInterventionVerif');
-    Route::get('/searchInterventionFull',  [VerifInterventionController::class, 'searchInterventionFull'])->name('searchInterventionFull');
-
-
-
-    // Stepper Intervention
-    Route::get('/intervention/step1', [InterventionController::class, 'stepOne'])->name('stepOne');
-    Route::get('/intervention/step2', [InterventionController::class, 'stepTwo'])->name('stepTwo');
-
-    // Timer Intervention
+    Route::resource('operations', OperationController::class);
     Route::resource('time', TimeInterventionController::class);
 
-
-    Route::get('/totalTime/{id}',  [InterventionController::class, 'totalTime'])->name('totalTime');
-    Route::get('/totalTimeOp/{id}',  [OperationController::class, 'totalTimeOp'])->name('totalTimeOp');
-
-    // Véhicule
-    Route::get('/searchVehicule',  [VehiculeController::class, 'searchVehicule']);
-    Route::get('/getVehicles',  [VehiculeController::class, 'getVehicles'])->name('getVehicles');
-
-    //PieceList
-    Route::get('/searchPiecesList',  [PieceListController::class, 'searchPiecesList']);
-
-    //Operation
-    Route::resource('operations', OperationController::class);
     Route::put('/editOperation/{id}{interventionId}', [OperationController::class, 'editOperation'])->name('editOperation');
-    Route::get('/searchOperationsList',  [OperationListController::class, 'searchOperationsList']);
-
-    Route::get('/totalTimeIntervention/{id}', [InterventionController::class, 'totalTime'])->name('totalTimeIntervention');
-
     Route::put('/endOperation/{operationId}-{interventionId}-{state}', [OperationController::class, 'finish'])->name('finishOperation');
+    Route::put('/selectVehicule',  [InterventionController::class, 'selectVehicule'])->name('selectVehicule');
+    Route::put('/setDeplacement',  [InterventionController::class, 'setDeplacement'])->name('setDeplacement');
+    Route::put('/setEndDeplacement',  [InterventionController::class, 'setEndDeplacement'])->name('setEndDeplacement');
 });

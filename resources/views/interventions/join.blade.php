@@ -2,7 +2,7 @@
 @section('content')
 <p class="txt-black txt-center h5 mt-5 mb-4 font-s5">Rejoindre une intervention</p>
 <div class="container">
-    @if(empty($intervention))
+    @if(!count($interventions))
     <p class="txt-center txt-black font-w600">Aucune intervention à rejoindre</p>
     @endif
     @foreach($interventions as $intervention)

@@ -23,6 +23,7 @@ class OperationController extends Controller
         }
 
         $operation->start_operation_time = Carbon::now();
+
         $operation->save();
 
         return redirect(route('interventions.edit', ['intervention' => $intervention_id]))->with(['toast' => 'addOperation', 'opState' => 'notEnd']);
@@ -31,7 +32,6 @@ class OperationController extends Controller
     public function update(Request $request, $id)
     {
         $inputs = $request->except('_token', '_method', 'updated_at');
-
         $interventionId = $request->intervention_id;
         $intervention = Intervention::find($interventionId);
         $operation = Operation::find($id);
@@ -45,12 +45,6 @@ class OperationController extends Controller
         return redirect(route('interventions.edit', ['intervention' => $intervention->id]))->with(['toast' => 'update']);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Operation  $operation
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Request $request, $id)
     {
         $intervention = $request->intervention_id;
@@ -76,7 +70,6 @@ class OperationController extends Controller
 
         $intervention = Intervention::find($interventionId);
 
-        // TimeOperation after finish
         $timeOperation = new TimeOperation();
 
         $timeOperation->operation_id = $id;

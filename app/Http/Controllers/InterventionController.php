@@ -20,7 +20,9 @@ class InterventionController extends Controller
 {
     public function index()
     {
-        $interventions = Intervention::where('state', '!=', 'finish')->paginate(5);
+        $interventions = Intervention::where('state', '!=', 'finish')
+            ->orderBy('id', 'desc')
+            ->paginate(5);
 
         return view('interventions.index', ['interventions' => $interventions]);
     }
@@ -64,33 +66,34 @@ class InterventionController extends Controller
 
 
         $opDoing = Operation::Where('intervention_id', $id)
-            ->Where('state', 'like', 'doing')
+            ->where('state', 'like', 'doing')
             ->get();
 
         $opPause = Operation::Where('intervention_id', $id)
-            ->Where('state', 'pause')
+            ->where('state', 'pause')
             ->get();
         $opEnd = Operation::Where('intervention_id', $id)
-            ->Where('state', 'finish')
+            ->where('state', 'finish')
             ->get();
 
         $search = $request->get('selectVehicule');
+
         $vehicules = Vehicule::Where('license_plate', 'like', '%' . $search . '%')
             ->get();
 
         return view('interventions.edit', [
-            'intervention' => $intervention, 'vehicules' => $vehicules, 'operationsList' => $operationsList, 'piecesList' => $piecesList,
-            'operations' => $operations, 'pieces' => $pieces, 'opDoing' => $opDoing, 'opEnd' => $opEnd, 'opPause' => $opPause
+            'intervention' => $intervention,
+            'vehicules' => $vehicules,
+            'operationsList' => $operationsList,
+            'piecesList' => $piecesList,
+            'operations' => $operations,
+            'pieces' => $pieces,
+            'opDoing' => $opDoing,
+            'opEnd' => $opEnd,
+            'opPause' => $opPause
         ])->with(['toast' => 'update']);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $inputs = $request->except('_token', '_method', 'updated_at');
@@ -101,9 +104,11 @@ class InterventionController extends Controller
         }
 
         $intervention->save();
+
         if ($intervention->state == 'finish') {
             $intervention->end_intervention_time = Carbon::now();
             $intervention->save();
+
             return redirect(route('home'))->with('toast', 'endIntervention');
         }
 
@@ -112,14 +117,19 @@ class InterventionController extends Controller
 
     public function adminIntervention()
     {
-        $interventions = Intervention::Where('state', 'like', '%' . 'finish' . '%')->orderBy('id', 'desc')->paginate(5);
+        $interventions = Intervention::Where('state', 'like', '%' . 'finish' . '%')
+            ->orderBy('id', 'desc')
+            ->paginate(5);
 
         return view('interventions.adminIndex', ['interventions' => $interventions]);
     }
 
     public function resumeIntervention()
     {
-        $interventions = Intervention::Where('state', 'like', 'pause')->orderBy('id', 'desc')->paginate(5);
+        $interventions = Intervention::Where('state', 'like', 'pause')
+            ->orderBy('id', 'desc')
+            ->paginate(5);
+
         return view('interventions.resume', ['interventions' => $interventions]);
     }
 
@@ -127,7 +137,9 @@ class InterventionController extends Controller
     {
         $id = $request->input('intervention');
         $intervention = Intervention::find($id);
+
         $intervention->state = "doing";
+
         $intervention->save();
 
         return redirect(route('interventions.edit', ['intervention' => $intervention]));
@@ -137,6 +149,7 @@ class InterventionController extends Controller
     {
         $interventions = Intervention::Where('user_id', '!=', Auth::id())
             ->where('state', '!=', 'finish')
+            ->orderBy('id', 'desc')
             ->get();
 
         return view('interventions.join', ['interventions' => $interventions]);
@@ -146,8 +159,10 @@ class InterventionController extends Controller
     {
         $id = $request->input('intervention');
         $intervention = Intervention::find($id);
+
         $intervention->users()->attach(Auth::id());
         $intervention->state = "doing";
+
         $intervention->save();
 
         return redirect(route('interventions.edit', ['intervention' => $intervention]));
@@ -157,6 +172,7 @@ class InterventionController extends Controller
     {
         $id = $request->input('intervention');
         $intervention = Intervention::find($id);
+
         $intervention->users()->detach(Auth::id());
 
         return redirect(route('interventions.index'));
@@ -197,7 +213,6 @@ class InterventionController extends Controller
     {
 
         $inputs = $request->except('_token', '_method');
-
         $intervention_id = $request->id;
         $intervention = Intervention::find($intervention_id);
 
@@ -250,10 +265,11 @@ class InterventionController extends Controller
         return view('interventions.step1', ['intervention' => $intervention]);
     }
 
-    public function sendVerif($id){
+    public function sendVerif($id)
+    {
         $intervention = Intervention::find($id);
 
-        if($intervention->state_verif == null){
+        if ($intervention->state_verif == null) {
             $intervention->state_verif = 'checking';
         }
 
@@ -266,9 +282,9 @@ class InterventionController extends Controller
     {
         $search = $request->get('searchIntervention');
 
-        $interventions = Intervention::whereHas('vehiculeList', function ($query) use($search) {
+        $interventions = Intervention::whereHas('vehiculeList', function ($query) use ($search) {
             $query->where('license_plate', 'like',  '%' . $search . '%');
-       })->orderBy('id', 'desc')->paginate(5);
+        })->orderBy('id', 'desc')->paginate(5);
 
         return view('interventions.adminIndex', ['interventions' => $interventions]);
     }

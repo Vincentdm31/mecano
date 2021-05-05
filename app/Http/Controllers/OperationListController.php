@@ -14,22 +14,11 @@ class OperationListController extends Controller
         return view('operations.index', ['operationsLists' => $operationsLists]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('operations.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $inputs = $request->except('_token', 'created_at', 'updated_at');
@@ -51,13 +40,6 @@ class OperationListController extends Controller
         return view('operations.edit', ['operationList' => $operationList]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $inputs = $request->except('_token', '_method', 'updated_at');
@@ -72,12 +54,6 @@ class OperationListController extends Controller
         return redirect(route('operationsList.index'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $operationList = OperationList::find($id);
@@ -91,8 +67,6 @@ class OperationListController extends Controller
         $search = $request->get('searchOperationsList');
 
         $operationsLists = OperationList::Where('name', 'like', '%' . $search . '%')->orderBy('name')->paginate(5);
-
-
 
         return view('operations.index', ['operationsLists' => $operationsLists]);
     }
