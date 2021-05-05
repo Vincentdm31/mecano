@@ -350,6 +350,8 @@ class InterventionController extends Controller
             ->addItems($itemList)
             ->notes($notes)
             ->logo(public_path('images/logoFact.png'));
+        // ->filename('toto')
+        // ->save('public');
 
         return $invoice->stream();
     }
