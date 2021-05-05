@@ -84,7 +84,8 @@ Route::middleware('auth')->group(function () {
     // Timer Intervention
     Route::resource('time', TimeInterventionController::class);
     Route::post('/totalTime',  [TimeInterventionController::class, 'totalTime'])->name('totalTime');
-    Route::post('/totalTimeOp',  [TimeOperationController::class, 'totalTimeOp'])->name('totalTimeOp');
+
+    Route::get('/totalTimeOp/{id}',  [OperationController::class, 'totalTimeOp'])->name('totalTimeOp');
 
     // Véhicule
     Route::get('/searchVehicule',  [VehiculeController::class, 'searchVehicule']);
@@ -100,5 +101,5 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/totalTimeIntervention/{id}', [InterventionController::class, 'totalTime'])->name('totalTimeIntervention');
 
-    Route::put('/endOperation/{operationId}-{interventionId}-{state}-{endOperationTime}', [OperationController::class, 'finish'])->name('finishOperation');
+    Route::put('/endOperation/{operationId}-{interventionId}-{state}', [OperationController::class, 'finish'])->name('finishOperation');
 });

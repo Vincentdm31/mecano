@@ -94,7 +94,7 @@ $date = Carbon::now();
         </div>
         <!-- Terminer -->
         <div class="col-xs2 col-md1">
-          <form method="POST" onsubmit="return confirm('Terminer l\'opération ?');" action="{{ route('finishOperation', ['operationId' => $operation->id, 'interventionId' => $intervention->id, 'state' => 'finish', 'endOperationTime' => $date])}}">
+          <form method="POST" onsubmit="return confirm('Terminer l\'opération ?');" action="{{ route('finishOperation', ['operationId' => $operation->id, 'interventionId' => $intervention->id, 'state' => 'finish'])}}">
             @method('PUT')
             @csrf
             <div class="txt-center">

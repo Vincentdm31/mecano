@@ -100,10 +100,11 @@ class OperationController extends Controller
         return redirect(route('interventions.edit', ['intervention' => $intervention->id]))->with('toast', 'editOperation');
     }
 
-    public function finish($operationId, $interventionId, $state, $endOperationTime)
+    public function finish($operationId, $interventionId, $state)
     {
         $intervention = Intervention::find($interventionId);
         $operation = Operation::find($operationId);
+        $endOperationTime = Carbon::now();
 
         $operation->state = $state;
         $operation->end_operation_time = $endOperationTime;
@@ -111,5 +112,26 @@ class OperationController extends Controller
         $operation->save();
 
         return redirect(route('interventions.edit', ['intervention' => $intervention->id]))->with(['toast' => 'update']);
+    }
+    
+    public function totalTimeOp($id)
+    {
+        $operation = Operation::find($id);
+
+        $totalTimeOperation = Carbon::parse($operation->end_operation_time)->diffInSeconds(Carbon::parse($operation->start_operation_time));
+
+        $pauseOperationList = TimeOperation::Where('operation_id', 'like', $id)->whereNotNull('end_date')->get();
+
+        $totalTime = 0;
+        $timePauseOperation = 0;
+
+        foreach ($pauseOperationList as $pause) {
+            $timetoseconds = Carbon::parse($pause->end_date)->diffInSeconds(Carbon::parse($pause->start_date));
+            $timePauseOperation += $timetoseconds;
+        }
+
+        $totalTime = $totalTimeOperation - $timePauseOperation;
+
+        return $totalTime;
     }
 }
