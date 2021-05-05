@@ -29,7 +29,8 @@ class CreateInterventionsTable extends Migration
             $table->string('km_vehicule')->nullable();
             $table->string('created_by');
             $table->boolean('needMove')->nullable();
-            $table->boolean('sendVerif')->default(false);
+            $table->enum('state_verif', ['checking', 'checked'])->nullable();
+
             $table->timestamps();
 
             $table->bigInteger('user_id')->unsigned()->nullable();

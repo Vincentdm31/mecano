@@ -1,17 +1,17 @@
-@extends('layouts.app')
+@extends('layouts.facture')
 @section('extra-css')
 <link href="{{ mix('css/intervention.css') }}" rel="stylesheet">
 @endsection
 @section('content')
 <div class="container">
-    <p class="txt-airforce txt-dark-4 txt-center h5 mt-2">Liste des Interventions terminées</p>
+    <p class="txt-airforce txt-dark-4 txt-center h5 mt-2">Liste des Interventions à vérifier</p>
     <div class="container">
-            <form class="form-material" method="GET" action="searchIntervention">
+            <form class="form-material" method="GET" action="searchInterventionVerif">
                 @csrf
                 <div class="grix xs3">
                     <div class="form-field pos-xs1 col-xs2">
-                        <input type="text" name="searchIntervention" id="searchIntervention" class="form-control" />
-                        <label for="searchIntervention">Rechercher</label>
+                        <input type="text" name="searchInterventionVerif" id="searchInterventionVerif" class="form-control" />
+                        <label for="searchInterventionVerif">Rechercher</label>
                     </div>
                     <button type="submit" class="btn circle orange dark-1 txt-white search-icon vself-center rounded-4 small"><i class="fa fa-search"></i></button>
                 </div>
@@ -43,7 +43,7 @@
                             <a class="btn circle blue dark-1 txt-white push" href="{{route('exportPDF', ['id' => $intervention->id])}}"><i class="fas fa-file-pdf"></i></a>
                         </td>
                         <td class="txt-center">
-                            <form class="form-material container" method="POST" action="{{ route('sendVerif',  ['id' => $intervention->id])}}">
+                            <form class="form-material container" method="POST" action="{{ route('validateVerif',  ['id' => $intervention->id])}}">
                                 @csrf
                                 <button type="submit" class="btn circle blue dark-1 txt-white push"><i class="fas fa-check"></i></a>
                             </form>
@@ -57,6 +57,7 @@
             @endif
         </div>
     </div>
-        <div class="d-flex fx-center mt-3">{{ $interventions->links('pagination') }}</div>
+    <div class="d-flex fx-center mt-3">{{ $interventions->links('pagination') }}</div>
+
 </div>
 @endsection

@@ -20,7 +20,7 @@ class InterventionController extends Controller
 {
     public function index()
     {
-        $interventions = Intervention::where('state', '!=', 'finish')->get();
+        $interventions = Intervention::where('state', '!=', 'finish')->paginate(5);
 
         return view('interventions.index', ['interventions' => $interventions]);
     }
@@ -112,7 +112,7 @@ class InterventionController extends Controller
 
     public function adminIntervention()
     {
-        $interventions = Intervention::Where('state', 'like', '%' . 'finish' . '%')->get();
+        $interventions = Intervention::Where('state', 'like', '%' . 'finish' . '%')->orderBy('id', 'desc')->paginate(5);
 
         return view('interventions.adminIndex', ['interventions' => $interventions]);
     }
@@ -249,6 +249,29 @@ class InterventionController extends Controller
         }
 
         return view('interventions.step1', ['intervention' => $intervention]);
+    }
+
+    public function sendVerif($id){
+        $intervention = Intervention::find($id);
+
+        if($intervention->state_verif == null){
+            $intervention->state_verif = 'checking';
+        }
+
+        $intervention->save();
+
+        return redirect(route('adminIntervention'));
+    }
+
+    public function searchIntervention(Request $request)
+    {
+        $search = $request->get('searchIntervention');
+
+        $interventions = Intervention::whereHas('vehiculeList', function ($query) use($search) {
+            $query->where('license_plate', 'like',  '%' . $search . '%');
+       })->orderBy('id', 'desc')->paginate(5);
+
+        return view('interventions.adminIndex', ['interventions' => $interventions]);
     }
 
     public function setEndDeplacement(Request $request)

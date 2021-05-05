@@ -13,7 +13,7 @@ use App\Http\Controllers\TimeInterventionController;
 use App\Http\Controllers\TimeOperationController;
 use App\Http\Controllers\VehiculeController;
 use App\Http\Controllers\UserController;
-
+use App\Http\Controllers\VerifInterventionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,6 +47,8 @@ Route::group(['middleware' => ['root']], function () {
 
 Route::middleware('auth')->group(function () {
 
+    Route::get('/home/factures', [VerifInterventionController::class, 'verifIntervention'])->name('home.facture');
+
     Route::get('/home/user', [HomeController::class, 'userView'])->name('home.user');
 
     Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -56,6 +58,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('timeoperations', TimeOperationController::class);
     Route::resource('controller', Controller::class);
     Route::resource('pieces', PieceController::class);
+    Route::resource('verif', VerifInterventionController::class);
+    Route::post('/home/validateVerif/{id}', [VerifInterventionController::class, 'validateVerif'])->name('validateVerif');
+    Route::get('/verifFull', [VerifInterventionController::class, 'verifFull'])->name('verifFull');
+
 
 
     // User
@@ -75,6 +81,13 @@ Route::middleware('auth')->group(function () {
     Route::put('/setEndDeplacement',  [InterventionController::class, 'setEndDeplacement'])->name('setEndDeplacement');
     Route::get('/adminIntervention',  [InterventionController::class, 'adminIntervention'])->name('adminIntervention');
     Route::get('/exportPDF/{id}', [InterventionController::class, 'exportPDF'])->name('exportPDF');
+    Route::post('/sendVerif/{id}', [InterventionController::class, 'sendVerif'])->name('sendVerif');
+
+    Route::get('/searchIntervention',  [InterventionController::class, 'searchIntervention'])->name('searchIntervention');
+
+    Route::get('/searchInterventionVerif',  [VerifInterventionController::class, 'searchInterventionVerif'])->name('searchInterventionVerif');
+    Route::get('/searchInterventionFull',  [VerifInterventionController::class, 'searchInterventionFull'])->name('searchInterventionFull');
+
 
 
     // Stepper Intervention

@@ -23,13 +23,15 @@ class HomeController extends Controller
      */
     public function index()
     {
-        if (Auth::check() && Auth()->user()->role == 0) { // do your magic here
+        if (Auth::check() && Auth()->user()->role == 4) {
+            return redirect()->route('verif.index');
+        } else if (Auth::check() && Auth()->user()->role == 0 ) {
             return redirect()->route('home.user');
-        } else if (Auth::check() && Auth()->user()->role == 1) { // do your magic here
+        }else if (Auth::check() && Auth()->user()->role == 1) {
             return redirect()->route('home.storekeeper');
-        } else if (Auth::check() && Auth()->user()->role == 2) { // do your magic here
+        }else if (Auth::check() && Auth()->user()->role == 2) {
             return redirect()->route('home.admin');
-        } else if (Auth::check() && Auth()->user()->role == 3) { // do your magic here
+        } else if (Auth::check() && Auth()->user()->role == 3) {
             return redirect()->route('home.root');
         }
     }
@@ -52,5 +54,10 @@ class HomeController extends Controller
     public function rootView()
     {
         return view('home.root');
+    }
+
+    public function factureView()
+    {
+        return view('home.facture');
     }
 }

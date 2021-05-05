@@ -31,6 +31,12 @@ class DatabaseSeeder extends Seeder
                 'role' => '0'
             ],
             [
+                'name' => 'Françoise',
+                'email' => 'francoise@meca.meca',
+                'password' => Hash::make('alcismeca'),
+                'role' => '4'
+            ],
+            [
                 'name' => 'magasinier',
                 'email' => 'magasinier@meca.meca',
                 'password' => Hash::make('alcismeca'),
