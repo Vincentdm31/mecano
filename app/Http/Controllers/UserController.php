@@ -104,15 +104,4 @@ class UserController extends Controller
 
         return redirect(route('users.index'))->with('toast', 'userDelete');
     }
-
-    public function searchUser(Request $request)
-    {
-        $search = $request->get('searchUser');
-
-        $users = User::Where('name', 'like', '%' . $search . '%')
-            ->orWhere('email', 'like', '%' . $search . '%')
-            ->orWhere('role', 'like', '%' . $search . '%')
-            ->get();
-        return view('users.index', ['users' => $users]);
-    }
 }

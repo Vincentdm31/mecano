@@ -2,22 +2,9 @@
 
 @section('content')
 <div class="container mt-3">
-    <div class="grix xs1 sm3 container">
-        <div class="col-sm1 mx-auto my-auto">
-            <a href="{{ route('users.create') }}" class="btn rounded-1 orange dark-1 txt-white small">Ajouter</a>
-        </div>
-        <div class="col-sm2">
-            <form class="form-material" method="GET" action="searchUser">
-                @csrf
-                <div class="grix xs5">
-                    <div class="form-field pos-xs1 col-xs4">
-                        <input type="text" name="searchUser" id="searchUser" class="form-control" />
-                        <label for="searchUser">Rechercher</label>
-                    </div>
-                    <button type="submit" class="btn circle orange dark-1 txt-white search-icon vself-center rounded-4 small"><i class="fa fa-search"></i></button>
-                </div>
-            </form>
-        </div>
+
+    <div class="txt-center">
+        <a href="{{ route('users.create') }}" class="btn rounded-1 orange dark-1 txt-white small">Ajouter</a>
     </div>
 
     <div class="container mt-5">
@@ -50,23 +37,25 @@
                         <td>{{ $user->email }}</td>
                         <td>{{ $displayRole }}</td>
                         <td>
+                            @if(Auth()->user()->role > 2)
                             <div class="grix xs2">
                                 <div>
                                     <a class="btn circle orange dark-1 txt-white small" href="{{route('users.edit', ['user' => $user->id])}}"><i class="fas fa-pen"></i></a>
                                 </div>
                                 <div>
-                                    @if(Auth()->user()->role > 2)
                                     <form method="POST" action="{{route('users.destroy', ['user' => $user->id])}}">
                                         @method('DELETE')
                                         @csrf
                                         <button type="submit" onclick="return confirm('Confirmer la suppression ?')" class="btn circle red dark-1 txt-white small"><i class="fas fa-trash"></i></button>
                                     </form>
-                                    @endif
                                 </div>
                             </div>
+                            @else
+                            <a class="btn circle orange dark-1 txt-white small" href="{{route('users.edit', ['user' => $user->id])}}"><i class="fas fa-pen"></i></a>
+                            @endif
                         </td>
                     </tr>
-                                    @endif
+                    @endif
                     @endforeach
                 </tbody>
             </table>

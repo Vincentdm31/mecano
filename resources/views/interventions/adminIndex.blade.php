@@ -14,12 +14,7 @@
                         <th class="txt-center">Créateur</th>
                         <th class="txt-center">Date de création</th>
                         <th class="txt-center">Immatriculation</th>
-                        @if(!Auth()->user()->role)
-                        <th class="txt-center">Rejoindre</th>
-                        @endif
-                        @if(Auth()->user()->role)
                         <th class="txt-center">Facture</th>
-                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -30,17 +25,10 @@
                         <td class="txt-center">{{ $intervention->created_at }}</td>
 
                         <td class="txt-center">@if(!empty($intervention->vehicule_id)){{ $intervention->vehiculeList->license_plate }} @endif</td>
-                        @if(!Auth()->user()->role)
 
-                        <td class="txt-center">
-                            <a class="btn circle orange dark-1 txt-white push" href="{{route('interventions.edit', ['intervention' => $intervention->id])}}"><i class="fas fa-pen"></i></a>
-                        </td>
-                        @endif
-                        @if(Auth()->user()->role)
                         <td class="txt-center">
                             <a class="btn circle blue dark-1 txt-white push" href="{{route('exportPDF', ['id' => $intervention->id])}}"><i class="fas fa-file-pdf"></i></a>
                         </td>
-                        @endif
                     </tr>
                     @endforeach
                 </tbody>
