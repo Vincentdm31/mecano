@@ -12,50 +12,21 @@ class VehiculeController extends Controller
 {
     public function index()
     {
-        $vehicules = Vehicule::paginate(5);
+        $vehicules = Vehicule::orderBy('capacity')->paginate(5);
+
         return view('vehicules.index', ['vehicules' => $vehicules]);
-    }
-
-    public function create()
-    {
-        return view('vehicules.create');
-    }
-
-    public function store(Request $request)
-    {
-        $inputs = $request->except('_token', 'created_at', 'updated_at');
-        $vehicule = new Vehicule();
-        foreach ($inputs as $key => $value) {
-            $vehicule->$key = $value;
-        }
-
-        $vehicule->save();
-        return redirect(route('vehicules.index'));
-    }
-
-    public function edit($id)
-    {
-        $vehicule = Vehicule::find($id);
-        return view('vehicules.edit', ['vehicule' => $vehicule]);
     }
 
     public function update(Request $request, $id)
     {
         $inputs = $request->except('_token', '_method', 'updated_at');
         $vehicule = Vehicule::find($id);
+
         foreach ($inputs as $key => $value) {
             $vehicule->$key = $value;
         }
+
         $vehicule->save();
-
-        return redirect(route('vehicules.index'));
-    }
-
-    public function destroy($id)
-    {
-        $vehicule = Vehicule::find($id);
-        $vehicule->delete();
-
 
         return redirect(route('vehicules.index'));
     }
@@ -98,12 +69,15 @@ class VehiculeController extends Controller
                 'capacity' => $item->Capacity,
                 'license_plate' => $item->Matriculation
             ]);
-
-            if ($item->Capacity > 22) {
+            
+            
+            if ($item->Capacity > 34) {
+                $vehicle->category = 4;
+            } elseif ($item->Capacity > 22) {
                 $vehicle->category = 3;
             } elseif ($item->Capacity > 9) {
                 $vehicle->category = 2;
-            } else {
+            } else{
                 $vehicle->category = 1;
             }
 

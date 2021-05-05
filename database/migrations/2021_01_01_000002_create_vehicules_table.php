@@ -19,7 +19,7 @@ class CreateVehiculesTable extends Migration
             $table->string('brand')->nullable();
             $table->string('model')->nullable();
             $table->string('license_plate')->nullable();
-            $table->enum('category', ['1', '2', '3'])->nullable();
+            $table->enum('category', ['1', '2', '3', '4'])->nullable();
             $table->integer('capacity')->nullable();
             $table->timestamps();
         });

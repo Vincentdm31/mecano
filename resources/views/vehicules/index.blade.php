@@ -2,22 +2,17 @@
 
 @section('content')
 <div class="container mt-3">
-    <div class="grix xs1 sm3 container">
-        <div class="col-sm1 mx-auto my-auto">
-            <a href="{{ route('vehicules.create') }}" class="btn rounded-1 orange dark-1 txt-white small">Ajouter ??</a>
-        </div>
-        <div class="col-sm2">
+    <div class="container">
             <form class="form-material" method="GET" action="searchVehicule">
                 @csrf
-                <div class="grix xs5">
-                    <div class="form-field pos-xs1 col-xs4">
+                <div class="grix xs3">
+                    <div class="form-field pos-xs1 col-xs2">
                         <input type="text" name="searchVehicule" id="searchVehicule" class="form-control" />
                         <label for="searchVehicule">Rechercher</label>
                     </div>
                     <button type="submit" class="btn circle orange dark-1 txt-white search-icon vself-center rounded-4 small"><i class="fa fa-search"></i></button>
                 </div>
             </form>
-        </div>
     </div>
 
     <div class="container mt-5 shadow-1 rounded-2">
@@ -29,8 +24,8 @@
                         <th class="txt-center">Marque</th>
                         <th class="txt-center">Modèle</th>
                         <th class="txt-center">Immat</th>
+                        <th class="txt-center">Capacité</th>
                         <th class="txt-center">Catégorie</th>
-                        <th class="txt-center">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -40,21 +35,8 @@
                         <td class="txt-center">{{ $vehicule->brand }}</td>
                         <td class="txt-center">{{ $vehicule->model }}</td>
                         <td class="txt-center">{{ $vehicule->license_plate }}</td>
+                        <td class="txt-center">{{ $vehicule->capacity }}</td>
                         <td class="txt-center">{{ $vehicule->category }}</td>
-                        <td>
-                            <div class="grix xs2 gutter-xs2">
-                                <div class="ml-auto">
-                                    <a class="btn circle orange dark-1 txt-white small" href="{{route('vehicules.edit', ['vehicule' => $vehicule->id])}}"><i class="fas fa-pen"></i></a>
-                                </div>
-                                <div>
-                                    <form method="POST" action="{{route('vehicules.destroy', ['vehicule' => $vehicule->id])}}">
-                                        @method('DELETE')
-                                        @csrf
-                                        <button type="submit" onclick="return confirm('Confirmer la suppression ?')" class="btn circle red dark-1 txt-white small"><i class="fas fa-trash"></i></button>
-                                    </form>
-                                </div>
-                            </div>
-                        </td>
                     </tr>
                     @endforeach
                 </tbody>
