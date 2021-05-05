@@ -29,7 +29,7 @@
                         <td class="txt-center">{{ $intervention->created_by }}</td>
                         <td class="txt-center">{{ $intervention->created_at }}</td>
 
-                        <td class="txt-center">@if(!empty($intervention->vehicule_id)){{ $intervention->vehiculeList->immat }} @endif</td>
+                        <td class="txt-center">@if(!empty($intervention->vehicule_id)){{ $intervention->vehiculeList->license_plate }} @endif</td>
                         @if(!Auth()->user()->role)
                         <td class="txt-center">
                             <a class="btn circle orange dark-1 txt-white push" href="{{route('interventions.edit', ['intervention' => $intervention->id])}}"><i class="fas fa-pen"></i></a>
@@ -50,5 +50,7 @@
             @endif
         </div>
     </div>
+    <div class="d-flex fx-center mt-3">{{ $interventions->links('pagination') }}</div>
+
 </div>
 @endsection

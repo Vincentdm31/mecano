@@ -119,8 +119,7 @@ class InterventionController extends Controller
 
     public function resumeIntervention()
     {
-        $interventions = Intervention::Where('state', 'like', 'pause')->get();
-
+        $interventions = Intervention::Where('state', 'like', 'pause')->orderBy('id', 'desc')->paginate(5);
         return view('interventions.resume', ['interventions' => $interventions]);
     }
 

@@ -7212,7 +7212,7 @@ textarea.form-control[rows] {
 body {
   font-family: "Quicksand", sans-serif;
   font-weight: 500;
-  background: linear-gradient(165deg, rgba(141, 133, 233, 0.673) 0%, #ffa545 92%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #f19216 92%);
 }
 
 .tab .tab-menu {
@@ -7271,4 +7271,8 @@ body {
 .pagination li.active {
   background-color: #e2e2e2 !important;
   color: #202020 !important;
+}
+
+.txt-gl4 {
+  color: #f7f7f7 !important;
 }

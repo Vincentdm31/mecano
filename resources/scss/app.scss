@@ -4,9 +4,9 @@ body {
     font-family: "Quicksand", sans-serif;
     font-weight: 500;
     background: linear-gradient(
-        165deg,
-        rgba(141, 133, 233, 0.673) 0%,
-        rgb(255, 165, 69) 92%
+        180deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgb(241, 146, 22) 92%
     );
 }
 
@@ -89,4 +89,8 @@ body {
 .pagination li.active {
     background-color: #e2e2e2 !important;
     color: rgb(32, 32, 32) !important;
+}
+
+.txt-gl4 {
+    color: #f7f7f7 !important;
 }
