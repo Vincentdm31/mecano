@@ -83,8 +83,9 @@ Route::middleware('auth')->group(function () {
 
     // Timer Intervention
     Route::resource('time', TimeInterventionController::class);
-    Route::post('/totalTime',  [TimeInterventionController::class, 'totalTime'])->name('totalTime');
 
+
+    Route::get('/totalTime/{id}',  [InterventionController::class, 'totalTime'])->name('totalTime');
     Route::get('/totalTimeOp/{id}',  [OperationController::class, 'totalTimeOp'])->name('totalTimeOp');
 
     // Véhicule
