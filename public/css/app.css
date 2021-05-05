@@ -7212,7 +7212,7 @@ textarea.form-control[rows] {
 body {
   font-family: "Quicksand", sans-serif;
   font-weight: 500;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #ffab50 92%);
+  background: linear-gradient(165deg, rgba(141, 133, 233, 0.673) 0%, #ffa545 92%);
 }
 
 .tab .tab-menu {
