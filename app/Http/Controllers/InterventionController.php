@@ -350,8 +350,6 @@ class InterventionController extends Controller
             ->addItems($itemList)
             ->notes($notes)
             ->logo(public_path('images/logoFact.png'));
-        // ->filename('toto')
-        // ->save('public');
 
         return $invoice->stream();
     }
@@ -374,6 +372,6 @@ class InterventionController extends Controller
 
         $totalTime = $totalTimeIntervention - $timePauseIntervention;
 
-        dd($totalTime);
+        return $totalTime;
     }
 }
