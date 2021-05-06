@@ -24,9 +24,10 @@
                         <select id="role" name="role" class="form-control txt-center" value="{{$user->role}}">
                             <option <?php echo $user->role == 0 ? 'selected' : '' ?> class="txt-dark" value="0">Mécanicien</option>
                             <option <?php echo $user->role == 1 ? 'selected' : '' ?> class="txt-dark" value="1">Magasinier</option>
-                            @if(Auth()->user()->role > 2)
-                            <option <?php echo $user->role == 2 ? 'selected' : '' ?> class="txt-dark" value="2">Admin</option>
-                            <option <?php echo $user->role == 3 ? 'selected' : '' ?> class="txt-dark" value="3">Root</option>
+                            @if(Auth()->user()->role > 3)
+                            <option <?php echo $user->role == 2 ? 'selected' : '' ?> class="txt-dark" value="2">Facturation</option>
+                            <option <?php echo $user->role == 3 ? 'selected' : '' ?> class="txt-dark" value="3">Admin</option>
+                            <option <?php echo $user->role == 4 ? 'selected' : '' ?> class="txt-dark" value="4">Root</option>
                             @endif
                         </select>
                     </div>

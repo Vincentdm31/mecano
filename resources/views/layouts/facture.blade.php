@@ -24,7 +24,7 @@
         <div class="navbar-fixed">
             <nav class="navbar dark txt-white shadow-1">
                 @if(Auth()->check())
-                <a href="{{ route('home.user') }}" class="navbar-brand hide-sm-down">Accueil</a>
+                <a href="{{ route('verif.index') }}" class="navbar-brand hide-sm-down">Accueil</a>
                 
                 @endif
                 <button data-target="sidenav" class="txt-white btn rounded-1 transparent sidenav-trigger hide-md-up"><i class="fas fa-bars mr-1"></i>Menu</button>

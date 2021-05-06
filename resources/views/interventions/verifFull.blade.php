@@ -4,8 +4,8 @@
 @endsection
 @section('content')
 <div class="container">
-    <p class="txt-airforce txt-dark-4 txt-center h5 mt-2">Liste des Interventions terminées</p>
-    <div class="container">
+    <div class="container mt-5">
+    <p class="txt-airforce txt-dark-4 font-s8 mt-2">Liste des Interventions terminées</p>
             <form class="form-material" method="GET" action="searchInterventionFull">
                 @csrf
                 <div class="grix xs3">
@@ -18,10 +18,10 @@
             </form>
     </div>
     <div class="container shadow-1 rounded-2 mt-2">
-        <div class="responsive-table white rounded-2">
+        <div class="responsive-table dark rounded-2">
             <table class="table striped">
                 <thead>
-                    <tr>
+                    <tr class="txt-gl4">
                         <th class="txt-center">#</th>
                         <th class="txt-center">Créateur</th>
                         <th class="txt-center">Date de création</th>
@@ -32,8 +32,8 @@
                 </thead>
                 <tbody>
                     @foreach($interventions as $intervention)
-                    <tr>
-                        <td class="<?php echo( ($intervention->state_verif == 'checking') ?  'orange': (($intervention->state_verif == 'checked') ?  'green' : '')) ?> txt-center txt-airforce txt-dark-4">{{ $intervention->id }}</td>
+                    <tr class="txt-gl4">
+                        <td class="<?php echo( ($intervention->state_verif == 'checking') ?  'orange': (($intervention->state_verif == 'checked') ?  'green' : '')) ?> txt-center">{{ $intervention->id }}</td>
                         <td class="txt-center">{{ $intervention->created_by }}</td>
                         <td class="txt-center">{{ $intervention->created_at }}</td>
 

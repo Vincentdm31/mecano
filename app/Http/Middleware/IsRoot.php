@@ -18,7 +18,7 @@ class IsRoot
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user() &&  Auth::user()->role > 2) {
+        if (Auth::user() &&  Auth::user()->role > 3) {
             return $next($request);
         }
 

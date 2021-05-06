@@ -28,9 +28,10 @@ Add Car
                         <select required id="role" name="role" class="form-control">
                             <option value='0' class="txt-dark">Membre</option>
                             <option value='1' class="txt-dark">Magasinier</option>
-                            @if(Auth()->user()->role == 3)
-                            <option value='2' class="txt-dark">Admin</option>
-                            <option value='3' class="txt-dark">Root</option>
+                            @if(Auth()->user()->role == 4)
+                            <option value='2' class="txt-dark">Facturation</option>
+                            <option value='3' class="txt-dark">Admin</option>
+                            <option value='4' class="txt-dark">Root</option>
                             @endif
                         </select>
                         <label for="role">Rôle</label>

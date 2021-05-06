@@ -38,7 +38,7 @@ class VehiculeController extends Controller
         $vehicules = Vehicule::Where('brand', 'like', '%' . $search . '%')
             ->orWhere('model', 'like', '%' . $search . '%')
             ->orWhere('license_plate', 'like', '%' . $search . '%')
-            ->paginate(5);
+            ->paginate(10);
 
         return view('vehicules.index', ['vehicules' => $vehicules]);
     }

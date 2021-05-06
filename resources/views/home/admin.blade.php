@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 <div class="container mt-3">
-    <p class="h5 mb-5 pb-2 bd-b-solid bd-orange bd-3 bd-dark-1 txt-airforce txt-dark-4">Espace Admin</p>
+    <p class="mb-5 pb-4 bd-b-solid bd-orange bd-3 bd-dark-1 txt-airforce txt-dark-4 font-s8">Espace Admin</p>
     <div class="grix xs1 md6 gutter-xs4 mt-5 h100">
         <div>
             <a href="{{ route('adminIntervention') }}" class="btn blue txt-white d-flex vcenter fx-center rounded-1 shadow-1 hoverable-1 h100 w100 mb-2">Interventions</a>

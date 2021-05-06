@@ -13,15 +13,15 @@ class HomeController extends Controller
 
     public function index()
     {
-        if (Auth::check() && Auth()->user()->role == 4) {
-            return redirect()->route('verif.index');
-        } else if (Auth::check() && Auth()->user()->role == 0 ) {
+        if (Auth::check() && Auth()->user()->role == 0) {
             return redirect()->route('home.user');
-        }else if (Auth::check() && Auth()->user()->role == 1) {
+        } else if (Auth::check() && Auth()->user()->role == 1 ) {
             return redirect()->route('home.storekeeper');
         }else if (Auth::check() && Auth()->user()->role == 2) {
+            return redirect()->route('verif.index');
+        }else if (Auth::check() && Auth()->user()->role == 3) {
             return redirect()->route('home.admin');
-        } else if (Auth::check() && Auth()->user()->role == 3) {
+        } else if (Auth::check() && Auth()->user()->role == 4) {
             return redirect()->route('home.root');
         }
     }
