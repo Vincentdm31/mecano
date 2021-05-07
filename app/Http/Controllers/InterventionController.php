@@ -214,7 +214,7 @@ class InterventionController extends Controller
 
         $intervention->users()->detach(Auth::id());
 
-        return redirect(route('interventions.index'));
+        return redirect(route('home'));
     }
 
     public function stepOne(Request $request)

@@ -5,7 +5,10 @@
 @section('content')
 <div class="container">
     <p class="txt-airforce txt-dark-4 txt-center font-s3 mt-5">Liste des Interventions à checker</p>
-    <div class="container shadow-1 rounded-2 mt-5">
+    <div class="container rounded-2 mt-5">
+    @if(!count($interventions))
+    <p class="txt-center font-s2">Aucune intervention à checker</p>
+    @else
     @foreach($interventions as $intervention)
     <div class="card overflow-visible dark rounded-2 m-2">
         <div class="grix xs2 p-3">
@@ -29,6 +32,7 @@
         </div>
     </div>
     @endforeach
+    @endif
     </div>
     <div class="d-flex fx-center mt-3">{{ $interventions->links('pagination') }}</div>
 
