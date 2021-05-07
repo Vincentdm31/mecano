@@ -387,7 +387,7 @@ class InterventionController extends Controller
             }else{
                 array_push($itemList, (new InvoiceItem())->title('Opération - ' . $operation->operationList->name)
                     ->quantity(1)
-                    ->pricePerUnit( Carbon::parse($operation->end_operation_time)->diffInSeconds(Carbon::parse($operation->start_operation_time)) * ($operation->operationList->price / 3600 )));
+                    ->pricePerUnit( Carbon::parse($operation->end_operation_time)->diffInSeconds(Carbon::parse($operation->start_operation_time)) * ($operation->operationList->price / 3600 ) * $operation->mechanic_count));
             }
 
             foreach ($operation->pieces as $piece) {
