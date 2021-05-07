@@ -2,7 +2,7 @@
 @section('content')
 <div class="container home mt-3">
     <p class="mb-5 pb-4 bd-b-solid bd-orange bd-3 bd-dark-1 txt-airforce txt-dark-4 font-s6">Espace Mécano</p>
-    <div class="grix xs1 gutter-xs5 md4">
+    <div class="grix xs1 gutter-xs5 md5">
         <div class="h100">
             <form class="form-material h100" method="POST" action="{{ route('interventions.store') }}">
                 @csrf
@@ -17,6 +17,9 @@
         </div>
         <div class="h100">
             <a href="{{ route('interventions.index') }}" class="btn blue dark-4 txt-white rounded-1 shadow-1 w100 h100 d-flex fx-center vcenter">Liste complète</a>
+        </div>
+        <div class="h100">
+            <a href="{{ route('correctInterventionIndex') }}" class="btn red dark-1 txt-white rounded-1 shadow-1 w100 h100 d-flex fx-center vcenter">Intervention à checker</a>
         </div>
     </div>
 </div>

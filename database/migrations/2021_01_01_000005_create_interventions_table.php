@@ -24,7 +24,7 @@ class CreateInterventionsTable extends Migration
             $table->datetime('end_intervention_time')->nullable();
             $table->float('totalTime')->nullable();
             $table->float('price')->nullable();
-            $table->enum('state', ['doing', 'pause', 'finish'])->nullable();
+            $table->enum('state', ['doing', 'pause', 'finish', 'recheck'])->nullable();
             $table->text('observations')->nullable();
             $table->string('km_vehicule')->nullable();
             $table->string('created_by');

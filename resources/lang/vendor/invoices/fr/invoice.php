@@ -30,7 +30,7 @@ return [
     'total_amount'    => 'Prix total',
     'pay_until'       => 'Payer avant',
     'amount_in_words' => 'Total en lettres',
-    'notes'           => 'Véhicule',
+    'notes'           => 'Informations générales',
     'shipping'        => 'Shipping',
 
 ];

@@ -115,6 +115,45 @@ class InterventionController extends Controller
         return redirect(route('interventions.edit', ['intervention' => $intervention]))->with('toast', 'update');
     }
 
+    public function correctInterventionIndex(){
+        $interventions = Intervention::where('state', 'like', 'recheck')->paginate(5);
+        return view('interventions.recheck', ['interventions' => $interventions]);
+    }
+
+    public function correctIntervention($id){
+        $intervention = Intervention::find($id);
+
+        $intervention->state = "recheck";
+        $intervention->save();
+
+        $timeIntervention = new TimeIntervention();
+        $timeIntervention->intervention_id = $id;
+
+        $timeIntervention->start_date = $intervention->end_intervention_time;
+
+        $timeIntervention->save();
+
+        return redirect(route('adminIntervention'));
+
+    }
+
+    public function resumeCorrectIntervention($id){
+
+        $intervention = Intervention::find($id);
+
+        $intervention->state = "recheck";
+
+        $intervention->save();
+
+        $timeIntervention = TimeIntervention::where('intervention_id', 'like', $id)->latest()->first();
+        
+        $timeIntervention->end_date = Carbon::now();
+
+        $timeIntervention->save();
+
+        return redirect(route('interventions.edit', ['intervention' => $intervention]))->with('toast', 'update');
+    }
+
     public function adminIntervention()
     {
         $interventions = Intervention::Where('state', 'like', '%' . 'finish' . '%')
@@ -312,6 +351,17 @@ class InterventionController extends Controller
 
         $itemList = array();
 
+        if($intervention->needMove){
+        
+        $timeMoving = Carbon::parse($intervention->end_move_begin)->diffInMinutes(Carbon::parse($intervention->start_move_begin)) + 
+                        Carbon::parse($intervention->end_move_return)->diffInMinutes(Carbon::parse($intervention->start_move_return));
+
+        array_push($itemList, (new InvoiceItem())->title("Déplacement")->quantity($timeMoving)->pricePerUnit(0.33));
+
+        }
+
+        array_push($itemList, (new InvoiceItem())->title("Main d'oeuvre")->quantity(1)->pricePerUnit(50));
+
         foreach ($intervention->operations as $operation) {
 
             $vehicleCateg = $intervention->vehiculeList->category;
@@ -338,11 +388,11 @@ class InterventionController extends Controller
         $notes = [
             '',
             '',
-            '',
+            'Createur: ' . '<strong>' .  $intervention->users[0]->name . '</strong>',
             'Immat: ' . '<strong>' . $intervention->vehiculeList->license_plate . '</strong>',
             'Marque: ' . '<strong>' . $intervention->vehiculeList->brand . '</strong>',
             'Modèle: ' . '<strong>' . $intervention->vehiculeList->model . '</strong>',
-            'Kilométrage: ' . '<strong>' . $intervention->km_vehicule . '</strong>'
+            'Kilométrage: ' . '<strong>' . $intervention->km_vehicule > 0 ? $intervention->km_vehicule : 'Kilométrage non renseigné' . '</strong>'
 
         ];
 
@@ -361,7 +411,7 @@ class InterventionController extends Controller
             ->currencyFormat('{VALUE} {SYMBOL}')
             ->currencyThousandsSeparator('.')
             ->currencyDecimalPoint(',')
-            ->filename($client->name . ' ' . $customer->name)
+            // ->filename($client->name . ' ' . $customer->name)
             ->addItems($itemList)
             ->notes($notes)
             ->logo(public_path('images/logoFact.png'));

@@ -28,6 +28,7 @@
                         <th class="txt-center">Immatriculation</th>
                         <th class="txt-center">Facture</th>
                         <th class="txt-center">Verification</th>
+                        <th class="txt-center">Correction</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -40,12 +41,19 @@
                         <td class="txt-center">@if(!empty($intervention->vehicule_id)){{ $intervention->vehiculeList->license_plate }} @endif</td>
 
                         <td class="txt-center">
-                            <a class="btn circle blue dark-1 txt-white push" href="{{route('exportPDF', ['id' => $intervention->id])}}"><i class="fas fa-file-pdf"></i></a>
+                            <a class="btn circle blue dark-1 txt-white" href="{{route('exportPDF', ['id' => $intervention->id])}}"><i class="fas fa-file-pdf"></i></a>
                         </td>
                         <td class="txt-center">
                             <form class="form-material container" method="POST" action="{{ route('sendVerif',  ['id' => $intervention->id])}}">
                                 @csrf
-                                <button type="submit" class="btn circle blue dark-1 txt-white push"><i class="fas fa-check"></i></a>
+                                <button type="submit" class="btn circle blue dark-1 txt-white"><i class="fas fa-check"></i></a>
+                            </form>
+                        </td>
+                        <td class="txt-center">
+                            <form class="form-material container" method="POST" action="{{ route('correctIntervention',  ['id' => $intervention->id])}}">
+                                @csrf
+                                @METHOD('PUT')
+                                <button type="submit" class="btn circle orange dark-1 txt-white"><i class="fas fa-edit"></i></a>
                             </form>
                         </td>
                     </tr>

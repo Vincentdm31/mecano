@@ -14,6 +14,7 @@ use App\Http\Controllers\TimeOperationController;
 use App\Http\Controllers\VehiculeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VerifInterventionController;
+use App\Models\Intervention;
 
 Auth::routes(['register' => false]);
 
@@ -52,6 +53,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/getVehicles',  [VehiculeController::class, 'getVehicles'])->name('getVehicles');
     Route::get('/home/factures', [VerifInterventionController::class, 'verifIntervention'])->name('home.facture');
     Route::get('/verifFull', [VerifInterventionController::class, 'verifFull'])->name('verifFull');
+    Route::get('/correctInterventionIndex', [InterventionController::class, 'correctInterventionIndex'])->name('correctInterventionIndex');
+    Route::get('/resumeCorrectIntervention/{id}', [InterventionController::class, 'resumeCorrectIntervention'])->name('resumeCorrectIntervention');
     
 
     Route::get('/searchIntervention',  [InterventionController::class, 'searchIntervention'])->name('searchIntervention');
@@ -81,4 +84,5 @@ Route::middleware('auth')->group(function () {
     Route::put('/selectVehicule',  [InterventionController::class, 'selectVehicule'])->name('selectVehicule');
     Route::put('/setDeplacement',  [InterventionController::class, 'setDeplacement'])->name('setDeplacement');
     Route::put('/setEndDeplacement',  [InterventionController::class, 'setEndDeplacement'])->name('setEndDeplacement');
+    Route::put('/correctIntervention/{id}',  [InterventionController::class, 'correctIntervention'])->name('correctIntervention');
 });
