@@ -146,7 +146,7 @@ class InterventionController extends Controller
         $intervention->save();
 
         $timeIntervention = TimeIntervention::where('intervention_id', 'like', $id)->latest()->first();
-        
+
         $timeIntervention->end_date = Carbon::now();
 
         $timeIntervention->save();
@@ -351,27 +351,49 @@ class InterventionController extends Controller
 
         $itemList = array();
 
+        $vehiculeType = $intervention->vehiculeList->category;
+
+
         if($intervention->needMove){
-        
-        $timeMoving = Carbon::parse($intervention->end_move_begin)->diffInMinutes(Carbon::parse($intervention->start_move_begin)) + 
-                        Carbon::parse($intervention->end_move_return)->diffInMinutes(Carbon::parse($intervention->start_move_return));
+            $timeMoving = Carbon::parse($intervention->end_move_begin)->diffInMinutes(Carbon::parse($intervention->start_move_begin)) + 
+                            Carbon::parse($intervention->end_move_return)->diffInMinutes(Carbon::parse($intervention->start_move_return));
 
-        array_push($itemList, (new InvoiceItem())->title("Déplacement")->quantity($timeMoving)->pricePerUnit(0.33));
-
+            array_push($itemList, (new InvoiceItem())->title("Déplacement")->quantity($timeMoving)
+                ->pricePerUnit(0.33));
         }
 
-        array_push($itemList, (new InvoiceItem())->title("Main d'oeuvre")->quantity(1)->pricePerUnit(50));
+        $totalTimeIntervention = 0;
+        $totalTimePauseIntervention = 0;
+        $timePauseIntervention = TimeIntervention::where('intervention_id', 'like', $id)->get();
+
+        foreach($timePauseIntervention as $pauseIntervention){
+            $totalTimePauseIntervention += Carbon::parse($pauseIntervention->end_date)->diffInMinutes(Carbon::parse($pauseIntervention->start_date));
+        }
+
+        $totalTimeIntervention += Carbon::parse($intervention->end_intervention_time)->diffInMinutes(Carbon::parse($intervention->start_intervention_time)) -
+            $totalTimePauseIntervention;
+
+        array_push($itemList, (new InvoiceItem())->title("Main d'oeuvre")->quantity($totalTimeIntervention)
+            ->pricePerUnit(
+                $vehiculeType == 1  ? 45/60 : (($vehiculeType == 2 ) ? 55/60 : 1  )
+            ));
 
         foreach ($intervention->operations as $operation) {
 
-            $vehicleCateg = $intervention->vehiculeList->category;
-            $price = "price" . $vehicleCateg;
-            $opPricePerUnit = $operation->operationList->$price;
-
-            array_push($itemList, (new InvoiceItem())->title('Opération - ' . $operation->operationList->name)->quantity(1)->pricePerUnit($opPricePerUnit));
+            if($operation->operationList->isPackage){
+                array_push($itemList, (new InvoiceItem())->title('Opération - ' . $operation->operationList->name)
+                    ->quantity(1)
+                    ->pricePerUnit($operation->operationList->price));
+            }else{
+                array_push($itemList, (new InvoiceItem())->title('Opération - ' . $operation->operationList->name)
+                    ->quantity(1)
+                    ->pricePerUnit( Carbon::parse($operation->end_operation_time)->diffInSeconds(Carbon::parse($operation->start_operation_time)) * ($operation->operationList->price / 3600 )));
+            }
 
             foreach ($operation->pieces as $piece) {
-                array_push($itemList, (new InvoiceItem())->title('Pièce - ' . $piece->PieceList->name)->quantity($piece->qte)->pricePerUnit($piece->pieceList->price));
+                array_push($itemList, (new InvoiceItem())->title('Pièce - ' . $piece->PieceList->name)
+                    ->quantity($piece->qte)
+                    ->pricePerUnit($piece->pieceList->price));
             }
         }
 
