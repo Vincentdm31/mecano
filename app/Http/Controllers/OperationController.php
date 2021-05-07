@@ -93,12 +93,17 @@ class OperationController extends Controller
         return redirect(route('interventions.edit', ['intervention' => $intervention->id]))->with('toast', 'editOperation');
     }
 
-    public function finish($operationId, $interventionId, $state)
+    public function finish(Request $request, $operationId, $interventionId, $state)
     {
         $intervention = Intervention::find($interventionId);
         $operation = Operation::find($operationId);
         $endOperationTime = Carbon::now();
 
+        if($request->mechanic_count === null){
+            return redirect(route('interventions.edit', ['intervention' => $intervention->id]))->with(['toast' => 'update']);
+        }
+
+        $operation->mechanic_count = $request->mechanic_count;
         $operation->state = $state;
         $operation->end_operation_time = $endOperationTime;
 

@@ -16,6 +16,7 @@ class CreateOperationsTable extends Migration
         Schema::create('operations', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->integer('mechanic_count')->default(1);
             $table->enum('state',  ['doing', 'pause', 'finish'])->default('doing');
             $table->text('op_comment')->nullable();
             $table->datetime('start_operation_time')->nullable();
