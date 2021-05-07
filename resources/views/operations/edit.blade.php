@@ -12,8 +12,24 @@
                 @csrf
                 <div class="grix xs1">
                     <div class="form-field">
+                        <input type="text" id="ref" name="ref" class="form-control txt-white" value="{{$operationList->ref}}" />
+                        <label for="ref">Nom</label>
+                    </div>
+                    <div class="form-field">
                         <input type="text" id="name" name="name" class="form-control txt-white" value="{{$operationList->name}}" />
                         <label for="name">Nom</label>
+                    </div>
+                    <div class="grix xs2">
+                        <div class="form-field">
+                            <input type="number" id="price" name="price" class="form-control txt-white" value="{{$operationList->price}}" />
+                            <label for="price">Prix</label>
+                        </div>
+                        <div class="form-field h100 p-0 m-0">
+                            <label class="form-check mt-auto pb-3">
+                                <input type="checkbox" name="isPackage" <?php echo($operationList->isPackage ? 'checked' : '')?>/>
+                                <span class="txt-gl4">Forfait ?</span>
+                            </label>
+                        </div>
                     </div>
                 </div>
                 <div class="txt-center">

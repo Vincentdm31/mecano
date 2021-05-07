@@ -21,13 +21,16 @@ class OperationListController extends Controller
 
     public function store(Request $request)
     {
-        $inputs = $request->except('_token', 'created_at', 'updated_at');
+        $inputs = $request->except('_token', 'created_at', 'updated_at', 'isPackage');
+        $isPackage = $request->isPackage;
         $operationList = new OperationList();
 
         foreach ($inputs as $key => $value) {
             $operationList->$key = $value;
         }
-
+        if($isPackage != null){
+            $operationList->isPackage = true;
+        }
         $operationList->save();
 
         return redirect(route('operationsList.index'));
@@ -42,11 +45,20 @@ class OperationListController extends Controller
 
     public function update(Request $request, $id)
     {
-        $inputs = $request->except('_token', '_method', 'updated_at');
+        $inputs = $request->except('_token', '_method', 'updated_at', 'isPackage');
         $operationList = OperationList::find($id);
+
+        $isPackage = $request->isPackage;
+
 
         foreach ($inputs as $key => $value) {
             $operationList->$key = $value;
+        }
+
+        if($isPackage != null){
+            $operationList->isPackage = true;
+        }else{
+            $operationList->isPackage = false;
         }
 
         $operationList->save();
@@ -66,7 +78,9 @@ class OperationListController extends Controller
     {
         $search = $request->get('searchOperationsList');
 
-        $operationsLists = OperationList::Where('name', 'like', '%' . $search . '%')->orderBy('name')->paginate(5);
+        $operationsLists = OperationList::Where('name', 'like', '%' . $search . '%')
+        ->orWhere('ref', 'like', '%' . $search . '%')  
+        ->orderBy('name')->paginate(5);
 
         return view('operations.index', ['operationsLists' => $operationsLists]);
     }

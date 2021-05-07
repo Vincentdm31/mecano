@@ -25,7 +25,10 @@
                 <thead>
                     <tr class="txt-orange">
                         <th class="txt-white">#</th>
+                        <th>Ref</th>
                         <th>Nom</th>
+                        <th>Forfait</th>
+                        <th>Prix</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -33,7 +36,12 @@
                     @foreach($operationsLists as $operationList)
                     <tr class="txt-white">
                         <td class="txt-orange">{{ $operationList->id }}</td>
+                        <td>{{ $operationList->ref }}</td>
                         <td>{{ $operationList->name }}</td>
+                        <td>
+                            <i class="<?php echo($operationList->isPackage ? 'fas fa-check' : 'fas fa-times' ) ?>">
+                        </td>
+                        <td>{{ $operationList->price }}</td>
                         <td>
                             <div class="grix xs2 gutter-xs4">
                                 <div class="ml-auto">

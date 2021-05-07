@@ -9,6 +9,8 @@ class OperationList extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+    
     public function operation()
     {
         return $this->belongsTo(Operation::class);
