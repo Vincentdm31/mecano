@@ -111,25 +111,4 @@ class OperationController extends Controller
 
         return redirect(route('interventions.edit', ['intervention' => $intervention->id]))->with(['toast' => 'update']);
     }
-    
-    // public function totalTimeOp($id)
-    // {
-    //     $operation = Operation::find($id);
-
-    //     $totalTimeOperation = Carbon::parse($operation->end_operation_time)->diffInSeconds(Carbon::parse($operation->start_operation_time));
-
-    //     $pauseOperationList = TimeOperation::Where('operation_id', 'like', $id)->whereNotNull('end_date')->get();
-
-    //     $totalTime = 0;
-    //     $timePauseOperation = 0;
-
-    //     foreach ($pauseOperationList as $pause) {
-    //         $timetoseconds = Carbon::parse($pause->end_date)->diffInSeconds(Carbon::parse($pause->start_date));
-    //         $timePauseOperation += $timetoseconds;
-    //     }
-
-    //     $totalTime = $totalTimeOperation - $timePauseOperation;
-
-    //     return $totalTime;
-    // }
 }

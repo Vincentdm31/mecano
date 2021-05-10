@@ -18,9 +18,9 @@
             line-height: 1.5;
             color: #212529;
             text-align: left;
-            background-color: #fff;
+            background-color: #f7f7f7;
             font-size: 10px;
-            margin: 36pt;
+            padding: 20pt;
         }
 
         h4 {
@@ -30,7 +30,7 @@
 
         p {
             margin-top: 0;
-            margin-bottom: 1rem;
+            margin-bottom: rem;
         }
 
         strong {
@@ -70,23 +70,28 @@
 
         .table th,
         .table td {
+            width: 50%;
             padding: 0.75rem;
             vertical-align: top;
-            border-top: 2px solid #dee2e6;
-            border-bottom: 1px solid #dee2e6;
+            border-top: 2px solid #f7f7f7;
+            background-color: #d6e0ff;
         }
 
         .table thead th {
             vertical-align: bottom;
-            border-bottom: 2px solid #dee2e6;
+            border-bottom: 2px solid #f7f7f7;
         }
 
         .table tbody+tbody {
-            border-top: 2px solid #dee2e6;
+            border-top: 2px solid blue;
         }
 
         .mt-1 {
             margin-top: 0.2rem !important;
+        }
+
+        .mb-1 {
+            padding-bottom: 1rem !important;
         }
 
         .pr-0,
@@ -143,10 +148,24 @@
         .total-amount {
             font-size: 12px;
             font-weight: 700;
+            background: #182654!important;
+            color: #f7f7f7;
         }
 
         .border-0 {
             border: none !important;
+        }
+
+        .name{
+            width: 80%!important;
+        }
+
+        .infos{
+            font-size: 1.5rem;
+        }
+        .total{
+            background: #182654 !important;
+            color: #f7f7f7;
         }
     </style>
 </head>
@@ -156,7 +175,7 @@
     <table class="table mt-1">
         <tbody>
             <tr>
-                <td class="border-0 pl-0" width="70%">
+                <td class="border-0 pl-0 name" width="70%">
                     <h4 class="text-uppercase pt-4">
                         <strong>{{ $invoice->name }}</strong>
                     </h4>
@@ -167,34 +186,19 @@
                     @endif
                 </td>
             </tr>
-            <tr>
-                <td class="border-1 pl-0">
-                    @if($invoice->notes)
-                    <p class="">
-                        {{ trans('invoices::invoice.notes') }}: {!! $invoice->notes !!}
-                    </p>
-                    @endif
-                </td>
-                <td class="border-1 pl-0">
-                    <p>{{ __('invoices::invoice.serial') }} <strong>{{ $invoice->getSerialNumber() }}</strong></p>
-                    <p>{{ __('invoices::invoice.date') }}: <strong>{{ $invoice->getDate() }}</strong></p>
-                </td>
-            </tr>
         </tbody>
     </table>
-
-
 
     {{-- Seller - Buyer --}}
     <table class="table">
         <thead>
             <tr>
                 <th class="border-0 pl-0 party-header" width="48.5%">
-                    {{ __('invoices::invoice.seller') }}
+                    Prestaire
                 </th>
-                <th class="border-0" width="3%"></th>
+                <th></th>
                 <th class="border-0 pl-0 party-header">
-                    {{ __('invoices::invoice.buyer') }}
+                    Client
                 </th>
             </tr>
         </thead>
@@ -279,6 +283,35 @@
         </tbody>
     </table>
 
+    <table class="table mt-1">
+        <tbody>
+            <tr>
+                <td class="infos">Informations Générales</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>
+                    <p>{{ __('invoices::invoice.serial') }} <strong>{{ $invoice->getSerialNumber() }}</strong></p>
+                    <p>{{ __('invoices::invoice.date') }}: <strong>{{ $invoice->getDate() }}</strong></p>
+                    <p><strong>Créé par: </strong>{{ $invoice->createdBy }}</p>
+                    <p><strong>Créée le: </strong>{{ $invoice->createdAt }}</p>
+                </td>
+                <td>
+                    <p><strong>Marque</strong>{{ $invoice->brand }}</p>
+                    <p><strong>Modèle </strong>{{ $invoice->model }}</p>
+                    <p><strong>Immatriculation </strong>{{ $invoice->immat }}</p>
+                    <p><strong>Kilométrage </strong>{{ $invoice->km }} Km</p>
+                </td>
+            </tr>
+            <tr>
+                <td >
+                    <p>{!! $invoice->notes !!}</p>
+                </td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+
     {{-- Table --}}
     <table class="table">
         <thead>
@@ -330,7 +363,7 @@
             @if($invoice->hasItemOrInvoiceDiscount())
             <tr>
                 <td colspan="{{ $invoice->table_columns - 2 }}" class="border-0"></td>
-                <td class="text-right pl-0">{{ __('invoices::invoice.total_discount') }}</td>
+                <td class="text-right pl-0 test">{{ __('invoices::invoice.total_discount') }}</td>
                 <td class="text-right pr-0">
                     {{ $invoice->formatCurrency($invoice->total_discount) }}
                 </td>
@@ -372,9 +405,9 @@
                 </td>
             </tr>
             @endif
-            <tr>
-                <td colspan="{{ $invoice->table_columns - 2 }}" class="border-0"></td>
-                <td class="text-right pl-0">{{ __('invoices::invoice.total_amount') }}</td>
+            <tr class="test">
+                <td colspan="{{ $invoice->table_columns - 2 }}" class="border-0 total "></td>
+                <td class="text-right pl-0 total">{{ __('invoices::invoice.total_amount') }}</td>
                 <td class="text-right pr-0 total-amount">
                     {{ $invoice->formatCurrency($invoice->total_amount) }}
                 </td>

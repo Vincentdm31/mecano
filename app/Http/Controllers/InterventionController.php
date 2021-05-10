@@ -352,6 +352,13 @@ class InterventionController extends Controller
         $itemList = array();
         $vehiculeType = $intervention->vehiculeList->category;
 
+        $notes = [
+            '<strong>Observations Générales</strong>',
+            $intervention->observations,
+            '',
+            '<strong>Commentaires par opérations</strong>',
+        ];
+
         // Calcul déplacement
         if($intervention->needMove){
             $timeMoving = Carbon::parse($intervention->end_move_begin)->diffInMinutes(Carbon::parse($intervention->start_move_begin)) + 
@@ -366,10 +373,11 @@ class InterventionController extends Controller
             ->pricePerUnit( 
                 $vehiculeType == 1  ? 45/60 : (($vehiculeType == 2 ) ? 55/60 : 1  )
             ));
-
         // Calcul main d'oeuvre opérations
         foreach ($intervention->operations as $operation) {
 
+            $operation->op_comment != null ? array_push($notes, '<li>' . $operation->operationList->name . '</li><br>' . $operation->op_comment . '<br>')  : '';
+            
             if($operation->operationList->isPackage){
                 array_push($itemList, (new InvoiceItem())->title('Opération - ' . $operation->operationList->name)
                     ->quantity(1)
@@ -406,16 +414,7 @@ class InterventionController extends Controller
             'address'       => '130 Route de Castres 31130 Balma'
         ]);
 
-        $notes = [
-            '',
-            '',
-            'Createur: ' . '<strong>' .  $intervention->users[0]->name . '</strong>',
-            'Immat: ' . '<strong>' . $intervention->vehiculeList->license_plate . '</strong>',
-            'Marque: ' . '<strong>' . $intervention->vehiculeList->brand . '</strong>',
-            'Modèle: ' . '<strong>' . $intervention->vehiculeList->model . '</strong>',
-            'Kilométrage: ' . '<strong>' . $intervention->km_vehicule > 0 ? $intervention->km_vehicule : 'Kilométrage non renseigné' . '</strong>'
-
-        ];
+        
 
         $notes = implode("<br>", $notes);
 
@@ -435,6 +434,12 @@ class InterventionController extends Controller
             // ->filename($client->name . ' ' . $customer->name)
             ->addItems($itemList)
             ->notes($notes)
+            ->createdBy($intervention->users[0]->name)
+            ->createdAt(Carbon::parse($intervention->created_at)->translatedFormat('d F Y à H\hi'))
+            ->immat($intervention->vehiculeList->license_plate)
+            ->brand($intervention->vehiculeList->brand)
+            ->model($intervention->vehiculeList->model)
+            ->km($intervention->km_vehicule > 0 ? $intervention->km_vehicule : 'Kilométrage non renseigné' . '</strong>')
             ->logo(public_path('images/logoFact.png'));
         // ->filename('toto')
         // ->save('public');

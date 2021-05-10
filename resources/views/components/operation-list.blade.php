@@ -38,7 +38,7 @@ $date = Carbon::now();
       </div>
 
       <!-- opérations -->
-      <div class="mr-5 ml-5 mt-3 pb-3 grix xs2 gutter-xs3 md5 rounded-2 pl-3 pr-3">
+      <div class="grix xs2 md5 gutter-xs3 rounded-2 mx-2 p-3">
         <!-- Ajout piece -->
         <div>
           <button data-target="add-piece-operation-{{ $operation->id }}" class="btn w100 rounded-1 dark light-shadow-3 txt-blue modal-trigger mx-auto">
@@ -127,18 +127,17 @@ $date = Carbon::now();
 @section('extra-js')
 
 <script>
+  function removePieces(id) {
+    let input = document.getElementById('rm_piece_' + id);
+    var pieceCount = window.prompt('Combien de pièces voulez vous supprimer ?');
+    input.value = pieceCount;
+  }
 
-function removePieces(id){
-  let input = document.getElementById('rm_piece_' + id);
-  var pieceCount = window.prompt('Combien de pièces voulez vous supprimer ?');
-  input.value = pieceCount;
-}
-
-function mechanicCount(id){
-  let input = document.getElementById('operation-' + id);
-  var mechanicCount = window.prompt('Nombre de mécanicien(s) présent(s) sur l\'opération ?');
-  input.value = mechanicCount;
-}
+  function mechanicCount(id) {
+    let input = document.getElementById('operation-' + id);
+    var mechanicCount = window.prompt('Nombre de mécanicien(s) présent(s) sur l\'opération ?');
+    input.value = mechanicCount;
+  }
 </script>
 
 @endsection

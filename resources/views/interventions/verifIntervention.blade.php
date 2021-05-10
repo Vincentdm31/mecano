@@ -28,6 +28,7 @@
                         <th class="txt-center">Immatriculation</th>
                         <th class="txt-center">Facture</th>
                         <th class="txt-center">Verification</th>
+                        <th class="txt-center">Editer</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -46,6 +47,12 @@
                             <form class="form-material container" method="POST" action="{{ route('validateVerif',  ['id' => $intervention->id])}}">
                                 @csrf
                                 <button type="submit" class="btn circle blue dark-1 txt-white push"><i class="fas fa-check"></i></a>
+                            </form>
+                        </td>
+                        <td class="txt-center">
+                            <form class="form-material container" method="GET" action="{{ route('invoice.edit',  ['invoice' => $intervention->id])}}">
+                                @csrf
+                                <button type="submit" class="btn circle blue dark-1 txt-white push"><i class="fas fa-edit"></i></a>
                             </form>
                         </td>
                     </tr>

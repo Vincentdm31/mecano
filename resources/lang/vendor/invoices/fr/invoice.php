@@ -9,7 +9,7 @@ return [
     */
 
     'serial'          => 'Intervention No.',
-    'date'            => 'Date',
+    'date'            => 'Date Facturation',
     'seller'          => 'Seller',
     'buyer'           => 'Buyer',
     'address'         => 'Addresse',

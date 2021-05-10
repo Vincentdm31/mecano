@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InterventionController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\OperationController;
 use App\Http\Controllers\OperationListController;
 use App\Http\Controllers\PieceController;
@@ -78,6 +79,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('verif', VerifInterventionController::class);
     Route::resource('operations', OperationController::class);
     Route::resource('time', TimeInterventionController::class);
+    Route::resource('invoice', InvoiceController::class);
+
 
     Route::put('/editOperation/{id}{interventionId}', [OperationController::class, 'editOperation'])->name('editOperation');
     Route::put('/endOperation/{operationId}-{interventionId}-{state}', [OperationController::class, 'finish'])->name('finishOperation');
