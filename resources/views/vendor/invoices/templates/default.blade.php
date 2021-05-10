@@ -298,16 +298,16 @@
             </tr>
             <tr>
                 <td>
-                    <p>{{ __('invoices::invoice.serial') }} <strong>{{ $invoice->getSerialNumber() }}</strong></p>
-                    <p>{{ __('invoices::invoice.date') }}: <strong>{{ $invoice->getDate() }}</strong></p>
+                    <p><strong>{{ __('invoices::invoice.serial') }} </strong>{{ $invoice->getSerialNumber() }}</p>
+                    <p><strong>{{ __('invoices::invoice.date') }}:</strong> {{ $invoice->getDate() }}</p>
                     <p><strong>Créé par: </strong>{{ $invoice->createdBy }}</p>
                     <p><strong>Créée le: </strong>{{ $invoice->createdAt }}</p>
                 </td>
                 <td>
-                    <p><strong>Marque</strong>{{ $invoice->brand }}</p>
-                    <p><strong>Modèle </strong>{{ $invoice->model }}</p>
-                    <p><strong>Immatriculation </strong>{{ $invoice->immat }}</p>
-                    <p><strong>Kilométrage </strong>{{ $invoice->km }} Km</p>
+                    <p><strong>Marque: </strong>{{ $invoice->brand }}</p>
+                    <p><strong>Modèle: </strong>{{ $invoice->model }}</p>
+                    <p><strong>Immatriculation: </strong>{{ $invoice->immat }}</p>
+                    <p><strong>Kilométrage: </strong>{{ $invoice->km }} Km</p>
                 </td>
             </tr>
             <tr>

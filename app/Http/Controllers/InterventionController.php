@@ -411,8 +411,8 @@ class InterventionController extends Controller
         ]);
 
         $customer = new Party([
-            'name'          => 'Alcis Groupe',
-            'address'       => '130 Route de Castres 31130 Balma'
+            'name'          => 'Nom du client',
+            'address'       => 'Adresse du client'
         ]);
 
 
@@ -441,11 +441,104 @@ class InterventionController extends Controller
             ->brand($intervention->vehiculeList->brand)
             ->model($intervention->vehiculeList->model)
             ->km($intervention->km_vehicule > 0 ? $intervention->km_vehicule : 'Kilométrage non renseigné' . '</strong>')
-            ->logo(public_path('images/logoFact.png'))
-            ->company(public_path('images/logoFact.png'))
+            ->logo(public_path('images/logo.png'))
             ->taxRate(20);
         // ->filename('toto')
         // ->save('public');
+
+        return $invoice->stream();
+    }
+
+    public function editInvoice(Request $request, $id)
+    {
+        $intervention = Intervention::find($id);
+        $itemList = array();
+        $vehiculeType = $intervention->vehiculeList->category;
+
+        $notes = [
+            '<strong>Observations Générales</strong>',
+            $request->observations,
+        ];
+
+        // Calcul déplacement
+        if ($intervention->needMove) {
+            $timeMoving = Carbon::parse($intervention->end_move_begin)->diffInMinutes(Carbon::parse($intervention->start_move_begin)) +
+                Carbon::parse($intervention->end_move_return)->diffInMinutes(Carbon::parse($intervention->start_move_return));
+
+            array_push($itemList, (new InvoiceItem())->title("Déplacement")->quantity($timeMoving)
+                ->pricePerUnit(0.33));
+        }
+
+        //Calcul main d'oeuvre intervention
+        array_push($itemList, (new InvoiceItem())->title("Main d'oeuvre")->quantity($this->totalTime($id))
+            ->pricePerUnit(
+                $vehiculeType == 1  ? 45 / 60 : (($vehiculeType == 2) ? 55 / 60 : 1)
+            ));
+        // Calcul main d'oeuvre opérations
+        foreach ($intervention->operations as $operation) {
+
+            // $operation->op_comment != null ? array_push($notes, '<li>' . $operation->operationList->name . '</li><br>' . $operation->op_comment . '<br>')  : '';
+
+            if ($operation->operationList->isPackage) {
+                array_push($itemList, (new InvoiceItem())->title('Opération - ' . $operation->operationList->name)
+                    ->quantity(1)
+                    ->pricePerUnit($operation->operationList->price));
+            } else {
+                $totalTimeOp = 0;
+                $totalTimeOp += Carbon::parse($operation->end_operation_time)->diffInMinutes(Carbon::parse($operation->start_operation_time));
+
+                $pausesOp = TimeOperation::where('operation_id', 'like', $operation->id)->get();
+
+                foreach ($pausesOp as $pause) {
+                    $totalTimeOp -= Carbon::parse($pause->end_date)->diffInMinutes(Carbon::parse($pause->start_date));
+                }
+                array_push($itemList, (new InvoiceItem())->title('Opération - ' . $operation->operationList->name)
+                    ->quantity($totalTimeOp)
+                    ->pricePerUnit(($operation->operationList->price / 60) * $operation->mechanic_count));
+            }
+            // Calcul des pièces
+            foreach ($operation->pieces as $piece) {
+                array_push($itemList, (new InvoiceItem())->title('Pièce - ' . $piece->PieceList->name)
+                    ->quantity($piece->qte)
+                    ->pricePerUnit($piece->pieceList->price));
+            }
+        }
+
+        $client = new Party([
+            'name'          => 'Alcis Meca',
+            'address'       => '130 Route de Castres 31130 Balma'
+        ]);
+
+        $customer = new Party([
+            'name'          => $request->client_name,
+            'address'       => $request->client_address
+        ]);
+
+        $notes = implode("<br>", $notes);
+
+        $invoice = Invoice::make('Facture atelier mécanique')
+
+            ->sequence($intervention->id)
+            ->serialNumberFormat('{SEQUENCE}{SERIES}')
+            ->seller($client)
+            ->buyer($customer)
+            ->date(now())
+            ->dateFormat('d/m/Y')
+            ->currencySymbol('€')
+            ->currencyCode('€')
+            ->currencyFormat('{VALUE} {SYMBOL}')
+            ->currencyThousandsSeparator('.')
+            ->currencyDecimalPoint(',')
+            ->addItems($itemList)
+            ->notes($notes)
+            ->createdBy($intervention->users[0]->name)
+            ->createdAt(Carbon::parse($intervention->created_at)->translatedFormat('d F Y à H\hi'))
+            ->immat($intervention->vehiculeList->license_plate)
+            ->brand($intervention->vehiculeList->brand)
+            ->model($intervention->vehiculeList->model)
+            ->km($intervention->km_vehicule > 0 ? $intervention->km_vehicule : 'Kilométrage non renseigné' . '</strong>')
+            ->logo(public_path('images/logo.png'))
+            ->taxRate(20);
 
         return $invoice->stream();
     }

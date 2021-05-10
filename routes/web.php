@@ -56,7 +56,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/verifFull', [VerifInterventionController::class, 'verifFull'])->name('verifFull');
     Route::get('/correctInterventionIndex', [InterventionController::class, 'correctInterventionIndex'])->name('correctInterventionIndex');
     Route::get('/resumeCorrectIntervention/{id}', [InterventionController::class, 'resumeCorrectIntervention'])->name('resumeCorrectIntervention');
-    
+
+
+
 
     Route::get('/searchIntervention',  [InterventionController::class, 'searchIntervention'])->name('searchIntervention');
     Route::get('/searchIntervVehicule',  [InterventionController::class, 'searchIntervVehicule'])->name('searchIntervVehicule');
@@ -66,10 +68,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/searchVehicule',  [VehiculeController::class, 'searchVehicule']);
     Route::get('/searchInterventionFull',  [VerifInterventionController::class, 'searchInterventionFull'])->name('searchInterventionFull');
     Route::get('/searchInterventionVerif',  [VerifInterventionController::class, 'searchInterventionVerif'])->name('searchInterventionVerif');
-    
+
     Route::post('/home/validateVerif/{id}', [VerifInterventionController::class, 'validateVerif'])->name('validateVerif');
     Route::post('/needMove',  [InterventionController::class, 'needMove'])->name('needMove');
     Route::post('/sendVerif/{id}', [InterventionController::class, 'sendVerif'])->name('sendVerif');
+    Route::post('/editInvoice/{id}', [InterventionController::class, 'editInvoice'])->name('editInvoice');
+
 
     Route::resource('interventions', InterventionController::class);
     Route::resource('timeinterventions', TimeInterventionController::class);
