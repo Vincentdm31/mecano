@@ -116,12 +116,14 @@ class InterventionController extends Controller
         return redirect(route('interventions.edit', ['intervention' => $intervention]))->with('toast', 'update');
     }
 
-    public function correctInterventionIndex(){
+    public function correctInterventionIndex()
+    {
         $interventions = Intervention::where('state', 'like', 'recheck')->paginate(5);
         return view('interventions.recheck', ['interventions' => $interventions]);
     }
 
-    public function correctIntervention($id){
+    public function correctIntervention($id)
+    {
         $intervention = Intervention::find($id);
 
         $intervention->state = "recheck";
@@ -135,10 +137,10 @@ class InterventionController extends Controller
         $timeIntervention->save();
 
         return redirect(route('adminIntervention'));
-
     }
 
-    public function resumeCorrectIntervention($id){
+    public function resumeCorrectIntervention($id)
+    {
 
         $intervention = Intervention::find($id);
 
@@ -355,14 +357,14 @@ class InterventionController extends Controller
         $notes = [
             '<strong>Observations Générales</strong>',
             $intervention->observations,
-            '',
-            '<strong>Commentaires par opérations</strong>',
+            // '',
+            // '<strong>Commentaires par opérations</strong>',
         ];
 
         // Calcul déplacement
-        if($intervention->needMove){
-            $timeMoving = Carbon::parse($intervention->end_move_begin)->diffInMinutes(Carbon::parse($intervention->start_move_begin)) + 
-                            Carbon::parse($intervention->end_move_return)->diffInMinutes(Carbon::parse($intervention->start_move_return));
+        if ($intervention->needMove) {
+            $timeMoving = Carbon::parse($intervention->end_move_begin)->diffInMinutes(Carbon::parse($intervention->start_move_begin)) +
+                Carbon::parse($intervention->end_move_return)->diffInMinutes(Carbon::parse($intervention->start_move_return));
 
             array_push($itemList, (new InvoiceItem())->title("Déplacement")->quantity($timeMoving)
                 ->pricePerUnit(0.33));
@@ -370,31 +372,30 @@ class InterventionController extends Controller
 
         //Calcul main d'oeuvre intervention
         array_push($itemList, (new InvoiceItem())->title("Main d'oeuvre")->quantity($this->totalTime($id))
-            ->pricePerUnit( 
-                $vehiculeType == 1  ? 45/60 : (($vehiculeType == 2 ) ? 55/60 : 1  )
+            ->pricePerUnit(
+                $vehiculeType == 1  ? 45 / 60 : (($vehiculeType == 2) ? 55 / 60 : 1)
             ));
         // Calcul main d'oeuvre opérations
         foreach ($intervention->operations as $operation) {
 
-            $operation->op_comment != null ? array_push($notes, '<li>' . $operation->operationList->name . '</li><br>' . $operation->op_comment . '<br>')  : '';
-            
-            if($operation->operationList->isPackage){
+            // $operation->op_comment != null ? array_push($notes, '<li>' . $operation->operationList->name . '</li><br>' . $operation->op_comment . '<br>')  : '';
+
+            if ($operation->operationList->isPackage) {
                 array_push($itemList, (new InvoiceItem())->title('Opération - ' . $operation->operationList->name)
                     ->quantity(1)
                     ->pricePerUnit($operation->operationList->price));
-            }else{
+            } else {
                 $totalTimeOp = 0;
                 $totalTimeOp += Carbon::parse($operation->end_operation_time)->diffInMinutes(Carbon::parse($operation->start_operation_time));
 
                 $pausesOp = TimeOperation::where('operation_id', 'like', $operation->id)->get();
 
-                foreach ($pausesOp as $pause){
+                foreach ($pausesOp as $pause) {
                     $totalTimeOp -= Carbon::parse($pause->end_date)->diffInMinutes(Carbon::parse($pause->start_date));
-                   
                 }
                 array_push($itemList, (new InvoiceItem())->title('Opération - ' . $operation->operationList->name)
                     ->quantity($totalTimeOp)
-                    ->pricePerUnit( ($operation->operationList->price / 60 ) * $operation->mechanic_count));
+                    ->pricePerUnit(($operation->operationList->price / 60) * $operation->mechanic_count));
             }
             // Calcul des pièces
             foreach ($operation->pieces as $piece) {
@@ -414,7 +415,7 @@ class InterventionController extends Controller
             'address'       => '130 Route de Castres 31130 Balma'
         ]);
 
-        
+
 
         $notes = implode("<br>", $notes);
 
@@ -440,7 +441,9 @@ class InterventionController extends Controller
             ->brand($intervention->vehiculeList->brand)
             ->model($intervention->vehiculeList->model)
             ->km($intervention->km_vehicule > 0 ? $intervention->km_vehicule : 'Kilométrage non renseigné' . '</strong>')
-            ->logo(public_path('images/logoFact.png'));
+            ->logo(public_path('images/logoFact.png'))
+            ->company(public_path('images/logoFact.png'))
+            ->taxRate(20);
         // ->filename('toto')
         // ->save('public');
 

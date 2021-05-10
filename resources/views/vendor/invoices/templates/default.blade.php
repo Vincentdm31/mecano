@@ -20,7 +20,7 @@
             text-align: left;
             background-color: #f7f7f7;
             font-size: 10px;
-            padding: 20pt;
+            padding: 5pt;
         }
 
         h4 {
@@ -148,7 +148,7 @@
         .total-amount {
             font-size: 12px;
             font-weight: 700;
-            background: #182654!important;
+            background: #182654 !important;
             color: #f7f7f7;
         }
 
@@ -156,16 +156,23 @@
             border: none !important;
         }
 
-        .name{
-            width: 80%!important;
+        .name {
+            width: 80% !important;
         }
 
-        .infos{
+        .infos {
             font-size: 1.5rem;
         }
-        .total{
+
+        .total {
             background: #182654 !important;
             color: #f7f7f7;
+        }
+
+        .company {
+            background-color: purple;
+            padding: 1px;
+            color: white;
         }
     </style>
 </head>
@@ -304,7 +311,7 @@
                 </td>
             </tr>
             <tr>
-                <td >
+                <td>
                     <p>{!! $invoice->notes !!}</p>
                 </td>
                 <td></td>
@@ -415,9 +422,14 @@
         </tbody>
     </table>
 
-    <p class="text-right">
-        {{ trans('invoices::invoice.amount_in_words') }}: {{ $invoice->getTotalAmountInWords() }}
-    </p>
+    <div class="company text-center">
+        <p class="text-center">SAS ALCIS LOCATION</p>
+        <p>Siège social : 130, Route de Castres - 31130 BALMA</p>
+        <p>Tél : 05 61 83 33 58 - Fax : 05 62 18 54 10</p>
+        <p>SIRET : 750 642 688 00022 - APE : 4520B - N°Intracom : FR35 750 462 688 - RCS TOULOUSE 750 642 688</p>
+        <p>S.A.S au capital de 7 500 €uros</p>
+    </div>
+
 
     <script type="text/php">
         if (isset($pdf) && $PAGE_COUNT > 1) {
