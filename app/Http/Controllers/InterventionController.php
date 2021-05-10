@@ -8,6 +8,7 @@ use App\Models\OperationList;
 use App\Models\Piece;
 use App\Models\PieceList;
 use App\Models\TimeIntervention;
+use App\Models\TimeOperation;
 use App\Models\Vehicule;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -348,12 +349,10 @@ class InterventionController extends Controller
     public function exportPDF($id)
     {
         $intervention = Intervention::find($id);
-
         $itemList = array();
-
         $vehiculeType = $intervention->vehiculeList->category;
 
-
+        // Calcul déplacement
         if($intervention->needMove){
             $timeMoving = Carbon::parse($intervention->end_move_begin)->diffInMinutes(Carbon::parse($intervention->start_move_begin)) + 
                             Carbon::parse($intervention->end_move_return)->diffInMinutes(Carbon::parse($intervention->start_move_return));
@@ -362,22 +361,13 @@ class InterventionController extends Controller
                 ->pricePerUnit(0.33));
         }
 
-        $totalTimeIntervention = 0;
-        $totalTimePauseIntervention = 0;
-        $timePauseIntervention = TimeIntervention::where('intervention_id', 'like', $id)->get();
-
-        foreach($timePauseIntervention as $pauseIntervention){
-            $totalTimePauseIntervention += Carbon::parse($pauseIntervention->end_date)->diffInMinutes(Carbon::parse($pauseIntervention->start_date));
-        }
-
-        $totalTimeIntervention += Carbon::parse($intervention->end_intervention_time)->diffInMinutes(Carbon::parse($intervention->start_intervention_time)) -
-            $totalTimePauseIntervention;
-
-        array_push($itemList, (new InvoiceItem())->title("Main d'oeuvre")->quantity($totalTimeIntervention)
-            ->pricePerUnit(
+        //Calcul main d'oeuvre intervention
+        array_push($itemList, (new InvoiceItem())->title("Main d'oeuvre")->quantity($this->totalTime($id))
+            ->pricePerUnit( 
                 $vehiculeType == 1  ? 45/60 : (($vehiculeType == 2 ) ? 55/60 : 1  )
             ));
 
+        // Calcul main d'oeuvre opérations
         foreach ($intervention->operations as $operation) {
 
             if($operation->operationList->isPackage){
@@ -385,11 +375,20 @@ class InterventionController extends Controller
                     ->quantity(1)
                     ->pricePerUnit($operation->operationList->price));
             }else{
-                array_push($itemList, (new InvoiceItem())->title('Opération - ' . $operation->operationList->name)
-                    ->quantity(1)
-                    ->pricePerUnit( Carbon::parse($operation->end_operation_time)->diffInSeconds(Carbon::parse($operation->start_operation_time)) * ($operation->operationList->price / 3600 ) * $operation->mechanic_count));
-            }
+                $totalTimeOp = 0;
+                $totalTimeOp += Carbon::parse($operation->end_operation_time)->diffInMinutes(Carbon::parse($operation->start_operation_time));
 
+                $pausesOp = TimeOperation::where('operation_id', 'like', $operation->id)->get();
+
+                foreach ($pausesOp as $pause){
+                    $totalTimeOp -= Carbon::parse($pause->end_date)->diffInMinutes(Carbon::parse($pause->start_date));
+                   
+                }
+                array_push($itemList, (new InvoiceItem())->title('Opération - ' . $operation->operationList->name)
+                    ->quantity($totalTimeOp)
+                    ->pricePerUnit( ($operation->operationList->price / 60 ) * $operation->mechanic_count));
+            }
+            // Calcul des pièces
             foreach ($operation->pieces as $piece) {
                 array_push($itemList, (new InvoiceItem())->title('Pièce - ' . $piece->PieceList->name)
                     ->quantity($piece->qte)
@@ -447,7 +446,7 @@ class InterventionController extends Controller
     {
         $intervention = Intervention::find($id);
 
-        $totalTimeIntervention = Carbon::parse($intervention->end_intervention_time)->diffInSeconds(Carbon::parse($intervention->start_intervention_time));
+        $totalTimeIntervention = Carbon::parse($intervention->end_intervention_time)->diffInMinutes(Carbon::parse($intervention->start_intervention_time));
 
         $pauseInterventionList = TimeIntervention::Where('intervention_id', 'like', $id)->whereNotNull('end_date')->get();
 
@@ -455,8 +454,8 @@ class InterventionController extends Controller
         $timePauseIntervention = 0;
 
         foreach ($pauseInterventionList as $pause) {
-            $timetoseconds = Carbon::parse($pause->end_date)->diffInSeconds(Carbon::parse($pause->start_date));
-            $timePauseIntervention += $timetoseconds;
+            $timeToMinuts = Carbon::parse($pause->end_date)->diffInMinutes(Carbon::parse($pause->start_date));
+            $timePauseIntervention += $timeToMinuts;
         }
 
         $totalTime = $totalTimeIntervention - $timePauseIntervention;
