@@ -73,9 +73,11 @@ class InterventionController extends Controller
         $opPause = Operation::Where('intervention_id', $id)
             ->where('state', 'pause')
             ->get();
-        $opEnd = Operation::Where('intervention_id', $id)
-            ->where('state', 'finish')
-            ->get();
+
+        $opUserDoing = Operation::Where('intervention_id', $id)
+        ->where('state', 'like', 'doing')
+        ->where('user_id', 'like', Auth()->user()->id)
+        ->get();
 
         $search = $request->get('selectVehicule');
 
@@ -90,8 +92,8 @@ class InterventionController extends Controller
             'operations' => $operations,
             'pieces' => $pieces,
             'opDoing' => $opDoing,
-            'opEnd' => $opEnd,
-            'opPause' => $opPause
+            'opPause' => $opPause,
+            'opUserDoing' => $opUserDoing,
         ])->with(['toast' => 'update']);
     }
 

@@ -6,6 +6,7 @@ use App\Models\Intervention;
 use App\Models\Operation;
 use App\Models\PieceList;
 use App\Models\TimeOperation;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -23,8 +24,13 @@ class OperationController extends Controller
         }
 
         $operation->start_operation_time = Carbon::now();
+        $operation->user_id = Auth()->user()->id;
 
         $operation->save();
+
+        $user = User::find(Auth()->user()->id);
+        $user->actual_operation = $operation->id;
+        $user->save();
 
         return redirect(route('interventions.edit', ['intervention' => $intervention_id]))->with(['toast' => 'addOperation', 'opState' => 'notEnd']);
     }
@@ -41,6 +47,10 @@ class OperationController extends Controller
         }
 
         $operation->save();
+
+        $user = User::find(Auth()->user()->id);
+        $user->actual_operation = $operation->id;
+        $user->save();
 
         return redirect(route('interventions.edit', ['intervention' => $intervention->id]))->with(['toast' => 'update']);
     }
@@ -61,15 +71,17 @@ class OperationController extends Controller
 
         $operation->delete();
 
+        $user = User::find(Auth()->user()->id);
+        $user->actual_operation = null;
+        $user->save();
+
         return redirect(route('interventions.edit', ['intervention' => $intervention]))->with('toast', 'removeOperation');
     }
 
     public function editOperation($id, $interventionId)
     {
         $operation = Operation::find($id);
-
         $intervention = Intervention::find($interventionId);
-
         $timeOperation = new TimeOperation();
 
         $timeOperation->operation_id = $id;
@@ -99,7 +111,7 @@ class OperationController extends Controller
         $operation = Operation::find($operationId);
         $endOperationTime = Carbon::now();
 
-        if($request->mechanic_count === null){
+        if ($request->mechanic_count === null) {
             return redirect(route('interventions.edit', ['intervention' => $intervention->id]))->with(['toast' => 'update']);
         }
 
@@ -108,6 +120,10 @@ class OperationController extends Controller
         $operation->end_operation_time = $endOperationTime;
 
         $operation->save();
+
+        $user = User::find(Auth()->user()->id);
+        $user->actual_operation = null;
+        $user->save();
 
         return redirect(route('interventions.edit', ['intervention' => $intervention->id]))->with(['toast' => 'update']);
     }

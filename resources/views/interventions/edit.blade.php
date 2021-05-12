@@ -22,11 +22,11 @@ $date = Carbon::now();
 
 <div class="container">
     <div class="d-flex fx-row fx-center txt-center mt-3 mb-3">
-        <button data-target="modal-recap" class="btn mr-3 rounded-1 txt-white shadow-1 orange dark-1 modal-trigger small">
+        <button data-target="modal-recap" class="btn rounded-1 txt-white shadow-1 orange dark-1 modal-trigger small">
             Récapitulatif
         </button>
         @if(Auth()->user()->name != $intervention->created_by)
-            <a href="{{route('leaveIntervention', ['intervention' => $intervention->id])}}" class="btn small rounded-1 txt-white shadow-1 red dark-1">
+            <a href="{{route('leaveIntervention', ['intervention' => $intervention->id])}}" class="btn small rounded-1 txt-white shadow-1 red ml-2 dark-1">
                 Quitter
             </a>
         @endif

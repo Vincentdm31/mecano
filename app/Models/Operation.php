@@ -17,11 +17,15 @@ class Operation extends Model
     public function intervention()
     {
         return $this->belongsTo(Intervention::class);
-
     }
 
     public function pieces()
     {
         return $this->hasMany(Piece::class);
+    }
+
+    public function user()
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
     }
 }

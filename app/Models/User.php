@@ -45,4 +45,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Intervention::class);
     }
+
+    public function operation()
+    {
+        return $this->belongsTo(Operation::class);
+    }
 }

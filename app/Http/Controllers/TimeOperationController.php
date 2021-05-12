@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Operation;
 use App\Models\TimeOperation;
-use Carbon\Carbon;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class TimeOperationController extends Controller
@@ -17,20 +17,28 @@ class TimeOperationController extends Controller
         $operationId = $request->input('operation_id');
         $operation = Operation::find($operationId);
 
-        if ($operation->state == 'doing') {
+        $user = User::find(Auth()->user()->id);
 
+
+        if ($operation->state == 'doing') {
             $timer = new TimeOperation();
             $operation->state = 'pause';
-        } else if ($operation->state == 'pause') {
 
+            $user->actual_operation = null;
+            $user->save();
+        } else if ($operation->state == 'pause') {
             $timer = TimeOperation::Where('operation_id', 'like', $operationId)->latest()->first();
             $operation->state = 'doing';
+
+            $user->actual_operation = $operation->id;
+            $user->save();
         }
 
         foreach ($inputs as $key => $value) {
             $timer->$key = $value;
             $timer->save();
         }
+
         $operation->save();
 
         return redirect(route('interventions.edit', ['intervention' => $interventionID]));

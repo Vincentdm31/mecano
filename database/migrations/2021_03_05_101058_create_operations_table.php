@@ -29,6 +29,10 @@ class CreateOperationsTable extends Migration
             $table->bigInteger('operation_id')->unsigned()->nullable();
             $table->foreign('operation_id')->references('id')->on('operation_lists')
                 ->onDelete('cascade')->onUpdate('cascade');
+
+            $table->bigInteger('user_id')->unsigned()->nullable();
+            $table->foreign('user_id')->references('id')->on('users')
+                ->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
