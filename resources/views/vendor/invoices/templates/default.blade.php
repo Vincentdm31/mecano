@@ -307,7 +307,7 @@
                     <p><strong>Marque: </strong>{{ $invoice->brand }}</p>
                     <p><strong>Modèle: </strong>{{ $invoice->model }}</p>
                     <p><strong>Immatriculation: </strong>{{ $invoice->immat }}</p>
-                    <p><strong>Kilométrage: </strong>{{ $invoice->km }} Km</p>
+                    <p><strong>Kilométrage: </strong>{{ $invoice->km }}</p>
                 </td>
             </tr>
             <tr>

@@ -442,7 +442,7 @@ class InterventionController extends Controller
             ->immat($intervention->vehiculeList->license_plate)
             ->brand($intervention->vehiculeList->brand)
             ->model($intervention->vehiculeList->model)
-            ->km($intervention->km_vehicule > 0 ? $intervention->km_vehicule : 'Kilométrage non renseigné' . '</strong>')
+            ->km($intervention->km_vehicule > 0 ? $intervention->km_vehicule : 'Kilométrage non renseigné')
             ->logo(public_path('images/logo.png'))
             ->taxRate(20);
         // ->filename('toto')
@@ -538,7 +538,7 @@ class InterventionController extends Controller
             ->immat($intervention->vehiculeList->license_plate)
             ->brand($intervention->vehiculeList->brand)
             ->model($intervention->vehiculeList->model)
-            ->km($intervention->km_vehicule > 0 ? $intervention->km_vehicule : 'Kilométrage non renseigné' . '</strong>')
+            ->km($intervention->km_vehicule > 0 ? $intervention->km_vehicule : $request->vehicle_km)
             ->logo(public_path('images/logo.png'))
             ->taxRate(20);
 
