@@ -14,6 +14,7 @@ $date = Carbon::now();
       <div class="card dark mb-3">
         <div class="card-header dark">
           <p class="p-0 m-0 font-s3 txt-grey txt-light-4 txt-center">{{ $operation->operationList->name }}</p>
+          <p class="p-0 m-0 font-s2 txt-grey txt-light-2 txt-center">{{ $operation->user->name }}</p>
           @if ($operation->pieces()->exists())
             @foreach($operation->pieces as $piece)
               <div class="card overflow-visible rounded-1 grey light-4 p-1 ml-5 mr-5 mt-2 mb-3">
