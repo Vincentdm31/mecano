@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container grix xs1 sm3 mt-5">
-    <div class="card pos-sm2 shadow-1 rounded-1">
+    <div class="card pos-sm2 dark txt-gl4 shadow-1 rounded-1">
         <div class="p-0 pl-4 pr-4 pt-1">
             <p class="bd-b-solid bd-orange bd-3 pb-2 h5">Editer pièce</p>
         </div>
