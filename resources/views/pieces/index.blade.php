@@ -27,6 +27,7 @@
                         <th class="txt-center txt-white">#</th>
                         <th class="txt-center">Nom</th>
                         <th class="txt-center">Reférence</th>
+                        <th class="txt-center">Localisation</th>
                         <th class="txt-center">Quantité</th>
                         <th class="txt-center">Action</th>
                     </tr>
@@ -37,6 +38,7 @@
                         <td class="txt-center txt-orange">{{ $pieceList->id }}</td>
                         <td class="txt-center">{{ $pieceList->name }}</td>
                         <td class="txt-center">{{ $pieceList->ref }}</td>
+                        <td class="txt-center">{{ $pieceList->localisation }}</td>
                         <td class="txt-center">{{ $pieceList->qte }}</td>
                         <td>
                             <div class="grix xs3 gutter-xs2">

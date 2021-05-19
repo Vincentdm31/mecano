@@ -20,6 +20,10 @@
                         <label for="ref">Référence</label>
                     </div>
                     <div class="form-field">
+                        <input type="text" id="localisation" name="localisation" class="form-control" value="{{$pieceList->localisation}}" />
+                        <label for="localisation">Localisation</label>
+                    </div>
+                    <div class="form-field">
                         <input type="number" id="qte" name="qte" class="form-control" value="{{$pieceList->qte}}" />
                         <label for="qte">Quantité</label>
                     </div>

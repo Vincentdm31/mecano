@@ -17,6 +17,10 @@
                     <input required type="text" name="ref" class="form-control txt-white txt-dark-4"></input>
                     <label for="ref">Référence</label>
                 </div>
+                <div class="form-field col-xs2">
+                    <input required type="text" name="localisation" class="form-control txt-white txt-dark-4"></input>
+                    <label for="localisation">Localisation</label>
+                </div>
                 <div class="form-field">
                     <input required type="number" name="qte" class="form-control txt-white txt-dark-4"></input>
                     <label for="qte">Qte</label>
@@ -25,6 +29,7 @@
                     <input required type="number" name="price" class="form-control txt-white txt-dark-4"></input>
                     <label for="price">Prix</label>
                 </div>
+                
             </div>
 
             <div class="txt-center">
