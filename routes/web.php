@@ -73,6 +73,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/needMove',  [InterventionController::class, 'needMove'])->name('needMove');
     Route::post('/sendVerif/{id}', [InterventionController::class, 'sendVerif'])->name('sendVerif');
     Route::post('/editInvoice/{id}', [InterventionController::class, 'editInvoice'])->name('editInvoice');
+    
+    Route::post('/joinOperation/{intervention}', [InterventionController::class, 'joinOperation'])->name('joinOperation');
+    Route::put('/leaveOperation/{intervention}', [InterventionController::class, 'leaveOperation'])->name('leaveOperation');
 
 
     Route::resource('interventions', InterventionController::class);

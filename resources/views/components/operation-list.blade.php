@@ -11,8 +11,21 @@ $date = Carbon::now();
   @endif
   @foreach( $intervention->operations as $operation)
     @if($operation->state != "finish")
-      <div class="card dark mb-3">
-        <div class="card-header dark">
+      <div class="card overflow-visible dark mb-3">
+        @if(Auth()->user()->id != $operation->user_id)
+        <form method="POST" action="{{ route('joinOperation', ['intervention' => $intervention->id]) }}">
+        @csrf
+        <input hidden name="operation" value="{{ $operation->id }}"/>
+        <button type="submit" class="btn blue circle absolute-pos" style="right:0; top:0;transform:translate(50%,-50%)"><i class="fas fa-plus txt-white"></i></button>
+        </form>
+        <form method="POST" action="{{ route('leaveOperation', ['intervention' => $intervention->id]) }}">
+        @csrf
+        @method('PUT')
+        <input hidden name="operation" value="{{ $operation->id }}"/>
+        <button type="submit" class="btn red circle absolute-pos" style="right:20px; top:0;transform:translate(50%,-50%)"><i class="fas fa-plus txt-white"></i></button>
+        </form>
+        @endif
+        <div class="card-header">
           <p class="p-0 m-0 font-s3 txt-grey txt-light-4 txt-center">{{ $operation->operationList->name }}</p>
           <p class="p-0 m-0 font-s2 txt-grey txt-light-2 txt-center">{{ $operation->user->name }}</p>
           @if ($operation->pieces()->exists())

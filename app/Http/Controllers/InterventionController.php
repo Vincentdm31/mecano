@@ -62,14 +62,14 @@ class InterventionController extends Controller
 
         $searchOperation = $request->get('selectOperation');
 
-        if($searchOperation != null){
+        if ($searchOperation != null) {
             $operationsList = OperationList::Where('name', 'like', '%' . $searchOperation . '%')
-            ->orWhere('ref', 'like', '%' . $searchOperation . '%')
-            ->get();
-        }else{
+                ->orWhere('ref', 'like', '%' . $searchOperation . '%')
+                ->get();
+        } else {
             $operationsList = OperationList::all()->except($operationsId);
         }
-        
+
 
         $piecesList = PieceList::all();
         $pieces = Piece::all();
@@ -84,9 +84,9 @@ class InterventionController extends Controller
             ->get();
 
         $opUserDoing = Operation::Where('intervention_id', $id)
-        ->where('state', 'like', 'doing')
-        ->where('user_id', 'like', Auth()->user()->id)
-        ->get();
+            ->where('state', 'like', 'doing')
+            ->where('user_id', 'like', Auth()->user()->id)
+            ->get();
 
         $search = $request->get('selectVehicule');
 
@@ -231,6 +231,32 @@ class InterventionController extends Controller
         return redirect(route('home'));
     }
 
+    public function joinOperation(Request $request, $intervention)
+    {
+        $id = $request->input('operation');
+
+        $operation = Operation::find($id);
+        $operation->usersOperations()->attach(Auth::id(), ['start_date' => Carbon::now(), 'intervention_id' => $intervention]);
+        $operation->save();
+
+        return redirect(route('interventions.edit', ['intervention' => $intervention]));
+    }
+
+    public function leaveOperation(Request $request, $intervention)
+    {
+        $id = $request->input('operation');
+        $operation = Operation::find($id);
+
+        $pivotRaw = $operation->usersOperations()->where('operation_id', $id)
+            ->where('intervention_id', $intervention)
+            ->first()->pivot;
+
+        $pivotRaw->end_date = Carbon::now();
+        $pivotRaw->save();
+
+        return redirect(route('interventions.edit', ['intervention' => $intervention]));
+    }
+
     public function stepOne(Request $request)
     {
         $id = $request->id;
@@ -264,7 +290,6 @@ class InterventionController extends Controller
 
     public function selectVehicule(Request $request)
     {
-
         $inputs = $request->except('_token', '_method');
         $intervention_id = $request->id;
         $intervention = Intervention::find($intervention_id);
@@ -277,8 +302,6 @@ class InterventionController extends Controller
 
         return redirect(route('interventions.edit', ['intervention' => $intervention]));
     }
-
-
 
     public function needMove(Request $request)
     {
@@ -299,7 +322,6 @@ class InterventionController extends Controller
 
     public function setDeplacement(Request $request)
     {
-
         $inputs = $request->except('_token', '_method');
         $vehicules = Vehicule::all();
         $intervention_id = $request->id;
@@ -344,7 +366,6 @@ class InterventionController extends Controller
 
     public function setEndDeplacement(Request $request)
     {
-
         $inputs = $request->except('_token', '_method');
 
         $intervention_id = $request->id;

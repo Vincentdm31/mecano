@@ -50,4 +50,11 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Operation::class);
     }
+
+    public function operationsUsers()
+    {
+        return $this->belongsToMany(Operation::class, 'operation_user')
+        ->withPivot('start_date', 'end_date')
+        ->distinct();
+    }
 }
