@@ -28,6 +28,7 @@
                         <th>Ref</th>
                         <th>Nom</th>
                         <th>Forfait</th>
+                        <th>Durée estimée</th>
                         <th>Prix</th>
                         <th>Actions</th>
                     </tr>
@@ -41,6 +42,7 @@
                         <td>
                             <i class="<?php echo($operationList->isPackage ? 'fas fa-check' : 'fas fa-times' ) ?>">
                         </td>
+                        <td><?php echo($operationList->duration > 0 ? $operationList->duration . ' H' : '')?></td>
                         <td>{{ $operationList->price }}</td>
                         <td>
                             <div class="grix xs2 gutter-xs4">

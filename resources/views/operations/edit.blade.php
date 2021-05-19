@@ -26,11 +26,17 @@
                         </div>
                         <div class="form-field h100 p-0 m-0">
                             <label class="form-check mt-auto pb-3">
-                                <input type="checkbox" name="isPackage" <?php echo($operationList->isPackage ? 'checked' : '')?>/>
+                                <input type="checkbox" name="isPackage" <?php echo ($operationList->isPackage ? 'checked' : '') ?> />
                                 <span class="txt-gl4">Forfait ?</span>
                             </label>
                         </div>
                     </div>
+                    @if($operationList->isPackage)
+                    <div class="form-field">
+                        <input type="number" id="duration" step="0.01" name="duration" class="form-control txt-white" value="{{ $operationList->duration }}" />
+                        <label for="duration">Durée estimée (en H)</label>
+                    </div>
+                    @endif
                 </div>
                 <div class="txt-center">
                     <button type="submit" class="btn rounded-1 orange dark-1 txt-white mt-3 mb-3">Mettre à jour</button>

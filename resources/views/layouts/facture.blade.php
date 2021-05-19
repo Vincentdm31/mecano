@@ -25,11 +25,12 @@
             <nav class="navbar dark txt-white shadow-1">
                 @if(Auth()->check())
                 <a href="{{ route('verif.index') }}" class="navbar-brand hide-sm-down">Accueil</a>
-                
+
                 @endif
                 <button data-target="sidenav" class="txt-white btn rounded-1 transparent sidenav-trigger hide-md-up"><i class="fas fa-bars mr-1"></i>Menu</button>
                 <div class="navbar-menu ml-auto hide-sm-down">
                     <a href="{{ route('verif.index') }}" class="navbar-link">Interventions</a>
+                    <a href="{{ route('piecesList.index') }}" class="sidenav-link">Gestion pièces</a>
                     <a href="{{ route('verifFull') }}" class="navbar-link">Liste complète</a>
                 </div>
                 <div class="ml-auto d-flex fx-row">

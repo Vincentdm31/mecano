@@ -60,7 +60,16 @@ class InterventionController extends Controller
             array_push($operationsId, $op->operation_id);
         }
 
-        $operationsList = OperationList::all()->except($operationsId);
+        $searchOperation = $request->get('selectOperation');
+
+        if($searchOperation != null){
+            $operationsList = OperationList::Where('name', 'like', '%' . $searchOperation . '%')
+            ->orWhere('ref', 'like', '%' . $searchOperation . '%')
+            ->get();
+        }else{
+            $operationsList = OperationList::all()->except($operationsId);
+        }
+        
 
         $piecesList = PieceList::all();
         $pieces = Piece::all();

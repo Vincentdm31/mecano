@@ -1,6 +1,20 @@
 @section('modal-operation')
 <!-- Modal Opération -->
 <div class="modal grey light-4 rounded-2 p-2" id="modal-new-operation" data-ax="modal">
+  <div class="">
+    <form class="form-material container" method="GET" action="{{ route('interventions.edit', ['intervention' => $intervention->id])}}">
+      @csrf
+      <div class="grix xs6">
+        <div class="form-field pos-xs1 col-xs5">
+          <input type="text" name="selectOperation" id="selectOperation" class="form-control txt-airforce txt-dark-4" />
+          <label for="selectOperation">Rechercher</label>
+        </div>
+        <div class="d-flex vcenter">
+          <button type="submit" class="btn shadow-1 rounded-1 orange dark-1 circle rounded-4 small"><i class="fas fa-search txt-white"></i></button>
+        </div>
+      </div>
+    </form>
+  </div>
   <div class="grix xs1 md2">
     <div class="d-flex vcenter">
       <form class="form-material container" method="POST" action="{{ route('operations.store')}}">

@@ -19,6 +19,7 @@ class CreateOperationListsTable extends Migration
             $table->string('name')->unique();
             $table->float('price');
             $table->boolean('isPackage')->default(false);
+            $table->float('duration')->nullable();
         });
     }
 
