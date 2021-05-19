@@ -111,11 +111,6 @@ class OperationController extends Controller
         $operation = Operation::find($operationId);
         $endOperationTime = Carbon::now();
 
-        if ($request->mechanic_count === null) {
-            return redirect(route('interventions.edit', ['intervention' => $intervention->id]))->with(['toast' => 'update']);
-        }
-
-        $operation->mechanic_count = $request->mechanic_count;
         $operation->state = $state;
         $operation->end_operation_time = $endOperationTime;
 

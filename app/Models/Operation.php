@@ -32,8 +32,8 @@ class Operation extends Model
 
     public function usersOperations()
     {
-        return $this->belongsToMany(User::class, 'operation_user')
-        ->withPivot('start_date', 'end_date', 'id')
+        return $this->belongsToMany(User::class, 'operation_user', 'operation_id', 'user_id', 'id')
+        ->withPivot('start_date', 'end_date', 'intervention_id')
         ->distinct();
     }
 }

@@ -38,7 +38,6 @@
   <div class="card grey light-4 overflow-visible shadow-1 m-4 rounded-2">
     <div class="card-header dark p-1">
       <div class="d-flex fx-row">
-      <p class="m-0 font-s3 p-2 txt-gl4"><i class="fas fa-user txt-gl4 pr-3"></i>{{ $operation->mechanic_count }}</p>
       <p class="m-0 font-s3 mx-auto txt-white p-2">{{ $operation->operationList->name}}</p>
       </div>
       <form method="POST" class="" action="{{ route('editOperation',  ['id' => $operation->id, 'interventionId' => $intervention->id ] ) }}">
