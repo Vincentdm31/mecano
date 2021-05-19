@@ -13,6 +13,7 @@ use App\Models\Vehicule;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use LaravelDaily\Invoices\Invoice;
 use LaravelDaily\Invoices\Classes\Party;
 use LaravelDaily\Invoices\Classes\InvoiceItem;
@@ -238,6 +239,8 @@ class InterventionController extends Controller
         $operation = Operation::find($id);
         $operation->usersOperations()->attach(Auth::id(), ['start_date' => Carbon::now(), 'intervention_id' => $intervention]);
         $operation->save();
+        Cookie::queue('joinOp', 'false', 500);
+
 
         return redirect(route('interventions.edit', ['intervention' => $intervention]));
     }
@@ -253,6 +256,8 @@ class InterventionController extends Controller
 
         $pivotRaw->end_date = Carbon::now();
         $pivotRaw->save();
+
+        Cookie::queue(Cookie::forget('joinOp'));
 
         return redirect(route('interventions.edit', ['intervention' => $intervention]));
     }
@@ -418,6 +423,7 @@ class InterventionController extends Controller
                     ->pricePerUnit($operation->operationList->price));
             } else {
                 $totalTimeOp = 0;
+                $totalTimeOpJoin = 0;
                 $totalTimeOp += Carbon::parse($operation->end_operation_time)->diffInMinutes(Carbon::parse($operation->start_operation_time));
 
                 $pausesOp = TimeOperation::where('operation_id', 'like', $operation->id)->get();
@@ -425,6 +431,14 @@ class InterventionController extends Controller
                 foreach ($pausesOp as $pause) {
                     $totalTimeOp -= Carbon::parse($pause->end_date)->diffInMinutes(Carbon::parse($pause->start_date));
                 }
+                // Récup toutes les opérations de la table pivot + calculer la différence entre end_date start date et push ds item list
+                $usersOperations = $operation->usersOperations()->where('intervention_id', $id)->get();
+                foreach($usersOperations as $userOperation){
+                    $totalTimeOpJoin += Carbon::parse($userOperation->pivot->end_date)->diffInMinutes(Carbon::parse($userOperation->pivot->start_date));
+                }
+
+                dd($totalTimeOpJoin);
+
                 array_push($itemList, (new InvoiceItem())->title('Opération - ' . $operation->operationList->name)
                     ->quantity($totalTimeOp)
                     ->pricePerUnit(($operation->operationList->price / 60) * $operation->mechanic_count));
