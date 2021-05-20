@@ -441,7 +441,7 @@ class InterventionController extends Controller
 
                 array_push($itemList, (new InvoiceItem())->title('Opération - ' . $operation->operationList->name)
                     ->quantity($totalTimeOp)
-                    ->pricePerUnit(($operation->operationList->price / 60) * $operation->mechanic_count));
+                    ->pricePerUnit(($operation->operationList->price / 60)));
             }
             // Calcul des pièces
             foreach ($operation->pieces as $piece) {

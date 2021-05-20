@@ -35,6 +35,5 @@
     @endif
     </div>
     <div class="d-flex fx-center mt-3">{{ $interventions->links('pagination') }}</div>
-
 </div>
 @endsection
