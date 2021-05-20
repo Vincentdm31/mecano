@@ -9,7 +9,7 @@ $date = Carbon::now()->format('d/m/Y');
 
 ?>
 
-<div class="dark m-0 h100 txt-gl4 p-5">
+<div class="bg-blue m-0 h100 txt-gl4 p-5">
   <form class="form-material" method="POST" action="{{ route('editInvoice',['id'=> $intervention->id]) }}">
     @csrf
     <div class="grix xs1 md3 gutter-xs3">
@@ -54,7 +54,7 @@ $date = Carbon::now()->format('d/m/Y');
         </div>
       </div>
     </div>
-    <button type="submit" class="btn orange rounded-1">Générer la facture</button>
+    <button type="submit" class="btn d-block mx-auto orange txt-gl4 rounded-1">Générer la facture</button>
   </form>
 </div>
 

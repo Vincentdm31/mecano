@@ -2,17 +2,15 @@
 <?php
 
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Cookie;
 
 $date = Carbon::now();
 ?>
 <div class="container">
-  @if($opDoing->count() < 1 && $opPause->count() < 1) <p class="dark rounded-2 txt-grey m-0 txt-light-4 p-3 font-s3 txt-center">Aucune opération en cours</p>
+  @if($opDoing->count() < 1 && $opPause->count() < 1) <p class="white rounded-2  m-0 txt-light-4 p-3 font-s3 txt-center">Aucune opération en cours</p>
       @endif
       @foreach( $intervention->operations as $operation)
       @if($operation->state != "finish")
-      <div class="card overflow-visible dark mb-3">
-        <p class="txt-gl4"><?php echo(Cookie::has('joinOp')) ?></p>
+      <div class="card overflow-visible bg-blue3 mb-3">
         @if(Auth()->user()->id != $operation->user_id && Cookie::has('joinOp') == false)
         <form method="POST" action="{{ route('joinOperation', ['intervention' => $intervention->id]) }}">
           @csrf
@@ -49,20 +47,20 @@ $date = Carbon::now();
           </div>
           @endforeach
           @else
-          <p class="m-0 p-3 font-s3 dark txt-center txt-orange">Aucune pièce utilisée</p>
+          <p class="m-0 p-3 font-s3 white txt-center txt-orange">Aucune pièce utilisée</p>
           @endif
         </div>
         <div class="card-content grey light-4">
           <div class="grix xs2 md5 gutter-xs3">
             <!-- Pièces -->
             <div>
-              <button data-target="add-piece-operation-{{ $operation->id }}" class="btn w100 rounded-1 dark modal-trigger mx-auto">
+              <button data-target="add-piece-operation-{{ $operation->id }}" class="btn w100 rounded-1 bg-blue3 modal-trigger mx-auto">
                 <i class="fas fa-tools txt-gl4"></i>
               </button>
             </div>
             <!-- Commentaire opération -->
             <div>
-              <button data-target="edit-operation-{{ $operation->id }}" class="btn w100 rounded-1 dark txt-gl4 modal-trigger mx-auto">
+              <button data-target="edit-operation-{{ $operation->id }}" class="btn w100 rounded-1 bg-blue3 txt-gl4 modal-trigger mx-auto">
                 <i class="fas fa-comment-medical <?php echo (isset($operation->op_comment) ? 'txt-orange' : '') ?>"></i>
               </button>
             </div>
@@ -75,7 +73,7 @@ $date = Carbon::now();
                 <input hidden name="intervention_id" value="{{ $intervention->id }}">
                 <input hidden name="operation_id" value="{{ $operation->id }}">
                 <input hidden name="start_date" value="{{ $date }}">
-                <button type="submit" class="btn w100 rounded-1 dark mx-auto">
+                <button type="submit" class="btn w100 rounded-1 bg-blue3 mx-auto">
                   <i class="fas fa-pause txt-orange"></i>
                 </button>
               </form>
@@ -88,7 +86,7 @@ $date = Carbon::now();
                 <input hidden name="intervention_id" value="{{ $intervention->id }}">
                 <input hidden name="operation_id" value="{{ $operation->id }}">
                 <input hidden name="end_date" value="{{ $date }}">
-                <button type="submit" class="btn w100 rounded-1 dark mx-auto">
+                <button type="submit" class="btn w100 rounded-1 bg-blue3 mx-auto">
                   <i class="fas fa-play txt-green txt-dark-1"></i>
                 </button>
               </form>
@@ -99,7 +97,7 @@ $date = Carbon::now();
                 @method('DELETE')
                 @csrf
                 <input hidden name="intervention_id" value="{{ $intervention->id }}" />
-                <button type="submit" class="btn w100 dark rounded-1 txt-red"><i class="fas fa-trash"></i></span></button>
+                <button type="submit" class="btn w100 bg-blue3 rounded-1 txt-red"><i class="fas fa-trash"></i></span></button>
               </form>
             </div>
             <div class="col-xs2 col-md1">
@@ -107,7 +105,7 @@ $date = Carbon::now();
                 @method('PUT')
                 @csrf
                 <div class="txt-center">
-                  <button type="" class="btn w100 rounded-1  dark mx-auto">
+                  <button type="" class="btn w100 rounded-1 bg-blue3 mx-auto">
                     <i class="fas fa-check txt-green txt-dark-1"></i>
                   </button>
                 </div>
@@ -138,8 +136,5 @@ $date = Carbon::now();
     input.value = pieceCount;
   }
 
-  document.getElementById('leaveOp').addEventListener('click', (e) => {
-    e.classList.add('hide');
-  })
 </script>
 @endsection

@@ -7,7 +7,7 @@
                 @csrf
                 <div class="grix xs3">
                     <div class="form-field pos-xs1 col-xs2">
-                        <input type="text" name="searchVehicule" id="searchVehicule" class="form-control" />
+                        <input type="text" name="searchVehicule" id="searchVehicule" class="form-control txt-gl4" />
                         <label for="searchVehicule">Rechercher</label>
                     </div>
                     <button type="submit" class="btn circle orange dark-1 txt-white search-icon vself-center rounded-4 small"><i class="fa fa-search"></i></button>
@@ -16,7 +16,7 @@
     </div>
 
     <div class="container mt-5 shadow-1 rounded-2">
-        <div class="responsive-table rounded-2 dark">
+        <div class="responsive-table rounded-2 bg-blue3">
             <table class="table striped centered">
                 <thead class="txt-grey txt-light-4">
                     <tr class="txt-orange">

@@ -10,7 +10,7 @@
                 @csrf
                 <div class="grix xs5">
                     <div class="form-field pos-xs1 col-xs4">
-                        <input type="text" name="searchPiecesList" id="searchPiecesList" class="form-control" />
+                        <input type="text" name="searchPiecesList" id="searchPiecesList" class="form-control txt-gl4" />
                         <label for="searchPiecesList">Rechercher</label>
                     </div>
                     <button type="submit" class="btn circle orange dark-1 txt-white search-icon vself-center rounded-4 small"><i class="fa fa-search"></i></button>
@@ -19,7 +19,7 @@
         </div>
     </div>
 
-    <div class="mt-5 container dark rounded-2">
+    <div class="mt-5 container bg-blue3 shadow-2 rounded-2">
         <div class="responsive-table rounded-2">
             <table class="table striped centered">
                 <thead class="txt-white">

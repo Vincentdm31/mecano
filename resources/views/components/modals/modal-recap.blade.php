@@ -1,7 +1,7 @@
 @section('modal-recap')
 <!-- Modal Recap -->
 <div class="modal grey light-4 rounded-2" id="modal-recap" data-ax="modal">
-  <div class="card dark shadow-2 mt-0 mb-0">
+  <div class="card bg-blue3 shadow-2 mt-0 mb-0">
     <div class="card-header txt-white p-0">
       <p class=" m-2 font-s4"><i class="fas fa-car font-s6 mr-3 ml-2 mb-2"></i>Véhicule</p>
     </div>
@@ -36,14 +36,14 @@
   @foreach( $intervention->operations as $operation)
   @if($operation->state == 'finish')
   <div class="card grey light-4 overflow-visible shadow-1 m-4 rounded-2">
-    <div class="card-header dark p-1">
+    <div class="card-header bg-blue3 p-1">
       <div class="d-flex fx-row">
       <p class="m-0 font-s3 mx-auto txt-white p-2">{{ $operation->operationList->name}}</p>
       </div>
       <form method="POST" class="" action="{{ route('editOperation',  ['id' => $operation->id, 'interventionId' => $intervention->id ] ) }}">
         @method('PUT')
         @csrf
-        <button type="submit" class="btn circle bd-solid bd-3 bd-white rounded-1 small dark txt-orange txt-dark-1 " style="position:absolute;top:0;right:0;transform:translate(50%,-50%)"><i class="fas fa-pen"></i></button>
+        <button type="submit" class="btn circle bd-solid bd-3 bd-white rounded-1 small bg-blue2 txt-orange txt-dark-1 " style="position:absolute;top:0;right:0;transform:translate(50%,-50%)"><i class="fas fa-pen"></i></button>
       </form>
     </div>
     @foreach($operation->pieces as $piece)

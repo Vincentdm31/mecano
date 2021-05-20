@@ -19,10 +19,10 @@
     @yield('extra-css')
 </head>
 
-<body class="layout grey light-4">
+<body class="layout bg-blue light-4">
     <header>
         <div class="navbar-fixed">
-            <nav class="navbar dark txt-white shadow-1">
+            <nav class="navbar bg-blue3 txt-white shadow-1">
                 @if(Auth()->check())
                 <a href="{{ route('verif.index') }}" class="navbar-brand hide-sm-down">Accueil</a>
 
@@ -44,8 +44,8 @@
                     @else
                     <span class="mr-2">{{ Auth::user()->name }}</span>
 
-                    <a href="{{ route('logout') }}" class="navbar-link" onclick="event.preventDefault(); document.getElementById('form-logout').submit();">
-                        {{ __('Logout') }}
+                    <a href="{{ route('logout') }}" class="navbar-link red rounded-2 px-2" onclick="event.preventDefault(); document.getElementById('form-logout').submit();">
+                        {{ __('Déconnexion') }}
                     </a>
 
                     <form id="form-logout" action="{{ route('logout') }}" method="POST" class="hide">

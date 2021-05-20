@@ -8,7 +8,7 @@ $date = Carbon::now();
 
 <div class="fab fab-checker" id="fab" data-ax="fab">
   <!-- Here is the fab-trigger -->
-  <button id="fab-btn" class="fab-checker btn shadow-1 circle large dark txt-white fab-trigger">
+  <button id="fab-btn" class="fab-checker btn shadow-1 circle large grey light-4 txt-orange fab-trigger">
     <i class="fas fa-plus fab-checker" aria-hidden="true"></i>
   </button>
 
@@ -18,7 +18,7 @@ $date = Carbon::now();
       @method('PUT')
       @csrf
       <input hidden value="finish" name="state" />
-      <button type="submit" class="<?php echo ($opDoing->count() < 1 && $opPause->count() < 1 && !$intervention->needMove || $opDoing->count() < 1 && $opPause->count() < 1 && $intervention->needMove && !empty($intervention->end_move_return) ? '' : 'hide') ?> btn mb-3 circle shadow-1 dark txt-green"><i class="fas fa-check" aria-hidden="true"></i></button>
+      <button type="submit" class="<?php echo ($opDoing->count() < 1 && $opPause->count() < 1 && !$intervention->needMove || $opDoing->count() < 1 && $opPause->count() < 1 && $intervention->needMove && !empty($intervention->end_move_return) ? '' : 'hide') ?> btn mb-3 circle shadow-1 grey light-4 txt-green"><i class="fas fa-check" aria-hidden="true"></i></button>
     </form>
 
 

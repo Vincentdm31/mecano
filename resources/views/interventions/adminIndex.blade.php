@@ -5,12 +5,12 @@
 @section('content')
 <div class="container">
     <div class="container">
-        <p class="txt-airforce txt-dark-4 font-s8 mt-5">Liste des interventions terminées</p>
+        <p class="txt-gl4 font-s8 mt-5">Liste des interventions terminées</p>
         <form class="form-material ml-2" method="GET" action="searchIntervention">
             @csrf
             <div class="grix xs3">
                 <div class="form-field pos-xs1 col-xs2">
-                    <input type="text" name="searchIntervention" id="searchIntervention" class="form-control" />
+                    <input type="text" name="searchIntervention" id="searchIntervention" class="form-control txt-gl4" />
                     <label for="searchIntervention">Rechercher</label>
                 </div>
                 <button type="submit" class="btn circle orange dark-1 txt-white search-icon vself-center rounded-4 small"><i class="fa fa-search"></i></button>
@@ -18,7 +18,7 @@
         </form>
     </div>
     <div class="container shadow-1 rounded-2 mt-2">
-        <div class="responsive-table dark rounded-2">
+        <div class="responsive-table bg-blue3 rounded-2">
             <table class="table striped">
                 <thead>
                     <tr class="txt-gl4">
@@ -66,7 +66,7 @@
             </table>
 
             @foreach($interventions as $intervention)
-            <div class="modal shadow-1 rounded-1 dark" id="modal-infos-{{ $intervention->id }}" data-ax="modal">
+            <div class="modal shadow-1 rounded-1 bg-blue3" id="modal-infos-{{ $intervention->id }}" data-ax="modal">
                 <div class="modal-header txt-gl4">
                     <div class="d-flex">
                         <p>Intervention n° {{ $intervention->id}}</p>

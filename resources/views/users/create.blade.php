@@ -4,7 +4,7 @@ Add Car
 @endsection
 @section('content')
 <div class="container h100 d-flex fx-center">
-    <div class="card vself-center rounded-2 shadow-1 dark pl-4 pr-4">
+    <div class="card vself-center rounded-2 shadow-1 bg-blue3 pl-4 pr-4">
         <div class="card-header pl-3 pr-3 p-0">
             <p class="txt-white bd-3 pb-2">Nouvel utilisateur</p>
         </div>

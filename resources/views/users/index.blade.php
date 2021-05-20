@@ -3,8 +3,8 @@
 @section('content')
 <div class="container mt-4">
     <div class="container mt-5 txt-right">
-        <a href="{{ route('users.create') }}" class="btn hoverable-1 rounded-1 orange dark-1 txt-white small mb-2">Nouvel utilisateur</a>
-        <div class="responsive-table dark shadow-2 rounded-2">
+        <a href="{{ route('users.create') }}" class="btn hoverable-1 rounded-1 orange dark-1 txt-white small mb-2">Nouvel utilisateur <i class="fas fa-plus white txt-orange p-1 rounded-1"></i></a>
+        <div class="responsive-table bg-blue3 shadow-2 rounded-2">
             <table class="table striped centered">
                 <thead>
                     <tr class="txt-orange">

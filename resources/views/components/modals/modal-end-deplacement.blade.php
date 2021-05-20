@@ -11,7 +11,7 @@ $date = Carbon::now();
   @if(empty($intervention->start_move_return))
   <div class="d-flex my-auto fx-col">
     <div>
-      <p class="txt-center dark txt-grey txt-light-4 mb-4 m-0 p-3 font-s3">Déplacements Retour</p>
+      <p class="txt-center bg-blue3 txt-gl4 mb-4 m-0 p-3 font-s3">Déplacements Retour</p>
       <div>
         <form method="POST" action="{{ route('setEndDeplacement')}}">
           @method('PUT')
@@ -19,7 +19,7 @@ $date = Carbon::now();
           <div class="txt-center">
             <input hidden value="{{ $date }}" name="start_move_return" />
             <input hidden name="id" value="{{ $intervention->id }}"></input>
-            <button type="submit" class="btn small shadow-1 rounded-1 orange dark-1 txt-grey txt-light-4">Début</span></button>
+            <button type="submit" class="btn small shadow-1 rounded-1 orange dark-1 txt-gl4">Début</span></button>
           </div>
         </form>
       </div>
@@ -32,7 +32,7 @@ $date = Carbon::now();
   @if(!empty($intervention->start_move_return) && empty($intervention->end_move_return))
   <div class="d-flex my-auto fx-col">
     <div>
-      <p class="txt-center dark txt-grey txt-light-4 mb-4 m-0 p-3 font-s3">Déplacements Retour</p>
+      <p class="txt-center bg-blue3 txt-gl4 mb-4 m-0 p-3 font-s3">Déplacements Retour</p>
     </div>
     <form method="POST" action="{{ route('setEndDeplacement')}}">
       @method('PUT')
@@ -40,7 +40,7 @@ $date = Carbon::now();
       <div class="txt-center">
         <input hidden value="{{ $date }}" name="end_move_return" />
         <input hidden name="id" value="{{ $intervention->id }}"></input>
-        <button type="submit" class="btn small shadow-1 rounded-1 orange dark-1 txt-grey txt-light-4">Fin</span></button>
+        <button type="submit" class="btn small shadow-1 rounded-1 orange dark-1 txt-gl4">Fin</span></button>
       </div>
     </form>
   </div>

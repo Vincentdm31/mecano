@@ -3,11 +3,21 @@
 body {
     font-family: "Quicksand", sans-serif;
     font-weight: 500;
-    background: linear-gradient(
-        180deg,
-        rgba(223, 223, 223, 0.843) 35%,
-        rgb(251, 171, 65) 95%
-    );
+    // background: linear-gradient(
+    //     180deg,
+    //     rgba(223, 223, 223, 0.843) 35%,
+    //     rgb(251, 171, 65) 95%
+    // );
+}
+
+.bg-blue {
+    background-color: #212433;
+}
+.bg-blue2 {
+    background-color: #1d2332;
+}
+.bg-blue3 {
+    background-color: #181c29;
 }
 
 .tab .tab-menu {
@@ -93,4 +103,9 @@ body {
 
 .txt-gl4 {
     color: #f7f7f7 !important;
+}
+
+.home-btn{
+    height: 150px!important;
+    width: 150px!important;
 }

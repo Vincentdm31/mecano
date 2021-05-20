@@ -6,7 +6,7 @@
 <div class="container h100 d-flex pb-5">
     <div class="vself-center container card overflow-visible shadow-1 rounded-3 white">
         <div class="card-header p-0">
-            <p class="m-0 txt-grey txt-light-4 p-3 font-s2 dark mb-4 rounded-tr0 rounded-bl0 rounded-tl3 rounded-br3">Choix du véhicule</p>
+            <p class="m-0 txt-gl4 p-3 font-s2 bg-blue3 mb-4 rounded-tr0 rounded-bl0 rounded-tl3 rounded-br3">Choix du véhicule</p>
         </div>
         <div class="card-content pl-4 pr-4 pt-0 pb-0">
             <div class="mt-2 mb-2 grix sm2 gutter-sm5">

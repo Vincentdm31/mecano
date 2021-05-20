@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <div class="card light-shadow-2 rounded-2 mx-auto mt-4 container dark">
+        <div class="card light-shadow-2 rounded-2 mx-auto mt-4 container bg-blue3">
             <div class="card-header txt-gl4">{{ __('Login') }}</div>
             <div class="card-content">
                 <form class="form-material" method="POST" action="{{ route('login') }}" autocomplete="false">

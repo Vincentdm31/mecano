@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 <div class="h100 d-flex fx-center">
-    <div class="card vself-center rounded-2 shadow-1 dark p-3">
+    <div class="card vself-center rounded-2 shadow-1 bg-blue3 p-3">
         <div class="card-header pl-3 pr-3 p-0">
             <p class="pb-2 txt-grey txt-light-4">Nouvelle opération</p>
         </div>

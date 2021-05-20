@@ -11,7 +11,7 @@
                 @csrf
                 <div class="grix xs5">
                     <div class="form-field pos-xs1 col-xs4">
-                        <input type="text" name="searchOperationsList" id="searchOperationsList" class="form-control" />
+                        <input type="text" name="searchOperationsList" id="searchOperationsList" class="form-control txt-gl4" />
                         <label for="searchOperationsList">Rechercher</label>
                     </div>
                     <button type="submit" class="btn circle orange dark-1 txt-white search-icon vself-center rounded-4 small"><i class="fa fa-search"></i></button>
@@ -20,7 +20,7 @@
         </div>
     </div>
     <div class="container mt-5">
-        <div class="responsive-table dark rounded-2">
+        <div class="responsive-table bg-blue3 shadow-1 rounded-2">
             <table class="table striped centered">
                 <thead>
                     <tr class="txt-orange">

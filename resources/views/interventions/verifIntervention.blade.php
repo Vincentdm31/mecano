@@ -5,12 +5,12 @@
 @section('content')
 <div class="container">
     <div class="container mt-5">
-    <p class="txt-airforce txt-dark-4 font-s8 mt-2">Liste des Interventions à vérifier</p>
+    <p class="txt-gl4 font-s8 mt-2">Liste des Interventions à vérifier</p>
             <form class="form-material" method="GET" action="searchInterventionVerif">
                 @csrf
                 <div class="grix xs3">
                     <div class="form-field pos-xs1 col-xs2">
-                        <input type="text" name="searchInterventionVerif" id="searchInterventionVerif" class="form-control" />
+                        <input type="text" name="searchInterventionVerif" id="searchInterventionVerif" class="form-control txt-gl4" />
                         <label for="searchInterventionVerif">Rechercher</label>
                     </div>
                     <button type="submit" class="btn circle orange dark-1 txt-white search-icon vself-center rounded-4 small"><i class="fa fa-search"></i></button>
@@ -18,7 +18,7 @@
             </form>
     </div>
     <div class="container shadow-1 rounded-2 mt-2">
-        <div class="responsive-table dark rounded-2">
+        <div class="responsive-table bg-blue3 rounded-2">
             <table class="table striped">
                 <thead>
                     <tr class="txt-gl4">

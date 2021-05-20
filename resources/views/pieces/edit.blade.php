@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container grix xs1 sm3 mt-5">
-    <div class="card pos-sm2 dark txt-gl4 shadow-1 rounded-1">
+    <div class="card pos-sm2 bg-blue3 txt-gl4 shadow-1 rounded-1">
         <div class="p-0 pl-4 pr-4 pt-1">
             <p class="bd-b-solid bd-orange bd-3 pb-2 h5">Editer pièce</p>
         </div>
@@ -23,13 +23,15 @@
                         <input type="text" id="localisation" name="localisation" class="form-control" value="{{$pieceList->localisation}}" />
                         <label for="localisation">Localisation</label>
                     </div>
-                    <div class="form-field">
-                        <input type="number" id="qte" name="qte" class="form-control" value="{{$pieceList->qte}}" />
-                        <label for="qte">Quantité</label>
-                    </div>
-                    <div class="form-field">
-                        <input type="number" id="price" name="price" class="form-control" value="{{$pieceList->qte}}" />
-                        <label for="price">Prix</label>
+                    <div class="grix xs2">
+                        <div class="form-field">
+                            <input type="number" id="qte" name="qte" class="form-control" value="{{$pieceList->qte}}" />
+                            <label for="qte">Quantité</label>
+                        </div>
+                        <div class="form-field">
+                            <input type="number" id="price" name="price" class="form-control" value="{{$pieceList->qte}}" />
+                            <label for="price">Prix</label>
+                        </div>
                     </div>
                 </div>
                 <div class="txt-center">

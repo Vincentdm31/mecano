@@ -1,25 +1,25 @@
 @extends('layouts.app')
 @section('content')
-<div class="container mt-3">
-    <p class="mb-5 pb-4 bd-b-solid bd-orange bd-3 bd-dark-1 txt-airforce txt-dark-4 font-s8">Espace Admin</p>
-    <div class="grix xs1 md6 gutter-xs4 mt-5 h100">
-        <div>
-            <a href="{{ route('adminIntervention') }}" class="btn blue txt-white d-flex vcenter fx-center rounded-1 shadow-1 hoverable-1 h100 w100 mb-2">Interventions</a>
+<div class="container">
+    <p class="mb-5 pb-4 bd-b-solid bd-orange bd-3 bd-dark-1 txt-gl4 font-s8">Espace Admin</p>
+    <div class="grix xs2 md6 gutter-xs4 mt-5 h100">
+        <div class="home-btn">
+            <a href="{{ route('adminIntervention') }}" class="btn orange txt-white d-flex vcenter fx-center rounded-1 shadow-1 hoverable-1 h100 w100 mb-2">Interventions</a>
         </div>
-        <div>
-            <a href="{{ route('users.index') }}" class="btn blue dark-3 txt-white d-flex vcenter fx-center rounded-1 shadow-1 hoverable-1 h100 w100 mb-2">Gestion utilisateurs</a>
+        <div class="home-btn">
+            <a href="{{ route('users.index') }}" class="btn blue txt-white d-flex vcenter fx-center rounded-1 shadow-1 hoverable-1 h100 w100 mb-2">Gestion utilisateurs</a>
         </div>
-        <div>
-            <a href="{{ route('vehicules.index') }}" class="btn blue dark-3 txt-white d-flex vcenter fx-center rounded-1 shadow-1 hoverable-1 h100 w100 mb-2">Gestion véhicules</a>
+        <div class="home-btn">
+            <a href="{{ route('vehicules.index') }}" class="btn blue txt-white d-flex vcenter fx-center rounded-1 shadow-1 hoverable-1 h100 w100 mb-2">Gestion véhicules</a>
         </div>
-        <div>
-            <a href="{{ route('piecesList.index') }}" class="btn blue dark-3 txt-white d-flex vcenter fx-center rounded-1 shadow-1 hoverable-1 h100 w100 mb-2">Gestion pièces</a>
+        <div class="home-btn">
+            <a href="{{ route('piecesList.index') }}" class="btn blue txt-white d-flex vcenter fx-center rounded-1 shadow-1 hoverable-1 h100 w100 mb-2">Gestion pièces</a>
         </div>
-        <div>
-            <a href="{{ route('operationsList.index') }}" class="btn blue dark-3 txt-white d-flex vcenter fx-center rounded-1 shadow-1 hoverable-1 h100 w100 mb-2">Gestion opérations</a>
+        <div class="home-btn">
+            <a href="{{ route('operationsList.index') }}" class="btn blue txt-white d-flex vcenter fx-center rounded-1 shadow-1 hoverable-1 h100 w100 mb-2">Gestion opérations</a>
         </div>
-        <div class="h100">
-            <a href="{{ route('correctInterventionIndex') }}" class="btn red dark-1 txt-white rounded-1 shadow-1 w100 h100 d-flex fx-center vcenter">Intervention à checker</a>
+        <div class="home-btn">
+            <a href="{{ route('correctInterventionIndex') }}" class="btn red txt-white rounded-1 shadow-1 w100 h100 d-flex fx-center vcenter">Intervention à checker</a>
         </div>
     </div>
 </div>
