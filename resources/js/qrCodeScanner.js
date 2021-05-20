@@ -1,4 +1,5 @@
 const qrcode = window.qrcode;
+const axentix = window.Axentix;
 
 let video = document.createElement("video");
 let canvasElement = document.getElementById("qr-canvas");
@@ -17,6 +18,8 @@ qrcode.callback = (res) => {
     if (res) {
         outputData.innerText = res;
         qrCodeResult.value = res;
+        console.log('Axentix', axentix);
+        axentix.updateInputs();
         scanning = false;
         btnScanQR.classList.remove("hide");
         btnStopQR.classList.add("hide");
@@ -31,7 +34,6 @@ qrcode.callback = (res) => {
 };
 
 btnScanQR.onclick = () => {
-    console.log('test');
     btnScanQR.classList.add("hide");
     btnStopQR.classList.remove("hide");
     navigator.mediaDevices

@@ -1,12 +1,12 @@
 @extends('layouts.app')
 @section('content')
-<p class="txt-black txt-center h5 mt-5 mb-4 font-s5">Rejoindre une intervention</p>
+<p class="txt-gl4 txt-center h5 mt-5 mb-4 font-s5">Rejoindre une intervention</p>
 <div class="container">
     @if(!count($interventions))
-    <p class="txt-center txt-black font-w600">Aucune intervention à rejoindre</p>
+    <p class="txt-center txt-gl4 font-w600">Aucune intervention à rejoindre</p>
     @endif
     @foreach($interventions as $intervention)
-    <div class="card overflow-visible dark rounded-2 m-2">
+    <div class="card overflow-visible bg-blue3 bd-solid bd-grey bd-1 rounded-2 m-2">
         <div class="grix xs2 p-3">
             <div>
                 <p class="txt-orange m-0">Intervention n°</p>

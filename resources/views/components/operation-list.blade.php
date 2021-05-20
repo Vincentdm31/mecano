@@ -10,7 +10,7 @@ $date = Carbon::now();
       @endif
       @foreach( $intervention->operations as $operation)
       @if($operation->state != "finish")
-      <div class="card overflow-visible bg-blue3 mb-3">
+      <div class="card overflow-visible bg-blue3 mb-3 mx-3">
         @if(Auth()->user()->id != $operation->user_id && Cookie::has('joinOp') == false)
         <form method="POST" action="{{ route('joinOperation', ['intervention' => $intervention->id]) }}">
           @csrf

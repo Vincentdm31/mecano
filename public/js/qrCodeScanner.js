@@ -3,6 +3,7 @@
   !*** ./resources/js/qrCodeScanner.js ***!
   \***************************************/
 var qrcode = window.qrcode;
+var axentix = window.Axentix;
 var video = document.createElement("video");
 var canvasElement = document.getElementById("qr-canvas");
 var canvas = canvasElement.getContext("2d");
@@ -17,6 +18,8 @@ qrcode.callback = function (res) {
   if (res) {
     outputData.innerText = res;
     qrCodeResult.value = res;
+    console.log('Axentix', axentix);
+    axentix.updateInputs();
     scanning = false;
     btnScanQR.classList.remove("hide");
     btnStopQR.classList.add("hide");
@@ -30,7 +33,6 @@ qrcode.callback = function (res) {
 };
 
 btnScanQR.onclick = function () {
-  console.log('test');
   btnScanQR.classList.add("hide");
   btnStopQR.classList.remove("hide");
   navigator.mediaDevices.getUserMedia({

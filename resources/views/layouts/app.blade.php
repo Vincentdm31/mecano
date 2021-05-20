@@ -62,7 +62,7 @@
                     @else
                     <span class="mr-2">{{ Auth::user()->name }}</span>
 
-                    <a href="{{ route('logout') }}" class="navbar-link red rounded-2 px-2" onclick="event.preventDefault(); document.getElementById('form-logout').submit();">
+                    <a href="{{ route('logout') }}" class="navbar-link txt-red" onclick="event.preventDefault(); document.getElementById('form-logout').submit();">
                         {{ __('Déconnexion') }}
                     </a>
 
