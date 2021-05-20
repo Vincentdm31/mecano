@@ -4,7 +4,7 @@
 @endsection
 @section('content')
 <div class="container">
-    <p class="txt-airforce txt-dark-4 txt-center font-s3 mt-5">Liste des Interventions à checker</p>
+    <p class="txt-gl4 txt-center font-s3 mt-5">Liste des Interventions à checker</p>
     <div class="container rounded-2 mt-5">
     @if(!count($interventions))
     <p class="txt-center font-s2">Aucune intervention à checker</p>

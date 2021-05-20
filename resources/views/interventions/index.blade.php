@@ -4,9 +4,9 @@
 @endsection
 @section('content')
 <div class="container">
-    <p class="txt-airforce txt-dark-4 txt-center h5 mt-5">Liste des Interventions</p>
+    <p class="txt-gl4 txt-center h5 mt-5">Liste des Interventions</p>
     <div class="container shadow-1 rounded-2 mt-5">
-        <div class="responsive-table white rounded-2">
+        <div class="responsive-table bg-blue3 txt-gl4 rounded-2">
             <table class="table striped">
                 <thead>
                     <tr>

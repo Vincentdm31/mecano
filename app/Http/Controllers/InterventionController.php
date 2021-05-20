@@ -437,7 +437,7 @@ class InterventionController extends Controller
                     $totalTimeOpJoin += Carbon::parse($userOperation->pivot->end_date)->diffInMinutes(Carbon::parse($userOperation->pivot->start_date));
                 }
 
-                dd($totalTimeOpJoin);
+                // ($totalTimeOpJoin);
 
                 array_push($itemList, (new InvoiceItem())->title('Opération - ' . $operation->operationList->name)
                     ->quantity($totalTimeOp)
