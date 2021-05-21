@@ -63,7 +63,7 @@
                     <span class="mr-2">{{ Auth::user()->name }}</span>
 
                     <a href="{{ route('logout') }}" class="navbar-link txt-red" onclick="event.preventDefault(); document.getElementById('form-logout').submit();">
-                        {{ __('Déconnexion') }}
+                        <i class="fas fa-power-off"></i>
                     </a>
 
                     <form id="form-logout" action="{{ route('logout') }}" method="POST" class="hide">
