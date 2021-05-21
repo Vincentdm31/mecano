@@ -18,9 +18,6 @@
         <div class="h100">
             <a href="{{ route('interventions.index') }}" class="btn blue txt-white rounded-1 shadow-1 w100 h100 d-flex fx-center vcenter">Liste complète</a>
         </div>
-        <div class="h100">
-            <a href="{{ route('correctInterventionIndex') }}" class="btn red txt-white rounded-1 shadow-1 w100 h100 d-flex fx-center vcenter">Intervention à checker</a>
-        </div>
     </div>
 </div>
 @endsection

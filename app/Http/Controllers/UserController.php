@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use Hash;
 use Illuminate\Support\Facades\Hash as FacadesHash;
 
 class UserController extends Controller
@@ -59,7 +58,6 @@ class UserController extends Controller
     {
         $user = User::find($id);
         $user->delete();
-
 
         return redirect(route('users.index'))->with('toast', 'userDelete');
     }

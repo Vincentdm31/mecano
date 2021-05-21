@@ -54,9 +54,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/getVehicles',  [VehiculeController::class, 'getVehicles'])->name('getVehicles');
     Route::get('/home/factures', [VerifInterventionController::class, 'verifIntervention'])->name('home.facture');
     Route::get('/verifFull', [VerifInterventionController::class, 'verifFull'])->name('verifFull');
-    Route::get('/correctInterventionIndex', [InterventionController::class, 'correctInterventionIndex'])->name('correctInterventionIndex');
-    Route::get('/resumeCorrectIntervention/{id}', [InterventionController::class, 'resumeCorrectIntervention'])->name('resumeCorrectIntervention');
-
 
 
 
@@ -72,7 +69,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/home/validateVerif/{id}', [VerifInterventionController::class, 'validateVerif'])->name('validateVerif');
     Route::post('/needMove',  [InterventionController::class, 'needMove'])->name('needMove');
     Route::post('/sendVerif/{id}', [InterventionController::class, 'sendVerif'])->name('sendVerif');
-    Route::post('/editInvoice/{id}', [InterventionController::class, 'editInvoice'])->name('editInvoice');
     
     Route::post('/joinOperation/{intervention}', [InterventionController::class, 'joinOperation'])->name('joinOperation');
     Route::put('/leaveOperation/{intervention}', [InterventionController::class, 'leaveOperation'])->name('leaveOperation');
@@ -86,7 +82,6 @@ Route::middleware('auth')->group(function () {
     Route::resource('verif', VerifInterventionController::class);
     Route::resource('operations', OperationController::class);
     Route::resource('time', TimeInterventionController::class);
-    Route::resource('invoice', InvoiceController::class);
 
 
     Route::put('/editOperation/{id}{interventionId}', [OperationController::class, 'editOperation'])->name('editOperation');
@@ -94,5 +89,8 @@ Route::middleware('auth')->group(function () {
     Route::put('/selectVehicule',  [InterventionController::class, 'selectVehicule'])->name('selectVehicule');
     Route::put('/setDeplacement',  [InterventionController::class, 'setDeplacement'])->name('setDeplacement');
     Route::put('/setEndDeplacement',  [InterventionController::class, 'setEndDeplacement'])->name('setEndDeplacement');
-    Route::put('/correctIntervention/{id}',  [InterventionController::class, 'correctIntervention'])->name('correctIntervention');
+
+    // Modify Intervention
+    Route::resource('invoice', InvoiceController::class);
+    Route::get('/editInvoice/{id}', [InterventionController::class, 'editInvoice'])->name('editInvoice');
 });

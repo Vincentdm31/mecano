@@ -51,10 +51,9 @@
                             </form>
                         </td>
                         <td class="txt-center">
-                            <form class="form-material container" method="POST" action="{{ route('correctIntervention',  ['id' => $intervention->id])}}">
+                            <form class="form-material container" method="GET" action="{{ route('editInvoice',  ['id' => $intervention->id])}}">
                                 @csrf
-                                @METHOD('PUT')
-                                <button type="submit" class="btn circle orange dark-1 txt-white"><i class="fas fa-edit"></i></a>
+                                <button type="submit" class="btn circle blue dark-1 txt-white"><i class="fas fa-edit"></i></a>
                             </form>
                         </td>
                         <td>
@@ -74,12 +73,12 @@
                     </div>
                 </div>
                 <div class="modal-content txt-gl4">
-                @foreach($intervention->operations as $operation)
-                <p>{{ $operation->operationList->name }}</p>
-                @foreach($operation->pieces as $piece)
-                <li class=><span class="mr-3">x{{ $piece->qte }}</span> {{ $piece->pieceList->name }}</li>
-                @endforeach
-                @endforeach
+                    @foreach($intervention->operations as $operation)
+                    <p>{{ $operation->operationList->name }}</p>
+                    @foreach($operation->pieces as $piece)
+                    <li class=><span class="mr-3">x{{ $piece->qte }}</span> {{ $piece->pieceList->name }}</li>
+                    @endforeach
+                    @endforeach
                 </div>
             </div>
             @endforeach
