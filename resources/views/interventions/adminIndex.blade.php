@@ -51,7 +51,7 @@
                             </form>
                         </td>
                         <td class="txt-center">
-                            <form class="form-material container" method="GET" action="{{ route('editInvoice',  ['id' => $intervention->id])}}">
+                            <form class="form-material container" method="GET" action="{{ route('invoice.edit',  ['invoice' => $intervention->id])}}">
                                 @csrf
                                 <button type="submit" class="btn circle blue dark-1 txt-white"><i class="fas fa-edit"></i></a>
                             </form>

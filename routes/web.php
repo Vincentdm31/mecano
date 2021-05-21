@@ -93,4 +93,13 @@ Route::middleware('auth')->group(function () {
     // Modify Intervention
     Route::resource('invoice', InvoiceController::class);
     Route::get('/editInvoice/{id}', [InterventionController::class, 'editInvoice'])->name('editInvoice');
+    Route::put('/modifyInterventionDate/{id}', [InvoiceController::class, 'modifyInterventionDate'])->name('modifyInterventionDate');
+    Route::put('/modifyDeplacement/{id}', [InvoiceController::class, 'modifyDeplacement'])->name('modifyDeplacement');
+    Route::put('/modifyVehicule/{id}', [InvoiceController::class, 'modifyVehicule'])->name('modifyVehicule');
+    Route::put('/modifyObservations/{id}', [InvoiceController::class, 'modifyObservations'])->name('modifyObservations');
+    Route::put('/modifyPauseIntervention/{id}', [InvoiceController::class, 'modifyPauseIntervention'])->name('modifyPauseIntervention');
+    Route::put('/modifyPauseOperation/{id}', [InvoiceController::class, 'modifyPauseOperation'])->name('modifyPauseOperation');
+    Route::put('/modifyOperation/{id}', [InvoiceController::class, 'modifyOperation'])->name('modifyOperation');
+    Route::put('/modifyPiece/{id}', [InvoiceController::class, 'modifyPiece'])->name('modifyPiece');
+    
 });

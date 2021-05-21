@@ -453,13 +453,6 @@ class InterventionController extends Controller
         return $invoice->stream();
     }
 
-    public function editInvoice(Request $request, $id)
-    {
-        $intervention = Intervention::find($id);
-        
-        return view('interventions.modifyIntervention', ['intervention' => $intervention]);
-    }
-
     public function totalTime($id)
     {
         $intervention = Intervention::find($id);
