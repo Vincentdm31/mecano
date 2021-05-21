@@ -101,5 +101,6 @@ Route::middleware('auth')->group(function () {
     Route::put('/modifyPauseOperation/{id}', [InvoiceController::class, 'modifyPauseOperation'])->name('modifyPauseOperation');
     Route::put('/modifyOperation/{id}', [InvoiceController::class, 'modifyOperation'])->name('modifyOperation');
     Route::put('/modifyPiece/{id}', [InvoiceController::class, 'modifyPiece'])->name('modifyPiece');
+    Route::post('/addPiece/{id}', [InvoiceController::class, 'addPiece'])->name('addPiece');
     
 });

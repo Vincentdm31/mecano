@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Intervention;
 use App\Models\Operation;
 use App\Models\Piece;
+use App\Models\PieceList;
 use App\Models\TimeIntervention;
 use App\Models\TimeOperation;
 use Illuminate\Http\Request;
@@ -16,6 +17,7 @@ class InvoiceController extends Controller
         $intervention = Intervention::find($id);
         $operations = $intervention->operations()->get();
         $pausesInterventions = TimeIntervention::where('intervention_id', $id)->get();
+        $piecesList = PieceList::all();
 
         $operationsId = [];
 
@@ -25,7 +27,7 @@ class InvoiceController extends Controller
 
         $pausesOperations = TimeOperation::where('operation_id', $operationsId )->get();
 
-        return view('interventions.modifyIntervention', ['intervention' => $intervention, 'operations' => $operations, 'pauseInterventions' => $pausesInterventions, 'pauseOperations' => $pausesOperations]);
+        return view('interventions.modifyIntervention', ['intervention' => $intervention, 'operations' => $operations, 'pauseInterventions' => $pausesInterventions, 'pauseOperations' => $pausesOperations, 'piecesList' => $piecesList]);
     }
 
     public function modifyInterventionDate(Request $request, $id){
@@ -197,6 +199,40 @@ class InvoiceController extends Controller
         }
 
         $piece->qte = $request->qte;
+
+        $piece->save();
+
+        if($piece->qte <= 0){
+            $piece->delete();
+        }
+
+        return back();
+    }
+
+    public function addPiece(Request $request, $id){
+        
+        $inputs = $request->except('_token', '_method');
+        
+        $validator = Validator::make($inputs, [
+            'piece_id' => 'integer|required',
+            'qte' => 'integer|nullable',
+        ]);
+ 
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+        $piece = new Piece();
+
+        $pieceList = PieceList::find($request->piece_id);
+
+
+        if($pieceList->qte < $request->qte){
+            return back()->with('toast', 'notEnoughQte');
+        }
+
+        $piece->operation_id = $id;
+        $piece->qte = $request->qte;
+        $piece->piece_id = $request->piece_id;
 
         $piece->save();
 

@@ -161,6 +161,7 @@ use Carbon\Carbon;
         <div class="bg-blue3 txt-gl4 mb-4 p-2 relative-pos ">
             <button class="btn circle small orange modal-trigger absolute-pos" style="top:0;right:0;transform:translate(50%,-50%)" data-target="modal-operation-{{ $operation->id }}"><i class="fas fa-pen txt-white"></i></button>
             <p class="txt-gl4 ml-2 font-s5">Opération</p>
+            <button class="btn orange modal-trigger txt-white" data-target="modal-piece-{{ $operation->id }}">Nouvelle pièce</button>
             <form class="form-material">
                 <div class="grix xs1 sm2 gutter-sm5 p-2 txt-gl4">
                     <div class="form-field">
@@ -185,11 +186,11 @@ use Carbon\Carbon;
             <form class="form-material">
                 <div class="grix xs2 bg-blue my-3 gutter-xs2 p-2 txt-gl4 relative-pos">
                     <div class="form-field">
-                        <input readonly type="text" name="start_move_begin" class="form-control rounded-1" value="{{ $piece->pieceList->name }}" />
+                        <input readonly type="text" name="name" class="form-control rounded-1" value="{{ $piece->pieceList->name }}" />
                         <label>Nom de la pièce</label>
                     </div>
                     <div class="form-field">
-                        <input readonly type="text" name="start_move_begin" class="form-control rounded-1" value="{{ $piece->qte }}" />
+                        <input readonly type="text" name="qte" class="form-control rounded-1" value="{{ $piece->qte }}" />
                         <label>Quantité</label>
                     </div>
                 </div>
@@ -410,7 +411,10 @@ $opName = $op[0]->name;
 @foreach($operations as $operation)
 <div class="modal bg-blue3 txt-gl4" id="modal-operation-{{ $operation->id }}" data-ax="modal">
     <div class="modal-header d-flex">
-        <p>Opération</p>
+        <div class="d-flex fx-col">
+            <p>Opération</p>
+
+        </div>
         <p class="ml-auto">{{ $operation->operationList->name }}</p>
         <button data-target="modal-intervention-date" class="modal-trigger">
             <span><i class="fas fa-times"></i></span>
@@ -442,7 +446,7 @@ $opName = $op[0]->name;
             <div class="grix xs2">
                 <input hidden name="piece_id" value="{{ $piece->id }}" />
                 <div class="form-field">
-                    <input readonly  class="form-control rounded-1" value="{{ $piece->pieceList->name }}" />
+                    <input readonly class="form-control rounded-1" value="{{ $piece->pieceList->name }}" />
                     <label>Nom de la pièce</label>
                 </div>
                 <div class="form-field">
@@ -453,6 +457,32 @@ $opName = $op[0]->name;
             <button type="submit" class="btn d-block mx-auto orange txt-white">Modifier</button>
         </form>
         @endforeach
+    </div>
+</div>
+<!-- Modal Pieces -->
+<div class="modal white" id="modal-piece-{{ $operation->id }}" data-ax="modal">
+    <div class="modal-header">
+        Nouvelle pièce
+    </div>
+    <div class="modal-content">
+        <form class="form-material" method="POST" action="{{ route('addPiece', ['id' => $operation->id ]) }}">
+            @csrf
+            <div class="grix xs1 sm2">
+                <div class="form-field">
+                    <label>Choisir une pièce</label>
+                    <select class="form-control rounded-1" name="piece_id">
+                        @foreach($piecesList as $piece)
+                        <option value="{{ $piece->id }}">{{ $piece->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-field">
+                    <input type="number" name="qte" class="form-control rounded-1" />
+                    <label>Quantité</label>
+                </div>
+            </div>
+            <button type="submit" class="btn orange txt-white">Valider</button>
+        </form>
     </div>
 </div>
 @endforeach
@@ -487,4 +517,12 @@ $opName = $op[0]->name;
 </script>
 @endif
 
+@if(session('toast') == 'notEnoughQte')
+<script>
+    toast.change('Pas assez de pièces en stock', {
+        classes: "rounded-1 red dark-2 txt-white shadow-2 mt-5"
+    });
+    toast.show();
+</script>
+@endif
 @endsection
