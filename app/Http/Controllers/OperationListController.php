@@ -73,15 +73,4 @@ class OperationListController extends Controller
 
         return redirect(route('operationsList.index'));
     }
-
-    public function searchOperationsList(Request $request)
-    {
-        $search = $request->get('searchOperationsList');
-
-        $operationsLists = OperationList::Where('name', 'like', '%' . $search . '%')
-        ->orWhere('ref', 'like', '%' . $search . '%')  
-        ->orderBy('name')->paginate(5);
-
-        return view('operations.index', ['operationsLists' => $operationsLists]);
-    }
 }

@@ -58,8 +58,6 @@ Route::middleware('auth')->group(function () {
 
 
     Route::get('/searchIntervention',  [InterventionController::class, 'searchIntervention'])->name('searchIntervention');
-    Route::get('/searchIntervVehicule',  [InterventionController::class, 'searchIntervVehicule'])->name('searchIntervVehicule');
-    Route::get('/searchOperationsList',  [OperationListController::class, 'searchOperationsList']);
     Route::get('/searchPiecesList',  [PieceListController::class, 'searchPiecesList']);
     Route::get('/searchUser',  [UserController::class, 'searchUser']);
     Route::get('/searchVehicule',  [VehiculeController::class, 'searchVehicule']);

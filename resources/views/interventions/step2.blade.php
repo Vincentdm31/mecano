@@ -11,40 +11,24 @@
         <div class="card-content pl-4 pr-4 pt-0 pb-0">
             <div class="mt-2 mb-2 grix sm2 gutter-sm5">
                 <div class="my-auto">
-                    <div>
-                        <form class="form-material" method="GET" action="{{ route('searchIntervVehicule')}}">
-                            @csrf
-                            <div class="grix xs6">
-                                <div class="form-field pos-xs1 col-xs5">
-                                    <input type="text" name="searchIntervVehicule" id="searchIntervVehicule" class="form-control txt-airforce txt-dark-4" />
-                                    <input hidden name="id" value="{{ $intervention->id }}" /></input>
-                                    <label for="searchIntervVehicule">Rechercher</label>
-                                </div>
-                                <div class="d-flex vcenter">
-                                    <button type="submit" class="btn shadow-1 rounded-1 orange dark-1 circle rounded-4 small"><i class="fas fa-search txt-white"></i></button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
                     <div class="mt-5">
                         <form class="form-material" method="POST" action="{{ route('selectVehicule')}}">
                             @method('PUT')
                             @csrf
                             <div class="form-field">
+                                <input type="text" id="filterVehicule" class="form-control txt-airforce txt-dark-4" />
+                                <label for="filter">Filtrer</label>
+                            </div>
+                            <div class="form-field">
                                 <label for="select">Véhicule</label>
-                                <select class="form-control  txt-airforce txt-dark-4" name="vehicule_id">
-                                    @foreach ( $vehicules as $vehicule)
-                                    <option class="grey light-4 txt-airforce txt-dark-4" value="{{ $vehicule->id }}">{{ $vehicule->brand }} - {{ $vehicule->license_plate }}</option>
-                                    @endforeach
+                                <select class="form-control  txt-airforce txt-dark-4" id="vehicule_id" name="vehicule_id">
                                 </select>
                             </div>
                             <div class="form-field">
                                 <input type="number" name="km_vehicule" id="km_vehicule" class="form-control txt-airforce txt-dark-4" />
                                 <label for="km_vehicule">Kilométrage</label>
                             </div>
-
                             <input hidden name="id" value="{{ $intervention->id }}" /></input>
-
                             <div class="txt-center pt-2">
                                 <button type="submit" class="btn orange dark-1 small txt-white rounded-1"><i class="fas fa-check pl-3 pr-3"></i></button>
                             </div>
@@ -58,4 +42,30 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('extra-js')
+<script>
+    let vehicules = <?php echo (json_encode($vehicules)); ?>;
+    console.log(vehicules);
+    let inputVehicule = document.getElementById('filterVehicule');
+    let selectVehicule = document.getElementById('vehicule_id');
+
+    inputVehicule.addEventListener('input', () => {
+        let filteredEventsVehicule = vehicules.filter(function(e) {
+            return e.license_plate.includes(inputVehicule.value);
+        });
+
+        if (selectVehicule.childElementCount >= 1) {
+            for (i = selectVehicule.childElementCount; i >= 0; i--) {
+                selectVehicule.remove(i);
+            }
+        }
+
+        for (const elem of filteredEventsVehicule) {
+            selectVehicule.add(new Option(elem.brand + ' ' + elem.license_plate , elem.id));
+        }
+    });
+</script>
+
 @endsection

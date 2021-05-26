@@ -530,7 +530,7 @@ $opName = $op[0]->name;
     let input = document.getElementById('filterPieces');
     let select = document.getElementById('piece_id');
 
-    input.addEventListener('change', () => {
+    input.addEventListener('input', () => {
         let filteredEvents = piecesList.filter(function(e) {
             return e.ref.includes(input.value) || e.name.includes(input.value);
         });
@@ -552,7 +552,7 @@ $opName = $op[0]->name;
     let inputOp = document.getElementById('filterOperations');
     let selectOp = document.getElementById('operation_id');
 
-    inputOp.addEventListener('change', () => {
+    inputOp.addEventListener('input', () => {
         let filteredEventsOp = operationsList.filter(function(e) {
             return e.name.includes(inputOp.value) || e.ref.includes(inputOp.value);
         });
@@ -569,11 +569,9 @@ $opName = $op[0]->name;
     });
 </script>
 
-
 <script>
     let toast = new Axentix.Toast();
 </script>
-
 
 @if($errors->has('start_intervention_time') || $errors->has('end_intervention_time')
 || $errors->has('start_date') || $errors->has('end_date')

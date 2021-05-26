@@ -239,19 +239,6 @@ class InterventionController extends Controller
         return view('interventions.step2', ['intervention' => $intervention, 'vehicules' => $vehicules]);
     }
 
-    public function searchIntervVehicule(Request $request)
-    {
-        $search = $request->get('searchIntervVehicule');
-        $intervention_id = $request->id;
-        $intervention = Intervention::find($intervention_id);
-
-        $vehicules = Vehicule::Where('license_plate', 'like', '%' . $search . '%')
-            ->orWhere('brand', 'like', '%' . $search . '%')
-            ->get();
-
-        return view('interventions.step2', ['intervention' => $intervention, 'vehicules' => $vehicules, 'id' => $intervention_id]);
-    }
-
     public function selectVehicule(Request $request)
     {
         $inputs = $request->except('_token', '_method');
