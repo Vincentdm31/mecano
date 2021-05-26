@@ -532,9 +532,8 @@ $opName = $op[0]->name;
 
     input.addEventListener('change', () => {
         let filteredEvents = piecesList.filter(function(e) {
-            return e.ref.includes(input.value);
+            return e.ref.includes(input.value) || e.name.includes(input.value);
         });
-        console.log(filteredEvents);
 
         if (select.childElementCount >= 1) {
             for (i = select.childElementCount; i >= 0; i--) {
@@ -555,12 +554,11 @@ $opName = $op[0]->name;
 
     inputOp.addEventListener('change', () => {
         let filteredEventsOp = operationsList.filter(function(e) {
-            return e.name.includes(inputOp.value), e.ref.includes(inputOp.value);
+            return e.name.includes(inputOp.value) || e.ref.includes(inputOp.value);
         });
-        console.log(filteredEventsOp);
 
-        if (select.childElementCount >= 1) {
-            for (i = select.childElementCount; i >= 0; i--) {
+        if (selectOp.childElementCount >= 1) {
+            for (i = selectOp.childElementCount; i >= 0; i--) {
                 selectOp.remove(i);
             }
         }
