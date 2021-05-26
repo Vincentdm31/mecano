@@ -157,6 +157,7 @@ use Carbon\Carbon;
     </div>
     <!-- Opérations -->
     <div>
+        <button class="btn orange d-block mx-auto txt-gl4 my-2 modal-trigger" data-target="modal-new-operation">Nouvelle Opération</button>
         @foreach($operations as $operation)
         <div class="bg-blue3 txt-gl4 mb-4 p-2 relative-pos ">
             <button class="btn circle small orange modal-trigger absolute-pos" style="top:0;right:0;transform:translate(50%,-50%)" data-target="modal-operation-{{ $operation->id }}"><i class="fas fa-pen txt-white"></i></button>
@@ -482,10 +483,6 @@ $opName = $op[0]->name;
                 <div class="form-field">
                     <label>Choisir une pièce</label>
                     <select class="form-control rounded-1" id="piece_id" name="piece_id">
-
-                        <!-- @foreach($piecesList as $piece)
-                        <option value="{{ $piece->id }}">{{ $piece->name }}</option>
-                        @endforeach -->
                     </select>
                 </div>
                 <div class="form-field">
@@ -498,6 +495,31 @@ $opName = $op[0]->name;
     </div>
 </div>
 @endforeach
+
+<!-- Modal New Opération -->
+<div class="modal bg-blue3 txt-gl4" id="modal-new-operation" data-ax="modal" style="width:500px">
+    <div class="modal-header">
+        Nouvelle opération
+    </div>
+    <div class="modal-content">
+        <form class="form-material" method="POST" action="{{ route('addOperation', ['id' => $operation->id, 'intervention' => $intervention->id, 'user' => Auth()->user()->id ]) }}">
+            @csrf
+            <div class="grix xs1">
+                <div class="form-field">
+                    <input type="text" name="test" id="filterOperations" class="form-control rounded-1" />
+                    <label>Filtre</label>
+                </div>
+                <div class="form-field">
+                    <label>Choisir une opération</label>
+                    <select class="form-control rounded-1 txt-white" id="operation_id" name="operation_id">>
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn orange txt-white">Valider</button>
+        </form>
+    </div>
+</div>
+
 <!-- FIN  MODALS -->
 @endsection
 
@@ -522,6 +544,29 @@ $opName = $op[0]->name;
 
         for (const elem of filteredEvents) {
             select.add(new Option(elem.name, elem.id));
+        }
+    });
+</script>
+
+<script>
+    let operationsList = <?php echo (json_encode($operationsList)); ?>;
+    let inputOp = document.getElementById('filterOperations');
+    let selectOp = document.getElementById('operation_id');
+
+    inputOp.addEventListener('change', () => {
+        let filteredEventsOp = operationsList.filter(function(e) {
+            return e.name.includes(inputOp.value), e.ref.includes(inputOp.value);
+        });
+        console.log(filteredEventsOp);
+
+        if (select.childElementCount >= 1) {
+            for (i = select.childElementCount; i >= 0; i--) {
+                selectOp.remove(i);
+            }
+        }
+
+        for (const elem of filteredEventsOp) {
+            selectOp.add(new Option(elem.name, elem.id));
         }
     });
 </script>

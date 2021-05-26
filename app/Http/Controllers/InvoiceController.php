@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Intervention;
 use App\Models\Operation;
+use App\Models\OperationList;
 use App\Models\Piece;
 use App\Models\PieceList;
 use App\Models\TimeIntervention;
@@ -18,6 +19,7 @@ class InvoiceController extends Controller
         $operations = $intervention->operations()->get();
         $pausesInterventions = TimeIntervention::where('intervention_id', $id)->get();
         $piecesList = PieceList::all();
+        $operationsList = OperationList::all();
 
         $operationsId = [];
 
@@ -27,7 +29,7 @@ class InvoiceController extends Controller
 
         $pausesOperations = TimeOperation::where('operation_id', $operationsId )->get();
 
-        return view('interventions.modifyIntervention', ['intervention' => $intervention, 'operations' => $operations, 'pauseInterventions' => $pausesInterventions, 'pauseOperations' => $pausesOperations, 'piecesList' => $piecesList]);
+        return view('interventions.modifyIntervention', ['intervention' => $intervention, 'operations' => $operations, 'pauseInterventions' => $pausesInterventions, 'pauseOperations' => $pausesOperations, 'piecesList' => $piecesList, 'operationsList' => $operationsList]);
     }
 
     public function modifyInterventionDate(Request $request, $id){
@@ -242,6 +244,17 @@ class InvoiceController extends Controller
     public function deleteOperation($id){
         $operation = Operation::find($id);
         $operation->delete();
+
+        return back();
+    }
+
+    public function addOperation($id, $intervention, $user){
+        $operation = new Operation();
+        $operation->operation_id = $id;
+        $operation->intervention_id = $intervention;
+        $operation->user_id = $user;
+
+        $operation->save();
 
         return back();
     }

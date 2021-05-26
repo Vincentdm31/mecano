@@ -7292,3 +7292,7 @@ body {
   height: 150px !important;
   width: 150px !important;
 }
+
+#operation_id > :not(:first-child) {
+  color: black !important;
+}
