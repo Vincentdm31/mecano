@@ -527,24 +527,28 @@ $opName = $op[0]->name;
 
 <script>
     let piecesList = <?php echo (json_encode($piecesList)); ?>;
-    let input = document.getElementById('filterPieces');
-    let select = document.getElementById('piece_id');
+    let input = document.querySelectorAll('#filterPieces');
+    let select = document.querySelectorAll('#piece_id');
 
-    input.addEventListener('input', () => {
-        let filteredEvents = piecesList.filter(function(e) {
-            return e.ref.includes(input.value) || e.name.includes(input.value);
-        });
+    for (const el of input) {
+        el.addEventListener('input', () => {
+            let filteredEvents = piecesList.filter(function(e) {
+                return e.ref.includes(el.value) || e.name.includes(el.value);
+            });
 
-        if (select.childElementCount >= 1) {
-            for (i = select.childElementCount; i >= 0; i--) {
-                select.remove(i);
+            for (const e of select) {
+                if (e.childElementCount >= 1) {
+                    for (i = e.childElementCount; i >= 0; i--) {
+                        e.remove(i);
+                    }
+                }
+                for (const elem of filteredEvents) {
+                    e.add(new Option(elem.name, elem.id));
+                }
             }
-        }
 
-        for (const elem of filteredEvents) {
-            select.add(new Option(elem.name, elem.id));
-        }
-    });
+        });
+    }
 </script>
 
 <script>

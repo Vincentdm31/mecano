@@ -55,8 +55,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/home/factures', [VerifInterventionController::class, 'verifIntervention'])->name('home.facture');
     Route::get('/verifFull', [VerifInterventionController::class, 'verifFull'])->name('verifFull');
 
-
-
     Route::get('/searchIntervention',  [InterventionController::class, 'searchIntervention'])->name('searchIntervention');
     Route::get('/searchPiecesList',  [PieceListController::class, 'searchPiecesList']);
     Route::get('/searchUser',  [UserController::class, 'searchUser']);
