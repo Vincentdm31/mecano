@@ -102,5 +102,6 @@ Route::middleware('auth')->group(function () {
     Route::put('/modifyOperation/{id}', [InvoiceController::class, 'modifyOperation'])->name('modifyOperation');
     Route::put('/modifyPiece/{id}', [InvoiceController::class, 'modifyPiece'])->name('modifyPiece');
     Route::post('/addPiece/{id}', [InvoiceController::class, 'addPiece'])->name('addPiece');
+    Route::post('/deleteOperation/{id}', [InvoiceController::class, 'deleteOperation'])->name('deleteOperation');
     
 });

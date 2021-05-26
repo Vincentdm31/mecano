@@ -238,4 +238,11 @@ class InvoiceController extends Controller
 
         return back();
     }
+
+    public function deleteOperation($id){
+        $operation = Operation::find($id);
+        $operation->delete();
+
+        return back();
+    }
 }

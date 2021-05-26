@@ -39,7 +39,7 @@ use Carbon\Carbon;
                         <label>Terminée le</label>
                     </div>
                     <div class="form-field">
-                        <input type="text" class="form-control rounded-1" value="{{ Carbon::parse($intervention->end_intervention_time)->diffInMinutes(Carbon::parse($intervention->start_intervention_time)) }}" readonly />
+                        <input type="text" class="form-control rounded-1" value="<?php echo (round(Carbon::parse($intervention->end_intervention_time)->diffInMinutes(Carbon::parse($intervention->start_intervention_time)) / 60, 2)) ?>" readonly />
                         <label>Total</label>
                     </div>
                 </div>
@@ -61,7 +61,7 @@ use Carbon\Carbon;
                         <label>Date fin</label>
                     </div>
                     <div class="form-field">
-                        <input type="text" class="form-control rounded-1" value="{{ Carbon::parse($pauseIntervention->end_date)->diffInMinutes(Carbon::parse($pauseIntervention->start_date)) }}" readonly />
+                        <input type="text" class="form-control rounded-1" value="<?php echo (round((Carbon::parse($pauseIntervention->end_date)->diffInMinutes(Carbon::parse($pauseIntervention->start_date)) / 60), 2)) ?>" readonly />
                         <label>Total</label>
                     </div>
                 </div>
@@ -111,7 +111,7 @@ use Carbon\Carbon;
                     </div>
                     <div class="form-field">
                         <input readonly type="text" name="end_move_begin" class="form-control rounded-1" value="{{ Carbon::parse($intervention->end_move_begin)->diffInMinutes(Carbon::parse($intervention->start_move_begin)) }}" />
-                        <label>Total aller</label>
+                        <label>Total aller (min)</label>
                     </div>
                     <div class="form-field">
                         <input readonly type="text" name="start_move_return" class="form-control rounded-1" value="{{ $intervention->start_move_return }}" />
@@ -123,7 +123,7 @@ use Carbon\Carbon;
                     </div>
                     <div class="form-field">
                         <input readonly type="text" name="end_move_begin" class="form-control rounded-1" value="{{ Carbon::parse($intervention->end_move_return)->diffInMinutes(Carbon::parse($intervention->start_move_return)) }}" />
-                        <label>Total retour</label>
+                        <label>Total retour (min)</label>
                     </div>
                 </div>
             </form>
@@ -160,7 +160,14 @@ use Carbon\Carbon;
         @foreach($operations as $operation)
         <div class="bg-blue3 txt-gl4 mb-4 p-2 relative-pos ">
             <button class="btn circle small orange modal-trigger absolute-pos" style="top:0;right:0;transform:translate(50%,-50%)" data-target="modal-operation-{{ $operation->id }}"><i class="fas fa-pen txt-white"></i></button>
-            <p class="txt-gl4 ml-2 font-s5">Opération</p>
+            <div class="d-flex">
+                <p class="txt-gl4 ml-2 font-s5">Opération</p>
+                <form class="ml-auto" method="POST" action="{{ route('deleteOperation', ['id' => $operation->id]) }}">
+                    @csrf
+                    <button type="submit" class="btn circle txt-gl4 mr-2 white font-s5"><i class="fas fa-trash txt-red"></i></button>
+                </form>
+            </div>
+
             <button class="btn orange modal-trigger txt-white" data-target="modal-piece-{{ $operation->id }}">Nouvelle pièce</button>
             <form class="form-material">
                 <div class="grix xs1 sm2 gutter-sm5 p-2 txt-gl4">
@@ -219,8 +226,8 @@ use Carbon\Carbon;
                         <label>Fin pause opération</label>
                     </div>
                     <div class="form-field">
-                        <input readonly type="text" class="form-control rounded-1" value="{{ Carbon::parse($pauseOperation->end_date)->diffInMinutes(Carbon::parse($pauseOperation->start_date)) }}" />
-                        <label>Total pause</label>
+                        <input readonly type="text" class="form-control rounded-1" value="<?php echo (round(Carbon::parse($pauseOperation->end_date)->diffInMinutes(Carbon::parse($pauseOperation->start_date)) / 60, 2)) ?>" />
+                        <label>Total pause (h)</label>
                     </div>
                 </div>
             </form>
@@ -467,13 +474,18 @@ $opName = $op[0]->name;
     <div class="modal-content">
         <form class="form-material" method="POST" action="{{ route('addPiece', ['id' => $operation->id ]) }}">
             @csrf
-            <div class="grix xs1 sm2">
+            <div class="grix xs1">
+                <div class="form-field">
+                    <input type="text" name="test" id="filterPieces" class="form-control rounded-1" />
+                    <label>Filtre</label>
+                </div>
                 <div class="form-field">
                     <label>Choisir une pièce</label>
-                    <select class="form-control rounded-1" name="piece_id">
-                        @foreach($piecesList as $piece)
+                    <select class="form-control rounded-1" id="piece_id" name="piece_id">
+
+                        <!-- @foreach($piecesList as $piece)
                         <option value="{{ $piece->id }}">{{ $piece->name }}</option>
-                        @endforeach
+                        @endforeach -->
                     </select>
                 </div>
                 <div class="form-field">
@@ -490,6 +502,31 @@ $opName = $op[0]->name;
 @endsection
 
 @section('extra-js')
+
+<script>
+    let piecesList = <?php echo (json_encode($piecesList)); ?>;
+    let input = document.getElementById('filterPieces');
+    let select = document.getElementById('piece_id');
+
+    input.addEventListener('change', () => {
+        let filteredEvents = piecesList.filter(function(e) {
+            return e.ref.includes(input.value);
+        });
+        console.log(filteredEvents);
+
+        if (select.childElementCount >= 1) {
+            for (i = select.childElementCount; i >= 0; i--) {
+                select.remove(i);
+            }
+        }
+
+        for (const elem of filteredEvents) {
+            select.add(new Option(elem.name, elem.id));
+        }
+    });
+</script>
+
+
 <script>
     let toast = new Axentix.Toast();
 </script>
@@ -500,6 +537,7 @@ $opName = $op[0]->name;
 || $errors->has('start_move_begin') || $errors->has('end_move_begin')
 || $errors->has('start_move_return') || $errors->has('end_move_return')
 || $errors->has('start_operation_time') || $errors->has('end_operation_time'))
+
 <script>
     toast.change('ERREUR: Vous ne respectez pas le format Année-Mois-Jour H:min:s', {
         classes: "rounded-1 red dark-2 txt-white shadow-2 mt-5"
